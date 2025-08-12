@@ -23,8 +23,6 @@ import java.util.List;
 public class ProgressionMod {
     public static final String MODID = "progression_change";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static ProgressionModConfig CONFIG;
-
     public static final DeferredRegister<ItemGroup> CREATIVE_TAB_REG = DeferredRegister.create(RegistryKeys.ITEM_GROUP, MODID);
     public static final RegistryObject<ItemGroup> CREATIVE_TAB = CREATIVE_TAB_REG.register(MODID, () -> ItemGroup.builder()
             .displayName(Text.translatable("itemGroup." + MODID + ".creative_tab"))
@@ -34,6 +32,7 @@ public class ProgressionMod {
                 ProgressionModItemRegistry.addItemToCreativeTab(output);
             })
             .build());
+    public static ProgressionModConfig CONFIG;
 
     public ProgressionMod(FMLJavaModLoadingContext context) {
         LOGGER.info("Loading Progression Mod Config...");
