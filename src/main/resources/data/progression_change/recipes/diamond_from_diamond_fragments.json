@@ -1,16 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "group": "diamond",
-  "key": {
-    "#": {
+  "ingredients": [
+    {
+      "item": "progression_change:diamond_fragment"
+    },
+    {
+      "item": "progression_change:diamond_fragment"
+    },
+    {
+      "item": "progression_change:diamond_fragment"
+    },
+    {
+      "item": "progression_change:diamond_fragment"
+    },
+    {
       "item": "progression_change:diamond_fragment"
     }
-  },
-  "pattern": [
-    " # ",
-    "###",
-    " # "
   ],
   "result": {
     "item": "minecraft:diamond"
