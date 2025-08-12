@@ -24,31 +24,23 @@ public class ProgressionMod {
     public static final String MODID = "progression_change";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static ProgressionModConfig CONFIG;
+
     public static final DeferredRegister<ItemGroup> CREATIVE_TAB_REG = DeferredRegister.create(RegistryKeys.ITEM_GROUP, MODID);
     public static final RegistryObject<ItemGroup> CREATIVE_TAB = CREATIVE_TAB_REG.register(MODID, () -> ItemGroup.builder()
             .displayName(Text.translatable("itemGroup." + MODID + ".creative_tab"))
             .icon(() -> new ItemStack(ProgressionModItemRegistry.COPPER_PICKAXE.get()))
             .withTabsBefore(ItemGroups.SPAWN_EGGS)
             .entries((enabledFeatures, output) -> {
-                output.add(ProgressionModItemRegistry.FLINT_PICKAXE.get());
-                output.add(ProgressionModItemRegistry.BONE_PICKAXE.get());
-                output.add(ProgressionModItemRegistry.COPPER_SWORD.get());
-                output.add(ProgressionModItemRegistry.COPPER_SHOVEL.get());
-                output.add(ProgressionModItemRegistry.COPPER_PICKAXE.get());
-                output.add(ProgressionModItemRegistry.COPPER_PICKAXE.get());
-                output.add(ProgressionModItemRegistry.COPPER_AXE.get());
-                output.add(ProgressionModItemRegistry.COPPER_HOE.get());
-                output.add(ProgressionModItemRegistry.COPPER_NUGGET.get());
-                output.add(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get());
-                output.add(ProgressionModItemRegistry.RAW_IRON_NUGGET.get());
-                output.add(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get());
+                ProgressionModItemRegistry.addItemToCreativeTab(output);
             })
             .build());
 
     public ProgressionMod(FMLJavaModLoadingContext context) {
         LOGGER.info("Loading Progression Mod Config...");
+
         AutoConfig.register(ProgressionModConfig.class, Toml4jConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(ProgressionModConfig.class).getConfig();
+
         IEventBus modEventBus = context.getModEventBus();
         ProgressionModItemRegistry.DEF_REG.register(modEventBus);
         CREATIVE_TAB_REG.register(modEventBus);

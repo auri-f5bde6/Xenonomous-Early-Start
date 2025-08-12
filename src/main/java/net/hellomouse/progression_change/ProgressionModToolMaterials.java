@@ -6,55 +6,44 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 
-public enum ProgressionModToolMaterials implements ToolMaterial {
-    FLINT(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT)),
-    BONE(MiningLevels.WOOD, 32, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT)),
-    COPPER(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT));
+public class ProgressionModToolMaterials {
+
+    public static final ToolMaterial FLINT = new Material(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT));
+    public static final ToolMaterial BONE = new Material(MiningLevels.WOOD, 32, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT));
+    public static final ToolMaterial COPPER = new Material(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT));
     public static final Identifier COPPER_ID = ProgressionMod.of("copper");
 
-    private final int miningLevel;
-    private final int itemDurability;
-    private final float miningSpeed;
-    private final float attackDamage;
-    private final int enchantability;
-    private final Ingredient repairIngredient;
+    private record Material(int miningLevel, int itemDurability, float miningSpeed, float attackDamage,
+                            int enchantability, Ingredient repairIngredient) implements ToolMaterial {
 
-    ProgressionModToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Ingredient repairIngredient) {
-        this.miningLevel = miningLevel;
-        this.itemDurability = itemDurability;
-        this.miningSpeed = miningSpeed;
-        this.attackDamage = attackDamage;
-        this.enchantability = enchantability;
-        this.repairIngredient = repairIngredient;
-    }
+        @Override
+        public int getDurability() {
+            return this.itemDurability;
+        }
 
-    @Override
-    public int getDurability() {
-        return this.itemDurability;
-    }
+        @Override
+        public float getMiningSpeedMultiplier() {
+            return this.miningSpeed;
+        }
 
-    @Override
-    public float getMiningSpeedMultiplier() {
-        return this.miningSpeed;
-    }
+        @Override
+        public float getAttackDamage() {
+            return this.attackDamage;
+        }
 
-    @Override
-    public float getAttackDamage() {
-        return this.attackDamage;
-    }
+        @Override
+        public int getMiningLevel() {
+            return this.miningLevel;
+        }
 
-    @Override
-    public int getMiningLevel() {
-        return this.miningLevel;
-    }
+        @Override
+        public int getEnchantability() {
+            return this.enchantability;
+        }
 
-    @Override
-    public int getEnchantability() {
-        return this.enchantability;
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return this.repairIngredient;
+        @Override
+        public Ingredient getRepairIngredient() {
+            return this.repairIngredient;
+        }
     }
 }
