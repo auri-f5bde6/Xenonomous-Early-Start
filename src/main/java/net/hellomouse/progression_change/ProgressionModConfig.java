@@ -8,4 +8,6 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ProgressionModConfig implements ConfigData {
     @ConfigEntry.BoundedDiscrete(min=0, max=9)
     public int ironNuggetDrop=1;
+    @ConfigEntry.BoundedDiscrete(min = 0, max = 9)
+    public int goldNuggetDrop = 1;
 }

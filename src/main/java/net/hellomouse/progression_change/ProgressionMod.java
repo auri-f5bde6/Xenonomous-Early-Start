@@ -30,12 +30,18 @@ public class ProgressionMod {
             .icon(() -> new ItemStack(ProgressionModItemRegistry.COPPER_PICKAXE.get()))
             .withTabsBefore(ItemGroups.SPAWN_EGGS)
             .entries((enabledFeatures, output) -> {
+                output.add(ProgressionModItemRegistry.FLINT_PICKAXE.get());
+                output.add(ProgressionModItemRegistry.BONE_PICKAXE.get());
                 output.add(ProgressionModItemRegistry.COPPER_SWORD.get());
                 output.add(ProgressionModItemRegistry.COPPER_SHOVEL.get());
                 output.add(ProgressionModItemRegistry.COPPER_PICKAXE.get());
                 output.add(ProgressionModItemRegistry.COPPER_PICKAXE.get());
                 output.add(ProgressionModItemRegistry.COPPER_AXE.get());
                 output.add(ProgressionModItemRegistry.COPPER_HOE.get());
+                output.add(ProgressionModItemRegistry.COPPER_NUGGET.get());
+                output.add(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get());
+                output.add(ProgressionModItemRegistry.RAW_IRON_NUGGET.get());
+                output.add(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get());
             })
             .build());
 

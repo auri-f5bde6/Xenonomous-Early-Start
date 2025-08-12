@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 24,
+  "experience": 0.07,
+  "group": "copper_ingot",
+  "ingredient": {
+    "item": "progression_change:raw_copper_nugget"
+  },
+  "result": "progression_change:copper_nugget"
+}

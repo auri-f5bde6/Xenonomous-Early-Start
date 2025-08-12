@@ -7,6 +7,8 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 
 public enum ProgressionModToolMaterials implements ToolMaterial {
+    FLINT(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT)),
+    BONE(MiningLevels.WOOD, 32, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT)),
     COPPER(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT));
     public static final Identifier COPPER_ID = ProgressionMod.of("copper");
 
