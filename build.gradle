@@ -24,9 +24,13 @@ loom {
             data()
             programArgs "--all", "--mod", "progression_mod"
             programArgs "--output", generatedResources.absolutePath
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
         client {
             vmArgs "-XX:+AllowEnhancedClassRedefinition"
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
     }
 }
@@ -53,15 +57,23 @@ repositories {
         name = "TerraformersMC"
         url = "https://maven.terraformersmc.com/"
     }
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+    }
 }
 
 dependencies {
     minecraft "net.minecraft:minecraft:$project.minecraft_version"
     mappings "net.fabricmc:yarn:$project.yarn_mappings:v2"
     forge "net.minecraftforge:forge:$project.forge_version"
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:${project.mixin_extras_version}"))
     modApi "me.shedaniel.cloth:cloth-config-forge:$project.cloth_config_version"
     modCompileOnlyApi("dev.emi:emi-forge:$project.emi_version:api")
     modRuntimeOnly("dev.emi:emi-forge:$project.emi_version")
+    modImplementation("maven.modrinth:better-combat:$project.better_combat_version-forge")
+    modImplementation("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_animator_version}")
 }
 
 processResources {
