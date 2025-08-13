@@ -2,5 +2,5 @@
 > https://modrinth.com/resourcepack/coppered-equipment
 
 ## Credits:
-
 - Xenonomous (models and textures)
+- AndrewHG (models and textures of copper tools and armour)

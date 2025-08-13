@@ -59,7 +59,7 @@ public class BreakEventHandler {
 
     public static void maybeReplaceDrop(BlockEvent.BreakEvent event, ItemStack toolStack, WorldAccess level, PlayerEntity player, BlockState blockState, BlockPos pos, ToolMaterial lowerThanTier, ItemStack toDrop) {
         var toolMaterial = ((MiningToolItem) toolStack.getItem()).getMaterial();
-        if (TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial)) {
+        if ((toolMaterial.getMiningLevel() < lowerThanTier.getMiningLevel() && ProgressionMod.CONFIG.oreDropChanges.moddedPickaxeWorkaround) || TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial)) {
             level.breakBlock(pos, false, player);
             blockState.getBlock().onBroken(level, pos, blockState);
             Block.dropStack((World) level, pos, toDrop);
