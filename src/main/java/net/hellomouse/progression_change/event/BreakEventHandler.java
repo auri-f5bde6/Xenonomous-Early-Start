@@ -35,22 +35,22 @@ public class BreakEventHandler {
                 if (registryEntry.containsTag(Tags.Blocks.ORES_COPPER)) {
                     maybeReplaceDrop(
                             event, toolStack, level, player, state, pos,
-                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get(), ProgressionMod.CONFIG.rawCopperNuggetDrop)
+                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get(), ProgressionMod.CONFIG.oreDropChanges.rawCopperNuggetDrop)
                     );
                 } else if (registryEntry.containsTag(Tags.Blocks.ORES_IRON)) {
                     maybeReplaceDrop(
                             event, toolStack, level, player, state, pos,
-                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.RAW_IRON_NUGGET.get(), ProgressionMod.CONFIG.rawIronNuggetDrop)
+                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.RAW_IRON_NUGGET.get(), ProgressionMod.CONFIG.oreDropChanges.rawIronNuggetDrop)
                     );
                 } else if (registryEntry.containsTag(Tags.Blocks.ORES_GOLD)) {
                     maybeReplaceDrop(
                             event, toolStack, level, player, state, pos,
-                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionMod.CONFIG.rawGoldNuggetDrop)
+                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionMod.CONFIG.oreDropChanges.rawGoldNuggetDrop)
                     );
                 } else if (registryEntry.containsTag(Tags.Blocks.ORES_DIAMOND)) {
                     maybeReplaceDrop(
                             event, toolStack, level, player, state, pos,
-                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), ProgressionMod.CONFIG.rawDiamondFragmentDrop)
+                            ToolMaterials.DIAMOND, new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), ProgressionMod.CONFIG.oreDropChanges.rawDiamondFragmentDrop)
                     );
                 }
             }
