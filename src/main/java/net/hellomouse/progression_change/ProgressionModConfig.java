@@ -8,7 +8,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ProgressionModConfig implements ConfigData {
     @ConfigEntry.Category("ore_drop_changes")
     @ConfigEntry.Gui.TransitiveObject
-    public OreDropChanges oreDropChanges;
+    public OreDropChanges oreDropChanges = new OreDropChanges();
 
     public static class OreDropChanges {
         @ConfigEntry.BoundedDiscrete(min = 0, max = 9)
