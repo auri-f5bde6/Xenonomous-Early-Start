@@ -5,6 +5,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = ProgressionMod.MODID)
+@Config.Gui.Background(Config.Gui.Background.TRANSPARENT)
 public class ProgressionModConfig implements ConfigData {
     @ConfigEntry.Category("ore_drop_changes")
     @ConfigEntry.Gui.TransitiveObject
