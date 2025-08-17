@@ -1,5 +1,6 @@
 package net.hellomouse.progression_change;
 
+import net.hellomouse.progression_change.item.BrickItem;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -11,6 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 
 public class ProgressionModItemRegistry {
+    public static final DeferredRegister<Item> VANILLA_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, "minecraft");
     public static final DeferredRegister<Item> DEF_REG = DeferredRegister.create(ForgeRegistries.ITEMS, ProgressionMod.MODID);
     public static final RegistryObject<Item> COPPER_SWORD = DEF_REG.register("copper_sword", () ->
             new PickaxeItem(ProgressionModToolMaterials.COPPER, 3, -2.4f, new Item.Settings()) // The attackDamage is actually 1.5 in the snapshot
@@ -60,6 +62,9 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> DIAMOND_FRAGMENT = DEF_REG.register("diamond_fragment", () ->
             new Item(new Item.Settings())
     );
+    public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
+            new BrickItem(new Item.Settings())
+    );
     public static final List<RegistryObject<Item>> CREATIVE_MOD_TAB = List.of(
             COPPER_SWORD,
             COPPER_SHOVEL,
@@ -76,8 +81,7 @@ public class ProgressionModItemRegistry {
             RAW_COPPER_NUGGET,
             RAW_IRON_NUGGET,
             RAW_GOLD_NUGGET,
-            DIAMOND_FRAGMENT
-    );
+            DIAMOND_FRAGMENT);
 
     public static void addItemToCreativeTab(ItemGroup.Entries entries) {
         for (var i : ProgressionModItemRegistry.CREATIVE_MOD_TAB) {

@@ -41,7 +41,10 @@ public class ProgressionMod {
         CONFIG = AutoConfig.getConfigHolder(ProgressionModConfig.class).getConfig();
 
         IEventBus modEventBus = context.getModEventBus();
+        ProgressionModItemRegistry.VANILLA_ITEMS.register(modEventBus);
         ProgressionModItemRegistry.DEF_REG.register(modEventBus);
+        ProgressionModEntityRegistry.DEF_REG.register(modEventBus);
+
         CREATIVE_TAB_REG.register(modEventBus);
         TierSortingRegistry.registerTier(ProgressionModToolMaterials.COPPER,
                 ProgressionModToolMaterials.COPPER_ID,
