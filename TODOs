@@ -1,0 +1,64 @@
+flint hatchet:
+(shapeless)
+flint= F
+stick= S
+plant fiber= P
+
+F S
+F P
+
+plant fiber is a 5% drop from any leaf or grass block while mining with flint
+
+fire starter:
+(shapeless)
+(any) wood log= W
+stick= S
+plant fiber= P
+
+W S
+S P
+
+fire starter creates a primitive, temporary campfire that burns out after a short while. has a 1 in 4 chances to fail and break.
+use on the ground to create the fire, burns out after 90 seconds and can be kept going by placing burnables into it.
+slowly cooks food on it, can char logs into tough wood and then charcoal if for too long.
+
+to make a crafting table you need 2 logs
+and 2 bricks, you can make bricks by getting clay and then crafting a raw brick (2 clay balls) then letting it sit to dry which takes 10 minutes
+logs= L
+bricks= b
+L L
+b b
+
+wood tools need tough wood to make, original recipes removed.
+mine stone which with a wood pick to get cobble stone (breaking a stone block does not break it, to break you must break it again)
+but you want to take 2 flint and smash it against the cobblestone which can destroy the flint but sometimes give you 1 rock
+take 1 rock in your offhand and another in your main hand and start smashing them together with right click on a cobble stone
+
+stone tools require knapped rocks to make, original recipes removed.
+
+after you get stone tool then you can mine stone regularly, coal, copper (which drops raw copper nuggets with stone), you can make a brick furnace which smelts 3 times slower than a regular furnace.
+
+brick furnace:
+brick blocks= B
+nothing= #
+
+B B B
+B # B
+B B B
+
+craft raw copper nuggets into regular raw copper 3x3, then you can smelt that and get a copper ingot and mine iron, with iron it works the same way.
+
+regular furnace:
+smooth stone: S
+iron ingot: i
+
+S S S
+S # S
+S i S
+
+diamonds break into fragments which you can recraft into a diamond like so:|
+Diamond fragment= F
+F F
+F F
+
+once you acquire diamonds you can mine copper and iron normally, and with netherite you can mine diamonds normally.
