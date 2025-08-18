@@ -35,17 +35,14 @@ public class BrickItem extends Item implements Vanishable {
         return TypedActionResult.consume(itemStack);
     }
 
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if (user instanceof PlayerEntity playerEntity) {
-            BrickEntity brickEntity = new BrickEntity(world, playerEntity, new ItemStack(stack.getItem()));
-            brickEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
-            world.spawnEntity(brickEntity);
-            if (!playerEntity.getAbilities().creativeMode) {
-                stack.decrement(1);
-            }
-            playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
+    public static float getPullProgress(int useTicks) {
+        float f = useTicks / 20.0F;
+        f = (f * f + f * 2.0F) / 3.0F;
+        if (f > 1.0F) {
+            f = 1.0F;
         }
+
+        return f;
     }
 
     @Override
@@ -54,4 +51,18 @@ public class BrickItem extends Item implements Vanishable {
         return true;
     }
 
+    @Override
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+        int i = this.getMaxUseTime(stack) - remainingUseTicks;
+        var progress = getPullProgress(i);
+        if (user instanceof PlayerEntity playerEntity) {
+            BrickEntity brickEntity = new BrickEntity(world, playerEntity, new ItemStack(stack.getItem()));
+            brickEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F * progress, 1.0F);
+            world.spawnEntity(brickEntity);
+            if (!playerEntity.getAbilities().creativeMode) {
+                stack.decrement(1);
+            }
+            playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
+        }
+    }
 }
