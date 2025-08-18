@@ -16,6 +16,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class BrickEntity extends PersistentProjectileEntity {
+    boolean bounced = false;
+    Vec3d lastDirectionVector = Vec3d.ZERO;
     ItemStack brickStack = new ItemStack(Items.BRICK);
 
 
@@ -60,14 +62,28 @@ public class BrickEntity extends PersistentProjectileEntity {
     protected void onBlockHit(BlockHitResult blockHitResult) {
         if (blockHitResult.getSide() != Direction.UP) {
             super.onBlockHit(blockHitResult);
-            Vec3d vec3 = blockHitResult.getPos().subtract(this.getX(), this.getY(), this.getZ());
-            this.setVelocity(vec3);
-            Vec3d vec31 = vec3.normalize().multiply(0.5F);
-            this.setPos(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
+            // This is going to be very verbose because I have math skill issues, and I am stupid
+
+            Vec3d blockPos = blockHitResult.getPos();
+            // Direction vector from block pos to entity
+            Vec3d directionVector = this.getPos().subtract(blockPos).normalize();
+            lastDirectionVector = directionVector;
+            // Move the entity away from the block by 0.6
+            this.setPosition(blockPos.add(directionVector.multiply(0.6)));
+            this.setVelocity(0, 0, 0);
+            this.bounced = true;
         } else {
             super.onBlockHit(blockHitResult);
             this.setOnGround(true);
         }
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        if (bounced) {
+            this.setVelocity(lastDirectionVector.multiply(0.5));
+            bounced = false;
+        }
+    }
 }
