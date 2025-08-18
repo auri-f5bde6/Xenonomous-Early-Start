@@ -14,10 +14,11 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 
 public class BrickEntity extends PersistentProjectileEntity {
     boolean bounced = false;
-    Vec3d lastDirectionVector = Vec3d.ZERO;
+    Vec3d futureVelocity = Vec3d.ZERO;
     ItemStack brickStack = new ItemStack(Items.BRICK);
 
 
@@ -60,16 +61,19 @@ public class BrickEntity extends PersistentProjectileEntity {
 
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
+        var world = getWorld();
+        if (!world.isClient()) {
+            var blockState = world.getBlockState(blockHitResult.getBlockPos());
+            if (blockState.getBlock().getRegistryEntry().containsTag(Tags.Blocks.GLASS)) {
+                world.breakBlock(blockHitResult.getBlockPos(), false, this);
+                this.moveBrickAwayFrom(blockHitResult, 0.9f);
+                this.setVelocity(this.getVelocity().multiply(0.7));
+                return;
+            }
+        }
         if (blockHitResult.getSide() != Direction.UP) {
-            super.onBlockHit(blockHitResult);
-            // This is going to be very verbose because I have math skill issues, and I am stupid
-
-            Vec3d blockPos = blockHitResult.getPos();
-            // Direction vector from block pos to entity
-            Vec3d directionVector = this.getPos().subtract(blockPos).normalize();
-            lastDirectionVector = directionVector;
-            // Move the entity away from the block by 0.6
-            this.setPosition(blockPos.add(directionVector.multiply(0.6)));
+            var directionVector = this.moveBrickAwayFrom(blockHitResult, 0.7F);
+            futureVelocity = directionVector.multiply(0.05);
             this.setVelocity(0, 0, 0);
             this.bounced = true;
         } else {
@@ -78,11 +82,21 @@ public class BrickEntity extends PersistentProjectileEntity {
         }
     }
 
+    public Vec3d moveBrickAwayFrom(BlockHitResult blockHitResult, float blocks) {
+        // This is going to be very verbose because I have math skill issues, and I am stupid
+        Vec3d blockPos = blockHitResult.getPos();
+        // Direction vector from block pos to entity
+        Vec3d directionVector = this.getPos().subtract(blockPos).normalize();
+        // Move the entity away from the block by 0.7
+        this.setPosition(blockPos.add(directionVector.multiply(blocks)));
+        return directionVector;
+    }
+
     @Override
     public void tick() {
         super.tick();
         if (bounced) {
-            this.setVelocity(lastDirectionVector.multiply(0.5));
+            this.setVelocity(futureVelocity);
             bounced = false;
         }
     }
