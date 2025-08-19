@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "B": {
+      "item": "minecraft:brick"
+    }
+  },
+  "pattern": [
+    "LL",
+    "BB"
+  ],
+  "result": {
+    "item": "minecraft:crafting_table"
+  },
+  "show_notification": false
+}

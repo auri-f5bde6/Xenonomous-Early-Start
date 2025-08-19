@@ -7,6 +7,9 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config(name = ProgressionMod.MODID)
 @Config.Gui.Background(Config.Gui.Background.TRANSPARENT)
 public class ProgressionModConfig implements ConfigData {
+    @ConfigEntry.Category("early_game")
+    public float plantFiberDropProbability = 0.05f;
+
     @ConfigEntry.Category("ore_drop_changes")
     @ConfigEntry.Gui.TransitiveObject
     public OreDropChanges oreDropChanges = new OreDropChanges();

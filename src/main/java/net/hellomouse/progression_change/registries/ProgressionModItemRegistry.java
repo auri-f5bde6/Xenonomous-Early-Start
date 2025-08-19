@@ -65,6 +65,12 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> RAW_BRICK = DEF_REG.register("raw_brick", () ->
             new BlockItem(ProgressionModBlockRegistry.RAW_BRICK.get(), new Item.Settings())
     );
+    public static final RegistryObject<Item> FLINT_HATCHET = DEF_REG.register("flint_hatchet", () ->
+            new AxeItem(ProgressionModToolMaterials.FLINT, 6.0f, -3.2f, new Item.Settings())
+    );
+    public static final RegistryObject<Item> PLANT_FIBER = DEF_REG.register("plant_fiber", () ->
+            new Item(new Item.Settings())
+    );
     public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
             new BrickItem(new Item.Settings())
     );
