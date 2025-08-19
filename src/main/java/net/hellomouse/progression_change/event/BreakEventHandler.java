@@ -32,9 +32,7 @@ public class BreakEventHandler {
         var player = event.getPlayer();
         var toolStack = player.getMainHandStack();
         var state = event.getState();
-        var block = eventState.getBlock();
         if (eventState.canHarvestBlock(level, pos, player)) {
-            var blockRegistryEntry = eventState.getBlock().getRegistryEntry();
             if (toolStack.getItem() instanceof MiningToolItem) {
                 if (state.isIn(Tags.Blocks.ORES_COPPER) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
                     replaceDrop(
@@ -54,7 +52,7 @@ public class BreakEventHandler {
                             new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawGoldNuggetDrop)
                     );
                     return;
-                } else if (state.isIn(Tags.Blocks.ORES_DIAMOND) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
+                } else if (state.isIn(Tags.Blocks.ORES_DIAMOND) && shouldReplaceDrop(toolStack, ToolMaterials.NETHERITE)) {
                     replaceDrop(
                             event, toolStack, level, player, state, pos,
                             new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), ProgressionModConfig.oreDropChanges.rawDiamondFragmentDrop)
