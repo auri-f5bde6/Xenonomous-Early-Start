@@ -1,8 +1,6 @@
 package net.hellomouse.progression_change;
 
 import com.mojang.logging.LogUtils;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.hellomouse.progression_change.registries.ProgressionModBlockRegistry;
 import net.hellomouse.progression_change.registries.ProgressionModEntityRegistry;
 import net.hellomouse.progression_change.registries.ProgressionModItemRegistry;
@@ -35,13 +33,9 @@ public class ProgressionMod {
                 ProgressionModItemRegistry.addItemToCreativeTab(output);
             })
             .build());
-    public static ProgressionModConfig CONFIG;
 
     public ProgressionMod(FMLJavaModLoadingContext context) {
         LOGGER.info("Loading Progression Mod Config...");
-
-        AutoConfig.register(ProgressionModConfig.class, Toml4jConfigSerializer::new);
-        CONFIG = AutoConfig.getConfigHolder(ProgressionModConfig.class).getConfig();
 
         IEventBus modEventBus = context.getModEventBus();
         ProgressionModBlockRegistry.DEF_REG.register(modEventBus);

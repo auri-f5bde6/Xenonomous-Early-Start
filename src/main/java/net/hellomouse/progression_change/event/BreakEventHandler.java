@@ -1,6 +1,7 @@
 package net.hellomouse.progression_change.event;
 
 import net.hellomouse.progression_change.ProgressionMod;
+import net.hellomouse.progression_change.ProgressionModConfig;
 import net.hellomouse.progression_change.registries.ProgressionModItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -38,25 +39,25 @@ public class BreakEventHandler {
                 if (state.isIn(Tags.Blocks.ORES_COPPER) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
                     replaceDrop(
                             event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get(), ProgressionMod.CONFIG.oreDropChanges.rawCopperNuggetDrop)
+                            new ItemStack(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawCopperNuggetDrop)
                     );
                     return;
                 } else if (state.isIn(Tags.Blocks.ORES_IRON) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
                     replaceDrop(
                             event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.RAW_IRON_NUGGET.get(), ProgressionMod.CONFIG.oreDropChanges.rawIronNuggetDrop)
+                            new ItemStack(ProgressionModItemRegistry.RAW_IRON_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawIronNuggetDrop)
                     );
                     return;
                 } else if (state.isIn(Tags.Blocks.ORES_GOLD) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
                     replaceDrop(
                             event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionMod.CONFIG.oreDropChanges.rawGoldNuggetDrop)
+                            new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawGoldNuggetDrop)
                     );
                     return;
                 } else if (state.isIn(Tags.Blocks.ORES_DIAMOND) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
                     replaceDrop(
                             event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), ProgressionMod.CONFIG.oreDropChanges.rawDiamondFragmentDrop)
+                            new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), ProgressionModConfig.oreDropChanges.rawDiamondFragmentDrop)
                     );
                     return;
                 }
@@ -64,7 +65,7 @@ public class BreakEventHandler {
             if (toolStack.isOf(Items.FLINT)) {
                 if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.REPLACEABLE_BY_TREES)) {
                     // I'm assuming that REPLACEABLE_BY_TREES blocks are either grass or flower, I hope I didn't make Ming looks bad
-                    if (random.nextFloat() < ProgressionMod.CONFIG.plantFiberDropProbability) {
+                    if (random.nextFloat() < (ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f)) {
                         Block.dropStack((World) level, pos, ProgressionModItemRegistry.PLANT_FIBER.get().getDefaultStack());
                         return;
                     }
@@ -80,7 +81,7 @@ public class BreakEventHandler {
 
     private static boolean shouldReplaceDrop(ItemStack toolStack, ToolMaterial lowerThanTier) {
         var toolMaterial = ((MiningToolItem) toolStack.getItem()).getMaterial();
-        return (toolMaterial.getMiningLevel() < lowerThanTier.getMiningLevel() && ProgressionMod.CONFIG.oreDropChanges.moddedPickaxeWorkaround)
+        return (toolMaterial.getMiningLevel() < lowerThanTier.getMiningLevel() && ProgressionModConfig.oreDropChanges.moddedPickaxeWorkaround)
                 || TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial);
     }
 

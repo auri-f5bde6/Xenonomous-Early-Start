@@ -1,6 +1,5 @@
 package net.hellomouse.progression_change.client;
 
-import me.shedaniel.autoconfig.AutoConfig;
 import net.hellomouse.progression_change.ProgressionMod;
 import net.hellomouse.progression_change.ProgressionModConfig;
 import net.hellomouse.progression_change.client.entity.BrickEntityModel;
@@ -19,7 +18,9 @@ public class ProgressionModClientHandler {
     @SubscribeEvent
     public static void onFMLClientSetupEvent(FMLClientSetupEvent event) {
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory((mc, prevScreen) -> AutoConfig.getConfigScreen(ProgressionModConfig.class, prevScreen).get())
+                () -> new ConfigScreenHandler.ConfigScreenFactory((mc, prevScreen) ->
+                        ProgressionModConfig.Gui.getConfigBuilder().build()
+                )
         );
     }
 
