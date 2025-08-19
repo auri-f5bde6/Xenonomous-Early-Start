@@ -1,6 +1,6 @@
 package net.hellomouse.progression_change.entity;
 
-import net.hellomouse.progression_change.ProgressionModEntityRegistry;
+import net.hellomouse.progression_change.registries.ProgressionModEntityRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

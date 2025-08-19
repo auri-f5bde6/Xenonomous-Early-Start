@@ -1,10 +1,10 @@
-package net.hellomouse.progression_change;
+package net.hellomouse.progression_change.registries;
 
+import net.hellomouse.progression_change.ProgressionMod;
+import net.hellomouse.progression_change.ProgressionModArmourMaterials;
+import net.hellomouse.progression_change.ProgressionModToolMaterials;
 import net.hellomouse.progression_change.item.BrickItem;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -62,6 +62,9 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> DIAMOND_FRAGMENT = DEF_REG.register("diamond_fragment", () ->
             new Item(new Item.Settings())
     );
+    public static final RegistryObject<Item> RAW_BRICK = DEF_REG.register("raw_brick", () ->
+            new BlockItem(ProgressionModBlockRegistry.RAW_BRICK.get(), new Item.Settings())
+    );
     public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
             new BrickItem(new Item.Settings())
     );
@@ -81,7 +84,8 @@ public class ProgressionModItemRegistry {
             RAW_COPPER_NUGGET,
             RAW_IRON_NUGGET,
             RAW_GOLD_NUGGET,
-            DIAMOND_FRAGMENT);
+            DIAMOND_FRAGMENT,
+            RAW_BRICK);
 
     public static void addItemToCreativeTab(ItemGroup.Entries entries) {
         for (var i : ProgressionModItemRegistry.CREATIVE_MOD_TAB) {

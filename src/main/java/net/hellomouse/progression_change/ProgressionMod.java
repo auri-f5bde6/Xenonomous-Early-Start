@@ -3,6 +3,9 @@ package net.hellomouse.progression_change;
 import com.mojang.logging.LogUtils;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import net.hellomouse.progression_change.registries.ProgressionModBlockRegistry;
+import net.hellomouse.progression_change.registries.ProgressionModEntityRegistry;
+import net.hellomouse.progression_change.registries.ProgressionModItemRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -41,10 +44,10 @@ public class ProgressionMod {
         CONFIG = AutoConfig.getConfigHolder(ProgressionModConfig.class).getConfig();
 
         IEventBus modEventBus = context.getModEventBus();
+        ProgressionModBlockRegistry.DEF_REG.register(modEventBus);
         ProgressionModItemRegistry.VANILLA_ITEMS.register(modEventBus);
         ProgressionModItemRegistry.DEF_REG.register(modEventBus);
         ProgressionModEntityRegistry.DEF_REG.register(modEventBus);
-
         CREATIVE_TAB_REG.register(modEventBus);
         TierSortingRegistry.registerTier(ProgressionModToolMaterials.COPPER,
                 ProgressionModToolMaterials.COPPER_ID,
@@ -52,6 +55,7 @@ public class ProgressionMod {
                 List.of(new Identifier("iron"))
         );
     }
+
 
     public static Identifier of(String path) {
         return Identifier.of(MODID, path);

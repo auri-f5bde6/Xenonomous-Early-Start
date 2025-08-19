@@ -1,5 +1,6 @@
-package net.hellomouse.progression_change;
+package net.hellomouse.progression_change.registries;
 
+import net.hellomouse.progression_change.ProgressionMod;
 import net.hellomouse.progression_change.entity.BrickEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;

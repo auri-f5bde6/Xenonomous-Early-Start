@@ -21,7 +21,7 @@ public class BrickEntityModel extends EntityModel<Entity> {
         ModelPartData modelPartData = modelData.getRoot();
         ModelPartData bb_main = modelPartData.addChild("bb_main", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
-        ModelPartData cube_r1 = bb_main.addChild("cube_r1", ModelPartBuilder.create().uv(-1, 0).cuboid(-2.0F, -1.0F, -4.0F, 4.0F, 2.0F, 8.0F, new Dilation(0.0F)), ModelTransform.of(-4.0F, -1.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
+        ModelPartData cube_r1 = bb_main.addChild("cube_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-5.0F, -3.0F, -3.0F, 4.0F, 3.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(-4.0F, 0.0F, 3.0F, 0.0F, -1.5708F, 0.0F));
         return TexturedModelData.of(modelData, 32, 32);
     }
 

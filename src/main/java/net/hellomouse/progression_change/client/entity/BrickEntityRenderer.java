@@ -31,14 +31,14 @@ public class BrickEntityRenderer extends EntityRenderer<BrickEntity> {
         return TEXTURE;
     }
 
-    public void render(BrickEntity arg, float f, float g, MatrixStack arg2, VertexConsumerProvider arg3, int i) {
-        arg2.push();
-        arg2.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(MathHelper.lerp(g, arg.prevYaw, arg.getYaw()) - 90.0f));
-        arg2.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(g, arg.prevPitch, arg.getPitch())));
+    public void render(BrickEntity arg, float f, float g, MatrixStack stack, VertexConsumerProvider arg3, int i) {
+        stack.push();
+        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(MathHelper.lerp(g, arg.prevYaw, arg.getYaw()) - 90.0f));
+        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(g, arg.prevPitch, arg.getPitch())));
         VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(arg3, this.model.getLayer(this.getTexture(arg)), false, false);
-        this.model.render(arg2, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-        arg2.pop();
-        super.render(arg, f, g, arg2, arg3, i);
+        this.model.render(stack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+        stack.pop();
+        super.render(arg, f, g, stack, arg3, i);
     }
 
 }
