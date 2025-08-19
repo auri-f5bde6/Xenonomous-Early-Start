@@ -70,7 +70,7 @@ public class BrickBlock extends HorizontalFacingBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (world.isAreaLoaded(pos, 1)) {
-            if (random.nextInt(7) == 0) {
+            if (random.nextInt(13) == 0) {
                 world.removeBlock(pos, false);
                 world.setBlockState(pos, Blocks.DIAMOND_BLOCK.getDefaultState());
             }
