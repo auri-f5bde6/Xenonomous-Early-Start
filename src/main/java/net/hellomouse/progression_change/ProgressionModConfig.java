@@ -43,11 +43,13 @@ public class ProgressionModConfig {
             ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"));
             category.addEntry(
                     entryBuilder.startIntSlider(
-                            getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
-                            earlyGameChanges.plantFiberDropProbability,
-                            1,
-                            100
-                    ).setSaveConsumer(aInt -> earlyGameChanges.plantFiberDropProbability = aInt).build()
+                                    getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
+                                    earlyGameChanges.plantFiberDropProbability,
+                                    1,
+                                    100
+                            ).setSaveConsumer(aInt -> earlyGameChanges.plantFiberDropProbability = aInt)
+                            .setDefaultValue(5)
+                            .build()
             );
         }
 
@@ -57,26 +59,31 @@ public class ProgressionModConfig {
                     entryBuilder.startBooleanToggle(
                                     getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"), oreDropChanges.moddedPickaxeWorkaround)
                             .setSaveConsumer(aBoolean -> oreDropChanges.moddedPickaxeWorkaround = aBoolean)
+                            .setDefaultValue(false)
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
                                     getTranslatableTextOption("oreDropChanges.rawCopperNuggetDrop"), oreDropChanges.rawCopperNuggetDrop, 1, 9)
                             .setSaveConsumer(aInt -> oreDropChanges.rawCopperNuggetDrop = aInt)
+                            .setDefaultValue(1)
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
                                     getTranslatableTextOption("oreDropChanges.rawIronNuggetDrop"), oreDropChanges.rawIronNuggetDrop, 1, 9)
                             .setSaveConsumer(aInt -> oreDropChanges.rawIronNuggetDrop = aInt)
+                            .setDefaultValue(1)
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
                                     getTranslatableTextOption("oreDropChanges.rawGoldNuggetDrop"), oreDropChanges.rawGoldNuggetDrop, 1, 9)
                             .setSaveConsumer(aInt -> oreDropChanges.rawGoldNuggetDrop = aInt)
+                            .setDefaultValue(1)
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
                                     getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.rawDiamondFragmentDrop, 1, 9)
                             .setSaveConsumer(aInt -> oreDropChanges.rawDiamondFragmentDrop = aInt)
+                            .setDefaultValue(1)
                             .build());
         }
     }

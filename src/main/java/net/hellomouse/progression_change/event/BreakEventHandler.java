@@ -5,8 +5,12 @@ import net.hellomouse.progression_change.ProgressionModConfig;
 import net.hellomouse.progression_change.registries.ProgressionModItemRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -18,12 +22,9 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = ProgressionMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class BreakEventHandler {
-    private static final Random random = new Random();
-
     @SubscribeEvent
     public static void onBreakEvent(BlockEvent.BreakEvent event) {
         var eventState = event.getState();
@@ -53,9 +54,11 @@ public class BreakEventHandler {
                     );
                     return;
                 } else if (state.isIn(Tags.Blocks.ORES_DIAMOND) && shouldReplaceDrop(toolStack, ToolMaterials.NETHERITE)) {
+                    int fortuneLevel = EnchantmentHelper.getLevel(Enchantments.FORTUNE, toolStack);
+                    var drop = new ApplyBonusLootFunction.OreDrops().getValue(level.getRandom(), ProgressionModConfig.oreDropChanges.rawDiamondFragmentDrop, fortuneLevel);
                     replaceDrop(
                             event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), ProgressionModConfig.oreDropChanges.rawDiamondFragmentDrop)
+                            new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), drop)
                     );
                     return;
                 }
@@ -63,16 +66,31 @@ public class BreakEventHandler {
             if (toolStack.isOf(Items.FLINT)) {
                 if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.REPLACEABLE_BY_TREES)) {
                     // I'm assuming that REPLACEABLE_BY_TREES blocks are either grass or flower, I hope I didn't make Ming looks bad
-                    if (random.nextFloat() < (ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f)) {
+                    if (level.getRandom().nextFloat() < (ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f)) {
                         Block.dropStack((World) level, pos, ProgressionModItemRegistry.PLANT_FIBER.get().getDefaultStack());
                         return;
                     }
                 }
             }
             if (state.isIn(BlockTags.LOGS) && !(toolStack.getItem() instanceof AxeItem)) {
-                level.breakBlock(pos, false, player);
-                state.getBlock().onBroken(level, pos, state);
+                breakBlock(level, player, state, pos);
                 event.setCanceled(true);
+                return;
+            }
+            // Turn deepslate into cobbled deepslate, modded stone can turn into cobblestone for now
+            if (toolStack.isOf(ProgressionModItemRegistry.FLINT_PICKAXE.get()) || toolStack.isOf(ProgressionModItemRegistry.BONE_PICKAXE.get())) {
+                if (state.isOf(Blocks.BLACKSTONE)) {
+                    replaceDrop(event, toolStack, level, player, state, pos, ProgressionModItemRegistry.BLACKSTONE_PEBBLE.get().getDefaultStack());
+                    event.setCanceled(true);
+                } else if (state.isOf(Blocks.DEEPSLATE)) {
+                    replaceDrop(event, toolStack, level, player, state, pos, ProgressionModItemRegistry.DEEPSLATE_PEBBLE.get().getDefaultStack());
+                    level.setBlockState(pos, Blocks.COBBLED_DEEPSLATE.getDefaultState(), Block.NOTIFY_ALL);
+                    event.setCanceled(true);
+                } else if (state.isIn(Tags.Blocks.STONE) && !state.isOf(Blocks.DEEPSLATE)) {
+                    replaceDrop(event, toolStack, level, player, state, pos, ProgressionModItemRegistry.PEBBLE.get().getDefaultStack());
+                    level.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState(), Block.NOTIFY_ALL);
+                    event.setCanceled(true);
+                }
             }
         }
     }
@@ -84,8 +102,7 @@ public class BreakEventHandler {
     }
 
     private static void replaceDrop(BlockEvent.BreakEvent event, ItemStack toolStack, WorldAccess level, PlayerEntity player, BlockState blockState, BlockPos pos, ItemStack toDrop) {
-        level.breakBlock(pos, false, player);
-        blockState.getBlock().onBroken(level, pos, blockState);
+        breakBlock(level, player, blockState, pos);
         Block.dropStack((World) level, pos, toDrop);
         var exp = event.getExpToDrop();
         if (exp > 0) {
@@ -93,5 +110,10 @@ public class BreakEventHandler {
         }
         toolStack.postMine((World) level, blockState, pos, player);
         event.setCanceled(true);
+    }
+
+    private static void breakBlock(WorldAccess level, PlayerEntity player, BlockState blockState, BlockPos pos) {
+        level.breakBlock(pos, false, player);
+        blockState.getBlock().onBroken(level, pos, blockState);
     }
 }

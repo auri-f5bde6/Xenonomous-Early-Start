@@ -71,6 +71,15 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> PLANT_FIBER = DEF_REG.register("plant_fiber", () ->
             new Item(new Item.Settings())
     );
+    public static final RegistryObject<Item> PEBBLE = DEF_REG.register("pebble", () ->
+            new Item(new Item.Settings())
+    );
+    public static final RegistryObject<Item> DEEPSLATE_PEBBLE = DEF_REG.register("deepslate_pebble", () ->
+            new Item(new Item.Settings())
+    );
+    public static final RegistryObject<Item> BLACKSTONE_PEBBLE = DEF_REG.register("blackstone_pebble", () ->
+            new Item(new Item.Settings())
+    );
     public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
             new BrickItem(new Item.Settings())
     );
@@ -93,7 +102,10 @@ public class ProgressionModItemRegistry {
             DIAMOND_FRAGMENT,
             RAW_BRICK,
             FLINT_HATCHET,
-            PLANT_FIBER
+            PLANT_FIBER,
+            PEBBLE,
+            DEEPSLATE_PEBBLE,
+            BLACKSTONE_PEBBLE
     );
 
     public static void addItemToCreativeTab(ItemGroup.Entries entries) {
