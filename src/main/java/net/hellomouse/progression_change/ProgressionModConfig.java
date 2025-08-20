@@ -11,7 +11,7 @@ public class ProgressionModConfig {
     public static EarlyGameChanges earlyGameChanges = new EarlyGameChanges();
 
     public static class OreDropChanges {
-        public boolean moddedPickaxeWorkaround = false; // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
+        public boolean moddedPickaxeWorkaround = true; // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
         public int rawCopperNuggetDrop = 1;
         public int rawIronNuggetDrop = 1;
         public int rawGoldNuggetDrop = 1;
@@ -72,7 +72,7 @@ public class ProgressionModConfig {
                                     getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"), oreDropChanges.moddedPickaxeWorkaround)
                             .setSaveConsumer(aBoolean -> oreDropChanges.moddedPickaxeWorkaround = aBoolean)
                             .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
-                            .setDefaultValue(false)
+                            .setDefaultValue(true)
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
