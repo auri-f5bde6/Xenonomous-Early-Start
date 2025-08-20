@@ -4,7 +4,10 @@ import net.hellomouse.progression_change.ProgressionMod;
 import net.hellomouse.progression_change.ProgressionModConfig;
 import net.hellomouse.progression_change.client.entity.BrickEntityModel;
 import net.hellomouse.progression_change.client.entity.BrickEntityRenderer;
+import net.hellomouse.progression_change.client.screen.BrickFurnaceScreen;
 import net.hellomouse.progression_change.registries.ProgressionModEntityRegistry;
+import net.hellomouse.progression_change.registries.ProgressionModScreenHandlerRegistry;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -22,6 +25,12 @@ public class ProgressionModClientHandler {
                         ProgressionModConfig.Gui.getConfigBuilder().build()
                 )
         );
+        event.enqueueWork(() -> {
+            HandledScreens.register(ProgressionModScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get(),
+                    BrickFurnaceScreen::new);
+        });
+
+
     }
 
     @SubscribeEvent

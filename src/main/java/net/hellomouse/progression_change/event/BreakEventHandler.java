@@ -36,34 +36,33 @@ public class BreakEventHandler {
         var toolStack = player.getMainHandStack();
         var state = event.getState();
         if (eventState.canHarvestBlock(level, pos, player)) {
-            if (toolStack.getItem() instanceof MiningToolItem) {
-                if (state.isIn(Tags.Blocks.ORES_COPPER) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
-                    replaceDrop(
-                            event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawCopperNuggetDrop)
-                    );
-                    return;
-                } else if (state.isIn(Tags.Blocks.ORES_IRON) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
-                    replaceDrop(
-                            event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.RAW_IRON_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawIronNuggetDrop)
-                    );
-                    return;
-                } else if (state.isIn(Tags.Blocks.ORES_GOLD) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
-                    replaceDrop(
-                            event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawGoldNuggetDrop)
-                    );
-                    return;
-                } else if (state.isIn(Tags.Blocks.ORES_DIAMOND) && shouldReplaceDrop(toolStack, ToolMaterials.NETHERITE)) {
-                    int fortuneLevel = EnchantmentHelper.getLevel(Enchantments.FORTUNE, toolStack);
-                    var drop = new ApplyBonusLootFunction.OreDrops().getValue(level.getRandom(), ProgressionModConfig.oreDropChanges.rawDiamondFragmentDrop, fortuneLevel);
-                    replaceDrop(
-                            event, toolStack, level, player, state, pos,
-                            new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), drop)
-                    );
-                    return;
-                }
+            if (state.isIn(Tags.Blocks.ORES_COPPER) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
+                replaceDrop(
+                        event, toolStack, level, player, state, pos,
+                        new ItemStack(ProgressionModItemRegistry.RAW_COPPER_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawCopperNuggetDrop)
+                );
+                return;
+            } else if (state.isIn(Tags.Blocks.ORES_IRON) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
+                replaceDrop(
+                        event, toolStack, level, player, state, pos,
+                        new ItemStack(ProgressionModItemRegistry.RAW_IRON_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawIronNuggetDrop)
+                );
+                return;
+            } else if (state.isIn(Tags.Blocks.ORES_GOLD) && shouldReplaceDrop(toolStack, ToolMaterials.DIAMOND)) {
+                replaceDrop(
+                        event, toolStack, level, player, state, pos,
+                        new ItemStack(ProgressionModItemRegistry.RAW_GOLD_NUGGET.get(), ProgressionModConfig.oreDropChanges.rawGoldNuggetDrop)
+                );
+                return;
+            } else if (state.isIn(Tags.Blocks.ORES_DIAMOND) && shouldReplaceDrop(toolStack, ToolMaterials.NETHERITE)) {
+                int fortuneLevel = EnchantmentHelper.getLevel(Enchantments.FORTUNE, toolStack);
+                var drop = new ApplyBonusLootFunction.OreDrops().getValue(level.getRandom(), ProgressionModConfig.oreDropChanges.rawDiamondFragmentDrop, fortuneLevel);
+                replaceDrop(
+                        event, toolStack, level, player, state, pos,
+                        new ItemStack(ProgressionModItemRegistry.DIAMOND_FRAGMENT.get(), drop)
+                );
+                return;
+
             }
             if (toolStack.isIn(ProgressionModTags.Items.SHARDS)) {
                 if (state.isIn(BlockTags.LEAVES) || state.isIn(BlockTags.REPLACEABLE_BY_TREES)) {

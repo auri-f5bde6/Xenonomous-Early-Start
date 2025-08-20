@@ -28,6 +28,8 @@
   "item.progression_change.knapped_stone": "Knapped Stone",
   "item.progression_change.knapped_deepslate": "Knapped Deepslate",
   "item.progression_change.knapped_blackstone": "Knapped Blackstone",
+  "item.progression_change.brick_furnace": "Brick Furnace",
+  "block.progression_change.brick_furnace": "Brick Furnace",
   "text.config.progression_change.title": "Progression Change",
   "text.config.progression_change.option.earlyGameChanges": "Early Game",
   "text.config.progression_change.option.earlyGameChanges.plantFiberDropProbability": "Plant Fiber Drop Probability (%)",
@@ -37,5 +39,6 @@
   "text.config.progression_change.option.oreDropChanges.rawCopperNuggetDrop": "Raw Copper Nugget Drop(s)",
   "text.config.progression_change.option.oreDropChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
   "text.config.progression_change.option.oreDropChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
-  "text.config.progression_change.option.oreDropChanges.rawDiamondFragmentDrop": "Raw Diamond Fragment Drop(s)"
+  "text.config.progression_change.option.oreDropChanges.rawDiamondFragmentDrop": "Raw Diamond Fragment Drop(s)",
+  "container.progression_change.brick_furnace": "Brick Furnace"
 }

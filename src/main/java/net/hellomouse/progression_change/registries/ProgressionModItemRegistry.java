@@ -90,6 +90,9 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> BLACKSTONE_PEBBLE = DEF_REG.register("blackstone_pebble", () ->
             new PebbleItem(KNAPPED_BLACKSTONE.get(), new Item.Settings())
     );
+    public static final RegistryObject<Item> BRICK_FURNACE = DEF_REG.register("brick_furnace", () ->
+            new BlockItem(ProgressionModBlockRegistry.BRICK_FURNACE.get(), new Item.Settings())
+    );
     public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
             new BrickItem(ProgressionModBlockRegistry.BRICK.get(), new Item.Settings())
     );
@@ -118,7 +121,8 @@ public class ProgressionModItemRegistry {
             BLACKSTONE_PEBBLE,
             KNAPPED_STONE,
             KNAPPED_DEEPSLATE,
-            KNAPPED_BLACKSTONE
+            KNAPPED_BLACKSTONE,
+            BRICK_FURNACE
     );
 
     public static void addItemToCreativeTab(ItemGroup.Entries entries) {

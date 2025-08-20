@@ -1,9 +1,7 @@
 package net.hellomouse.progression_change;
 
 import com.mojang.logging.LogUtils;
-import net.hellomouse.progression_change.registries.ProgressionModBlockRegistry;
-import net.hellomouse.progression_change.registries.ProgressionModEntityRegistry;
-import net.hellomouse.progression_change.registries.ProgressionModItemRegistry;
+import net.hellomouse.progression_change.registries.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -42,6 +40,8 @@ public class ProgressionMod {
         ProgressionModItemRegistry.VANILLA_ITEMS.register(modEventBus);
         ProgressionModItemRegistry.DEF_REG.register(modEventBus);
         ProgressionModEntityRegistry.DEF_REG.register(modEventBus);
+        ProgressionModScreenHandlerRegistry.DEF_REG.register(modEventBus);
+        ProgressionModBlockEntityRegistry.DEF_REG.register(modEventBus);
         CREATIVE_TAB_REG.register(modEventBus);
         TierSortingRegistry.registerTier(ProgressionModToolMaterials.COPPER,
                 ProgressionModToolMaterials.COPPER_ID,

@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "net.hellomouse.progression_change.mixin",
+  "package": "net.hellomouse.progression_change.mixins",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
   ],
   "mixins": [
+    "AbstractFurnaceBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
