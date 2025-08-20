@@ -16,6 +16,7 @@ public class ProgressionModConfig {
         public int rawIronNuggetDrop = 1;
         public int rawGoldNuggetDrop = 1;
         public int diamondFragmentDrop = 1;
+        public boolean oreToStone = false;
     }
 
     public static class EarlyGameChanges {
@@ -70,6 +71,7 @@ public class ProgressionModConfig {
                     entryBuilder.startBooleanToggle(
                                     getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"), oreDropChanges.moddedPickaxeWorkaround)
                             .setSaveConsumer(aBoolean -> oreDropChanges.moddedPickaxeWorkaround = aBoolean)
+                            .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
                             .setDefaultValue(false)
                             .build());
             category.addEntry(
@@ -95,6 +97,13 @@ public class ProgressionModConfig {
                                     getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.diamondFragmentDrop, 1, 9)
                             .setSaveConsumer(aInt -> oreDropChanges.diamondFragmentDrop = aInt)
                             .setDefaultValue(1)
+                            .build());
+            category.addEntry(
+                    entryBuilder.startBooleanToggle(
+                                    getTranslatableTextOption("oreDropChanges.oreToStone"), oreDropChanges.oreToStone)
+                            .setSaveConsumer(aBoolean -> oreDropChanges.oreToStone = aBoolean)
+                            .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
+                            .setDefaultValue(false)
                             .build());
         }
     }

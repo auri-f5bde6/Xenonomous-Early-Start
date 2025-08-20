@@ -4,9 +4,8 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.hellomouse.progression_change.ProgressionMod;
-import net.hellomouse.progression_change.ProgressionModConfig;
 import net.hellomouse.progression_change.registries.ProgressionModLootTypeRegistry;
-import net.minecraft.item.MiningToolItem;
+import net.hellomouse.progression_change.utils.MiningLevel;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.condition.LootConditionType;
@@ -60,17 +59,7 @@ public class PickaxeTier implements LootCondition {
     @Override
     public boolean test(LootContext lootContext) {
         var itemStack = lootContext.get(LootContextParameters.TOOL);
-        if (itemStack == null) {
-            return false;
-        } else if (itemStack.getItem() instanceof MiningToolItem miningToolItem) {
-            var toolMaterial = miningToolItem.getMaterial();
-            if (TierSortingRegistry.isTierSorted(toolMaterial)) {
-                return TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial);
-            } else {
-                return toolMaterial.getMiningLevel() < lowerThanTier.getMiningLevel() && ProgressionModConfig.oreDropChanges.moddedPickaxeWorkaround;
-            }
-        }
-        return false;
+        return MiningLevel.IsToolLowerThanTier(itemStack, lowerThanTier);
     }
 
     public static class Serializer implements JsonSerializer<PickaxeTier> {

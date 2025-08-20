@@ -36,9 +36,12 @@
   "text.config.progression_change.option.earlyGameChanges.pebbleDropProbability": "Pebble Drop Probability (%)",
   "text.config.progression_change.option.oreDropChanges": "Ore Drop Changes",
   "text.config.progression_change.option.oreDropChanges.moddedPickaxeWorkaround": "Modded Pickaxe Workaround",
+  "text.config.progression_change.option.oreDropChanges.moddedPickaxeWorkaround.tooltip": "Use vanilla's mining int level, as a workaround for modded pickaxe that didn't register their material to TierSortingRegistry.",
   "text.config.progression_change.option.oreDropChanges.rawCopperNuggetDrop": "Raw Copper Nugget Drop(s)",
   "text.config.progression_change.option.oreDropChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
   "text.config.progression_change.option.oreDropChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
   "text.config.progression_change.option.oreDropChanges.rawDiamondFragmentDrop": "Raw Diamond Fragment Drop(s)",
+  "text.config.progression_change.option.oreDropChanges.oreToStone": "Mine Ore Without Dropping Block",
+  "text.config.progression_change.option.oreDropChanges.oreToStone.tooltip": "Mined ore drop raw ore and replace block with stone/deepslate/netherrack.",
   "container.progression_change.brick_furnace": "Brick Furnace"
 }
