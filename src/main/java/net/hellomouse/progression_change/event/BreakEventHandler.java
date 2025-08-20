@@ -111,9 +111,14 @@ public class BreakEventHandler {
     }
 
     private static boolean shouldReplaceDrop(ItemStack toolStack, ToolMaterial lowerThanTier) {
-        var toolMaterial = ((MiningToolItem) toolStack.getItem()).getMaterial();
-        return (toolMaterial.getMiningLevel() < lowerThanTier.getMiningLevel() && ProgressionModConfig.oreDropChanges.moddedPickaxeWorkaround)
-                || TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial);
+        if (toolStack.getItem() instanceof MiningToolItem toolItem) {
+            var toolMaterial = toolItem.getMaterial();
+            return (toolMaterial.getMiningLevel() < lowerThanTier.getMiningLevel() && ProgressionModConfig.oreDropChanges.moddedPickaxeWorkaround)
+                    || TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial);
+        } else {
+            return false;
+        }
+
     }
 
     private static void replaceDrop(BlockEvent.BreakEvent event, ItemStack toolStack, WorldAccess level, PlayerEntity player, BlockState blockState, BlockPos pos, ItemStack toDrop) {
