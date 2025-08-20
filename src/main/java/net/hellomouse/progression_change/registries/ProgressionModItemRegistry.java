@@ -4,6 +4,7 @@ import net.hellomouse.progression_change.ProgressionMod;
 import net.hellomouse.progression_change.ProgressionModArmourMaterials;
 import net.hellomouse.progression_change.ProgressionModToolMaterials;
 import net.hellomouse.progression_change.item.BrickItem;
+import net.hellomouse.progression_change.item.PebbleItem;
 import net.minecraft.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -71,14 +72,23 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> PLANT_FIBER = DEF_REG.register("plant_fiber", () ->
             new Item(new Item.Settings())
     );
+    public static final RegistryObject<Item> KNAPPED_STONE = DEF_REG.register("knapped_stone", () ->
+            new Item(new Item.Settings())
+    );
     public static final RegistryObject<Item> PEBBLE = DEF_REG.register("pebble", () ->
+            new PebbleItem(KNAPPED_STONE.get(), new Item.Settings())
+    );
+    public static final RegistryObject<Item> KNAPPED_DEEPSLATE = DEF_REG.register("knapped_deepslate", () ->
             new Item(new Item.Settings())
     );
     public static final RegistryObject<Item> DEEPSLATE_PEBBLE = DEF_REG.register("deepslate_pebble", () ->
+            new PebbleItem(KNAPPED_DEEPSLATE.get(), new Item.Settings())
+    );
+    public static final RegistryObject<Item> KNAPPED_BLACKSTONE = DEF_REG.register("knapped_blackstone", () ->
             new Item(new Item.Settings())
     );
     public static final RegistryObject<Item> BLACKSTONE_PEBBLE = DEF_REG.register("blackstone_pebble", () ->
-            new Item(new Item.Settings())
+            new PebbleItem(KNAPPED_BLACKSTONE.get(), new Item.Settings())
     );
     public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
             new BrickItem(ProgressionModBlockRegistry.BRICK.get(), new Item.Settings())
@@ -105,7 +115,10 @@ public class ProgressionModItemRegistry {
             PLANT_FIBER,
             PEBBLE,
             DEEPSLATE_PEBBLE,
-            BLACKSTONE_PEBBLE
+            BLACKSTONE_PEBBLE,
+            KNAPPED_STONE,
+            KNAPPED_DEEPSLATE,
+            KNAPPED_BLACKSTONE
     );
 
     public static void addItemToCreativeTab(ItemGroup.Entries entries) {
