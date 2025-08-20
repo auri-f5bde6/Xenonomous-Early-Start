@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "progression_change:item/pebble"
+    "layer0": "progression_change:item/deepslate_pebble"
   }
 }
