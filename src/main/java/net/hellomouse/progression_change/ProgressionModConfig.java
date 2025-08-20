@@ -15,7 +15,7 @@ public class ProgressionModConfig {
         public int rawCopperNuggetDrop = 1;
         public int rawIronNuggetDrop = 1;
         public int rawGoldNuggetDrop = 1;
-        public int rawDiamondFragmentDrop = 1;
+        public int diamondFragmentDrop = 1;
     }
 
     public static class EarlyGameChanges {
@@ -92,8 +92,8 @@ public class ProgressionModConfig {
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.rawDiamondFragmentDrop, 1, 9)
-                            .setSaveConsumer(aInt -> oreDropChanges.rawDiamondFragmentDrop = aInt)
+                                    getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.diamondFragmentDrop, 1, 9)
+                            .setSaveConsumer(aInt -> oreDropChanges.diamondFragmentDrop = aInt)
                             .setDefaultValue(1)
                             .build());
         }
