@@ -1,8 +1,13 @@
 {
-  "format_version": "1.9.0",
+  "format_version": "1.21.6",
+  "credit": "Made with Blockbench",
+  "texture_size": [
+    32,
+    32
+  ],
   "textures": {
-    "0": "progression_change:block/raw_brick",
-    "particle": "progression_change:block/raw_brick"
+    "0": "progression_change:block/brick",
+    "particle": "progression_change:block/brick"
   },
   "elements": [
     {
@@ -28,55 +33,55 @@
       "faces": {
         "north": {
           "uv": [
-            8,
-            0,
-            12,
-            3
+            3.5,
+            3.5,
+            5.5,
+            5
           ],
           "texture": "#0"
         },
         "east": {
           "uv": [
             0,
-            7,
-            7,
-            10
+            3.5,
+            3.5,
+            5
           ],
           "texture": "#0"
         },
         "south": {
           "uv": [
-            8,
-            3,
-            12,
-            6
+            9,
+            3.5,
+            11,
+            5
           ],
           "texture": "#0"
         },
         "west": {
           "uv": [
-            7,
-            7,
-            14,
-            10
+            5.5,
+            3.5,
+            9,
+            5
           ],
           "texture": "#0"
         },
         "up": {
           "uv": [
-            4,
-            7,
-            0,
+            5.5,
+            3.5,
+            3.5,
             0
           ],
           "texture": "#0"
         },
         "down": {
           "uv": [
-            8,
+            7.5,
             0,
-            4,
-            7
+            5.5,
+            3.5
           ],
           "texture": "#0"
         }

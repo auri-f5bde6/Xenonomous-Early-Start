@@ -81,7 +81,7 @@ public class ProgressionModItemRegistry {
             new Item(new Item.Settings())
     );
     public static final RegistryObject<Item> BRICK = VANILLA_ITEMS.register("brick", () ->
-            new BrickItem(new Item.Settings())
+            new BrickItem(ProgressionModBlockRegistry.BRICK.get(), new Item.Settings())
     );
     public static final List<RegistryObject<Item>> CREATIVE_MOD_TAB = List.of(
             COPPER_SWORD,

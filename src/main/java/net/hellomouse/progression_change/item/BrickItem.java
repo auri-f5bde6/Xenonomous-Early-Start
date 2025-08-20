@@ -1,10 +1,11 @@
 package net.hellomouse.progression_change.item;
 
 import net.hellomouse.progression_change.entity.BrickEntity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
 import net.minecraft.stat.Stats;
@@ -13,9 +14,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class BrickItem extends Item implements Vanishable {
-    public BrickItem(Settings settings) {
-        super(settings);
+public class BrickItem extends BlockItem implements Vanishable {
+    public BrickItem(Block block, Settings settings) {
+        super(block, settings);
     }
 
     @Override

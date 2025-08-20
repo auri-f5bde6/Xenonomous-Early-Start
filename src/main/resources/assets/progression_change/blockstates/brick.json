@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=east,vertical=false": {
+      "model": "progression_change:block/brick",
+      "y": 270
+    },
+    "facing=north,vertical=false": {
+      "model": "progression_change:block/brick",
+      "y": 180
+    },
+    "facing=south,vertical=false": {
+      "model": "progression_change:block/brick",
+      "y": 180
+    },
+    "facing=west,vertical=false": {
+      "model": "progression_change:block/brick",
+      "y": 90
+    },
+    "facing=east,vertical=true": {
+      "model": "progression_change:block/brick_up",
+      "y": 270
+    },
+    "facing=north,vertical=true": {
+      "model": "progression_change:block/brick_up",
+      "y": 180
+    },
+    "facing=south,vertical=true": {
+      "model": "progression_change:block/brick_up",
+      "y": 180
+    },
+    "facing=west,vertical=true": {
+      "model": "progression_change:block/brick_up",
+      "y": 90
+    }
+  }
+}
