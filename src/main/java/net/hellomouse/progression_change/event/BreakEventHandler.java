@@ -81,7 +81,7 @@ public class BreakEventHandler {
             }
             // Turn deepslate into cobbled deepslate, modded stone can turn into cobblestone for now
             if (shouldReplaceDrop(toolStack, ProgressionModToolMaterials.COPPER)) {
-                var drop = level.getRandom().nextFloat() < (ProgressionModConfig.earlyGameChanges.shardDropProbability / 100f);
+                var drop = level.getRandom().nextFloat() < (ProgressionModConfig.earlyGameChanges.pebbleDropProbability / 100f);
                 if (state.isOf(Blocks.BLACKSTONE)) {
                     if (drop) {
                         replaceDrop(event, toolStack, level, player, state, pos, ProgressionModItemRegistry.BLACKSTONE_PEBBLE.get().getDefaultStack());

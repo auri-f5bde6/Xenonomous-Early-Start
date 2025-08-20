@@ -20,7 +20,7 @@ public class ProgressionModConfig {
 
     public static class EarlyGameChanges {
         public int plantFiberDropProbability = 5;
-        public int shardDropProbability = 40;
+        public int pebbleDropProbability = 40;
     }
 
     public static class Gui {
@@ -54,11 +54,11 @@ public class ProgressionModConfig {
             );
             category.addEntry(
                     entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("earlyGameChanges.PebbleDropProbability"),
-                                    earlyGameChanges.shardDropProbability,
+                                    getTranslatableTextOption("earlyGameChanges.pebbleDropProbability"),
+                                    earlyGameChanges.pebbleDropProbability,
                                     1,
                                     100
-                            ).setSaveConsumer(aInt -> earlyGameChanges.shardDropProbability = aInt)
+                            ).setSaveConsumer(aInt -> earlyGameChanges.pebbleDropProbability = aInt)
                             .setDefaultValue(40)
                             .build()
             );
