@@ -48,6 +48,16 @@ public class ProgressionMod {
                 List.of(new Identifier("stone")),
                 List.of(new Identifier("iron"))
         );
+        TierSortingRegistry.registerTier(ProgressionModToolMaterials.FLINT,
+                ProgressionModToolMaterials.FLINT_ID,
+                List.of(),
+                List.of(new Identifier("wood"))
+        );
+        TierSortingRegistry.registerTier(ProgressionModToolMaterials.BONE,
+                ProgressionModToolMaterials.BONE_ID,
+                List.of(),
+                List.of(new Identifier("wood"))
+        );
     }
 
 
