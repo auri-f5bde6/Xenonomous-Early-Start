@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "xeno_early_start:item/copper_nugget"
+  }
+}

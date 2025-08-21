@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 24,
+  "experience": 0.07,
+  "group": "copper_ingot",
+  "ingredient": {
+    "item": "xeno_early_start:raw_copper_nugget"
+  },
+  "result": "xeno_early_start:copper_nugget"
+}

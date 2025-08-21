@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "diamond",
+  "ingredients": [
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    }
+  ],
+  "result": {
+    "item": "xeno_early_start:flint_hatchet"
+  },
+  "show_notification": true
+}

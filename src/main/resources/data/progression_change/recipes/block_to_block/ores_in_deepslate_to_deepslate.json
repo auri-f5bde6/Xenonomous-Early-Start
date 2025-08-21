@@ -1,8 +1,0 @@
-{
-  "type": "progression_change:block_to_block",
-  "mined_block": "#forge:ores_in_ground/deepslate",
-  "resulting_block": "minecraft:deepslate",
-  "any_tier": true,
-  "ore_to_stone": true,
-  "drop_block_loot_table": true
-}

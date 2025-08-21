@@ -30,7 +30,7 @@
               "type": "minecraft:item",
               "functions": [
                 {
-                  "function": "progression_change:config",
+                  "function": "xeno_early_start:config",
                   "drop_type": "diamond"
                 },
                 {
@@ -42,10 +42,10 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "progression_change:diamond_fragment",
+              "name": "xeno_early_start:diamond_fragment",
               "conditions": [
                 {
-                  "condition": "progression_change:pickaxe_tier",
+                  "condition": "xeno_early_start:pickaxe_tier",
                   "below_tier": "minecraft:netherite"
                 }
               ]

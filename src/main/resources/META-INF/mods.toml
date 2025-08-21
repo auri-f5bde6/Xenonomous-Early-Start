@@ -4,23 +4,23 @@ loaderVersion = "[47,)"
 license = "Insert License Here"
 
 [[mods]]
-modId = "progression_change"
+modId = "xeno_early_start"
 version = "${version}"
-displayName = "Progression Change"
+displayName = "Xenonomous' Early Start"
 authors = "Me!"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+An overhaul of the early game progression, It also brings copper equipment to 1.20.1 (that actually look good) which fits nicely!
 '''
 #logoFile = ""
 
-[[dependencies.progression_change]]
+[[dependencies.xeno_early_start]]
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.progression_change]]
+[[dependencies.xeno_early_start]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1,)"

@@ -7,7 +7,7 @@
       "item": "minecraft:stick"
     },
     "X": {
-      "tag": "progression_change:knapped_stone"
+      "tag": "xeno_early_start:knapped_stone"
     }
   },
   "pattern": [
