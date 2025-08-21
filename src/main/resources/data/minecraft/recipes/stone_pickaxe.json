@@ -1,0 +1,22 @@
+{
+  "override": true,
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "tag": "progression_change:knapped_stone"
+    }
+  },
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "item": "minecraft:stone_pickaxe"
+  },
+  "show_notification": true
+}

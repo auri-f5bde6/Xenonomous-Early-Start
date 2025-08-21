@@ -1,4 +1,6 @@
 {
+  "tag.item.progression_change.shards": "Shards",
+  "tag.item.progression_change.knapped_stone": "Knapped Stone",
   "block.progression_change.brick": "Brick",
   "block.progression_change.brick_furnace": "Brick Furnace",
   "block.progression_change.raw_brick": "Raw Brick",

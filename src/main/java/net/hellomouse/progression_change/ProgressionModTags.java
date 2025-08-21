@@ -18,7 +18,7 @@ public class ProgressionModTags {
 
     public static class Items {
         public static final TagKey<Item> SHARDS = createTag("shards");
-
+        public static final TagKey<Item> KNAPPED_STONE = createTag("knapped_stone");
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ProgressionMod.of(name));
         }

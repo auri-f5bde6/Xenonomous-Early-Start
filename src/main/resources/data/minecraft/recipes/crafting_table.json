@@ -1,4 +1,5 @@
 {
+  "override": true,
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
