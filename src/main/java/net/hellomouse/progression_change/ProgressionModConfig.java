@@ -11,15 +11,18 @@ public class ProgressionModConfig {
     public static EarlyGameChanges earlyGameChanges = new EarlyGameChanges();
 
     public static class OreDropChanges {
-        public boolean moddedPickaxeWorkaround = false; // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
+        public boolean moddedPickaxeWorkaround = true; // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
         public int rawCopperNuggetDrop = 1;
         public int rawIronNuggetDrop = 1;
         public int rawGoldNuggetDrop = 1;
-        public int rawDiamondFragmentDrop = 1;
+        public int diamondFragmentDrop = 1;
+        public boolean oreToStone = false;
     }
 
     public static class EarlyGameChanges {
+        public boolean overridePlantFiberProbability = false;
         public int plantFiberDropProbability = 5;
+        public boolean overridePebbleDropProbability = false;
         public int pebbleDropProbability = 40;
     }
 
@@ -43,6 +46,14 @@ public class ProgressionModConfig {
         private static void addEarlyGameEntries(ConfigBuilder configBuilder, ConfigEntryBuilder entryBuilder) {
             ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"));
             category.addEntry(
+                    entryBuilder.startBooleanToggle(
+                                    getTranslatableTextOption("earlyGameChanges.overridePlantFiberDropProbability"),
+                                    earlyGameChanges.overridePlantFiberProbability
+                            ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePlantFiberProbability = aBoolean)
+                            .setDefaultValue(false)
+                            .build()
+            );
+            category.addEntry(
                     entryBuilder.startIntSlider(
                                     getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
                                     earlyGameChanges.plantFiberDropProbability,
@@ -50,6 +61,14 @@ public class ProgressionModConfig {
                                     100
                             ).setSaveConsumer(aInt -> earlyGameChanges.plantFiberDropProbability = aInt)
                             .setDefaultValue(5)
+                            .build()
+            );
+            category.addEntry(
+                    entryBuilder.startBooleanToggle(
+                                    getTranslatableTextOption("earlyGameChanges.overridePebbleDropProbability"),
+                                    earlyGameChanges.overridePebbleDropProbability
+                            ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePebbleDropProbability = aBoolean)
+                            .setDefaultValue(false)
                             .build()
             );
             category.addEntry(
@@ -70,7 +89,8 @@ public class ProgressionModConfig {
                     entryBuilder.startBooleanToggle(
                                     getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"), oreDropChanges.moddedPickaxeWorkaround)
                             .setSaveConsumer(aBoolean -> oreDropChanges.moddedPickaxeWorkaround = aBoolean)
-                            .setDefaultValue(false)
+                            .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
+                            .setDefaultValue(true)
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
@@ -92,9 +112,16 @@ public class ProgressionModConfig {
                             .build());
             category.addEntry(
                     entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.rawDiamondFragmentDrop, 1, 9)
-                            .setSaveConsumer(aInt -> oreDropChanges.rawDiamondFragmentDrop = aInt)
+                                    getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.diamondFragmentDrop, 1, 9)
+                            .setSaveConsumer(aInt -> oreDropChanges.diamondFragmentDrop = aInt)
                             .setDefaultValue(1)
+                            .build());
+            category.addEntry(
+                    entryBuilder.startBooleanToggle(
+                                    getTranslatableTextOption("oreDropChanges.oreToStone"), oreDropChanges.oreToStone)
+                            .setSaveConsumer(aBoolean -> oreDropChanges.oreToStone = aBoolean)
+                            .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
+                            .setDefaultValue(false)
                             .build());
         }
     }

@@ -42,6 +42,10 @@ public class ProgressionMod {
         ProgressionModEntityRegistry.DEF_REG.register(modEventBus);
         ProgressionModScreenHandlerRegistry.DEF_REG.register(modEventBus);
         ProgressionModBlockEntityRegistry.DEF_REG.register(modEventBus);
+        ProgressionModLootTypeRegistry.FUNC_DEF_REG.register(modEventBus);
+        ProgressionModLootTypeRegistry.COND_DEF_REG.register(modEventBus);
+        ProgressionModRecipeRegistry.DEF_REG.register(modEventBus);
+        ProgressionModRecipeRegistry.TYPE_DEF_REG.register(modEventBus);
         CREATIVE_TAB_REG.register(modEventBus);
         TierSortingRegistry.registerTier(ProgressionModToolMaterials.COPPER,
                 ProgressionModToolMaterials.COPPER_ID,

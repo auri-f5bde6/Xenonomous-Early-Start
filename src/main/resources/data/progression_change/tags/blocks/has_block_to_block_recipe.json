@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:stone",
+    "minecraft:deepslate",
+    "minecraft:blackstone",
+    "#forge:ores_in_ground/deepslate",
+    "#forge:ores_in_ground/stone",
+    "#minecraft:replaceable_by_trees"
+  ]
+}
