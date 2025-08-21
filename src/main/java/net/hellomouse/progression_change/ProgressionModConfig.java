@@ -47,7 +47,7 @@ public class ProgressionModConfig {
             ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"));
             category.addEntry(
                     entryBuilder.startBooleanToggle(
-                                    getTranslatableTextOption("earlyGameChanges.overridePlantFiberProbability"),
+                                    getTranslatableTextOption("earlyGameChanges.overridePlantFiberDropProbability"),
                                     earlyGameChanges.overridePlantFiberProbability
                             ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePlantFiberProbability = aBoolean)
                             .setDefaultValue(false)
