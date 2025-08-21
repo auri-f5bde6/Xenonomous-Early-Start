@@ -32,6 +32,8 @@
   "item.progression_change.raw_iron_nugget": "Raw Iron Nugget",
   "itemGroup.progression_change.creative_tab": "Progression Change",
   "text.config.progression_change.option.earlyGameChanges": "Early Game",
+  "text.config.progression_change.option.earlyGameChanges.overridePebbleDropProbability": "Override Pebble Drop Probability",
+  "text.config.progression_change.option.earlyGameChanges.overridePlantFiberDropProbability": "Override Plant Fiber Drop Probability",
   "text.config.progression_change.option.earlyGameChanges.pebbleDropProbability": "Pebble Drop Probability (%)",
   "text.config.progression_change.option.earlyGameChanges.plantFiberDropProbability": "Plant Fiber Drop Probability (%)",
   "text.config.progression_change.option.oreDropChanges": "Ore Drop Changes",
