@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import net.hellomouse.progression_change.ProgressionModConfig;
 import net.hellomouse.progression_change.registries.ProgressionModRecipeRegistry;
+import net.hellomouse.progression_change.utils.MiningLevel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.SimpleInventory;
@@ -76,11 +77,16 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
                 return true;
             }
         }
-        if (minedBlockIsTag) {
-            TagKey<Block> tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock);
-            return state.isIn(tag);
+
+        if ((this.isAnyTier() || MiningLevel.IsToolLowerThanTier(itemStack, this.getMiningTierLowerThan())) && (!this.isOreToStone() || (this.isOreToStone() && ProgressionModConfig.oreDropChanges.oreToStone))) {
+            if (minedBlockIsTag) {
+                TagKey<Block> tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock);
+                return state.isIn(tag);
+            } else {
+                return state.isOf(ForgeRegistries.BLOCKS.getValue(minedBlock));
+            }
         } else {
-            return state.isOf(ForgeRegistries.BLOCKS.getValue(minedBlock));
+            return false;
         }
     }
 
@@ -240,7 +246,7 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
                 dropBlockLootTable = obj.getAsBoolean();
             }
             var isOreToStone = false;
-            if (json.get("is_ore_to_stone") instanceof JsonPrimitive obj) {
+            if (json.get("ore_to_stone") instanceof JsonPrimitive obj) {
                 isOreToStone = obj.getAsBoolean();
             }
             var anyTier = false;

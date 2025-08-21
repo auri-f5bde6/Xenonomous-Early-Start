@@ -5,7 +5,6 @@
   "held_item_match_any": [
     "#progression_change:shards"
   ],
-  "any_tier": true,
   "dropped_items": [
     {
       "item": "progression_change:plant_fiber",
