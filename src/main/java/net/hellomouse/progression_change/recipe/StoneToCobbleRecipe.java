@@ -33,12 +33,14 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
     boolean minedBlockIsTag;
     Identifier resultingBlock;
     ArrayList<DroppedItem> droppedItems;
+    ArrayList<Identifier> matchHeldItems;
+    ArrayList<Boolean> matchHeldItemsIsTag;
     boolean isOreToStone;
     boolean anyTier;
     Identifier miningTierLowerThan;
     boolean dropBlockLootTable;
 
-    public StoneToCobbleRecipe(Identifier id, Identifier minedBlock, Identifier resultingBlock, ArrayList<DroppedItem> droppedItemList, Identifier miningTierLowerThan, boolean dropBlockLootTable, boolean isOreToStone, boolean minedBlockIsTag, boolean anyTier) {
+    public StoneToCobbleRecipe(Identifier id, Identifier minedBlock, Identifier resultingBlock, ArrayList<DroppedItem> droppedItemList, Identifier miningTierLowerThan, boolean dropBlockLootTable, boolean isOreToStone, boolean minedBlockIsTag, boolean anyTier, ArrayList<Identifier> matchHeldItems, ArrayList<Boolean> matchHeldItemsIsTag) {
         this.id = id;
         this.minedBlock = minedBlock;
         this.resultingBlock = resultingBlock;
@@ -48,6 +50,8 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
         this.isOreToStone = isOreToStone;
         this.minedBlockIsTag = minedBlockIsTag;
         this.anyTier = anyTier;
+        this.matchHeldItems = matchHeldItems;
+        this.matchHeldItemsIsTag = matchHeldItemsIsTag;
     }
 
     public boolean isAnyTier() {
@@ -66,7 +70,12 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
         return isOreToStone;
     }
 
-    public boolean matches(@NotNull BlockState state) {
+    public boolean matches(@NotNull BlockState state, ItemStack itemStack) {
+        for (int i = 0; i < matchHeldItems.size(); i++) {
+            if ((matchHeldItemsIsTag.get(i) && matchHeldItems.get(i) == (ForgeRegistries.ITEMS.getKey(itemStack.getItem()))) || (!matchHeldItemsIsTag.get(i) && itemStack.isIn(TagKey.of(ForgeRegistries.ITEMS.getRegistryKey(), matchHeldItems.get(i))))) {
+                return true;
+            }
+        }
         if (minedBlockIsTag) {
             TagKey<Block> tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock);
             return state.isIn(tag);
@@ -79,7 +88,9 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
         for (var i : droppedItems) {
             var probability = i.getProbability();
             if (ProgressionModConfig.earlyGameChanges.overridePebbleDropProbability && i.isPebble()) {
-                probability = ProgressionModConfig.earlyGameChanges.pebbleDropProbability;
+                probability = ProgressionModConfig.earlyGameChanges.pebbleDropProbability / 100f;
+            } else if (ProgressionModConfig.earlyGameChanges.overridePlantFiberProbability && i.isPlantFiber()) {
+                probability = ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f;
             }
             if (level.random.nextFloat() < probability) {
                 Block.dropStack(level, pos, i.getItem().getDefaultStack());
@@ -133,19 +144,23 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
         boolean affectedByFortune;
         boolean pebble;
 
-        public DroppedItem(Identifier item, float probability, boolean affectedByFortune, boolean pebble) {
+        boolean plantFiber;
+
+        public DroppedItem(Identifier item, float probability, boolean affectedByFortune, boolean pebble, boolean plantFiber) {
             this.item = item;
             this.probability = probability;
             this.affectedByFortune = affectedByFortune;
             this.pebble = pebble;
+            this.plantFiber = plantFiber;
         }
 
-        public static @Nullable DroppedItem read(PacketByteBuf buf) {
+        public static @NotNull DroppedItem read(PacketByteBuf buf) {
             var item = buf.readIdentifier();
             var probability = buf.readFloat();
             var affectedByFortune = buf.readBoolean();
             var pebble = buf.readBoolean();
-            return new DroppedItem(item, probability, affectedByFortune, pebble);
+            var plantFiber = buf.readBoolean();
+            return new DroppedItem(item, probability, affectedByFortune, pebble, plantFiber);
         }
 
         public static DroppedItem from_json(JsonObject obj) {
@@ -162,7 +177,15 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
             if (obj.get("pebble") instanceof JsonPrimitive a) {
                 pebble = a.getAsBoolean();
             }
-            return new DroppedItem(item, probability, affectedByFortune, pebble);
+            var plant_fiber = false;
+            if (obj.get("plant_fiber") instanceof JsonPrimitive a) {
+                plant_fiber = a.getAsBoolean();
+            }
+            return new DroppedItem(item, probability, affectedByFortune, pebble, plant_fiber);
+        }
+
+        public boolean isPlantFiber() {
+            return plantFiber;
         }
 
         public Item getItem() {
@@ -186,6 +209,7 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
             buf.writeFloat(this.probability);
             buf.writeBoolean(this.affectedByFortune);
             buf.writeBoolean(this.pebble);
+            buf.writeBoolean(this.plantFiber);
         }
     }
 
@@ -223,7 +247,22 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
             if (json.get("any_tier") instanceof JsonPrimitive obj) {
                 anyTier = obj.getAsBoolean();
             }
-            return new StoneToCobbleRecipe(id, minedBlock, resultingBlock, droppedItems, miningTierLowerThan, dropBlockLootTable, isOreToStone, minedBlockIsTag, anyTier);
+            var matchHeldItems = new ArrayList<Identifier>();
+            var matchHeldItemsIsTag = new ArrayList<Boolean>();
+            if (json.get("held_item_match_any") instanceof JsonArray obj) {
+                for (var i : obj.getAsJsonArray()) {
+                    var val = i.getAsString();
+                    if (val.charAt(0) == '#') {
+                        matchHeldItems.add(Identifier.parse(val.substring(1)));
+                        matchHeldItemsIsTag.add(true);
+                    } else {
+                        matchHeldItems.add(Identifier.parse(val));
+                        matchHeldItemsIsTag.add(false);
+                    }
+
+                }
+            }
+            return new StoneToCobbleRecipe(id, minedBlock, resultingBlock, droppedItems, miningTierLowerThan, dropBlockLootTable, isOreToStone, minedBlockIsTag, anyTier, matchHeldItems, matchHeldItemsIsTag);
         }
 
         @Override
@@ -240,7 +279,14 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
             boolean isOreToStone = buf.readBoolean();
             boolean minedBlockIsTag = buf.readBoolean();
             boolean anyTier = buf.readBoolean();
-            return new StoneToCobbleRecipe(id, minedBlock, resultingBlock, droppedItems, miningTierLowerThan, dropBlockLootTable, isOreToStone, minedBlockIsTag, anyTier);
+            var matchHeldItemSize = buf.readInt();
+            var matchHeldItem = new ArrayList<Identifier>();
+            var matchHeldItemIsTag = new ArrayList<Boolean>();
+            for (int i = 0; i < matchHeldItemSize; i++) {
+                matchHeldItem.add(buf.readIdentifier());
+                matchHeldItemIsTag.add(buf.readBoolean());
+            }
+            return new StoneToCobbleRecipe(id, minedBlock, resultingBlock, droppedItems, miningTierLowerThan, dropBlockLootTable, isOreToStone, minedBlockIsTag, anyTier, matchHeldItem, matchHeldItemIsTag);
         }
 
         @Override
@@ -256,6 +302,11 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
             buf.writeBoolean(recipe.isOreToStone);
             buf.writeBoolean(recipe.minedBlockIsTag);
             buf.writeBoolean(recipe.anyTier);
+            buf.writeInt(recipe.matchHeldItems.size());
+            for (var i = 0; i < recipe.matchHeldItemsIsTag.size(); i++) {
+                buf.writeIdentifier(recipe.matchHeldItems.get(i));
+                buf.writeBoolean(recipe.matchHeldItemsIsTag.get(i));
+            }
         }
     }
 }

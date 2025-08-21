@@ -20,6 +20,7 @@ public class ProgressionModConfig {
     }
 
     public static class EarlyGameChanges {
+        public boolean overridePlantFiberProbability = false;
         public int plantFiberDropProbability = 5;
         public boolean overridePebbleDropProbability = false;
         public int pebbleDropProbability = 40;
@@ -44,6 +45,14 @@ public class ProgressionModConfig {
 
         private static void addEarlyGameEntries(ConfigBuilder configBuilder, ConfigEntryBuilder entryBuilder) {
             ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"));
+            category.addEntry(
+                    entryBuilder.startBooleanToggle(
+                                    getTranslatableTextOption("earlyGameChanges.overridePlantFiberProbability"),
+                                    earlyGameChanges.overridePlantFiberProbability
+                            ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePlantFiberProbability = aBoolean)
+                            .setDefaultValue(false)
+                            .build()
+            );
             category.addEntry(
                     entryBuilder.startIntSlider(
                                     getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
