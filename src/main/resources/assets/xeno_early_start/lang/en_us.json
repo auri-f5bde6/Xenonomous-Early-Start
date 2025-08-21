@@ -32,7 +32,7 @@
   "item.xeno_early_start.raw_copper_nugget": "Raw Copper Nugget",
   "item.xeno_early_start.raw_gold_nugget": "Raw Gold Nugget",
   "item.xeno_early_start.raw_iron_nugget": "Raw Iron Nugget",
-  "itemGroup.xeno_early_start.creative_tab": "Progression Change",
+  "itemGroup.xeno_early_start.creative_tab": "Xenonomous' Early Start",
   "text.config.xeno_early_start.option.earlyGameChanges": "Early Game",
   "text.config.xeno_early_start.option.earlyGameChanges.overridePebbleDropProbability": "Override Pebble Drop Probability",
   "text.config.xeno_early_start.option.earlyGameChanges.overridePlantFiberDropProbability": "Override Plant Fiber Drop Probability",
