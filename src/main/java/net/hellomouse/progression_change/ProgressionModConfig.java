@@ -21,6 +21,7 @@ public class ProgressionModConfig {
 
     public static class EarlyGameChanges {
         public int plantFiberDropProbability = 5;
+        public boolean overridePebbleDropProbability = false;
         public int pebbleDropProbability = 40;
     }
 
@@ -51,6 +52,14 @@ public class ProgressionModConfig {
                                     100
                             ).setSaveConsumer(aInt -> earlyGameChanges.plantFiberDropProbability = aInt)
                             .setDefaultValue(5)
+                            .build()
+            );
+            category.addEntry(
+                    entryBuilder.startBooleanToggle(
+                                    getTranslatableTextOption("earlyGameChanges.overridePebbleDropProbability"),
+                                    earlyGameChanges.overridePebbleDropProbability
+                            ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePebbleDropProbability = aBoolean)
+                            .setDefaultValue(false)
                             .build()
             );
             category.addEntry(

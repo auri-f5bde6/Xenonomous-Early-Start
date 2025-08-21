@@ -1,5 +1,6 @@
 package net.hellomouse.progression_change.utils;
 
+import net.hellomouse.progression_change.ProgressionMod;
 import net.hellomouse.progression_change.ProgressionModConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
@@ -19,5 +20,15 @@ public class MiningLevel {
             }
         }
         return false;
+    }
+
+    public static String getTierName(ToolMaterial material) {
+        var name = TierSortingRegistry.getName(material);
+        if (name == null) {
+            ProgressionMod.LOGGER.warn("Pickaxe Tier {} is missing from tierSortingRegistry! (pickaxe_tier's below_tier will fallback to minecraft:wood)", material);
+            return "minecraft:wood";
+        } else {
+            return name.toString();
+        }
     }
 }

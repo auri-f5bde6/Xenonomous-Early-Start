@@ -18,6 +18,8 @@ import net.minecraftforge.common.TierSortingRegistry;
 
 import javax.annotation.Nullable;
 
+import static net.hellomouse.progression_change.utils.MiningLevel.getTierName;
+
 public class PickaxeTier implements LootCondition {
     ToolMaterial lowerThanTier;
 
@@ -41,15 +43,6 @@ public class PickaxeTier implements LootCondition {
         return from_identifier(id);
     }
 
-    private static String getTierName(ToolMaterial material) {
-        var name = TierSortingRegistry.getName(material);
-        if (name == null) {
-            ProgressionMod.LOGGER.warn("Pickaxe Tier " + material + " is missing from tierSortingRegistry! (pickaxe_tier's below_tier will fallback to minecraft:wood)");
-            return "minecraft:wood";
-        } else {
-            return name.toString();
-        }
-    }
 
     @Override
     public LootConditionType getType() {

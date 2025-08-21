@@ -1,0 +1,14 @@
+{
+  "type": "progression_change:block_to_block",
+  "mined_block": "minecraft:blackstone",
+  "resulting_block": "minecraft:air",
+  "mining_tier_lower_than": "progression_change:copper",
+  "dropped_items": [
+    {
+      "item": "progression_change:blackstone_pebble",
+      "probability": "0.4",
+      "affected_by_fortune": true,
+      "pebble": true
+    }
+  ]
+}
