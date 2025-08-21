@@ -1,0 +1,14 @@
+{
+  "type": "xeno_early_start:block_to_block",
+  "mined_block": "minecraft:deepslate",
+  "resulting_block": "minecraft:deepslate_cobblestone",
+  "mining_tier_lower_than": "xeno_early_start:copper",
+  "dropped_items": [
+    {
+      "item": "xeno_early_start:deepslate_pebble",
+      "probability": "0.3",
+      "affected_by_fortune": true,
+      "pebble": true
+    }
+  ]
+}

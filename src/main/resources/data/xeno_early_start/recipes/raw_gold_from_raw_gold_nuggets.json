@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "gold_ingot",
+  "key": {
+    "#": {
+      "item": "xeno_early_start:raw_gold_nugget"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "item": "minecraft:raw_gold"
+  },
+  "show_notification": true
+}

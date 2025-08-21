@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "diamond",
+  "ingredients": [
+    {
+      "item": "xeno_early_start:diamond_fragment"
+    },
+    {
+      "item": "xeno_early_start:diamond_fragment"
+    },
+    {
+      "item": "xeno_early_start:diamond_fragment"
+    },
+    {
+      "item": "xeno_early_start:diamond_fragment"
+    },
+    {
+      "item": "xeno_early_start:diamond_fragment"
+    }
+  ],
+  "result": {
+    "item": "minecraft:diamond"
+  },
+  "show_notification": true
+}

@@ -1,8 +1,0 @@
-{
-  "type": "progression_change:block_to_block",
-  "mined_block": "#forge:ores_in_ground/stone",
-  "resulting_block": "minecraft:stone",
-  "any_tier": true,
-  "ore_to_stone": true,
-  "drop_block_loot_table": true
-}

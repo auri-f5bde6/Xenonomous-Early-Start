@@ -28,16 +28,16 @@
             },
             {
               "type": "minecraft:item",
-              "name": "progression_change:raw_gold_nugget",
+              "name": "xeno_early_start:raw_gold_nugget",
               "conditions": [
                 {
-                  "condition": "progression_change:pickaxe_tier",
+                  "condition": "xeno_early_start:pickaxe_tier",
                   "below_tier": "minecraft:diamond"
                 }
               ],
               "functions": [
                 {
-                  "function": "progression_change:config",
+                  "function": "xeno_early_start:config",
                   "drop_type": "gold"
                 }
               ]

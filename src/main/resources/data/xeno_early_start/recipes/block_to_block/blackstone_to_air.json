@@ -1,0 +1,14 @@
+{
+  "type": "xeno_early_start:block_to_block",
+  "mined_block": "minecraft:blackstone",
+  "resulting_block": "minecraft:air",
+  "mining_tier_lower_than": "xeno_early_start:copper",
+  "dropped_items": [
+    {
+      "item": "xeno_early_start:blackstone_pebble",
+      "probability": "0.4",
+      "affected_by_fortune": true,
+      "pebble": true
+    }
+  ]
+}
