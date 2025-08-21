@@ -8,7 +8,7 @@
   "dropped_items": [
     {
       "item": "xeno_early_start:plant_fiber",
-      "probability": 0.05,
+      "probability": 0.15,
       "plant_fiber": true
     }
   ]
