@@ -21,13 +21,13 @@ public class ProgressionModBlockRegistry {
     public static final DeferredRegister<Block> DEF_REG = DeferredRegister.create(ForgeRegistries.BLOCKS, ProgressionMod.MODID);
     public static final RegistryObject<Block> RAW_BRICK = DEF_REG.register("raw_brick", () -> new RawBrickBlock(
             AbstractBlock.Settings.create()
-                    .strength(0.8F, 0.5F)
+                    .strength(0.3F, 0.5F)
                     .sounds(BlockSoundGroup.SLIME)
                     .ticksRandomly()
     ));
     public static final RegistryObject<Block> BRICK = DEF_REG.register("brick", () -> new BrickBlock(
             AbstractBlock.Settings.create()
-                    .strength(1.0F, 0.5F)
+                    .strength(0.6F, 0.5F)
                     .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)
                     .ticksRandomly()
     ));
