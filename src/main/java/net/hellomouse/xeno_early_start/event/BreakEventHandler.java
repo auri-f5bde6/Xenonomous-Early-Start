@@ -1,10 +1,8 @@
 package net.hellomouse.xeno_early_start.event;
 
 import net.hellomouse.xeno_early_start.ProgressionMod;
-import net.hellomouse.xeno_early_start.ProgressionModConfig;
 import net.hellomouse.xeno_early_start.ProgressionModTags;
 import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry;
-import net.hellomouse.xeno_early_start.utils.MiningLevel;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +38,7 @@ public class BreakEventHandler {
             if (state.isIn(ProgressionModTags.Blocks.HAS_BLOCK_TO_BLOCK_RECIPE)) {
                 var recipes = ((World) level).getRecipeManager().listAllOfType(ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get());
                 for (var recipe : recipes) {
-                    if (recipe.matches(state, toolStack) && (recipe.isAnyTier() || MiningLevel.IsToolLowerThanTier(toolStack, recipe.getMiningTierLowerThan())) && (!recipe.isOreToStone() || (recipe.isOreToStone() && ProgressionModConfig.oreDropChanges.oreToStone))) {
+                    if (recipe.matches(state, toolStack)) {
                         breakBlock(toolStack, level, player, state, pos, recipe.isDropBlockLootTable());
                         recipe.maybeDropItemsInList((World) level, pos);
                         ((World) level).setBlockState(pos, recipe.getResultingBlock().getDefaultState());

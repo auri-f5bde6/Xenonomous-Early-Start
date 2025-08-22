@@ -73,7 +73,7 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
 
     public boolean matches(@NotNull BlockState state, ItemStack itemStack) {
         for (int i = 0; i < matchHeldItems.size(); i++) {
-            if ((matchHeldItemsIsTag.get(i) && matchHeldItems.get(i) == (ForgeRegistries.ITEMS.getKey(itemStack.getItem()))) || (!matchHeldItemsIsTag.get(i) && itemStack.isIn(TagKey.of(ForgeRegistries.ITEMS.getRegistryKey(), matchHeldItems.get(i))))) {
+            if ((!matchHeldItemsIsTag.get(i) && matchHeldItems.get(i) == (ForgeRegistries.ITEMS.getKey(itemStack.getItem()))) || (matchHeldItemsIsTag.get(i) && itemStack.isIn(TagKey.of(ForgeRegistries.ITEMS.getRegistryKey(), matchHeldItems.get(i))))) {
                 return true;
             }
         }
