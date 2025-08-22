@@ -9,6 +9,12 @@
       "probability": "0.4",
       "affected_by_fortune": true,
       "pebble": true
+    },
+    {
+      "item": "xeno_early_start:pebble",
+      "probability": "0.4",
+      "affected_by_fortune": true,
+      "pebble": true
     }
   ]
 }
