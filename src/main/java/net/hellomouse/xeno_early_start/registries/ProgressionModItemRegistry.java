@@ -42,6 +42,9 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> COPPER_BOOTS = DEF_REG.register("copper_boots", () ->
             new ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.BOOTS, new Item.Settings())
     );
+    public static final RegistryObject<Item> FLINT_HATCHET = DEF_REG.register("flint_hatchet", () ->
+            new AxeItem(ProgressionModToolMaterials.FLINT, 6.0f, -3.2f, new Item.Settings())
+    );
     public static final RegistryObject<Item> FLINT_PICKAXE = DEF_REG.register("flint_pickaxe", () ->
             new PickaxeItem(ProgressionModToolMaterials.FLINT, 1, -2.8f, new Item.Settings())
     );
@@ -66,9 +69,7 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> RAW_BRICK = DEF_REG.register("raw_brick", () ->
             new BlockItem(ProgressionModBlockRegistry.RAW_BRICK.get(), new Item.Settings())
     );
-    public static final RegistryObject<Item> FLINT_HATCHET = DEF_REG.register("flint_hatchet", () ->
-            new AxeItem(ProgressionModToolMaterials.FLINT, 6.0f, -3.2f, new Item.Settings())
-    );
+
     public static final RegistryObject<Item> PLANT_FIBER = DEF_REG.register("plant_fiber", () ->
             new Item(new Item.Settings())
     );

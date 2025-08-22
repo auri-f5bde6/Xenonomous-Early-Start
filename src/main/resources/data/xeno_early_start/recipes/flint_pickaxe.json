@@ -9,11 +9,14 @@
       "item": "minecraft:stick"
     },
     {
+      "item": "minecraft:flint"
+    },
+    {
       "item": "xeno_early_start:plant_fiber"
     }
   ],
   "result": {
-    "item": "xeno_early_start:flint_hatchet"
+    "item": "xeno_early_start:flint_pickaxe"
   },
   "show_notification": true
 }
