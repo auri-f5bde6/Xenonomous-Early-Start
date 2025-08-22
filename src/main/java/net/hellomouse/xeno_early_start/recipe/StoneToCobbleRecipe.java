@@ -77,7 +77,9 @@ public class StoneToCobbleRecipe implements Recipe<SimpleInventory> {
                 return true;
             }
         }
-
+        if (!matchHeldItems.isEmpty()) {
+            return false;
+        }
         if ((this.isAnyTier() || MiningLevel.IsToolLowerThanTier(itemStack, this.getMiningTierLowerThan())) && (!this.isOreToStone() || (this.isOreToStone() && ProgressionModConfig.oreDropChanges.oreToStone))) {
             if (minedBlockIsTag) {
                 TagKey<Block> tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock);
