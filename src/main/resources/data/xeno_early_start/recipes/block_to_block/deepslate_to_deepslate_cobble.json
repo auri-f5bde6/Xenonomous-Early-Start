@@ -1,7 +1,7 @@
 {
   "type": "xeno_early_start:block_to_block",
   "mined_block": "minecraft:deepslate",
-  "resulting_block": "minecraft:deepslate_cobblestone",
+  "resulting_block": "minecraft:cobbled_deepslate",
   "mining_tier_lower_than": "xeno_early_start:copper",
   "dropped_items": [
     {
