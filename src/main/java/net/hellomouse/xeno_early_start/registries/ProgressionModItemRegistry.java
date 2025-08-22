@@ -48,8 +48,14 @@ public class ProgressionModItemRegistry {
     public static final RegistryObject<Item> FLINT_PICKAXE = DEF_REG.register("flint_pickaxe", () ->
             new PickaxeItem(ProgressionModToolMaterials.FLINT, 1, -2.8f, new Item.Settings())
     );
+    public static final RegistryObject<Item> FLINT_DAGGER = DEF_REG.register("flint_dagger", () ->
+            new SwordItem(ProgressionModToolMaterials.FLINT, 3, -2.4f, new Item.Settings())
+    );
     public static final RegistryObject<Item> BONE_PICKAXE = DEF_REG.register("bone_pickaxe", () ->
             new PickaxeItem(ProgressionModToolMaterials.BONE, 1, -2.8f, new Item.Settings())
+    );
+    public static final RegistryObject<Item> BONE_DAGGER = DEF_REG.register("bone_dagger", () ->
+            new SwordItem(ProgressionModToolMaterials.FLINT, 3, -2.4f, new Item.Settings())
     );
     public static final RegistryObject<Item> COPPER_NUGGET = DEF_REG.register("copper_nugget", () ->
             new Item(new Item.Settings())
