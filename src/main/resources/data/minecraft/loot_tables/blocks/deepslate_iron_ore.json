@@ -5,18 +5,18 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "minecraft:air",
-          "conditions": [
-            {
-              "condition": "xeno_early_start:pickaxe_tier",
-              "below_tier": "xeno_early_start:copper"
-            }
-          ]
-        },
-        {
           "type": "minecraft:alternatives",
           "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:air",
+              "conditions": [
+                {
+                  "condition": "xeno_early_start:pickaxe_tier",
+                  "below_tier": "xeno_early_start:copper"
+                }
+              ]
+            },
             {
               "type": "minecraft:item",
               "conditions": [
