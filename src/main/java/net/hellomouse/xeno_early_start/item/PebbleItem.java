@@ -3,6 +3,8 @@ package net.hellomouse.xeno_early_start.item;
 import net.hellomouse.xeno_early_start.ProgressionMod;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraftforge.common.Tags;
 
@@ -27,6 +29,7 @@ public class PebbleItem extends Item {
                 mainhandStack.decrement(1);
                 offhandStack.decrement(1);
                 player.giveItemStack(result.getDefaultStack());
+                world.playSound(player, blockPos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.PLAYERS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
                 return ActionResult.SUCCESS;
             } else {
                 return ActionResult.PASS;
