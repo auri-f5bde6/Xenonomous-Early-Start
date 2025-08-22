@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:cobblestone"
+    },
+    "B": {
+      "item": "xeno_early_start:brick_furnace"
+    },
+    "F": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "###",
+    "#B#",
+    "FFF"
+  ],
+  "result": {
+    "item": "minecraft:furnace"
+  },
+  "show_notification": true
+}
