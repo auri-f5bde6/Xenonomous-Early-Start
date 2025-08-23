@@ -9,6 +9,7 @@ public class ProgressionModConfig {
 
     public static OreDropChanges oreDropChanges = new OreDropChanges();
     public static EarlyGameChanges earlyGameChanges = new EarlyGameChanges();
+    public static MobChanges mobChanges = new MobChanges();
 
     public static class OreDropChanges {
         public boolean moddedPickaxeWorkaround = true; // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
@@ -26,6 +27,12 @@ public class ProgressionModConfig {
         public int pebbleDropProbability = 40;
     }
 
+    public static class MobChanges {
+        public float flatAdditiveMobSpawnWithEquipment = 0.05F;
+        public float replaceEntityCopperArmourProbability = 0.05f;
+        public float entitySpawnWithCopperToolProbability = 0.05f;
+    }
+
     public static class Gui {
         private static Text getTranslatableText(String name) {
             return Text.translatable("text.config." + ProgressionMod.MODID + "." + name);
@@ -40,6 +47,7 @@ public class ProgressionModConfig {
             ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
             addOreDropChangesEntries(builder, entryBuilder);
             addEarlyGameEntries(builder, entryBuilder);
+            addMobChangesEntries(builder, entryBuilder);
             return builder; // heh, rewriting the entire config just for this
         }
 
@@ -79,6 +87,42 @@ public class ProgressionModConfig {
                                     100
                             ).setSaveConsumer(aInt -> earlyGameChanges.pebbleDropProbability = aInt)
                             .setDefaultValue(40)
+                            .build()
+            );
+        }
+
+        private static void addMobChangesEntries(ConfigBuilder configBuilder, ConfigEntryBuilder entryBuilder) {
+            ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("mobChanges"));
+            category.addEntry(
+                    entryBuilder.startIntSlider(
+                                    getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment"),
+                                    (int) (mobChanges.flatAdditiveMobSpawnWithEquipment * 100f),
+                                    1,
+                                    100
+                            ).setSaveConsumer(aInt -> mobChanges.flatAdditiveMobSpawnWithEquipment = (aInt / 100f))
+                            .setTooltip(getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment.tooltip"))
+                            .setDefaultValue(5)
+                            .build()
+            );
+            category.addEntry(
+                    entryBuilder.startIntSlider(
+                                    getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability"),
+                                    (int) (mobChanges.replaceEntityCopperArmourProbability * 100f),
+                                    1,
+                                    100
+                            ).setSaveConsumer(aInt -> mobChanges.replaceEntityCopperArmourProbability = (aInt / 100f))
+                            .setTooltip(getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability.tooltip"))
+                            .setDefaultValue(5)
+                            .build()
+            );
+            category.addEntry(
+                    entryBuilder.startIntSlider(
+                                    getTranslatableTextOption("mobChanges.entitySpawnWithCopperToolProbability"),
+                                    (int) (mobChanges.entitySpawnWithCopperToolProbability * 100f),
+                                    1,
+                                    100
+                            ).setSaveConsumer(aInt -> mobChanges.entitySpawnWithCopperToolProbability = (aInt / 100f))
+                            .setDefaultValue(5)
                             .build()
             );
         }
