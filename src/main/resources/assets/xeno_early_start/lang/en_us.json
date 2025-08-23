@@ -49,5 +49,11 @@
   "text.config.xeno_early_start.option.oreDropChanges.rawDiamondFragmentDrop": "Raw Diamond Fragment Drop(s)",
   "text.config.xeno_early_start.option.oreDropChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreDropChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
+  "text.config.xeno_early_start.option.mobChanges": "Mob Changes",
+  "text.config.xeno_early_start.option.mobChanges.flatAdditiveMobSpawnWithEquipment": "Probability Of Mob Spawning With Equipment",
+  "text.config.xeno_early_start.option.mobChanges.flatAdditiveMobSpawnWithEquipment.tooltip": "A flat, additive increase to the probability a mob is spawned with equipment. (There is a small chance they won't be spawned with any even at 100%)",
+  "text.config.xeno_early_start.option.mobChanges.replaceEntityCopperArmourProbability": "Probability Of Copper Armour Replacing Vanilla Armour On Spawned Mob",
+  "text.config.xeno_early_start.option.mobChanges.replaceEntityCopperArmourProbability.tooltip": "Probability only applies to mob already spawning with equipment.",
+  "text.config.xeno_early_start.option.mobChanges.entitySpawnWithCopperToolProbability": "Probability Of Mob Spawning With Copper Tool",
   "text.config.xeno_early_start.title": "Progression Change"
 }
