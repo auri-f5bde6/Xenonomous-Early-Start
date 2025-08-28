@@ -17,13 +17,14 @@ object MiningLevel {
             if (TierSortingRegistry.isTierSorted(toolMaterial)) {
                 return TierSortingRegistry.getTiersLowerThan(lowerThanTier).contains(toolMaterial)
             } else {
+                @Suppress("DEPRECATION") // It's a workaround for mod that doesn't use tier sorting
                 return toolMaterial.miningLevel < lowerThanTier.miningLevel && ProgressionModConfig.oreDropChanges.moddedPickaxeWorkaround
             }
         }
         return false
     }
 
-    fun getTierName(material: ToolMaterial?): String? {
+    fun getTierName(material: ToolMaterial?): String {
         val name = TierSortingRegistry.getName(material)
         if (name == null) {
             ProgressionMod.Companion.LOGGER.warn(

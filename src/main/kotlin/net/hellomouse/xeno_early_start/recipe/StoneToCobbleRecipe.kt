@@ -86,7 +86,7 @@ class StoneToCobbleRecipe(
                 probability = ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f
             }
             if (level.random.nextFloat() < probability) {
-                Block.dropStack(level, pos, i.getItem().defaultStack)
+                Block.dropStack(level, pos, i.item.defaultStack)
             }
         }
     }
@@ -129,10 +129,6 @@ class StoneToCobbleRecipe(
         var isPebble: Boolean,
         var isPlantFiber: Boolean
     ) {
-        fun getItem(): Item {
-            return item
-        }
-
         fun write(buf: PacketByteBuf) {
             buf.writeIdentifier(ForgeRegistries.ITEMS.getKey(item))
             buf.writeFloat(this.probability)

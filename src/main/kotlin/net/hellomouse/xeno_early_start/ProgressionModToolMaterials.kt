@@ -7,12 +7,23 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 
 object ProgressionModToolMaterials {
+    @JvmField
     val FLINT: ToolMaterial = Material(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT))
+
+    @JvmField
     val BONE: ToolMaterial = Material(MiningLevels.WOOD, 32, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT))
+
+    @JvmField
     val COPPER: ToolMaterial = Material(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT))
-    val FLINT_ID: Identifier? = ProgressionMod.Companion.of("flint")
-    val BONE_ID: Identifier? = ProgressionMod.Companion.of("bone")
-    val COPPER_ID: Identifier? = ProgressionMod.Companion.of("copper")
+
+    @JvmField
+    val FLINT_ID: Identifier = ProgressionMod.Companion.of("flint")
+
+    @JvmField
+    val BONE_ID: Identifier = ProgressionMod.Companion.of("bone")
+
+    @JvmField
+    val COPPER_ID: Identifier = ProgressionMod.Companion.of("copper")
 
     @JvmRecord
     private data class Material(
@@ -31,6 +42,7 @@ object ProgressionModToolMaterials {
             return this.attackDamage
         }
 
+        @Deprecated("Deprecated in Java")
         override fun getMiningLevel(): Int {
             return this.miningLevel
         }

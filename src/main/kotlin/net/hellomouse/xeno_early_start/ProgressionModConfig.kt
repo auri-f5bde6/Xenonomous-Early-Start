@@ -3,7 +3,6 @@ package net.hellomouse.xeno_early_start
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder
 import net.minecraft.text.Text
-import java.util.function.Consumer
 
 object ProgressionModConfig {
     @JvmField
@@ -40,11 +39,11 @@ object ProgressionModConfig {
 
     object Gui {
         private fun getTranslatableText(name: String?): Text {
-            return Text.translatable("text.config." + ProgressionMod.Companion.MODID + "." + name)
+            return Text.translatable("text.config.${ProgressionMod.Companion.MODID}.$name")
         }
 
         private fun getTranslatableTextOption(name: String?): Text {
-            return getTranslatableText("option." + name)
+            return getTranslatableText("option.$name")
         }
 
         val configBuilder: ConfigBuilder
@@ -65,9 +64,9 @@ object ProgressionModConfig {
                 entryBuilder.startBooleanToggle(
                     getTranslatableTextOption("earlyGameChanges.overridePlantFiberDropProbability"),
                     earlyGameChanges.overridePlantFiberProbability
-                ).setSaveConsumer(Consumer { aBoolean: Boolean? ->
-                    earlyGameChanges.overridePlantFiberProbability = aBoolean!!
-                })
+                ).setSaveConsumer { aBoolean: Boolean ->
+                    earlyGameChanges.overridePlantFiberProbability = aBoolean
+                }
                     .setDefaultValue(false)
                     .build()
             )
@@ -77,7 +76,7 @@ object ProgressionModConfig {
                     earlyGameChanges.plantFiberDropProbability,
                     1,
                     100
-                ).setSaveConsumer(Consumer { aInt: Int? -> earlyGameChanges.plantFiberDropProbability = aInt!! })
+                ).setSaveConsumer { aInt: Int -> earlyGameChanges.plantFiberDropProbability = aInt }
                     .setDefaultValue(5)
                     .build()
             )
@@ -85,9 +84,9 @@ object ProgressionModConfig {
                 entryBuilder.startBooleanToggle(
                     getTranslatableTextOption("earlyGameChanges.overridePebbleDropProbability"),
                     earlyGameChanges.overridePebbleDropProbability
-                ).setSaveConsumer(Consumer { aBoolean: Boolean? ->
-                    earlyGameChanges.overridePebbleDropProbability = aBoolean!!
-                })
+                ).setSaveConsumer { aBoolean: Boolean ->
+                    earlyGameChanges.overridePebbleDropProbability = aBoolean
+                }
                     .setDefaultValue(false)
                     .build()
             )
@@ -97,7 +96,7 @@ object ProgressionModConfig {
                     earlyGameChanges.pebbleDropProbability,
                     1,
                     100
-                ).setSaveConsumer(Consumer { aInt: Int? -> earlyGameChanges.pebbleDropProbability = aInt!! })
+                ).setSaveConsumer { aInt: Int -> earlyGameChanges.pebbleDropProbability = aInt }
                     .setDefaultValue(40)
                     .build()
             )
@@ -111,9 +110,9 @@ object ProgressionModConfig {
                     (mobChanges.flatAdditiveMobSpawnWithEquipment * 100f).toInt(),
                     1,
                     100
-                ).setSaveConsumer(Consumer { aInt: Int? ->
-                    mobChanges.flatAdditiveMobSpawnWithEquipment = (aInt!! / 100f)
-                })
+                ).setSaveConsumer { aInt: Int ->
+                    mobChanges.flatAdditiveMobSpawnWithEquipment = (aInt / 100f)
+                }
                     .setTooltip(getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment.tooltip"))
                     .setDefaultValue(5)
                     .build()
@@ -124,9 +123,9 @@ object ProgressionModConfig {
                     (mobChanges.replaceEntityCopperArmourProbability * 100f).toInt(),
                     1,
                     100
-                ).setSaveConsumer(Consumer { aInt: Int? ->
-                    mobChanges.replaceEntityCopperArmourProbability = (aInt!! / 100f)
-                })
+                ).setSaveConsumer { aInt: Int ->
+                    mobChanges.replaceEntityCopperArmourProbability = (aInt / 100f)
+                }
                     .setTooltip(getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability.tooltip"))
                     .setDefaultValue(5)
                     .build()
@@ -137,9 +136,9 @@ object ProgressionModConfig {
                     (mobChanges.entitySpawnWithCopperToolProbability * 100f).toInt(),
                     1,
                     100
-                ).setSaveConsumer(Consumer { aInt: Int? ->
-                    mobChanges.entitySpawnWithCopperToolProbability = (aInt!! / 100f)
-                })
+                ).setSaveConsumer { aInt: Int ->
+                    mobChanges.entitySpawnWithCopperToolProbability = (aInt / 100f)
+                }
                     .setDefaultValue(5)
                     .build()
             )
@@ -152,9 +151,9 @@ object ProgressionModConfig {
                     getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"),
                     oreDropChanges.moddedPickaxeWorkaround
                 )
-                    .setSaveConsumer(Consumer { aBoolean: Boolean? ->
-                        oreDropChanges.moddedPickaxeWorkaround = aBoolean!!
-                    })
+                    .setSaveConsumer { aBoolean: Boolean ->
+                        oreDropChanges.moddedPickaxeWorkaround = aBoolean
+                    }
                     .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
                     .setDefaultValue(true)
                     .build()
@@ -166,7 +165,7 @@ object ProgressionModConfig {
                     1,
                     9
                 )
-                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.rawCopperNuggetDrop = aInt!! })
+                    .setSaveConsumer { aInt: Int -> oreDropChanges.rawCopperNuggetDrop = aInt }
                     .setDefaultValue(1)
                     .build()
             )
@@ -177,7 +176,7 @@ object ProgressionModConfig {
                     1,
                     9
                 )
-                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.rawIronNuggetDrop = aInt!! })
+                    .setSaveConsumer { aInt: Int -> oreDropChanges.rawIronNuggetDrop = aInt }
                     .setDefaultValue(1)
                     .build()
             )
@@ -188,7 +187,7 @@ object ProgressionModConfig {
                     1,
                     9
                 )
-                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.rawGoldNuggetDrop = aInt!! })
+                    .setSaveConsumer { aInt: Int -> oreDropChanges.rawGoldNuggetDrop = aInt }
                     .setDefaultValue(1)
                     .build()
             )
@@ -199,7 +198,7 @@ object ProgressionModConfig {
                     1,
                     9
                 )
-                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.diamondFragmentDrop = aInt!! })
+                    .setSaveConsumer { aInt: Int -> oreDropChanges.diamondFragmentDrop = aInt }
                     .setDefaultValue(1)
                     .build()
             )
@@ -207,7 +206,7 @@ object ProgressionModConfig {
                 entryBuilder.startBooleanToggle(
                     getTranslatableTextOption("oreDropChanges.oreToStone"), oreDropChanges.oreToStone
                 )
-                    .setSaveConsumer(Consumer { aBoolean: Boolean? -> oreDropChanges.oreToStone = aBoolean!! })
+                    .setSaveConsumer { aBoolean: Boolean -> oreDropChanges.oreToStone = aBoolean }
                     .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
                     .setDefaultValue(false)
                     .build()

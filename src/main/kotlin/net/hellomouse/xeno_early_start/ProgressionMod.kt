@@ -35,20 +35,20 @@ class ProgressionMod {
         TierSortingRegistry.registerTier(
             ProgressionModToolMaterials.COPPER,
             ProgressionModToolMaterials.COPPER_ID,
-            listOf<Any?>(Identifier("stone")),
-            listOf<Any?>(Identifier("iron"))
+            listOf<Any?>(ofMinecraft("stone")),
+            listOf<Any?>(ofMinecraft("iron"))
         )
         TierSortingRegistry.registerTier(
             ProgressionModToolMaterials.FLINT,
             ProgressionModToolMaterials.FLINT_ID,
             mutableListOf<Any?>(),
-            listOf<Any?>(Identifier("wood"))
+            listOf<Any?>(ofMinecraft("wood"))
         )
         TierSortingRegistry.registerTier(
             ProgressionModToolMaterials.BONE,
             ProgressionModToolMaterials.BONE_ID,
             mutableListOf<Any?>(),
-            listOf<Any?>(Identifier("wood"))
+            listOf<Any?>(ofMinecraft("wood"))
         )
     }
 
@@ -56,12 +56,14 @@ class ProgressionMod {
     companion object {
         const val MODID: String = "xeno_early_start"
         val LOGGER: Logger = LogUtils.getLogger()
-        val CREATIVE_TAB_REG: DeferredRegister<ItemGroup?> =
-            DeferredRegister.create<ItemGroup?>(RegistryKeys.ITEM_GROUP, MODID)
-        val CREATIVE_TAB: RegistryObject<ItemGroup?>? = CREATIVE_TAB_REG.register<ItemGroup?>(MODID, Supplier {
+        val CREATIVE_TAB_REG: DeferredRegister<ItemGroup> =
+            DeferredRegister.create<ItemGroup>(RegistryKeys.ITEM_GROUP, MODID)
+
+        @Suppress("UNUSED")
+        val CREATIVE_TAB: RegistryObject<ItemGroup> = CREATIVE_TAB_REG.register<ItemGroup>(MODID, Supplier {
             ItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.$MODID.creative_tab"))
-                .icon(Supplier { ItemStack(ProgressionModItemRegistry.COPPER_PICKAXE.get()) })
+                .icon { ItemStack(ProgressionModItemRegistry.COPPER_PICKAXE.get()) }
                 .withTabsBefore(ItemGroups.SPAWN_EGGS)
                 .entries { enabledFeatures: ItemGroup.DisplayContext?, output: ItemGroup.Entries ->
                     ProgressionModItemRegistry.addItemToCreativeTab(output)
@@ -71,6 +73,10 @@ class ProgressionMod {
 
         fun of(path: String): Identifier {
             return Identifier.of(MODID, path) ?: throw IllegalArgumentException("$MODID:$path is not valid")
+        }
+
+        fun ofMinecraft(path: String): Identifier {
+            return Identifier.of("minecraft", path) ?: throw IllegalArgumentException("$MODID:$path is not valid")
         }
     }
 }
