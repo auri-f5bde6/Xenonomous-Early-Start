@@ -1,69 +1,66 @@
-package net.hellomouse.xeno_early_start.item;
+package net.hellomouse.xeno_early_start.item
 
-import net.hellomouse.xeno_early_start.entity.BrickEntity;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Vanishable;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
-import net.minecraft.world.World;
+import net.hellomouse.xeno_early_start.entity.BrickEntity
+import net.minecraft.block.Block
+import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.BlockItem
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Vanishable
+import net.minecraft.stat.Stats
+import net.minecraft.util.Hand
+import net.minecraft.util.TypedActionResult
+import net.minecraft.util.UseAction
+import net.minecraft.world.World
+import java.util.function.Consumer
 
-public class BrickItem extends BlockItem implements Vanishable {
-    public BrickItem(Block block, Settings settings) {
-        super(block, settings);
+class BrickItem(block: Block?, settings: Settings) : BlockItem(block, settings), Vanishable {
+    override fun getMaxUseTime(stack: ItemStack?): Int {
+        return 72000
     }
 
-    public static float getPullProgress(int useTicks) {
-        float f = useTicks / 20.0F;
-        f = (f * f + f * 2.0F) / 3.0F;
-        if (f > 1.0F) {
-            f = 1.0F;
-        }
-
-        return f;
+    override fun getUseAction(stack: ItemStack?): UseAction {
+        return UseAction.BOW
     }
 
-    @Override
-    public int getMaxUseTime(ItemStack stack) {
-        return 72000;
+    override fun use(world: World?, user: PlayerEntity, hand: Hand?): TypedActionResult<ItemStack?> {
+        val itemStack = user.getStackInHand(hand)
+        user.setCurrentHand(hand)
+        return TypedActionResult.consume<ItemStack?>(itemStack)
     }
 
-    @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BOW;
+    override fun postHit(stack: ItemStack, target: LivingEntity?, attacker: LivingEntity): Boolean {
+        stack.damage<LivingEntity?>(
+            1,
+            attacker,
+            Consumer { e: LivingEntity? -> e!!.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) })
+        return true
     }
 
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        user.setCurrentHand(hand);
-        return TypedActionResult.consume(itemStack);
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damage(1, attacker, e -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
-        return true;
-    }
-
-    @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        int i = this.getMaxUseTime(stack) - remainingUseTicks;
-        var progress = getPullProgress(i);
-        if (user instanceof PlayerEntity playerEntity) {
-            BrickEntity brickEntity = new BrickEntity(world, playerEntity, new ItemStack(stack.getItem()));
-            brickEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F * progress, 1.0F);
-            world.spawnEntity(brickEntity);
-            if (!playerEntity.getAbilities().creativeMode) {
-                stack.decrement(1);
+    override fun onStoppedUsing(stack: ItemStack, world: World, user: LivingEntity?, remainingUseTicks: Int) {
+        val i = this.getMaxUseTime(stack) - remainingUseTicks
+        val progress: Float = getPullProgress(i)
+        if (user is PlayerEntity) {
+            val brickEntity = BrickEntity(world, user, ItemStack(stack.item))
+            brickEntity.setVelocity(user, user.pitch, user.yaw, 0.0f, 2.5f * progress, 1.0f)
+            world.spawnEntity(brickEntity)
+            if (!user.abilities.creativeMode) {
+                stack.decrement(1)
             }
-            playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
+            user.incrementStat(Stats.USED.getOrCreateStat(this))
+        }
+    }
+
+    companion object {
+        fun getPullProgress(useTicks: Int): Float {
+            var f = useTicks / 20.0f
+            f = (f * f + f * 2.0f) / 3.0f
+            if (f > 1.0f) {
+                f = 1.0f
+            }
+
+            return f
         }
     }
 }

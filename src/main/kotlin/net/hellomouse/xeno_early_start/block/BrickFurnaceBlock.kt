@@ -1,43 +1,36 @@
-package net.hellomouse.xeno_early_start.block;
+package net.hellomouse.xeno_early_start.block
 
-import net.hellomouse.xeno_early_start.block.block_entity.BrickFurnaceBlockEntity;
-import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FurnaceBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.hellomouse.xeno_early_start.block.block_entity.BrickFurnaceBlockEntity
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
+import net.minecraft.block.BlockState
+import net.minecraft.block.FurnaceBlock
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.screen.NamedScreenHandlerFactory
+import net.minecraft.stat.Stats
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 
-import javax.annotation.Nullable;
-
-public class BrickFurnaceBlock extends FurnaceBlock {
-
-    public BrickFurnaceBlock(Settings arg) {
-        super(arg);
+class BrickFurnaceBlock(arg: Settings) : FurnaceBlock(arg) {
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
+        return BrickFurnaceBlockEntity(pos, state)
     }
 
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new BrickFurnaceBlockEntity(pos, state);
-    }
-
-    @Override
-    protected void openScreen(World world, BlockPos pos, PlayerEntity player) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof BrickFurnaceBlockEntity) {
-            player.openHandledScreen((NamedScreenHandlerFactory) blockEntity);
-            player.incrementStat(Stats.INTERACT_WITH_FURNACE);
+    override fun openScreen(world: World, pos: BlockPos, player: PlayerEntity) {
+        val blockEntity = world.getBlockEntity(pos)
+        if (blockEntity is BrickFurnaceBlockEntity) {
+            player.openHandledScreen(blockEntity as NamedScreenHandlerFactory)
+            player.incrementStat(Stats.INTERACT_WITH_FURNACE)
         }
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(world, type, ProgressionModBlockEntityRegistry.BRICK_FURNACE.get());
+    override fun <T : BlockEntity?> getTicker(
+        world: World,
+        state: BlockState?,
+        type: BlockEntityType<T?>?
+    ): BlockEntityTicker<T?>? {
+        return checkType<T?>(world, type, ProgressionModBlockEntityRegistry.BRICK_FURNACE!!.get())
     }
 }

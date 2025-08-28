@@ -1,172 +1,217 @@
-package net.hellomouse.xeno_early_start;
+package net.hellomouse.xeno_early_start
 
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.minecraft.text.Text;
+import me.shedaniel.clothconfig2.api.ConfigBuilder
+import me.shedaniel.clothconfig2.api.ConfigEntryBuilder
+import net.minecraft.text.Text
+import java.util.function.Consumer
 
-public class ProgressionModConfig {
+object ProgressionModConfig {
+    @JvmField
+    var oreDropChanges: OreDropChanges = OreDropChanges()
 
-    public static OreDropChanges oreDropChanges = new OreDropChanges();
-    public static EarlyGameChanges earlyGameChanges = new EarlyGameChanges();
-    public static MobChanges mobChanges = new MobChanges();
+    @JvmField
+    var earlyGameChanges: EarlyGameChanges = EarlyGameChanges()
 
-    public static class OreDropChanges {
-        public boolean moddedPickaxeWorkaround = true; // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
-        public int rawCopperNuggetDrop = 1;
-        public int rawIronNuggetDrop = 1;
-        public int rawGoldNuggetDrop = 1;
-        public int diamondFragmentDrop = 1;
-        public boolean oreToStone = false;
+    @JvmField
+    var mobChanges: MobChanges = MobChanges()
+
+    class OreDropChanges {
+        var moddedPickaxeWorkaround: Boolean =
+            true // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
+        var rawCopperNuggetDrop: Int = 1
+        var rawIronNuggetDrop: Int = 1
+        var rawGoldNuggetDrop: Int = 1
+        var diamondFragmentDrop: Int = 1
+        var oreToStone: Boolean = false
     }
 
-    public static class EarlyGameChanges {
-        public boolean overridePlantFiberProbability = false;
-        public int plantFiberDropProbability = 5;
-        public boolean overridePebbleDropProbability = false;
-        public int pebbleDropProbability = 40;
+    class EarlyGameChanges {
+        var overridePlantFiberProbability: Boolean = false
+        var plantFiberDropProbability: Int = 5
+        var overridePebbleDropProbability: Boolean = false
+        var pebbleDropProbability: Int = 40
     }
 
-    public static class MobChanges {
-        public float flatAdditiveMobSpawnWithEquipment = 0.05F;
-        public float replaceEntityCopperArmourProbability = 0.05f;
-        public float entitySpawnWithCopperToolProbability = 0.05f;
+    class MobChanges {
+        var flatAdditiveMobSpawnWithEquipment: Float = 0.05f
+        var replaceEntityCopperArmourProbability: Float = 0.05f
+        var entitySpawnWithCopperToolProbability: Float = 0.05f
     }
 
-    public static class Gui {
-        private static Text getTranslatableText(String name) {
-            return Text.translatable("text.config." + ProgressionMod.MODID + "." + name);
+    object Gui {
+        private fun getTranslatableText(name: String?): Text {
+            return Text.translatable("text.config." + ProgressionMod.Companion.MODID + "." + name)
         }
 
-        private static Text getTranslatableTextOption(String name) {
-            return getTranslatableText("option." + name);
+        private fun getTranslatableTextOption(name: String?): Text {
+            return getTranslatableText("option." + name)
         }
 
-        public static ConfigBuilder getConfigBuilder() {
-            ConfigBuilder builder = ConfigBuilder.create().setTitle(getTranslatableText("title")).transparentBackground();
-            ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
-            addOreDropChangesEntries(builder, entryBuilder);
-            addEarlyGameEntries(builder, entryBuilder);
-            addMobChangesEntries(builder, entryBuilder);
-            return builder; // heh, rewriting the entire config just for this
+        val configBuilder: ConfigBuilder
+            get() {
+                val builder = ConfigBuilder.create()
+                    .setTitle(getTranslatableText("title"))
+                    .transparentBackground()
+                val entryBuilder = ConfigEntryBuilder.create()
+                addOreDropChangesEntries(builder, entryBuilder)
+                addEarlyGameEntries(builder, entryBuilder)
+                addMobChangesEntries(builder, entryBuilder)
+                return builder // heh, rewriting the entire config just for this
+            }
+
+        private fun addEarlyGameEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
+            val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"))
+            category.addEntry(
+                entryBuilder.startBooleanToggle(
+                    getTranslatableTextOption("earlyGameChanges.overridePlantFiberDropProbability"),
+                    earlyGameChanges.overridePlantFiberProbability
+                ).setSaveConsumer(Consumer { aBoolean: Boolean? ->
+                    earlyGameChanges.overridePlantFiberProbability = aBoolean!!
+                })
+                    .setDefaultValue(false)
+                    .build()
+            )
+            category.addEntry(
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
+                    earlyGameChanges.plantFiberDropProbability,
+                    1,
+                    100
+                ).setSaveConsumer(Consumer { aInt: Int? -> earlyGameChanges.plantFiberDropProbability = aInt!! })
+                    .setDefaultValue(5)
+                    .build()
+            )
+            category.addEntry(
+                entryBuilder.startBooleanToggle(
+                    getTranslatableTextOption("earlyGameChanges.overridePebbleDropProbability"),
+                    earlyGameChanges.overridePebbleDropProbability
+                ).setSaveConsumer(Consumer { aBoolean: Boolean? ->
+                    earlyGameChanges.overridePebbleDropProbability = aBoolean!!
+                })
+                    .setDefaultValue(false)
+                    .build()
+            )
+            category.addEntry(
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("earlyGameChanges.pebbleDropProbability"),
+                    earlyGameChanges.pebbleDropProbability,
+                    1,
+                    100
+                ).setSaveConsumer(Consumer { aInt: Int? -> earlyGameChanges.pebbleDropProbability = aInt!! })
+                    .setDefaultValue(40)
+                    .build()
+            )
         }
 
-        private static void addEarlyGameEntries(ConfigBuilder configBuilder, ConfigEntryBuilder entryBuilder) {
-            ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"));
+        private fun addMobChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
+            val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("mobChanges"))
             category.addEntry(
-                    entryBuilder.startBooleanToggle(
-                                    getTranslatableTextOption("earlyGameChanges.overridePlantFiberDropProbability"),
-                                    earlyGameChanges.overridePlantFiberProbability
-                            ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePlantFiberProbability = aBoolean)
-                            .setDefaultValue(false)
-                            .build()
-            );
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment"),
+                    (mobChanges.flatAdditiveMobSpawnWithEquipment * 100f).toInt(),
+                    1,
+                    100
+                ).setSaveConsumer(Consumer { aInt: Int? ->
+                    mobChanges.flatAdditiveMobSpawnWithEquipment = (aInt!! / 100f)
+                })
+                    .setTooltip(getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment.tooltip"))
+                    .setDefaultValue(5)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
-                                    earlyGameChanges.plantFiberDropProbability,
-                                    1,
-                                    100
-                            ).setSaveConsumer(aInt -> earlyGameChanges.plantFiberDropProbability = aInt)
-                            .setDefaultValue(5)
-                            .build()
-            );
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability"),
+                    (mobChanges.replaceEntityCopperArmourProbability * 100f).toInt(),
+                    1,
+                    100
+                ).setSaveConsumer(Consumer { aInt: Int? ->
+                    mobChanges.replaceEntityCopperArmourProbability = (aInt!! / 100f)
+                })
+                    .setTooltip(getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability.tooltip"))
+                    .setDefaultValue(5)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startBooleanToggle(
-                                    getTranslatableTextOption("earlyGameChanges.overridePebbleDropProbability"),
-                                    earlyGameChanges.overridePebbleDropProbability
-                            ).setSaveConsumer(aBoolean -> earlyGameChanges.overridePebbleDropProbability = aBoolean)
-                            .setDefaultValue(false)
-                            .build()
-            );
-            category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("earlyGameChanges.pebbleDropProbability"),
-                                    earlyGameChanges.pebbleDropProbability,
-                                    1,
-                                    100
-                            ).setSaveConsumer(aInt -> earlyGameChanges.pebbleDropProbability = aInt)
-                            .setDefaultValue(40)
-                            .build()
-            );
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("mobChanges.entitySpawnWithCopperToolProbability"),
+                    (mobChanges.entitySpawnWithCopperToolProbability * 100f).toInt(),
+                    1,
+                    100
+                ).setSaveConsumer(Consumer { aInt: Int? ->
+                    mobChanges.entitySpawnWithCopperToolProbability = (aInt!! / 100f)
+                })
+                    .setDefaultValue(5)
+                    .build()
+            )
         }
 
-        private static void addMobChangesEntries(ConfigBuilder configBuilder, ConfigEntryBuilder entryBuilder) {
-            ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("mobChanges"));
+        private fun addOreDropChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
+            val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("oreDropChanges"))
             category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment"),
-                                    (int) (mobChanges.flatAdditiveMobSpawnWithEquipment * 100f),
-                                    1,
-                                    100
-                            ).setSaveConsumer(aInt -> mobChanges.flatAdditiveMobSpawnWithEquipment = (aInt / 100f))
-                            .setTooltip(getTranslatableTextOption("mobChanges.flatAdditiveMobSpawnWithEquipment.tooltip"))
-                            .setDefaultValue(5)
-                            .build()
-            );
+                entryBuilder.startBooleanToggle(
+                    getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"),
+                    oreDropChanges.moddedPickaxeWorkaround
+                )
+                    .setSaveConsumer(Consumer { aBoolean: Boolean? ->
+                        oreDropChanges.moddedPickaxeWorkaround = aBoolean!!
+                    })
+                    .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
+                    .setDefaultValue(true)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability"),
-                                    (int) (mobChanges.replaceEntityCopperArmourProbability * 100f),
-                                    1,
-                                    100
-                            ).setSaveConsumer(aInt -> mobChanges.replaceEntityCopperArmourProbability = (aInt / 100f))
-                            .setTooltip(getTranslatableTextOption("mobChanges.replaceEntityCopperArmourProbability.tooltip"))
-                            .setDefaultValue(5)
-                            .build()
-            );
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("oreDropChanges.rawCopperNuggetDrop"),
+                    oreDropChanges.rawCopperNuggetDrop,
+                    1,
+                    9
+                )
+                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.rawCopperNuggetDrop = aInt!! })
+                    .setDefaultValue(1)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("mobChanges.entitySpawnWithCopperToolProbability"),
-                                    (int) (mobChanges.entitySpawnWithCopperToolProbability * 100f),
-                                    1,
-                                    100
-                            ).setSaveConsumer(aInt -> mobChanges.entitySpawnWithCopperToolProbability = (aInt / 100f))
-                            .setDefaultValue(5)
-                            .build()
-            );
-        }
-
-        private static void addOreDropChangesEntries(ConfigBuilder configBuilder, ConfigEntryBuilder entryBuilder) {
-            ConfigCategory category = configBuilder.getOrCreateCategory(getTranslatableTextOption("oreDropChanges"));
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("oreDropChanges.rawIronNuggetDrop"),
+                    oreDropChanges.rawIronNuggetDrop,
+                    1,
+                    9
+                )
+                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.rawIronNuggetDrop = aInt!! })
+                    .setDefaultValue(1)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startBooleanToggle(
-                                    getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"), oreDropChanges.moddedPickaxeWorkaround)
-                            .setSaveConsumer(aBoolean -> oreDropChanges.moddedPickaxeWorkaround = aBoolean)
-                            .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
-                            .setDefaultValue(true)
-                            .build());
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("oreDropChanges.rawGoldNuggetDrop"),
+                    oreDropChanges.rawGoldNuggetDrop,
+                    1,
+                    9
+                )
+                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.rawGoldNuggetDrop = aInt!! })
+                    .setDefaultValue(1)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("oreDropChanges.rawCopperNuggetDrop"), oreDropChanges.rawCopperNuggetDrop, 1, 9)
-                            .setSaveConsumer(aInt -> oreDropChanges.rawCopperNuggetDrop = aInt)
-                            .setDefaultValue(1)
-                            .build());
+                entryBuilder.startIntSlider(
+                    getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"),
+                    oreDropChanges.diamondFragmentDrop,
+                    1,
+                    9
+                )
+                    .setSaveConsumer(Consumer { aInt: Int? -> oreDropChanges.diamondFragmentDrop = aInt!! })
+                    .setDefaultValue(1)
+                    .build()
+            )
             category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("oreDropChanges.rawIronNuggetDrop"), oreDropChanges.rawIronNuggetDrop, 1, 9)
-                            .setSaveConsumer(aInt -> oreDropChanges.rawIronNuggetDrop = aInt)
-                            .setDefaultValue(1)
-                            .build());
-            category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("oreDropChanges.rawGoldNuggetDrop"), oreDropChanges.rawGoldNuggetDrop, 1, 9)
-                            .setSaveConsumer(aInt -> oreDropChanges.rawGoldNuggetDrop = aInt)
-                            .setDefaultValue(1)
-                            .build());
-            category.addEntry(
-                    entryBuilder.startIntSlider(
-                                    getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"), oreDropChanges.diamondFragmentDrop, 1, 9)
-                            .setSaveConsumer(aInt -> oreDropChanges.diamondFragmentDrop = aInt)
-                            .setDefaultValue(1)
-                            .build());
-            category.addEntry(
-                    entryBuilder.startBooleanToggle(
-                                    getTranslatableTextOption("oreDropChanges.oreToStone"), oreDropChanges.oreToStone)
-                            .setSaveConsumer(aBoolean -> oreDropChanges.oreToStone = aBoolean)
-                            .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
-                            .setDefaultValue(false)
-                            .build());
+                entryBuilder.startBooleanToggle(
+                    getTranslatableTextOption("oreDropChanges.oreToStone"), oreDropChanges.oreToStone
+                )
+                    .setSaveConsumer(Consumer { aBoolean: Boolean? -> oreDropChanges.oreToStone = aBoolean!! })
+                    .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
+                    .setDefaultValue(false)
+                    .build()
+            )
         }
     }
 }

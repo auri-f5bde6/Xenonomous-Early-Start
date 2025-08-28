@@ -1,51 +1,46 @@
-package net.hellomouse.xeno_early_start;
+package net.hellomouse.xeno_early_start
 
-import net.fabricmc.yarn.constants.MiningLevels;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.Identifier;
+import net.fabricmc.yarn.constants.MiningLevels
+import net.minecraft.item.Items
+import net.minecraft.item.ToolMaterial
+import net.minecraft.recipe.Ingredient
+import net.minecraft.util.Identifier
 
-public class ProgressionModToolMaterials {
+object ProgressionModToolMaterials {
+    val FLINT: ToolMaterial = Material(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT))
+    val BONE: ToolMaterial = Material(MiningLevels.WOOD, 32, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT))
+    val COPPER: ToolMaterial = Material(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT))
+    val FLINT_ID: Identifier? = ProgressionMod.Companion.of("flint")
+    val BONE_ID: Identifier? = ProgressionMod.Companion.of("bone")
+    val COPPER_ID: Identifier? = ProgressionMod.Companion.of("copper")
 
-    public static final ToolMaterial FLINT = new Material(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT));
-    public static final ToolMaterial BONE = new Material(MiningLevels.WOOD, 32, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT));
-    public static final ToolMaterial COPPER = new Material(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT));
-    public static final Identifier FLINT_ID = ProgressionMod.of("flint");
-    public static final Identifier BONE_ID = ProgressionMod.of("bone");
-    public static final Identifier COPPER_ID = ProgressionMod.of("copper");
-
-    private record Material(int miningLevel, int itemDurability, float miningSpeed, float attackDamage,
-                            int enchantability, Ingredient repairIngredient) implements ToolMaterial {
-
-        @Override
-        public int getDurability() {
-            return this.itemDurability;
+    @JvmRecord
+    private data class Material(
+        val miningLevel: Int, val itemDurability: Int, val miningSpeed: Float, val attackDamage: Float,
+        val enchantability: Int, val repairIngredient: Ingredient?
+    ) : ToolMaterial {
+        override fun getDurability(): Int {
+            return this.itemDurability
         }
 
-        @Override
-        public float getMiningSpeedMultiplier() {
-            return this.miningSpeed;
+        override fun getMiningSpeedMultiplier(): Float {
+            return this.miningSpeed
         }
 
-        @Override
-        public float getAttackDamage() {
-            return this.attackDamage;
+        override fun getAttackDamage(): Float {
+            return this.attackDamage
         }
 
-        @Override
-        public int getMiningLevel() {
-            return this.miningLevel;
+        override fun getMiningLevel(): Int {
+            return this.miningLevel
         }
 
-        @Override
-        public int getEnchantability() {
-            return this.enchantability;
+        override fun getEnchantability(): Int {
+            return this.enchantability
         }
 
-        @Override
-        public Ingredient getRepairIngredient() {
-            return this.repairIngredient;
+        override fun getRepairIngredient(): Ingredient? {
+            return this.repairIngredient
         }
     }
 }

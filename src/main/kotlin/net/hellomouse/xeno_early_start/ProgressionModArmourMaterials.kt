@@ -1,100 +1,87 @@
-package net.hellomouse.xeno_early_start;
+package net.hellomouse.xeno_early_start
 
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.ArmorMaterials;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Lazy;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.Util;
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterial
+import net.minecraft.item.ArmorMaterials
+import net.minecraft.item.Items
+import net.minecraft.recipe.Ingredient
+import net.minecraft.sound.SoundEvent
+import net.minecraft.sound.SoundEvents
+import net.minecraft.util.Lazy
+import net.minecraft.util.StringIdentifiable
+import net.minecraft.util.Util
+import java.util.*
+import java.util.function.Consumer
+import java.util.function.Supplier
 
-import java.util.EnumMap;
-import java.util.function.Supplier;
 
-public enum ProgressionModArmourMaterials implements StringIdentifiable, ArmorMaterial {
-    COPPER("copper", 11, Util.make(new EnumMap(ArmorItem.Type.class), map -> {
-        map.put(ArmorItem.Type.BOOTS, 1);
-        map.put(ArmorItem.Type.LEGGINGS, 3);
-        map.put(ArmorItem.Type.CHESTPLATE, 4);
-        map.put(ArmorItem.Type.HELMET, 2);
-    }), 8, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> Ingredient.ofItems(Items.COPPER_INGOT)),
-    ;
+enum class ProgressionModArmourMaterials(
+    private val enum_name: String,
+    private val durabilityMultiplier: Int,
+    private val protectionAmounts: EnumMap<ArmorItem.Type?, Int?>,
+    private val enchantability: Int,
+    private val equipSound: SoundEvent,
+    private val toughness: Float,
+    private val knockbackResistance: Float,
+    repairIngredientSupplier: Supplier<Ingredient?>
+) : StringIdentifiable, ArmorMaterial {
+    COPPER(
+        "copper",
+        11,
+        Util.make<EnumMap<ArmorItem.Type?, Int?>?>(
+            EnumMap<ArmorItem.Type?, Int?>(ArmorItem.Type::class.java),
+            Consumer { map: EnumMap<ArmorItem.Type?, Int?>? ->
+                map!!.put(ArmorItem.Type.BOOTS, 1)
+                map.put(ArmorItem.Type.LEGGINGS, 3)
+                map.put(ArmorItem.Type.CHESTPLATE, 4)
+                map.put(ArmorItem.Type.HELMET, 2)
+            }),
+        8,
+        SoundEvents.ITEM_ARMOR_EQUIP_IRON,
+        0.0f,
+        0.0f,
+        Supplier { Ingredient.ofItems(Items.COPPER_INGOT) }), ;
 
-    public static final StringIdentifiable.Codec<net.minecraft.item.ArmorMaterials> CODEC = StringIdentifiable.createCodec(net.minecraft.item.ArmorMaterials::values);
-    private final String name;
-    private final int durabilityMultiplier;
-    private final EnumMap<ArmorItem.Type, Integer> protectionAmounts;
-    private final int enchantability;
-    private final SoundEvent equipSound;
-    private final float toughness;
-    private final float knockbackResistance;
-    private final Lazy<Ingredient> repairIngredientSupplier;
+    private val repairIngredientSupplier: Lazy<Ingredient?> = Lazy<Ingredient?>(repairIngredientSupplier)
 
-    ProgressionModArmourMaterials(
-            String name,
-            int durabilityMultiplier,
-            EnumMap<ArmorItem.Type, Integer> protectionAmounts,
-            int enchantability,
-            SoundEvent equipSound,
-            float toughness,
-            float knockbackResistance,
-            Supplier<Ingredient> repairIngredientSupplier
-    ) {
-        this.name = name;
-        this.durabilityMultiplier = durabilityMultiplier;
-        this.protectionAmounts = protectionAmounts;
-        this.enchantability = enchantability;
-        this.equipSound = equipSound;
-        this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairIngredientSupplier = new Lazy<>(repairIngredientSupplier);
+    override fun getDurability(type: ArmorItem.Type?): Int {
+        return ArmorMaterials.BASE_DURABILITY.get(type)!! * this.durabilityMultiplier
     }
 
-    @Override
-    public int getDurability(ArmorItem.Type type) {
-        return ArmorMaterials.BASE_DURABILITY.get(type) * this.durabilityMultiplier;
+    override fun getProtection(type: ArmorItem.Type?): Int {
+        return this.protectionAmounts.get(type)!!
     }
 
-    @Override
-    public int getProtection(ArmorItem.Type type) {
-        return this.protectionAmounts.get(type);
+    override fun getEnchantability(): Int {
+        return this.enchantability
     }
 
-    @Override
-    public int getEnchantability() {
-        return this.enchantability;
+    override fun getEquipSound(): SoundEvent? {
+        return this.equipSound
     }
 
-    @Override
-    public SoundEvent getEquipSound() {
-        return this.equipSound;
+    override fun getRepairIngredient(): Ingredient? {
+        return this.repairIngredientSupplier.get()
     }
 
-    @Override
-    public Ingredient getRepairIngredient() {
-        return this.repairIngredientSupplier.get();
+    override fun getName(): String? {
+        return this.enum_name
     }
 
-    @Override
-    public String getName() {
-        return this.name;
+    override fun getToughness(): Float {
+        return this.toughness
     }
 
-    @Override
-    public float getToughness() {
-        return this.toughness;
+    override fun getKnockbackResistance(): Float {
+        return this.knockbackResistance
     }
 
-    @Override
-    public float getKnockbackResistance() {
-        return this.knockbackResistance;
+    override fun asString(): String? {
+        return this.enum_name
     }
 
-    @Override
-    public String asString() {
-        return this.name;
+    companion object {
+        val CODEC: StringIdentifiable.Codec<ArmorMaterials?> =
+            StringIdentifiable.createCodec<ArmorMaterials?>(Supplier { ArmorMaterials.entries.toTypedArray() })
     }
 }

@@ -1,27 +1,26 @@
-package net.hellomouse.xeno_early_start;
+package net.hellomouse.xeno_early_start
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.block.Block
+import net.minecraft.item.Item
+import net.minecraft.registry.tag.BlockTags
+import net.minecraft.registry.tag.ItemTags
+import net.minecraft.registry.tag.TagKey
 
-public class ProgressionModTags {
-    public static class Blocks {
-        public static final TagKey<Block> HAS_BLOCK_TO_BLOCK_RECIPE = createTag("has_block_to_block_recipe");
+class ProgressionModTags {
+    object Blocks {
+        val HAS_BLOCK_TO_BLOCK_RECIPE: TagKey<Block> = createTag("has_block_to_block_recipe")
 
-        private static TagKey<Block> createTag(String name) {
-            return BlockTags.create(ProgressionMod.of(name));
+        private fun createTag(name: String): TagKey<Block> {
+            return BlockTags.create(ProgressionMod.Companion.of(name))
         }
-
     }
 
-    public static class Items {
-        public static final TagKey<Item> SHARDS = createTag("shards");
-        public static final TagKey<Item> KNAPPED_STONE = createTag("knapped_stone");
+    object Items {
+        val SHARDS: TagKey<Item> = createTag("shards")
+        val KNAPPED_STONE: TagKey<Item> = createTag("knapped_stone")
 
-        private static TagKey<Item> createTag(String name) {
-            return ItemTags.create(ProgressionMod.of(name));
+        private fun createTag(name: String): TagKey<Item> {
+            return ItemTags.create(ProgressionMod.Companion.of(name))
         }
     }
 }

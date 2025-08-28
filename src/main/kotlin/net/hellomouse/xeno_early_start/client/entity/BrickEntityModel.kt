@@ -1,36 +1,57 @@
-package net.hellomouse.xeno_early_start.client.entity;
+package net.hellomouse.xeno_early_start.client.entity
 
-import net.hellomouse.xeno_early_start.ProgressionMod;
-import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
+import net.hellomouse.xeno_early_start.ProgressionMod
+import net.minecraft.client.model.*
+import net.minecraft.client.render.VertexConsumer
+import net.minecraft.client.render.entity.model.EntityModel
+import net.minecraft.client.render.entity.model.EntityModelLayer
+import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.entity.Entity
 
-public class BrickEntityModel extends EntityModel<Entity> {
-    public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(ProgressionMod.of("brick"), "main");
-    private final ModelPart bb_main;
+class BrickEntityModel(root: ModelPart) : EntityModel<Entity?>() {
+    private val bb_main: ModelPart = root.getChild("bb_main")
 
-    public BrickEntityModel(ModelPart root) {
-        this.bb_main = root.getChild("bb_main");
+    override fun setAngles(
+        entity: Entity?,
+        limbSwing: Float,
+        limbSwingAmount: Float,
+        ageInTicks: Float,
+        netHeadYaw: Float,
+        headPitch: Float
+    ) {
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData bb_main = modelPartData.addChild("bb_main", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-
-        ModelPartData cube_r1 = bb_main.addChild("cube_r1", ModelPartBuilder.create().uv(0, 0).cuboid(-5.0F, -3.0F, -3.0F, 4.0F, 3.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(-4.0F, 0.0F, 3.0F, 0.0F, -1.5708F, 0.0F));
-        return TexturedModelData.of(modelData, 32, 32);
+    override fun render(
+        matrices: MatrixStack?,
+        vertexConsumer: VertexConsumer?,
+        light: Int,
+        overlay: Int,
+        red: Float,
+        green: Float,
+        blue: Float,
+        alpha: Float
+    ) {
+        bb_main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha)
     }
 
-    @Override
-    public void setAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-    }
+    companion object {
+        val LAYER_LOCATION: EntityModelLayer = EntityModelLayer(ProgressionMod.Companion.of("brick"), "main")
+        val texturedModelData: TexturedModelData
+            get() {
+                val modelData = ModelData()
+                val modelPartData = modelData.root
+                val bb_main = modelPartData.addChild(
+                    "bb_main",
+                    ModelPartBuilder.create(),
+                    ModelTransform.pivot(0.0f, 0.0f, 0.0f)
+                )
 
-    @Override
-    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-        bb_main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+                bb_main.addChild(
+                    "cube_r1",
+                    ModelPartBuilder.create().uv(0, 0).cuboid(-5.0f, -3.0f, -3.0f, 4.0f, 3.0f, 7.0f, Dilation(0.0f)),
+                    ModelTransform.of(-4.0f, 0.0f, 3.0f, 0.0f, -1.5708f, 0.0f)
+                )
+                return TexturedModelData.of(modelData, 32, 32)
+            }
     }
 }

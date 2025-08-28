@@ -1,65 +1,59 @@
-package net.hellomouse.xeno_early_start.loot;
+package net.hellomouse.xeno_early_start.loot
 
-import com.google.gson.*;
-import com.google.gson.annotations.SerializedName;
-import net.hellomouse.xeno_early_start.ProgressionModConfig;
-import net.hellomouse.xeno_early_start.registries.ProgressionModLootTypeRegistry;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.function.LootFunction;
-import net.minecraft.loot.function.LootFunctionType;
-import net.minecraft.util.JsonSerializer;
+import com.google.gson.*
+import com.google.gson.annotations.SerializedName
+import net.hellomouse.xeno_early_start.ProgressionModConfig
+import net.hellomouse.xeno_early_start.registries.ProgressionModLootTypeRegistry
+import net.minecraft.item.ItemStack
+import net.minecraft.loot.context.LootContext
+import net.minecraft.loot.function.LootFunction
+import net.minecraft.loot.function.LootFunctionType
+import net.minecraft.util.JsonSerializer
 
-/// Make it so the loot table drop amount of raw nuggets as configured in UI
-public class ConfigLootFunction implements LootFunction {
-    private static final Gson GSON = new GsonBuilder().create();
-    private final DropType dropType;
-
-    public ConfigLootFunction(DropType dropType) {
-        this.dropType = dropType;
+/** Make it so the loot table drop amount of raw nuggets as configured in UI */
+class ConfigLootFunction private constructor(private val dropType: DropType) : LootFunction {
+    override fun getType(): LootFunctionType {
+        return ProgressionModLootTypeRegistry.configLootFunction.get()
     }
 
-    @Override
-    public LootFunctionType getType() {
-        return ProgressionModLootTypeRegistry.ConfigLootFunction.get();
-    }
-
-    @Override
-    public ItemStack apply(ItemStack itemStack, LootContext lootContext) {
+    override fun apply(itemStack: ItemStack, lootContext: LootContext): ItemStack {
         if (dropType == DropType.Copper) {
-            itemStack.setCount(ProgressionModConfig.oreDropChanges.rawCopperNuggetDrop);
+            itemStack.count = ProgressionModConfig.oreDropChanges.rawCopperNuggetDrop
         } else if (dropType == DropType.Iron) {
-            itemStack.setCount(ProgressionModConfig.oreDropChanges.rawIronNuggetDrop);
+            itemStack.count = ProgressionModConfig.oreDropChanges.rawIronNuggetDrop
         } else if (dropType == DropType.Gold) {
-            itemStack.setCount(ProgressionModConfig.oreDropChanges.rawGoldNuggetDrop);
+            itemStack.count = ProgressionModConfig.oreDropChanges.rawGoldNuggetDrop
         } else if (dropType == DropType.Diamond) {
-            itemStack.setCount(ProgressionModConfig.oreDropChanges.diamondFragmentDrop);
+            itemStack.count = ProgressionModConfig.oreDropChanges.diamondFragmentDrop
         }
-        return itemStack;
+        return itemStack
     }
 
-    enum DropType {
+    internal enum class DropType {
         @SerializedName("iron")
         Iron,
+
         @SerializedName("copper")
         Copper,
+
         @SerializedName("gold")
         Gold,
+
         @SerializedName("diamond")
         Diamond
     }
 
-    public static class Serializer implements JsonSerializer<ConfigLootFunction> {
-
-        @Override
-        public void toJson(JsonObject json, ConfigLootFunction object, JsonSerializationContext context) {
-            json.addProperty("drop_type", GSON.toJson(object.dropType));
+    class Serializer : JsonSerializer<ConfigLootFunction> {
+        override fun toJson(json: JsonObject, `object`: ConfigLootFunction, context: JsonSerializationContext?) {
+            json.addProperty("drop_type", GSON.toJson(`object`.dropType))
         }
 
-        @Override
-        public ConfigLootFunction fromJson(JsonObject json, JsonDeserializationContext context) {
-            return new ConfigLootFunction(GSON.fromJson(json.get("drop_type"), DropType.class));
+        override fun fromJson(json: JsonObject, context: JsonDeserializationContext?): ConfigLootFunction {
+            return ConfigLootFunction(GSON.fromJson(json.get("drop_type"), DropType::class.java))
         }
     }
 
+    companion object {
+        private val GSON: Gson = GsonBuilder().create()
+    }
 }

@@ -1,44 +1,54 @@
-package net.hellomouse.xeno_early_start.client.entity;
+package net.hellomouse.xeno_early_start.client.entity
 
-import net.hellomouse.xeno_early_start.ProgressionMod;
-import net.hellomouse.xeno_early_start.entity.BrickEntity;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.hellomouse.xeno_early_start.ProgressionMod
+import net.hellomouse.xeno_early_start.entity.BrickEntity
+import net.minecraft.client.render.OverlayTexture
+import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.render.entity.EntityRenderer
+import net.minecraft.client.render.entity.EntityRendererFactory
+import net.minecraft.client.render.item.ItemRenderer
+import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.util.Identifier
+import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.RotationAxis
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-public class BrickEntityRenderer extends EntityRenderer<BrickEntity> {
-    public static final Identifier TEXTURE = ProgressionMod.of("textures/entity/brick.png");
+class BrickEntityRenderer(arg: EntityRendererFactory.Context) : EntityRenderer<BrickEntity>(arg) {
+    private val model: BrickEntityModel = BrickEntityModel(arg.getPart(BrickEntityModel.Companion.LAYER_LOCATION))
 
-    private final BrickEntityModel model;
-
-    public BrickEntityRenderer(EntityRendererFactory.Context arg) {
-        super(arg);
-        this.model = new BrickEntityModel(arg.getPart(BrickEntityModel.LAYER_LOCATION));
+    override fun getTexture(entity: BrickEntity): Identifier {
+        return TEXTURE
     }
 
-    @Override
-    public Identifier getTexture(BrickEntity entity) {
-        return TEXTURE;
+    override fun render(
+        entity: BrickEntity,
+        yaw: Float,
+        tickDelta: Float,
+        stack: MatrixStack,
+        arg3: VertexConsumerProvider,
+        lightLevel: Int
+    ) {
+        stack.push()
+        stack.multiply(
+            RotationAxis.POSITIVE_Y.rotationDegrees(
+                MathHelper.lerp(
+                    yaw,
+                    entity.prevYaw,
+                    entity.yaw
+                ) - 90.0f
+            )
+        )
+        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(yaw, entity.prevPitch, entity.pitch)))
+        val vertexConsumer =
+            ItemRenderer.getDirectItemGlintConsumer(arg3, this.model.getLayer(this.getTexture(entity)), false, false)
+        this.model.render(stack, vertexConsumer, lightLevel, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f)
+        stack.pop()
+        super.render(entity, yaw, yaw, stack, arg3, lightLevel)
     }
 
-    public void render(BrickEntity arg, float f, float g, MatrixStack stack, VertexConsumerProvider arg3, int i) {
-        stack.push();
-        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(MathHelper.lerp(g, arg.prevYaw, arg.getYaw()) - 90.0f));
-        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(g, arg.prevPitch, arg.getPitch())));
-        VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(arg3, this.model.getLayer(this.getTexture(arg)), false, false);
-        this.model.render(stack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-        stack.pop();
-        super.render(arg, f, g, stack, arg3, i);
+    companion object {
+        val TEXTURE: Identifier = ProgressionMod.Companion.of("textures/entity/brick.png")
     }
-
 }
