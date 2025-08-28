@@ -1,5 +1,6 @@
 package net.hellomouse.xeno_early_start
 
+import com.google.common.base.Supplier
 import com.google.common.base.Suppliers
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ArmorMaterial
@@ -11,8 +12,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.Util
 import java.util.*
-import java.util.function.Supplier
-
 
 enum class ProgressionModArmourMaterials(
     private val enumName: String,
@@ -42,7 +41,7 @@ enum class ProgressionModArmourMaterials(
         Supplier { Ingredient.ofItems(Items.COPPER_INGOT) }), ;
 
     private val repairIngredientSupplier: Supplier<Ingredient?> = Suppliers.memoize(
-        repairIngredientSupplier as com.google.common.base.Supplier<Ingredient?>
+        repairIngredientSupplier
     )
 
     override fun getDurability(type: ArmorItem.Type?): Int {
