@@ -15,8 +15,8 @@ import net.minecraft.world.BlockView
 
 open class BrickBlock(arg: Settings) : HorizontalFacingBlock(arg) {
     init {
-        this.defaultState = this.stateManager.getDefaultState().with<Direction?, Direction?>(FACING, Direction.NORTH)
-        this.defaultState = this.stateManager.getDefaultState().with<Boolean?, Boolean?>(VERTICAL, false)
+        this.defaultState = this.stateManager.getDefaultState().with<Direction, Direction>(FACING, Direction.NORTH)
+        this.defaultState = this.stateManager.getDefaultState().with<Boolean, Boolean>(VERTICAL, false)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block?, BlockState?>) {
@@ -29,24 +29,25 @@ open class BrickBlock(arg: Settings) : HorizontalFacingBlock(arg) {
         val vertical = ctx.side == Direction.UP || ctx.side == Direction.DOWN
 
         return this.defaultState
-            .with<Direction?, Direction?>(FACING, facing)
-            .with<Boolean?, Boolean?>(VERTICAL, vertical)
+            .with(FACING, facing)
+            .with(VERTICAL, vertical)
     }
 
+    @Deprecated("Deprecated in Java, I guess")
     override fun getOutlineShape(
         state: BlockState,
         world: BlockView?,
         pos: BlockPos?,
         context: ShapeContext?
     ): VoxelShape? {
-        if (state.get<Boolean?>(VERTICAL)) {
-            if (state.get<Direction?>(FACING) == Direction.NORTH || state.get<Direction?>(FACING) == Direction.SOUTH) {
-                return SHAPE_UP
+        if (state.get(VERTICAL)) {
+            return if (state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH) {
+                SHAPE_UP
             } else {
-                return SHAPE_UP_ROTATED
+                SHAPE_UP_ROTATED
             }
         } else {
-            if (state.get<Direction?>(FACING) == Direction.NORTH || state.get<Direction?>(FACING) == Direction.SOUTH) {
+            if (state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH) {
                 return SHAPE
             } else {
                 return SHAPE_ROTATED
@@ -54,6 +55,7 @@ open class BrickBlock(arg: Settings) : HorizontalFacingBlock(arg) {
         }
     }
 
+    @Deprecated("Deprecated in Java, I guess")
     override fun getCullingShape(state: BlockState?, world: BlockView?, pos: BlockPos?): VoxelShape? {
         return VoxelShapes.empty()
     }

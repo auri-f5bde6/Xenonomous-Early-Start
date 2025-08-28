@@ -3,10 +3,27 @@ package net.hellomouse.xeno_early_start.utils
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
+import net.minecraft.item.Item
 import net.minecraft.util.Identifier
 import net.minecraft.util.JsonHelper
+import net.minecraftforge.registries.ForgeRegistries
 
+/// All function here takes an JsonObject, locate the key, return null if the key is not present. But if the value is invalid, it throws error
 object JsonUtils {
+    fun getItem(obj: JsonObject, key: String): Item? {
+        val value = getIdentifier(obj, key)
+        if (value == null) {
+            return null
+        }
+        val item = ForgeRegistries.ITEMS.getValue(value)
+        if (item == null) {
+            throw JsonSyntaxException(
+                "Expected $key to be a valid Minecraft item identifier, got $value "
+            )
+        }
+        return item
+    }
+
     fun getIdentifier(obj: JsonObject, key: String): Identifier? {
         val value = getString(obj, key)
         if (value == null) {
@@ -15,7 +32,7 @@ object JsonUtils {
         val ident = Identifier.tryParse(value)
         if (ident == null) {
             throw JsonSyntaxException(
-                "Expected $key to be a valid Minecraft resource identifier, got $value "
+                "Expected $key to be a valid Minecraft resource identifier, got $value"
             )
         }
         return ident

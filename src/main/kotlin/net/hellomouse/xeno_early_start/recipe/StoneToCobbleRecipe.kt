@@ -9,6 +9,8 @@ import net.hellomouse.xeno_early_start.utils.JsonUtils.getArray
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getBool
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getFloat
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getIdentifier
+import net.hellomouse.xeno_early_start.utils.JsonUtils.getItem
+import net.hellomouse.xeno_early_start.utils.JsonUtils.getString
 import net.hellomouse.xeno_early_start.utils.MiningLevel
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -30,8 +32,8 @@ import net.minecraftforge.common.TierSortingRegistry
 import net.minecraftforge.registries.ForgeRegistries
 
 class StoneToCobbleRecipe(
-    var recipeId: Identifier?,
-    var minedBlock: Identifier?,
+    var recipeId: Identifier,
+    var minedBlock: Identifier,
     var resultingBlock: Block,
     var droppedItems: Array<DroppedItem>,
     var miningTierLowerThan: Identifier?,
@@ -84,7 +86,7 @@ class StoneToCobbleRecipe(
                 probability = ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f
             }
             if (level.random.nextFloat() < probability) {
-                Block.dropStack(level, pos, i.getItem()!!.defaultStack)
+                Block.dropStack(level, pos, i.getItem().defaultStack)
             }
         }
     }
@@ -94,7 +96,7 @@ class StoneToCobbleRecipe(
         return resultingBlock.asItem().defaultStack
     }
 
-    override fun getId(): Identifier? {
+    override fun getId(): Identifier {
         return recipeId
     }
 
@@ -104,7 +106,7 @@ class StoneToCobbleRecipe(
     }
 
     override fun getType(): RecipeType<*> {
-        return ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE!!.get()
+        return ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get()
     }
 
     // These methods aren't used here but must be implemented
@@ -121,18 +123,18 @@ class StoneToCobbleRecipe(
     }
 
     class DroppedItem(
-        var item: Identifier?,
+        var item: Item,
         var probability: Float,
         var isAffectedByFortune: Boolean,
         var isPebble: Boolean,
         var isPlantFiber: Boolean
     ) {
-        fun getItem(): Item? {
-            return ForgeRegistries.ITEMS.getValue(item)
+        fun getItem(): Item {
+            return item
         }
 
         fun write(buf: PacketByteBuf) {
-            buf.writeIdentifier(this.item)
+            buf.writeIdentifier(ForgeRegistries.ITEMS.getKey(item))
             buf.writeFloat(this.probability)
             buf.writeBoolean(this.isAffectedByFortune)
             buf.writeBoolean(this.isPebble)
@@ -141,7 +143,7 @@ class StoneToCobbleRecipe(
 
         companion object {
             fun read(buf: PacketByteBuf): DroppedItem {
-                val item = buf.readIdentifier()
+                val item = ForgeRegistries.ITEMS.getValue(buf.readIdentifier())!!
                 val probability = buf.readFloat()
                 val affectedByFortune = buf.readBoolean()
                 val pebble = buf.readBoolean()
@@ -151,7 +153,14 @@ class StoneToCobbleRecipe(
 
             fun fromJson(element: JsonElement): DroppedItem {
                 val obj = element.asJsonObject
-                val item = Identifier.parse(obj.get("item").asString)
+                val item = getItem(obj, "item") ?: throw JsonSyntaxException(
+                    "Expected item to be an valid item identifier, got ${
+                        getString(
+                            obj,
+                            "item"
+                        )
+                    }"
+                )
                 val probability = getFloat(obj, "probability") ?: 1.0f
                 val affectedByFortune = getBool(obj, "affected_by_fortune") ?: false
                 val pebble = getBool(obj, "pebble") ?: false
@@ -173,7 +182,7 @@ class StoneToCobbleRecipe(
             val minedBlock = Identifier.parse(minedBlockStr)
             val resultingBlock = ForgeRegistries.BLOCKS.getValue(Identifier.parse(json.get("resulting_block").asString))
                 ?: throw JsonSyntaxException(
-                    "Expected resulting_block to be a valid block identifier, got ${json.get("resulting_block").asString}"
+                    "Expected resulting_block to be a valid block identifier, got ${getString(json, "resulting_block")}"
                 )
             val droppedItems =
                 getArray<DroppedItem>(json, "dropped_items", DroppedItem.Companion::fromJson) ?: arrayOf()
@@ -275,7 +284,7 @@ class StoneToCobbleRecipe(
             buf.writeInt(recipe.matchHeldItems.size)
             for (i in recipe.matchHeldItemsIsTag.indices) {
                 buf.writeIdentifier(recipe.matchHeldItems[i])
-                buf.writeBoolean(recipe.matchHeldItemsIsTag[i]!!)
+                buf.writeBoolean(recipe.matchHeldItemsIsTag[i])
             }
         }
     }

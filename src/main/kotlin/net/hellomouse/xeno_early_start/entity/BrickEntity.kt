@@ -16,11 +16,11 @@ import net.minecraftforge.common.Tags
 
 class BrickEntity : PersistentProjectileEntity {
     var bounced: Boolean = false
-    var futureVelocity: Vec3d? = Vec3d.ZERO
+    var futureVelocity: Vec3d = Vec3d.ZERO
     var brickStack: ItemStack = ItemStack(Items.BRICK)
 
 
-    constructor(world: World?, owner: LivingEntity, stack: ItemStack) : super(
+    constructor(world: World, owner: LivingEntity, stack: ItemStack) : super(
         ProgressionModEntityRegistry.BRICK.get(),
         owner,
         world
@@ -28,7 +28,7 @@ class BrickEntity : PersistentProjectileEntity {
         this.brickStack = stack.copy()
     }
 
-    constructor(brickEntityEntityType: EntityType<BrickEntity>, world: World?) : super(brickEntityEntityType, world)
+    constructor(brickEntityEntityType: EntityType<BrickEntity>, world: World) : super(brickEntityEntityType, world)
 
     override fun asItemStack(): ItemStack {
         return brickStack.copy()
@@ -39,7 +39,7 @@ class BrickEntity : PersistentProjectileEntity {
         val f = 4.5f
 
         val owner = this.owner
-        val damageSource = this.damageSources.trident(this, if (owner == null) this else owner)
+        val damageSource = this.damageSources.trident(this, owner ?: this)
         if (entity.damage(damageSource, f)) {
             if (entity.type === EntityType.ENDERMAN) {
                 return
@@ -60,7 +60,7 @@ class BrickEntity : PersistentProjectileEntity {
         val world = getWorld()
         if (!world.isClient()) {
             val blockState = world.getBlockState(blockHitResult.blockPos)
-            if (blockState.block.registryEntry.containsTag(Tags.Blocks.GLASS)) {
+            if (blockState.isIn(Tags.Blocks.GLASS)) {
                 world.breakBlock(blockHitResult.blockPos, false, this)
                 this.moveBrickAwayFrom(blockHitResult, 0.9f)
                 this.velocity = this.velocity.multiply(0.7)

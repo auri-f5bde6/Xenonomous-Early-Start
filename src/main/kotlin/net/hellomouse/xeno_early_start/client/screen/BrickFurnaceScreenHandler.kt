@@ -23,8 +23,8 @@ class BrickFurnaceScreenHandler : AbstractFurnaceScreenHandler {
     constructor(
         syncId: Int,
         playerInventory: PlayerInventory,
-        inventory: Inventory?,
-        propertyDelegate: PropertyDelegate?
+        inventory: Inventory,
+        propertyDelegate: PropertyDelegate
     ) : super(
         ProgressionModScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get(),
         RecipeType.SMELTING,

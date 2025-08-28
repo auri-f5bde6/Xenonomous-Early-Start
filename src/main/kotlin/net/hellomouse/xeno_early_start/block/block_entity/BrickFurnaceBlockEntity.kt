@@ -11,7 +11,7 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 
-class BrickFurnaceBlockEntity(pos: BlockPos, state: BlockState?) :
+class BrickFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     AbstractFurnaceBlockEntity(ProgressionModBlockEntityRegistry.BRICK_FURNACE.get(), pos, state, RecipeType.SMELTING) {
     override fun getContainerName(): Text {
         return Text.translatable("container.xeno_early_start.brick_furnace")

@@ -57,7 +57,7 @@ object BreakEventHandler {
         level: WorldAccess,
         player: PlayerEntity?,
         blockState: BlockState,
-        pos: BlockPos?,
+        pos: BlockPos,
         drop: Boolean = false
     ) {
         val toolstack1 = toolStack.copy()
@@ -68,8 +68,8 @@ object BreakEventHandler {
             ForgeEventFactory.onPlayerDestroyItem(player, toolstack1, Hand.MAIN_HAND)
         }
         if (drop) {
-            val blockentity = level.getBlockEntity(pos)
-            blockState.block.afterBreak(level, player, pos, blockState, blockentity, toolstack1)
+            val blockEntity = level.getBlockEntity(pos)
+            blockState.block.afterBreak(level, player, pos, blockState, blockEntity, toolstack1)
         }
     }
 }

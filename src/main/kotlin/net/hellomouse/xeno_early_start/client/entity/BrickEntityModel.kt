@@ -8,11 +8,11 @@ import net.minecraft.client.render.entity.model.EntityModelLayer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.Entity
 
-class BrickEntityModel(root: ModelPart) : EntityModel<Entity?>() {
-    private val bb_main: ModelPart = root.getChild("bb_main")
+class BrickEntityModel(root: ModelPart) : EntityModel<Entity>() {
+    private val bbMain: ModelPart = root.getChild("bb_main")
 
     override fun setAngles(
-        entity: Entity?,
+        entity: Entity,
         limbSwing: Float,
         limbSwingAmount: Float,
         ageInTicks: Float,
@@ -31,7 +31,7 @@ class BrickEntityModel(root: ModelPart) : EntityModel<Entity?>() {
         blue: Float,
         alpha: Float
     ) {
-        bb_main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha)
+        bbMain.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha)
     }
 
     companion object {
@@ -40,13 +40,13 @@ class BrickEntityModel(root: ModelPart) : EntityModel<Entity?>() {
             get() {
                 val modelData = ModelData()
                 val modelPartData = modelData.root
-                val bb_main = modelPartData.addChild(
+                val bbMain = modelPartData.addChild(
                     "bb_main",
                     ModelPartBuilder.create(),
                     ModelTransform.pivot(0.0f, 0.0f, 0.0f)
                 )
 
-                bb_main.addChild(
+                bbMain.addChild(
                     "cube_r1",
                     ModelPartBuilder.create().uv(0, 0).cuboid(-5.0f, -3.0f, -3.0f, 4.0f, 3.0f, 7.0f, Dilation(0.0f)),
                     ModelTransform.of(-4.0f, 0.0f, 3.0f, 0.0f, -1.5708f, 0.0f)

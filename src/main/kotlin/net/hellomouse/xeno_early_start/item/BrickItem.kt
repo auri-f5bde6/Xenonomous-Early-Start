@@ -13,9 +13,8 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.UseAction
 import net.minecraft.world.World
-import java.util.function.Consumer
 
-class BrickItem(block: Block?, settings: Settings) : BlockItem(block, settings), Vanishable {
+class BrickItem(block: Block, settings: Settings) : BlockItem(block, settings), Vanishable {
     override fun getMaxUseTime(stack: ItemStack?): Int {
         return 72000
     }
@@ -31,10 +30,10 @@ class BrickItem(block: Block?, settings: Settings) : BlockItem(block, settings),
     }
 
     override fun postHit(stack: ItemStack, target: LivingEntity?, attacker: LivingEntity): Boolean {
-        stack.damage<LivingEntity?>(
+        stack.damage(
             1,
-            attacker,
-            Consumer { e: LivingEntity? -> e!!.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) })
+            attacker
+        ) { e: LivingEntity? -> e!!.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) }
         return true
     }
 

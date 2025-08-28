@@ -31,6 +31,6 @@ class BrickFurnaceBlock(arg: Settings) : FurnaceBlock(arg) {
         state: BlockState?,
         type: BlockEntityType<T?>?
     ): BlockEntityTicker<T?>? {
-        return checkType<T?>(world, type, ProgressionModBlockEntityRegistry.BRICK_FURNACE!!.get())
+        return checkType<T?>(world, type, ProgressionModBlockEntityRegistry.BRICK_FURNACE.get())
     }
 }
