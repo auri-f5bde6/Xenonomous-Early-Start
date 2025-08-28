@@ -1,6 +1,7 @@
 plugins {
     id 'dev.architectury.loom' version '1.10-SNAPSHOT'
     id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version "2.2.10"
 }
 
 group = project.maven_group
@@ -61,6 +62,11 @@ repositories {
         name "KosmX's maven"
         url 'https://maven.kosmx.dev/'
     }
+    mavenCentral()
+    maven {
+        name = "Kotlin for Forge"
+        setUrl("https://thedarkcolour.github.io/KotlinForForge/")
+    }
 }
 
 dependencies {
@@ -74,6 +80,8 @@ dependencies {
     modRuntimeOnly("dev.emi:emi-forge:$project.emi_version")
     modImplementation("maven.modrinth:better-combat:$project.better_combat_version-forge")
     modImplementation("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_animator_version}")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'thedarkcolour:kotlinforforge:4.10.0'
 }
 
 processResources {
@@ -90,8 +98,6 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -113,4 +119,7 @@ publishing {
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
     }
+}
+kotlin {
+    jvmToolchain(17)
 }
