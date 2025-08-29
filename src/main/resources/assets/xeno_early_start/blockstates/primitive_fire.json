@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,lit=false": {
+      "model": "xeno_early_start:block/primitive_fire",
+      "y": 270
+    },
+    "facing=east,lit=true": {
+      "model": "xeno_early_start:block/primitive_fire_lit",
+      "y": 270
+    },
+    "facing=north,lit=false": {
+      "model": "xeno_early_start:block/primitive_fire",
+      "y": 180
+    },
+    "facing=north,lit=true": {
+      "model": "xeno_early_start:block/primitive_fire_lit",
+      "y": 180
+    },
+    "facing=south,lit=false": {
+      "model": "xeno_early_start:block/primitive_fire"
+    },
+    "facing=south,lit=true": {
+      "model": "xeno_early_start:block/primitive_fire_lit"
+    },
+    "facing=west,lit=false": {
+      "model": "xeno_early_start:block/primitive_fire",
+      "y": 90
+    },
+    "facing=west,lit=true": {
+      "model": "xeno_early_start:block/primitive_fire_lit",
+      "y": 90
+    }
+  }
+}

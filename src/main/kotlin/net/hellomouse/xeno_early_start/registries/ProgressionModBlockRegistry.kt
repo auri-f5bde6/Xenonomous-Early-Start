@@ -3,6 +3,7 @@ package net.hellomouse.xeno_early_start.registries
 import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.block.BrickBlock
 import net.hellomouse.xeno_early_start.block.BrickFurnaceBlock
+import net.hellomouse.xeno_early_start.block.PrimitiveFIreBlock
 import net.hellomouse.xeno_early_start.block.RawBrickBlock
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
@@ -51,6 +52,22 @@ object ProgressionModBlockRegistry {
                 .strength(3.5f)
                 .luminance(createLightLevelFromLitBlockState(13))
 
+        )
+    })
+
+    @JvmField
+    val PRIMITIVE_FIRE: RegistryObject<Block> = DEF_REG.register<Block>("primitive_fire", Supplier {
+        PrimitiveFIreBlock(
+            1,
+            AbstractBlock.Settings.create()
+                .mapColor(MapColor.SPRUCE_BROWN)
+                .instrument(Instrument.BASS)
+                .strength(1f)
+                .sounds(BlockSoundGroup.WOOD)
+                .luminance(createLightLevelFromLitBlockState(15))
+                .nonOpaque()
+                .burnable()
+                .dropsNothing()
         )
     })
 

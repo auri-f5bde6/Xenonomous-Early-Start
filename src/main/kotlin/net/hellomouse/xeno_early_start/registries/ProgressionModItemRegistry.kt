@@ -4,6 +4,7 @@ import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.ProgressionModArmourMaterials
 import net.hellomouse.xeno_early_start.ProgressionModToolMaterials
 import net.hellomouse.xeno_early_start.item.BrickItem
+import net.hellomouse.xeno_early_start.item.FireStarterItem
 import net.hellomouse.xeno_early_start.item.PebbleItem
 import net.minecraft.item.*
 import net.minecraftforge.registries.DeferredRegister
@@ -186,6 +187,18 @@ object ProgressionModItemRegistry {
     )
 
     @JvmField
+    val FIRE_STARTER: RegistryObject<Item> = DEF_REG.register<Item>(
+        "fire_starter",
+        Supplier { FireStarterItem(Item.Settings()) }
+    )
+
+    @JvmField
+    val PRIMITIVE_FIRE: RegistryObject<Item> = DEF_REG.register<Item>(
+        "primitive_fire",
+        Supplier { BlockItem(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get(), Item.Settings()) }
+    )
+
+    @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
         COPPER_SWORD,
         COPPER_SHOVEL,
@@ -212,9 +225,14 @@ object ProgressionModItemRegistry {
         KNAPPED_STONE,
         KNAPPED_DEEPSLATE,
         KNAPPED_BLACKSTONE,
-        BRICK_FURNACE
+        BRICK_FURNACE,
+        FIRE_STARTER,
+        PRIMITIVE_FIRE,
+        FLINT_DAGGER,
+        BONE_DAGGER,
     )
 
+    @Suppress("UNUSED")
     @JvmField
     val BRICK: RegistryObject<Item> = VANILLA_ITEMS.register<Item>(
         "brick",

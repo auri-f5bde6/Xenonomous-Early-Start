@@ -1,5 +1,6 @@
 package net.hellomouse.xeno_early_start.block
 
+import net.hellomouse.xeno_early_start.utils.TransUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.HorizontalFacingBlock
@@ -62,10 +63,12 @@ open class BrickBlock(arg: Settings) : HorizontalFacingBlock(arg) {
 
     companion object {
         val VERTICAL: BooleanProperty = BooleanProperty.of("vertical")
-        private val SHAPE: VoxelShape? = VoxelShapes.cuboid(0.375, 0.0, 0.28125, 0.625, 0.1875, 0.71875)
-        private val SHAPE_ROTATED: VoxelShape? = VoxelShapes.cuboid(0.28125, 0.0, 0.375, 0.71875, 0.1875, 0.625)
+        private val SHAPE: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.28125, 0.625, 0.1875, 0.71875)
+        private val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
+        //private val SHAPE_ROTATED: VoxelShape? = VoxelShapes.cuboid(0.28125, 0.0, 0.375, 0.71875, 0.1875, 0.625)
 
-        private val SHAPE_UP: VoxelShape? = VoxelShapes.cuboid(0.375, 0.0, 0.40625, 0.625, 0.4375, 0.59375)
-        private val SHAPE_UP_ROTATED: VoxelShape? = VoxelShapes.cuboid(0.40625, 0.0, 0.375, 0.59375, 0.4375, 0.625)
+        private val SHAPE_UP: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.40625, 0.625, 0.4375, 0.59375)
+        private val SHAPE_UP_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE_UP)
+        //private val SHAPE_UP_ROTATED: VoxelShape = VoxelShapes.cuboid(0.40625, 0.0, 0.375, 0.59375, 0.4375, 0.625)
     }
 }

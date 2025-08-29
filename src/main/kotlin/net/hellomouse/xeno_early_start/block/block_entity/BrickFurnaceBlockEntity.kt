@@ -4,7 +4,6 @@ import net.hellomouse.xeno_early_start.client.screen.BrickFurnaceScreenHandler
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.recipe.RecipeType
 import net.minecraft.screen.ScreenHandler
@@ -21,8 +20,4 @@ class BrickFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         return BrickFurnaceScreenHandler(syncId, playerInventory, this, this.propertyDelegate)
     }
 
-    override fun onOpen(player: PlayerEntity?) {
-        super.onOpen(player)
-        println("HELLO")
-    }
 }
