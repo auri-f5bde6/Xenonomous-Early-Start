@@ -1,14 +1,11 @@
 package net.hellomouse.xeno_early_start.recipe
 
 import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
 import net.hellomouse.xeno_early_start.ProgressionModConfig
 import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry
-import net.hellomouse.xeno_early_start.utils.JsonUtils.getArray
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getBool
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getFloat
-import net.hellomouse.xeno_early_start.utils.JsonUtils.getIdentifier
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getItem
 import net.hellomouse.xeno_early_start.utils.JsonUtils.getString
 import net.hellomouse.xeno_early_start.utils.MiningLevel
@@ -25,7 +22,6 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import net.minecraft.util.JsonHelper
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.TierSortingRegistry
@@ -43,7 +39,7 @@ class StoneToCobbleRecipe(
     var isAnyTier: Boolean,
     var matchHeldItems: Array<Identifier>,
     var matchHeldItemsIsTag: Array<Boolean>
-) : Recipe<SimpleInventory?> {
+) : Recipe<SimpleInventory> {
     fun getMiningTierLowerThan(): ToolMaterial? {
         return TierSortingRegistry.byName(miningTierLowerThan)
     }
@@ -102,7 +98,7 @@ class StoneToCobbleRecipe(
 
 
     override fun getSerializer(): RecipeSerializer<*> {
-        return Serializer()
+        return ProgressionModRecipeRegistry.BLOCK_TO_BLOCK.get()
     }
 
     override fun getType(): RecipeType<*> {
@@ -166,122 +162,4 @@ class StoneToCobbleRecipe(
         }
     }
 
-    class Serializer : RecipeSerializer<StoneToCobbleRecipe> {
-
-        override fun read(id: Identifier, json: JsonObject): StoneToCobbleRecipe {
-            var minedBlockIsTag = false
-            var minedBlockStr = json.get("mined_block").asString
-            if (minedBlockStr[0] == '#') {
-                minedBlockIsTag = true
-                minedBlockStr = minedBlockStr.substring(1)
-            }
-            val minedBlock = Identifier.parse(minedBlockStr)
-            val resultingBlock = ForgeRegistries.BLOCKS.getValue(Identifier.parse(json.get("resulting_block").asString))
-                ?: throw JsonSyntaxException(
-                    "Expected resulting_block to be a valid block identifier, got ${getString(json, "resulting_block")}"
-                )
-            val droppedItems =
-                getArray<DroppedItem>(json, "dropped_items", DroppedItem.Companion::fromJson) ?: arrayOf()
-            val miningTierLowerThan =
-                getIdentifier(json, "mining_tier_lower_than") ?: Identifier.of("minecraft", "wood")
-            val dropBlockLootTable = getBool(json, "drop_block_loot_table") ?: false
-            val isOreToStone = getBool(json, "ore_to_stone") ?: false
-            val anyTier = getBool(json, "any_tier") ?: false
-            var matchHeldItems: Array<Identifier?>? = null
-            var matchHeldItemsIsTag: Array<Boolean?>? = null
-            val value = json.get("held_item_match_any")
-            if (value != null) {
-                if (value.isJsonArray) {
-                    for ((i, v) in value.asJsonArray.withIndex()) {
-                        val size = value.asJsonArray.size()
-                        matchHeldItems = arrayOfNulls(size)
-                        matchHeldItemsIsTag = arrayOfNulls(size)
-                        val itemOrTag: String = v.asString
-                        if (itemOrTag[0] == '#') {
-                            matchHeldItems[i] = Identifier.parse(itemOrTag.substring(1))
-                            matchHeldItemsIsTag[i] = true
-                        } else {
-                            matchHeldItems[i] = Identifier.parse(itemOrTag)
-                            matchHeldItemsIsTag[i] = false
-                        }
-                    }
-                } else {
-                    throw JsonSyntaxException(
-                        "Expected held_item_match_any to be a JsonArray, was " + JsonHelper.getType(
-                            value
-                        )
-                    )
-                }
-            }
-            @Suppress("UNCHECKED_CAST") // It's fine as each null should be replaced in the loop
-            return StoneToCobbleRecipe(
-                id,
-                minedBlock,
-                resultingBlock,
-                droppedItems,
-                miningTierLowerThan,
-                dropBlockLootTable,
-                isOreToStone,
-                minedBlockIsTag,
-                anyTier,
-                (matchHeldItems ?: arrayOf()) as Array<Identifier>,
-                (matchHeldItemsIsTag ?: arrayOf()) as Array<Boolean>
-            )
-        }
-
-        override fun read(id: Identifier, buf: PacketByteBuf): StoneToCobbleRecipe {
-            val minedBlock = buf.readIdentifier()
-            val resultingBlock = ForgeRegistries.BLOCKS.getValue(buf.readIdentifier())!!
-            val droppedItemSize = buf.readInt()
-            val droppedItems = arrayOfNulls<DroppedItem>(droppedItemSize)
-            for (i in 0..<droppedItemSize) {
-                droppedItems[i] = DroppedItem.Companion.read(buf)
-            }
-            val miningTierLowerThan = buf.readIdentifier()
-            val dropBlockLootTable = buf.readBoolean()
-            val isOreToStone = buf.readBoolean()
-            val minedBlockIsTag = buf.readBoolean()
-            val anyTier = buf.readBoolean()
-            val matchHeldItemSize = buf.readInt()
-            val matchHeldItem = arrayOfNulls<Identifier?>(matchHeldItemSize)
-            val matchHeldItemIsTag = arrayOfNulls<Boolean?>(matchHeldItemSize)
-            for (i in 0..<matchHeldItemSize) {
-                matchHeldItem[i] = buf.readIdentifier()
-                matchHeldItemIsTag[i] = buf.readBoolean()
-            }
-            @Suppress("UNCHECKED_CAST") // It's fine as each null should be replaced in the loop
-            return StoneToCobbleRecipe(
-                id,
-                minedBlock,
-                resultingBlock,
-                droppedItems as Array<DroppedItem>,
-                miningTierLowerThan,
-                dropBlockLootTable,
-                isOreToStone,
-                minedBlockIsTag,
-                anyTier,
-                matchHeldItem as Array<Identifier>,
-                matchHeldItemIsTag as Array<Boolean>
-            )
-        }
-
-        override fun write(buf: PacketByteBuf, recipe: StoneToCobbleRecipe) {
-            buf.writeIdentifier(recipe.minedBlock)
-            buf.writeIdentifier(ForgeRegistries.BLOCKS.getKey(recipe.resultingBlock))
-            buf.writeInt(recipe.droppedItems.size)
-            for (i in recipe.droppedItems) {
-                i.write(buf)
-            }
-            buf.writeIdentifier(recipe.miningTierLowerThan)
-            buf.writeBoolean(recipe.isDropBlockLootTable)
-            buf.writeBoolean(recipe.isOreToStone)
-            buf.writeBoolean(recipe.minedBlockIsTag)
-            buf.writeBoolean(recipe.isAnyTier)
-            buf.writeInt(recipe.matchHeldItems.size)
-            for (i in recipe.matchHeldItemsIsTag.indices) {
-                buf.writeIdentifier(recipe.matchHeldItems[i])
-                buf.writeBoolean(recipe.matchHeldItemsIsTag[i])
-            }
-        }
-    }
 }

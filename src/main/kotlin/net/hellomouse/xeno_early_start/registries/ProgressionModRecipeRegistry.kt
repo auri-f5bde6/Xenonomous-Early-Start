@@ -1,7 +1,10 @@
 package net.hellomouse.xeno_early_start.registries
 
 import net.hellomouse.xeno_early_start.ProgressionMod
+import net.hellomouse.xeno_early_start.recipe.PrimitiveFireRecipe
+import net.hellomouse.xeno_early_start.recipe.Serializer
 import net.hellomouse.xeno_early_start.recipe.StoneToCobbleRecipe
+import net.minecraft.recipe.CookingRecipeSerializer
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.RegistryKeys
@@ -26,5 +29,18 @@ object ProgressionModRecipeRegistry {
     val BLOCK_TO_BLOCK: RegistryObject<RecipeSerializer<StoneToCobbleRecipe>> =
         DEF_REG.register(
             "block_to_block",
-            Supplier { StoneToCobbleRecipe.Serializer() })
+            Supplier { Serializer() })
+
+    @JvmField
+    val PRIMITIVE_FIRE_TYPE: RegistryObject<RecipeType<PrimitiveFireRecipe>> =
+        TYPE_DEF_REG.register("primitive_fire", Supplier {
+            object : RecipeType<PrimitiveFireRecipe> {
+            }
+        })
+
+    @JvmField
+    val PRIMITIVE_FIRE: RegistryObject<RecipeSerializer<PrimitiveFireRecipe>> =
+        DEF_REG.register(
+            "primitive_fire",
+            Supplier { CookingRecipeSerializer(::PrimitiveFireRecipe, 200) })
 }
