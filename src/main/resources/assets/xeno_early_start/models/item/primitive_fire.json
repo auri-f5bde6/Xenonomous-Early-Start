@@ -1,3 +1,6 @@
 {
-  "parent": "xeno_early_start:block/primitive_fire"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "xeno_early_start:item/primitive_fire"
+  }
 }

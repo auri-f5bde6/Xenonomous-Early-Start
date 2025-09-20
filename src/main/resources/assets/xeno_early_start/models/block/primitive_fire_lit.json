@@ -6,8 +6,8 @@
     32
   ],
   "textures": {
-    "0": "xeno_early_start:block/primitive_fire",
-    "particle": "xeno_early_start:block/primitive_fire"
+    "0": "xeno_early_start:block/primitive_fire_lit",
+    "particle": "xeno_early_start:block/primitive_fire_lit"
   },
   "elements": [
     {
