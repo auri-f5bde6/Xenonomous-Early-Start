@@ -1,0 +1,9 @@
+{
+  "type": "xeno_early_start:primitive_fire",
+  "ingredient": {
+    "tag": "minecraft:logs"
+  },
+  "result": "minecraft:charcoal",
+  "experience": 0.1,
+  "cookingtime": 100
+}

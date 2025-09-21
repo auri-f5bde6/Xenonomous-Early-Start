@@ -17,13 +17,13 @@ object ProgressionModToolMaterials {
     val COPPER: ToolMaterial = Material(MiningLevels.STONE, 190, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT))
 
     @JvmField
-    val FLINT_ID: Identifier = ProgressionMod.Companion.of("flint")
+    val FLINT_ID: Identifier = ProgressionMod.of("flint")
 
     @JvmField
-    val BONE_ID: Identifier = ProgressionMod.Companion.of("bone")
+    val BONE_ID: Identifier = ProgressionMod.of("bone")
 
     @JvmField
-    val COPPER_ID: Identifier = ProgressionMod.Companion.of("copper")
+    val COPPER_ID: Identifier = ProgressionMod.of("copper")
 
     @JvmRecord
     private data class Material(

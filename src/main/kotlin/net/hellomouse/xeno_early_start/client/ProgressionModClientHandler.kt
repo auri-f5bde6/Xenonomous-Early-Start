@@ -2,15 +2,21 @@ package net.hellomouse.xeno_early_start.client
 
 import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.ProgressionModConfig
+import net.hellomouse.xeno_early_start.client.block_entity.PrimitiveFireBlockEntityRenderer
 import net.hellomouse.xeno_early_start.client.entity.BrickEntityModel
 import net.hellomouse.xeno_early_start.client.entity.BrickEntityRenderer
 import net.hellomouse.xeno_early_start.client.screen.BrickFurnaceScreen
 import net.hellomouse.xeno_early_start.client.screen.BrickFurnaceScreenHandler
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModEntityRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModScreenHandlerRegistry
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.screen.ingame.HandledScreens
+import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.RenderLayers
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
@@ -43,6 +49,10 @@ object ProgressionModClientHandler {
                 BrickFurnaceScreen(handler, playerInventory, title)
             }
         })
+        BlockEntityRendererFactories.register(
+            ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(), ::PrimitiveFireBlockEntityRenderer
+        )
+        RenderLayers.setRenderLayer(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get(), RenderLayer.getCutout())
     }
 
     @SubscribeEvent

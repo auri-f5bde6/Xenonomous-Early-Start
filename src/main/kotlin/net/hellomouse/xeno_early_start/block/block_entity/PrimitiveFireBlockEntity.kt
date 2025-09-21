@@ -1,18 +1,187 @@
 package net.hellomouse.xeno_early_start.block.block_entity
 
+import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
+import net.hellomouse.xeno_early_start.recipe.PrimitiveFireRecipe
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
+import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.CampfireBlock
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.CampfireBlockEntity
+import net.minecraft.entity.Entity
+import net.minecraft.inventory.Inventories
+import net.minecraft.inventory.Inventory
+import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtElement
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.recipe.RecipeManager
+import net.minecraft.recipe.RecipeManager.MatchGetter
 import net.minecraft.util.Clearable
+import net.minecraft.util.ItemScatterer
+import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
+import net.minecraft.util.math.MathHelper
+import net.minecraft.world.World
+import net.minecraft.world.event.GameEvent
+import java.util.*
+import java.util.function.Function
+import kotlin.math.min
 
 class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
     ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(), pos, state
 ), Clearable {
-    private var itemBeingCooked: Array<ItemStack?> = arrayOfNulls(4)
+    private val itemsBeingCooked: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
+    private val cookingTimes = IntArray(2)
+    private val cookingTotalTimes = IntArray(2)
+    private val matchGetter: MatchGetter<Inventory, PrimitiveFireRecipe> =
+        RecipeManager.createCachedMatchGetter(ProgressionModRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
+    companion object{
+        fun litServerTick(world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+            var bl = false
+
+            for (i in campfire.itemsBeingCooked.indices) {
+                val itemStack = campfire.itemsBeingCooked[i]
+                if (!itemStack.isEmpty) {
+                    bl = true
+                    campfire.cookingTimes[i]++
+                    if (campfire.cookingTimes[i] >= campfire.cookingTotalTimes[i]) {
+                        val inventory: Inventory = SimpleInventory(itemStack)
+                        val itemStack2 = campfire.matchGetter
+                            .getFirstMatch(inventory, world)
+                            .map<ItemStack?>(Function { recipe: PrimitiveFireRecipe ->
+                                recipe.craft(
+                                    inventory,
+                                    world.registryManager
+                                )
+                            })
+                            .orElse(itemStack) as ItemStack
+                        if (itemStack2.isItemEnabled(world.enabledFeatures)) {
+                            ItemScatterer.spawn(
+                                world,
+                                pos.x.toDouble(),
+                                pos.y.toDouble(),
+                                pos.z.toDouble(),
+                                itemStack2
+                            )
+                            campfire.itemsBeingCooked[i] = ItemStack.EMPTY
+                            world.updateListeners(pos, state, state, Block.NOTIFY_ALL)
+                            world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(state))
+                        }
+                    }
+                }
+            }
+
+            if (bl) {
+                markDirty(world, pos, state)
+            }
+        }
+
+        fun unlitServerTick(world: World, pos: BlockPos?, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+            var bl = false
+
+            for (i in campfire.itemsBeingCooked.indices) {
+                if (campfire.cookingTimes[i] > 0) {
+                    bl = true
+                    campfire.cookingTimes[i] =
+                        MathHelper.clamp(campfire.cookingTimes[i] - 2, 0, campfire.cookingTotalTimes[i])
+                }
+            }
+
+            if (bl) {
+                markDirty(world, pos, state)
+            }
+        }
+
+        fun clientTick(world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+            val random = world.random
+            if (random.nextFloat() < 0.11f) {
+                for (i in 0..<random.nextInt(2) + 2) {
+                    PrimitiveFireBlock.spawnSmokeParticle(world, pos, false)
+                }
+            }
+        }
+    }
+
+    fun getItemsBeingCooked(): DefaultedList<ItemStack> {
+        return this.itemsBeingCooked
+    }
+
+    override fun readNbt(nbt: NbtCompound) {
+        super.readNbt(nbt)
+        this.itemsBeingCooked.clear()
+        Inventories.readNbt(nbt, this.itemsBeingCooked)
+        if (nbt.contains("CookingTimes", NbtElement.INT_ARRAY_TYPE.toInt())) {
+            val array = nbt.getIntArray("CookingTimes")
+            System.arraycopy(array, 0, this.cookingTimes, 0, min(this.cookingTotalTimes.size, array.size))
+        }
+
+        if (nbt.contains("CookingTotalTimes", NbtElement.INT_ARRAY_TYPE.toInt())) {
+            val array = nbt.getIntArray("CookingTotalTimes")
+            System.arraycopy(array, 0, this.cookingTotalTimes, 0, min(this.cookingTotalTimes.size, array.size))
+        }
+    }
+
+    override fun writeNbt(nbt: NbtCompound) {
+        super.writeNbt(nbt)
+        Inventories.writeNbt(nbt, this.itemsBeingCooked, true)
+        nbt.putIntArray("CookingTimes", this.cookingTimes)
+        nbt.putIntArray("CookingTotalTimes", this.cookingTotalTimes)
+    }
+
+    override fun toUpdatePacket(): BlockEntityUpdateS2CPacket? {
+        return BlockEntityUpdateS2CPacket.create(this)
+    }
+
+    override fun toInitialChunkDataNbt(): NbtCompound {
+        val nbtCompound = NbtCompound()
+        Inventories.writeNbt(nbtCompound, this.itemsBeingCooked, true)
+        return nbtCompound
+    }
+
+    fun getRecipeFor(stack: ItemStack): Optional<PrimitiveFireRecipe> {
+        return if (this.itemsBeingCooked.stream().noneMatch { obj: ItemStack-> obj.isEmpty })
+            Optional.empty()
+        else
+            this.matchGetter.getFirstMatch(SimpleInventory(stack), this.world)
+    }
+
+    fun addItem(user: Entity?, stack: ItemStack, cookTime: Int): Boolean {
+        for (i in this.itemsBeingCooked.indices) {
+            val itemStack = this.itemsBeingCooked[i]
+            if (itemStack.isEmpty) {
+                this.cookingTotalTimes[i] = cookTime
+                this.cookingTimes[i] = 0
+                this.itemsBeingCooked[i] = stack.split(1)
+                this.world!!.emitGameEvent(
+                    GameEvent.BLOCK_CHANGE,
+                    this.getPos(),
+                    GameEvent.Emitter.of(user, this.cachedState)
+                )
+                this.updateListeners()
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun updateListeners() {
+        this.markDirty()
+        this.getWorld()!!.updateListeners(this.getPos(), this.cachedState, this.cachedState, Block.NOTIFY_ALL)
+    }
 
     override fun clear() {
-        TODO("Not yet implemented")
+        this.itemsBeingCooked.clear()
+    }
+
+    fun spawnItemsBeingCooked() {
+        if (this.world != null) {
+            this.updateListeners()
+        }
     }
 }
