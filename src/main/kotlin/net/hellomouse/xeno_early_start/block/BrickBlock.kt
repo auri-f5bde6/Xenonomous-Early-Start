@@ -1,38 +1,27 @@
 package net.hellomouse.xeno_early_start.block
 
+import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.utils.TransUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.HorizontalFacingBlock
 import net.minecraft.block.ShapeContext
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
+import net.minecraft.state.property.EnumProperty
+import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import kotlin.math.abs
 
-open class BrickBlock(arg: Settings) : HorizontalFacingBlock(arg) {
+open class BrickBlock(arg: Settings) : Block(arg) {
     init {
-        this.defaultState = this.stateManager.getDefaultState().with<Direction, Direction>(FACING, Direction.NORTH)
-        this.defaultState = this.stateManager.getDefaultState().with<Boolean, Boolean>(VERTICAL, false)
+        this.defaultState = this.stateManager.getDefaultState().with(AXIS, Direction.Axis.X)
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block?, BlockState?>) {
-        builder.add(FACING)
-        builder.add(VERTICAL)
-    }
-
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState? {
-        val facing = ctx.horizontalPlayerFacing.opposite
-        val vertical = ctx.side == Direction.UP || ctx.side == Direction.DOWN
-
-        return this.defaultState
-            .with(FACING, facing)
-            .with(VERTICAL, vertical)
-    }
 
     @Deprecated("Deprecated in Java, I guess")
     override fun getOutlineShape(
@@ -40,35 +29,34 @@ open class BrickBlock(arg: Settings) : HorizontalFacingBlock(arg) {
         world: BlockView?,
         pos: BlockPos?,
         context: ShapeContext?
-    ): VoxelShape? {
-        if (state.get(VERTICAL)) {
-            return if (state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH) {
-                SHAPE_UP
-            } else {
-                SHAPE_UP_ROTATED
-            }
-        } else {
-            if (state.get(FACING) == Direction.NORTH || state.get(FACING) == Direction.SOUTH) {
-                return SHAPE
-            } else {
-                return SHAPE_ROTATED
-            }
+    ): VoxelShape {
+        return when (state[AXIS]) {
+            Direction.Axis.X -> SHAPE_ROTATED
+            Direction.Axis.Y -> throw UnsupportedOperationException()
+            Direction.Axis.Z -> SHAPE
         }
+
     }
 
     @Deprecated("Deprecated in Java, I guess")
-    override fun getCullingShape(state: BlockState?, world: BlockView?, pos: BlockPos?): VoxelShape? {
+    override fun getCullingShape(state: BlockState?, world: BlockView?, pos: BlockPos?): VoxelShape {
         return VoxelShapes.empty()
     }
 
     companion object {
-        val VERTICAL: BooleanProperty = BooleanProperty.of("vertical")
+        val AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
         private val SHAPE: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.28125, 0.625, 0.1875, 0.71875)
         private val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
-        //private val SHAPE_ROTATED: VoxelShape? = VoxelShapes.cuboid(0.28125, 0.0, 0.375, 0.71875, 0.1875, 0.625)
-
         private val SHAPE_UP: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.40625, 0.625, 0.4375, 0.59375)
         private val SHAPE_UP_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE_UP)
-        //private val SHAPE_UP_ROTATED: VoxelShape = VoxelShapes.cuboid(0.40625, 0.0, 0.375, 0.59375, 0.4375, 0.625)
+    }
+
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+        super.appendProperties(builder)
+        builder.add(AXIS)
+    }
+
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
+        return this.defaultState.with(AXIS, ctx.horizontalPlayerFacing.axis)
     }
 }
