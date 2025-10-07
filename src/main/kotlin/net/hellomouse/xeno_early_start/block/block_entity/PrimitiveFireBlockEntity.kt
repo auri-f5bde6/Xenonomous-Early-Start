@@ -4,12 +4,13 @@ import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
 import net.hellomouse.xeno_early_start.recipe.PrimitiveFireRecipe
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry
+import net.hellomouse.xeno_early_start.utils.OtherUtils.canSeeSky
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.CampfireBlock
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.CampfireBlockEntity
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
@@ -17,14 +18,14 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeManager.MatchGetter
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Clearable
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
@@ -42,6 +43,21 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
         RecipeManager.createCachedMatchGetter(ProgressionModRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
     companion object{
         fun litServerTick(world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+            if (canSeeSky(world, pos) && (world.isRaining || world.isThundering)) {
+                if (!world.isClient()) {
+                    world.playSound(
+                        null as PlayerEntity?,
+                        pos,
+                        SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,
+                        SoundCategory.BLOCKS,
+                        1.0f,
+                        1.0f
+                    )
+                }
+                CampfireBlock.extinguish(null, world, pos, state)
+                world.setBlockState(pos, state.with(CampfireBlock.LIT, false), Block.NOTIFY_ALL)
+                return
+            }
             var bl = false
 
             for (i in campfire.itemsBeingCooked.indices) {

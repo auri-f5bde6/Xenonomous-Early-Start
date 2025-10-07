@@ -5,6 +5,7 @@ import net.minecraft.world.Heightmap
 import net.minecraft.world.World
 
 object OtherUtils {
+    @JvmStatic
     fun canSeeSky(world: World, pos: BlockPos): Boolean {
         return world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)-1 <= pos.y
     }
