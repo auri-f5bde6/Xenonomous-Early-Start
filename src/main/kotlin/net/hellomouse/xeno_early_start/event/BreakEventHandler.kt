@@ -31,11 +31,6 @@ object BreakEventHandler {
         val toolStack = player.mainHandStack
         val state = event.state
         if (eventState.canHarvestBlock(level, pos, player)) {
-            if (state.isIn(BlockTags.LOGS) && toolStack.item !is AxeItem) {
-                breakBlock(toolStack, level, player, state, pos)
-                event.setCanceled(true)
-                return
-            }
             if (state.isIn(ProgressionModTags.Blocks.HAS_BLOCK_TO_BLOCK_RECIPE)) {
                 val recipes = (level as World).recipeManager
                     .listAllOfType(ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())
