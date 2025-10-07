@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 @Suppress("UNUSED_PARAMETER")
-@EventBusSubscriber(modid = ProgressionMod.Companion.MODID, bus = EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = ProgressionMod.MODID, bus = EventBusSubscriber.Bus.FORGE)
 object BreakEventHandler {
     @SubscribeEvent
     fun onBreakEvent(event: BreakEvent) {
@@ -38,7 +38,7 @@ object BreakEventHandler {
             }
             if (state.isIn(ProgressionModTags.Blocks.HAS_BLOCK_TO_BLOCK_RECIPE)) {
                 val recipes = (level as World).recipeManager
-                    .listAllOfType<SimpleInventory?, StoneToCobbleRecipe>(ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())
+                    .listAllOfType(ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())
                 for (recipe in recipes) {
                     if (recipe.matches(state, toolStack)) {
                         breakBlock(toolStack, level, player, state, pos, recipe.isDropBlockLootTable)
