@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    "B": {
+      "item": "minecraft:flint"
+    }
+  },
+  "pattern": [
+    "FB",
+    "SF"
+  ],
+  "result": {
+    "item": "xeno_early_start:flint_dagger"
+  },
+  "show_notification": true
+}
