@@ -11,24 +11,24 @@ import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 
 object ProgressionModLootTypeRegistry {
-    val COND_DEF_REG: DeferredRegister<LootConditionType> = DeferredRegister.create<LootConditionType>(
+    val COND_DEF_REG: DeferredRegister<LootConditionType> = DeferredRegister.create(
         Registries.LOOT_CONDITION_TYPE.getKey(),
         ProgressionMod.Companion.MODID
     )
 
     @JvmField
-    val pickaxeTier: RegistryObject<LootConditionType> = COND_DEF_REG.register<LootConditionType>(
+    val pickaxeTier: RegistryObject<LootConditionType> = COND_DEF_REG.register(
         "pickaxe_tier",
         Supplier { LootConditionType(PickaxeTier.Serializer()) })
 
     @JvmField
-    val FUNC_DEF_REG: DeferredRegister<LootFunctionType> = DeferredRegister.create<LootFunctionType>(
+    val FUNC_DEF_REG: DeferredRegister<LootFunctionType> = DeferredRegister.create(
         Registries.LOOT_FUNCTION_TYPE.getKey(),
         ProgressionMod.Companion.MODID
     )
 
     @JvmField
-    val configLootFunction: RegistryObject<LootFunctionType> = FUNC_DEF_REG.register<LootFunctionType>(
+    val configLootFunction: RegistryObject<LootFunctionType> = FUNC_DEF_REG.register(
         "config",
         Supplier { LootFunctionType(ConfigLootFunction.Serializer()) })
 }

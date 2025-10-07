@@ -20,10 +20,10 @@ import java.util.function.ToIntFunction
 
 object ProgressionModBlockRegistry {
     val DEF_REG: DeferredRegister<Block> =
-        DeferredRegister.create<Block>(ForgeRegistries.BLOCKS, ProgressionMod.Companion.MODID)
+        DeferredRegister.create(ForgeRegistries.BLOCKS, ProgressionMod.MODID)
 
     @JvmField
-    val RAW_BRICK: RegistryObject<Block> = DEF_REG.register<Block>("raw_brick", Supplier {
+    val RAW_BRICK: RegistryObject<Block> = DEF_REG.register("raw_brick", Supplier {
         RawBrickBlock(
             AbstractBlock.Settings.create()
                 .strength(0.3f, 0.5f)
@@ -33,7 +33,7 @@ object ProgressionModBlockRegistry {
     })
 
     @JvmField
-    val BRICK: RegistryObject<Block> = DEF_REG.register<Block>("brick", Supplier {
+    val BRICK: RegistryObject<Block> = DEF_REG.register("brick", Supplier {
         BrickBlock(
             AbstractBlock.Settings.create()
                 .strength(0.6f, 0.5f)
@@ -43,7 +43,7 @@ object ProgressionModBlockRegistry {
     })
 
     @JvmField
-    val BRICK_FURNACE: RegistryObject<Block> = DEF_REG.register<Block>("brick_furnace", Supplier {
+    val BRICK_FURNACE: RegistryObject<Block> = DEF_REG.register("brick_furnace", Supplier {
         BrickFurnaceBlock(
             AbstractBlock.Settings.create()
                 .mapColor(MapColor.DARK_RED)
@@ -56,7 +56,7 @@ object ProgressionModBlockRegistry {
     })
 
     @JvmField
-    val PRIMITIVE_FIRE: RegistryObject<Block> = DEF_REG.register<Block>("primitive_fire", Supplier {
+    val PRIMITIVE_FIRE: RegistryObject<Block> = DEF_REG.register("primitive_fire", Supplier {
         PrimitiveFireBlock(
             1,
             AbstractBlock.Settings.create()

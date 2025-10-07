@@ -12,13 +12,13 @@ import java.util.function.Supplier
 
 object ProgressionModEntityRegistry {
     val DEF_REG: DeferredRegister<EntityType<*>> =
-        DeferredRegister.create<EntityType<*>>(ForgeRegistries.ENTITY_TYPES, ProgressionMod.Companion.MODID)
+        DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ProgressionMod.MODID)
 
     @JvmField
-    val BRICK: RegistryObject<EntityType<BrickEntity>> = DEF_REG.register<EntityType<BrickEntity>>(
+    val BRICK: RegistryObject<EntityType<BrickEntity>> = DEF_REG.register(
         "brick",
         Supplier {
-            EntityType.Builder.create<BrickEntity>(EntityType.EntityFactory { brickEntityEntityType: EntityType<BrickEntity>, world: World ->
+            EntityType.Builder.create({ brickEntityEntityType: EntityType<BrickEntity>, world: World ->
                 BrickEntity(
                     brickEntityEntityType,
                     world

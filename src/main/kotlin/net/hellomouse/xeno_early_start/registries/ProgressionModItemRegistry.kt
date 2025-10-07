@@ -15,7 +15,7 @@ import java.util.function.Supplier
 object ProgressionModItemRegistry {
     val VANILLA_ITEMS: DeferredRegister<Item> = DeferredRegister.create<Item>(ForgeRegistries.ITEMS, "minecraft")
     val DEF_REG: DeferredRegister<Item> =
-        DeferredRegister.create<Item>(ForgeRegistries.ITEMS, ProgressionMod.Companion.MODID)
+        DeferredRegister.create(ForgeRegistries.ITEMS, ProgressionMod.Companion.MODID)
 
     @JvmField
     val COPPER_SWORD: RegistryObject<Item> = DEF_REG.register(

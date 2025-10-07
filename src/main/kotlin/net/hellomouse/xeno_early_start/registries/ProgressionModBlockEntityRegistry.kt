@@ -14,7 +14,7 @@ import java.util.function.Supplier
 
 object ProgressionModBlockEntityRegistry {
     val DEF_REG: DeferredRegister<BlockEntityType<*>> =
-        DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ProgressionMod.Companion.MODID)
+        DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ProgressionMod.MODID)
 
     @JvmField
     val BRICK_FURNACE: RegistryObject<BlockEntityType<BrickFurnaceBlockEntity>> =

@@ -12,7 +12,7 @@ import java.util.function.Supplier
 
 object ProgressionModScreenHandlerRegistry {
     val DEF_REG: DeferredRegister<ScreenHandlerType<*>> =
-        DeferredRegister.create(ForgeRegistries.MENU_TYPES, ProgressionMod.Companion.MODID)
+        DeferredRegister.create(ForgeRegistries.MENU_TYPES, ProgressionMod.MODID)
 
     @JvmField
     val BRICK_FURNACE_SCREEN: RegistryObject<ScreenHandlerType<BrickFurnaceScreenHandler>> =
