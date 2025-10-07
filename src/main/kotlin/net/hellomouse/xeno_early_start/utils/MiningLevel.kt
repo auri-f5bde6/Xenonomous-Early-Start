@@ -8,7 +8,7 @@ import net.minecraft.item.ToolMaterial
 import net.minecraftforge.common.TierSortingRegistry
 
 object MiningLevel {
-    fun IsToolLowerThanTier(itemStack: ItemStack?, lowerThanTier: ToolMaterial?): Boolean {
+    fun isToolLowerThanTier(itemStack: ItemStack?, lowerThanTier: ToolMaterial?): Boolean {
         val item = itemStack?.item
         if (itemStack == null || lowerThanTier == null) {
             return false

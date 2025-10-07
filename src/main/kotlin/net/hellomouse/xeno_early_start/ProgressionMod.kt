@@ -2,18 +2,25 @@ package net.hellomouse.xeno_early_start
 
 import com.mojang.logging.LogUtils
 import net.hellomouse.xeno_early_start.registries.*
+import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemGroups
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
+import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory
 import net.minecraftforge.common.TierSortingRegistry
+import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegistryObject
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
+
 import java.util.function.Supplier
 
 @Mod(ProgressionMod.Companion.MODID)
@@ -49,6 +56,14 @@ class ProgressionMod {
             ProgressionModToolMaterials.BONE_ID,
             mutableListOf<Any?>(),
             listOf<Any?>(ofMinecraft("wood"))
+        )
+        LOADING_CONTEXT.registerExtensionPoint(
+            ConfigScreenFactory::class.java,
+            Supplier {
+                ConfigScreenFactory { mc: MinecraftClient?, prevScreen: Screen? ->
+                    ProgressionModConfig.Gui.configBuilder.build()
+                }
+            }
         )
     }
 

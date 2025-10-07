@@ -23,7 +23,7 @@ class PickaxeTier(var lowerThanTier: ToolMaterial?) : LootCondition {
 
     override fun test(lootContext: LootContext): Boolean {
         val itemStack = lootContext.get(LootContextParameters.TOOL)
-        return MiningLevel.IsToolLowerThanTier(itemStack, lowerThanTier)
+        return MiningLevel.isToolLowerThanTier(itemStack, lowerThanTier)
     }
 
     class Serializer : JsonSerializer<PickaxeTier> {

@@ -58,7 +58,7 @@ class StoneToCobbleRecipe(
         if (!matchHeldItems.isEmpty()) {
             return false
         }
-        if ((this.isAnyTier || MiningLevel.IsToolLowerThanTier(
+        if ((this.isAnyTier || MiningLevel.isToolLowerThanTier(
                 itemStack, this.getMiningTierLowerThan()
             )) && (!this.isOreToStone || (ProgressionModConfig.oreDropChanges.oreToStone))
         ) {

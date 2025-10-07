@@ -34,14 +34,6 @@ import java.util.function.Supplier
 object ProgressionModClientHandler {
     @SubscribeEvent
     fun onFMLClientSetupEvent(event: FMLClientSetupEvent) {
-        ModLoadingContext.get().registerExtensionPoint(
-            ConfigScreenFactory::class.java,
-            Supplier {
-                ConfigScreenFactory { mc: MinecraftClient?, prevScreen: Screen? ->
-                    ProgressionModConfig.Gui.configBuilder.build()
-                }
-            }
-        )
         event.enqueueWork(Runnable {
             HandledScreens.register(
                 ProgressionModScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get()

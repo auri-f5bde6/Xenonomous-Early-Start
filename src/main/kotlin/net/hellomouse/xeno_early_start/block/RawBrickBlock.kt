@@ -1,6 +1,7 @@
 package net.hellomouse.xeno_early_start.block
 
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
+import net.hellomouse.xeno_early_start.utils.OtherUtils.canSeeSky
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.server.world.ServerWorld
@@ -9,8 +10,6 @@ import net.minecraft.state.property.IntProperty
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
-import net.minecraft.world.Heightmap
-import net.minecraft.world.World
 
 class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     init {
@@ -47,8 +46,5 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     companion object {
         const val FINISH_DRYING_AT=18
         val DRYING_LEVEL: IntProperty = IntProperty.of("dying_level", 0, FINISH_DRYING_AT)
-        private fun canSeeSky(world: World, pos: BlockPos): Boolean {
-            return world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)-1 <= pos.y
-        }
     }
 }

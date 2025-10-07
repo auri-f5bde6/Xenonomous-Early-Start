@@ -18,7 +18,7 @@ object ProgressionModItemRegistry {
         DeferredRegister.create<Item>(ForgeRegistries.ITEMS, ProgressionMod.Companion.MODID)
 
     @JvmField
-    val COPPER_SWORD: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_SWORD: RegistryObject<Item> = DEF_REG.register(
         "copper_sword",
         Supplier {
             SwordItem(
@@ -31,7 +31,7 @@ object ProgressionModItemRegistry {
     )
 
     @JvmField
-    val COPPER_SHOVEL: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_SHOVEL: RegistryObject<Item> = DEF_REG.register(
         "copper_shovel",
         Supplier {
             ShovelItem(
@@ -44,156 +44,156 @@ object ProgressionModItemRegistry {
     )
 
     @JvmField
-    val COPPER_PICKAXE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_PICKAXE: RegistryObject<Item> = DEF_REG.register(
         "copper_pickaxe",
         Supplier { PickaxeItem(ProgressionModToolMaterials.COPPER, 1, -2.8f, Item.Settings()) }
     )
 
     @JvmField
-    val COPPER_AXE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_AXE: RegistryObject<Item> = DEF_REG.register(
         "copper_axe",
         Supplier { AxeItem(ProgressionModToolMaterials.COPPER, 7f, -3.2f, Item.Settings()) }
     )
 
     @JvmField
-    val COPPER_HOE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_HOE: RegistryObject<Item> = DEF_REG.register(
         "copper_hoe",
         Supplier { HoeItem(ProgressionModToolMaterials.COPPER, -1, -2.0f, Item.Settings()) }
     )
 
     @JvmField
-    val COPPER_HELMET: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_HELMET: RegistryObject<Item> = DEF_REG.register(
         "copper_helmet",
         Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.HELMET, Item.Settings()) }
     )
 
     @JvmField
-    val COPPER_CHESTPLATE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_CHESTPLATE: RegistryObject<Item> = DEF_REG.register(
         "copper_chestplate",
         Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.CHESTPLATE, Item.Settings()) }
     )
 
     @JvmField
-    val COPPER_LEGGINGS: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_LEGGINGS: RegistryObject<Item> = DEF_REG.register(
         "copper_leggings",
         Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.LEGGINGS, Item.Settings()) }
     )
 
     @JvmField
-    val COPPER_BOOTS: RegistryObject<Item> = DEF_REG.register<Item>(
+    val COPPER_BOOTS: RegistryObject<Item> = DEF_REG.register(
         "copper_boots",
         Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.BOOTS, Item.Settings()) }
     )
 
     @JvmField
-    val FLINT_HATCHET: RegistryObject<Item> = DEF_REG.register<Item>(
+    val FLINT_HATCHET: RegistryObject<Item> = DEF_REG.register(
         "flint_hatchet",
         Supplier { AxeItem(ProgressionModToolMaterials.FLINT, 6.0f, -3.2f, Item.Settings()) }
     )
 
     @JvmField
-    val FLINT_PICKAXE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val FLINT_PICKAXE: RegistryObject<Item> = DEF_REG.register(
         "flint_pickaxe",
         Supplier { PickaxeItem(ProgressionModToolMaterials.FLINT, 1, -2.8f, Item.Settings()) }
     )
 
     @JvmField
-    val FLINT_DAGGER: RegistryObject<Item> = DEF_REG.register<Item>(
+    val FLINT_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "flint_dagger",
         Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 3, -2.4f, Item.Settings()) }
     )
 
     @JvmField
-    val BONE_PICKAXE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val BONE_PICKAXE: RegistryObject<Item> = DEF_REG.register(
         "bone_pickaxe",
         Supplier { PickaxeItem(ProgressionModToolMaterials.BONE, 1, -2.8f, Item.Settings()) }
     )
 
     @JvmField
-    val BONE_DAGGER: RegistryObject<Item> = DEF_REG.register<Item>(
+    val BONE_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "bone_dagger",
         Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 3, -2.4f, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_NUGGET: RegistryObject<Item> =
-        DEF_REG.register<Item>("copper_nugget", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("copper_nugget", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val RAW_COPPER_NUGGET: RegistryObject<Item> =
-        DEF_REG.register<Item>("raw_copper_nugget", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("raw_copper_nugget", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val RAW_IRON_NUGGET: RegistryObject<Item> =
-        DEF_REG.register<Item>("raw_iron_nugget", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("raw_iron_nugget", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val RAW_GOLD_NUGGET: RegistryObject<Item> =
-        DEF_REG.register<Item>("raw_gold_nugget", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("raw_gold_nugget", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val DIAMOND_FRAGMENT: RegistryObject<Item> =
-        DEF_REG.register<Item>("diamond_fragment", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("diamond_fragment", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
-    val RAW_BRICK: RegistryObject<Item> = DEF_REG.register<Item>(
+    val RAW_BRICK: RegistryObject<Item> = DEF_REG.register(
         "raw_brick",
         Supplier { BlockItem(ProgressionModBlockRegistry.RAW_BRICK.get(), Item.Settings()) }
     )
 
     @JvmField
-    val PLANT_FIBER: RegistryObject<Item> = DEF_REG.register<Item>("plant_fiber", Supplier { Item(Item.Settings()) }
+    val PLANT_FIBER: RegistryObject<Item> = DEF_REG.register("plant_fiber", Supplier { Item(Item.Settings()) }
     )
 
     @JvmField
     val KNAPPED_STONE: RegistryObject<Item> =
-        DEF_REG.register<Item>("knapped_stone", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("knapped_stone", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val PEBBLE: RegistryObject<Item> =
-        DEF_REG.register<Item>("pebble", Supplier { PebbleItem(KNAPPED_STONE.get(), Item.Settings()) }
+        DEF_REG.register("pebble", Supplier { PebbleItem(KNAPPED_STONE.get(), Item.Settings()) }
         )
 
     @JvmField
     val KNAPPED_DEEPSLATE: RegistryObject<Item> =
-        DEF_REG.register<Item>("knapped_deepslate", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("knapped_deepslate", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val DEEPSLATE_PEBBLE: RegistryObject<Item> =
-        DEF_REG.register<Item>("deepslate_pebble", Supplier { PebbleItem(KNAPPED_DEEPSLATE.get(), Item.Settings()) }
+        DEF_REG.register("deepslate_pebble", Supplier { PebbleItem(KNAPPED_DEEPSLATE.get(), Item.Settings()) }
         )
 
     @JvmField
     val KNAPPED_BLACKSTONE: RegistryObject<Item> =
-        DEF_REG.register<Item>("knapped_blackstone", Supplier { Item(Item.Settings()) }
+        DEF_REG.register("knapped_blackstone", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
     val BLACKSTONE_PEBBLE: RegistryObject<Item> =
-        DEF_REG.register<Item>("blackstone_pebble", Supplier { PebbleItem(KNAPPED_BLACKSTONE.get(), Item.Settings()) }
+        DEF_REG.register("blackstone_pebble", Supplier { PebbleItem(KNAPPED_BLACKSTONE.get(), Item.Settings()) }
         )
 
     @JvmField
-    val BRICK_FURNACE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val BRICK_FURNACE: RegistryObject<Item> = DEF_REG.register(
         "brick_furnace",
         Supplier { BlockItem(ProgressionModBlockRegistry.BRICK_FURNACE.get(), Item.Settings()) }
     )
 
     @JvmField
-    val FIRE_STARTER: RegistryObject<Item> = DEF_REG.register<Item>(
+    val FIRE_STARTER: RegistryObject<Item> = DEF_REG.register(
         "fire_starter",
         Supplier { FireStarterItem(Item.Settings()) }
     )
 
     @JvmField
-    val PRIMITIVE_FIRE: RegistryObject<Item> = DEF_REG.register<Item>(
+    val PRIMITIVE_FIRE: RegistryObject<Item> = DEF_REG.register(
         "primitive_fire",
         Supplier { BlockItem(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get(), Item.Settings()) }
     )
@@ -234,7 +234,7 @@ object ProgressionModItemRegistry {
 
     @Suppress("UNUSED")
     @JvmField
-    val BRICK: RegistryObject<Item> = VANILLA_ITEMS.register<Item>(
+    val BRICK: RegistryObject<Item> = VANILLA_ITEMS.register(
         "brick",
         Supplier { BrickItem(ProgressionModBlockRegistry.BRICK.get(), Item.Settings()) }
     )
