@@ -14,6 +14,9 @@ object ProgressionModConfig {
     @JvmField
     var mobChanges: MobChanges = MobChanges()
 
+    @JvmField
+    var blockChanges: BlockChanges = BlockChanges()
+
     class OreDropChanges {
         var moddedPickaxeWorkaround: Boolean =
             true // if a mod didn't registerTier to TierSortingRegistry, check the mining level int instead
@@ -37,6 +40,10 @@ object ProgressionModConfig {
         var entitySpawnWithCopperToolProbability: Float = 0.05f
     }
 
+    class BlockChanges {
+        var stonecutterDamage: Float = 3f
+    }
+
     object Gui {
         private fun getTranslatableText(name: String?): Text {
             return Text.translatable("text.config.${ProgressionMod.Companion.MODID}.$name")
@@ -50,12 +57,13 @@ object ProgressionModConfig {
             get() {
                 val builder = ConfigBuilder.create()
                     .setTitle(getTranslatableText("title"))
-                    .transparentBackground()
+                    .transparentBackground()  // heh, rewriting the entire config just for this
                 val entryBuilder = ConfigEntryBuilder.create()
                 addOreDropChangesEntries(builder, entryBuilder)
                 addEarlyGameEntries(builder, entryBuilder)
                 addMobChangesEntries(builder, entryBuilder)
-                return builder // heh, rewriting the entire config just for this
+                addBlockChangesEntries(builder, entryBuilder)
+                return builder
             }
 
         private fun addEarlyGameEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
@@ -209,6 +217,20 @@ object ProgressionModConfig {
                     .setSaveConsumer { aBoolean: Boolean -> oreDropChanges.oreToStone = aBoolean }
                     .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
                     .setDefaultValue(false)
+                    .build()
+            )
+        }
+
+        private fun addBlockChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
+            val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("blockChanges"))
+            category.addEntry(
+                entryBuilder.startFloatField(
+                    getTranslatableTextOption("blockChanges.stonecutterDamage"),
+                    blockChanges.stonecutterDamage,
+                ).setSaveConsumer { aFloat: Float -> blockChanges.stonecutterDamage = aFloat }
+                    .setDefaultValue(3f)
+                    .setMin(0f)
+                    .setMax(5f)
                     .build()
             )
         }

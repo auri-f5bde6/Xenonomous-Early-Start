@@ -8,6 +8,7 @@
   "mixins": [
     "AbstractBlockMixin",
     "AbstractFurnaceBlockEntityMixin",
+    "BlockMixin",
     "CampfireBlockEntityMixin",
     "CampfireBlockMixin",
     "EntityMixin",

@@ -58,5 +58,6 @@
   "text.config.xeno_early_start.option.oreDropChanges.rawDiamondFragmentDrop": "Raw Diamond Fragment Drop(s)",
   "text.config.xeno_early_start.option.oreDropChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreDropChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
-  "text.config.xeno_early_start.title": "Progression Change"
+  "text.config.xeno_early_start.title": "Progression Change",
+  "death.damage.stonecutter_0": "%s was split into half"
 }
