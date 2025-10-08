@@ -88,7 +88,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val FLINT_HATCHET: RegistryObject<Item> = DEF_REG.register(
         "flint_hatchet",
-        Supplier { AxeItem(ProgressionModToolMaterials.FLINT, 6.0f, -3.2f, Item.Settings()) }
+        Supplier { AxeItem(ProgressionModToolMaterials.FLINT, 4.5f, -3.2f, Item.Settings()) }
     )
 
     @JvmField
@@ -100,7 +100,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val FLINT_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "flint_dagger",
-        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 3, -2.4f, Item.Settings()) }
+        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -2.4f, Item.Settings()) }
     )
 
     @JvmField
@@ -112,7 +112,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val BONE_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "bone_dagger",
-        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 3, -2.4f, Item.Settings()) }
+        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -2.4f, Item.Settings()) }
     )
 
     @JvmField
@@ -189,7 +189,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val FIRE_STARTER: RegistryObject<Item> = DEF_REG.register(
         "fire_starter",
-        Supplier { FireStarterItem(Item.Settings()) }
+        Supplier { FireStarterItem(Item.Settings().maxDamage(4)) }
     )
 
     @JvmField
