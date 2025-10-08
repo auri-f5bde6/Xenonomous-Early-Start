@@ -1,13 +1,12 @@
 package net.hellomouse.xeno_early_start.block
 
-import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.utils.TransUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
@@ -15,7 +14,8 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
-import kotlin.math.abs
+import net.minecraft.world.WorldAccess
+import net.minecraft.world.WorldView
 
 open class BrickBlock(arg: Settings) : Block(arg) {
     init {
@@ -49,6 +49,25 @@ open class BrickBlock(arg: Settings) : Block(arg) {
         private val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun canPlaceAt(state: BlockState?, world: WorldView, pos: BlockPos): Boolean {
+        return sideCoversSmallSquare(world, pos.down(), Direction.UP)
+    }
+    @Deprecated("Deprecated in Java")
+    override fun getStateForNeighborUpdate(
+        state: BlockState,
+        direction: Direction,
+        neighborState: BlockState,
+        world: WorldAccess,
+        pos: BlockPos,
+        neighborPos: BlockPos
+    ): BlockState {
+        return if (direction == Direction.DOWN && !this.canPlaceAt(state, world, pos))
+            Blocks.AIR.defaultState
+        else
+            @Suppress("Deprecation")
+            super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
+    }
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         super.appendProperties(builder)
         builder.add(AXIS)

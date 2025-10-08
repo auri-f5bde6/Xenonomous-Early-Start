@@ -31,16 +31,7 @@ class BrickEntityRenderer(arg: EntityRendererFactory.Context) : EntityRenderer<B
         lightLevel: Int
     ) {
         stack.push()
-        stack.multiply(
-            RotationAxis.POSITIVE_Y.rotationDegrees(
-                MathHelper.lerp(
-                    yaw,
-                    entity.prevYaw,
-                    entity.yaw
-                ) - 90.0f
-            )
-        )
-        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(MathHelper.lerp(yaw, entity.prevPitch, entity.pitch)))
+
         val vertexConsumer =
             ItemRenderer.getDirectItemGlintConsumer(arg3, this.model.getLayer(this.getTexture(entity)), false, false)
         this.model.render(stack, vertexConsumer, lightLevel, OverlayTexture.DEFAULT_UV, 1.0f, 1.0f, 1.0f, 1.0f)

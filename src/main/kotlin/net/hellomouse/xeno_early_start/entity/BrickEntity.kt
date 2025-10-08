@@ -11,6 +11,8 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.sound.SoundCategory
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.math.Direction
@@ -62,34 +64,50 @@ class BrickEntity : PersistentProjectileEntity {
 
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         val world = getWorld()
-        if (!world.isClient()) {
-            val blockState = world.getBlockState(blockHitResult.blockPos)
-            if (blockState.isIn(Tags.Blocks.GLASS)) {
-                world.breakBlock(blockHitResult.blockPos, false, this)
-                this.moveBrickAwayFrom(blockHitResult, 0.9f)
-                this.velocity = this.velocity.multiply(0.7)
-                return
-            }
-        }
-        if (blockHitResult.side != Direction.UP) {
-            val directionVector = this.moveBrickAwayFrom(blockHitResult, 0.7f)
-            futureVelocity = directionVector.multiply(0.05)
-            this.setVelocity(0.0, 0.0, 0.0)
-            this.bounced = true
+        val blockState = world.getBlockState(blockHitResult.blockPos)
+        if (blockState.isIn(Tags.Blocks.GLASS)&&velocity.lengthSquared()>1.5) {
+            world.breakBlock(blockHitResult.blockPos, false, this)
+            this.moveBrickAwayFrom(blockHitResult, 0.9f)
+            this.velocity = this.velocity.multiply(0.7)
+            return
         } else {
-            val above = blockHitResult.blockPos.add(0, 1, 0);
-            if (world.getBlockState(above).isAir) {
-                world.setBlockState(
-                    above,
-                    ProgressionModBlockRegistry.BRICK.get().defaultState.with(BrickBlock.AXIS, horizontalFacing.axis),
-                    NOTIFY_ALL
-                )
+            if (blockHitResult.side != Direction.UP) {
+                val directionVector = this.moveBrickAwayFrom(blockHitResult, 0.9f)
+                futureVelocity = directionVector.multiply(0.05)
+                this.setVelocity(0.0, 0.0, 0.0)
+                this.bounced = true
             } else {
-                world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, brickStack))
-            }
-            kill()
+                val above = blockHitResult.blockPos.add(0, 1, 0);
+                val block = ProgressionModBlockRegistry.BRICK.get().defaultState.with(
+                    BrickBlock.AXIS, horizontalFacing.rotateClockwise(
+                        Direction.Axis.Y
+                    ).axis
+                );
+                if (world.getBlockState(above).isAir && block.canPlaceAt(world, above)) {
+                    world.setBlockState(
+                        above,
+                        block,
+                        NOTIFY_ALL
+                    )
+                    world.playSound(
+                        pos.x,
+                        pos.y,
+                        pos.z,
+                        BlockSoundGroup.DEEPSLATE_BRICKS.hitSound,
+                        SoundCategory.BLOCKS,
+                        1.0f,
+                        1.0f,
+                        true
+                    )
+                } else {
+                    world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, brickStack))
+                }
+                kill()
 
+            }
         }
+
+
     }
 
     fun moveBrickAwayFrom(blockHitResult: BlockHitResult, blocks: Float): Vec3d {
@@ -97,7 +115,7 @@ class BrickEntity : PersistentProjectileEntity {
         val blockPos = blockHitResult.getPos()
         // Direction vector from block pos to entity
         val directionVector = this.pos.subtract(blockPos).normalize()
-        // Move the entity away from the block by 0.7
+        // Move the entity away from the block by `blocks`
         this.setPosition(blockPos.add(directionVector.multiply(blocks.toDouble())))
         return directionVector
     }
