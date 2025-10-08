@@ -1,8 +1,12 @@
 package net.hellomouse.xeno_early_start.entity
 
+import net.hellomouse.xeno_early_start.block.BrickBlock
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModEntityRegistry
+import net.minecraft.block.Block.NOTIFY_ALL
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.item.ItemStack
@@ -73,8 +77,18 @@ class BrickEntity : PersistentProjectileEntity {
             this.setVelocity(0.0, 0.0, 0.0)
             this.bounced = true
         } else {
-            super.onBlockHit(blockHitResult)
-            this.setOnGround(true)
+            val above = blockHitResult.blockPos.add(0, 1, 0);
+            if (world.getBlockState(above).isAir) {
+                world.setBlockState(
+                    above,
+                    ProgressionModBlockRegistry.BRICK.get().defaultState.with(BrickBlock.AXIS, horizontalFacing.axis),
+                    NOTIFY_ALL
+                )
+            } else {
+                world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, brickStack))
+            }
+            kill()
+
         }
     }
 

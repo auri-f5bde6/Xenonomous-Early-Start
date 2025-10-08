@@ -47,8 +47,6 @@ open class BrickBlock(arg: Settings) : Block(arg) {
         val AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
         private val SHAPE: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.28125, 0.625, 0.1875, 0.71875)
         private val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
-        private val SHAPE_UP: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.40625, 0.625, 0.4375, 0.59375)
-        private val SHAPE_UP_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE_UP)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
