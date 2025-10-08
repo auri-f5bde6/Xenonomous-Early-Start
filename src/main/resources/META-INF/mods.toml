@@ -17,7 +17,7 @@ An overhaul of the early game progression, It also brings copper equipment to 1.
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
-ordering = "NONE"
+ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.xeno_early_start]]
