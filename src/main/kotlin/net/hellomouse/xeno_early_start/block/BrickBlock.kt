@@ -5,7 +5,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
-import net.minecraft.entity.Entity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.EnumProperty
@@ -15,7 +14,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
-import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
@@ -54,9 +52,6 @@ open class BrickBlock(arg: Settings) : Block(arg) {
     @Deprecated("Deprecated in Java")
     override fun canPlaceAt(state: BlockState?, world: WorldView, pos: BlockPos): Boolean {
         return sideCoversSmallSquare(world, pos.down(), Direction.UP)
-    }
-    override fun onLandedUpon(world: World, state: BlockState, pos: BlockPos, entity: Entity, fallDistance: Float) {
-        world.breakBlock(pos, true)
     }
 
     @Deprecated("Deprecated in Java")

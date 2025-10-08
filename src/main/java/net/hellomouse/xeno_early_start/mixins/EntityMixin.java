@@ -1,9 +1,12 @@
 package net.hellomouse.xeno_early_start.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.hellomouse.xeno_early_start.ProgressionMod;
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
-import net.hellomouse.xeno_early_start.block.BrickBlock;
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry;
 import net.hellomouse.xeno_early_start.utils.OtherUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.sound.BlockSoundGroup;
@@ -13,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,6 +49,12 @@ public abstract class EntityMixin {
     @Shadow
     public abstract void onLanding();
 
+    @Shadow
+    private boolean onGround;
+
+    @Shadow
+    public abstract Vec3d getPos();
+
     @Inject(method = "playStepSound", at = @At("HEAD"), cancellable = true)
     void fixSmallBlockStepSound(BlockPos pos, BlockState state, CallbackInfo ci) {
         var conf = ProgressionModConfig.blockChanges.getFixThinBlockStepSound();
@@ -65,22 +73,14 @@ public abstract class EntityMixin {
         }
     }
 
-    @Inject(method = "fall", at = @At("HEAD"), cancellable = true)
-    protected void fall(double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition, CallbackInfo ci) {
-        var stepping_on = OtherUtils.raycastSteppingOn(world, this.pos, ((Entity) (Object) this));
+    @WrapOperation(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;onSteppedOn(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/Entity;)V"))
+    void move(Block instance, World world, BlockPos pos, BlockState state, Entity entity, Operation<Void> original) {
+        var stepping_on = OtherUtils.raycastSteppingOn(world, getPos(), ((Entity) (Object) this));
         var block = stepping_on.component2().getBlock();
-        if (onGround && block instanceof BrickBlock) {
-            if (fallDistance > 0.0F) {
-                block.onLandedUpon(getWorld(), stepping_on.component2(), stepping_on.component1().getBlockPos(), ((Entity) (Object) this), this.fallDistance);
-                this.getWorld()
-                        .emitGameEvent(
-                                GameEvent.HIT_GROUND,
-                                pos,
-                                GameEvent.Emitter.of(((Entity) (Object) this), supportingBlockPos.map(arg -> this.getWorld().getBlockState(arg)).orElse(state))
-                        );
-            }
-            onLanding();
-            ci.cancel();
+        if (stepping_on.component2().isOf(ProgressionModBlockRegistry.RAW_BRICK.get())) {
+            block.onSteppedOn(world, stepping_on.component1().getBlockPos(), stepping_on.component2(), entity);
+        } else {
+            original.call(instance, world, pos, state, entity);
         }
     }
 }

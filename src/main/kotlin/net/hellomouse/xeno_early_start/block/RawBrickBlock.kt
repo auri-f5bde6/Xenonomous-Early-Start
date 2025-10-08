@@ -4,12 +4,17 @@ import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.utils.OtherUtils.canSeeSky
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.entity.Entity
+import net.minecraft.entity.ItemEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
+import net.minecraft.world.World
 
 class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     init {
@@ -43,8 +48,24 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
         }
     }
 
+    override fun onSteppedOn(world: World, pos: BlockPos, state: BlockState, entity: Entity) {
+        super.onSteppedOn(world, pos, state, entity)
+        if (!entity.isSneaking) {
+            world.breakBlock(pos, false)
+            world.spawnEntity(
+                ItemEntity(
+                    world,
+                    pos.x.toDouble(),
+                    pos.y.toDouble(),
+                    pos.z.toDouble(),
+                    ItemStack(Items.CLAY_BALL, 2)
+                )
+            )
+        }
+    }
+
     companion object {
-        const val FINISH_DRYING_AT=18
+        const val FINISH_DRYING_AT = 18
         val DRYING_LEVEL: IntProperty = IntProperty.of("dying_level", 0, FINISH_DRYING_AT)
     }
 }
