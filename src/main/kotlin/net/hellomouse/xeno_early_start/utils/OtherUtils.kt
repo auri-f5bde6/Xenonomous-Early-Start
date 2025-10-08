@@ -22,12 +22,17 @@ object OtherUtils {
     fun raycastSteppingOn(world: World, entityPos: Vec3d, entity: Entity): Pair<BlockPos, BlockState> {
         val divisor = 4
         val bound = divisor / 2
+        val epsilon = 0.001
         val halfX = entity.boundingBox.xLength / divisor
         val halfZ = entity.boundingBox.zLength / divisor
         var closest: Pair<BlockHitResult?, Double> = Pair(null, Double.MAX_VALUE)
         for (i in -bound..bound) {
             for (j in -bound..bound) {
-                val corner = entityPos.add(if (i == 0) 0.0 else halfX * i, 0.0, if (j == 0) 0.0 else halfZ * j)
+                val corner = entityPos.add(
+                    if (i == 0) 0.0 else halfX * i - epsilon,
+                    0.0,
+                    if (j == 0) 0.0 else halfZ * j - epsilon
+                )
                 val context = RaycastContext(
                     corner,
                     corner.add(0.0, -1.0, 0.0),
@@ -51,7 +56,6 @@ object OtherUtils {
         } else {
             return Pair(entity.blockPos.subtract(Vec3i(0, -1, 0)), Blocks.AIR.defaultState)
         }
-
     }
 }
 
