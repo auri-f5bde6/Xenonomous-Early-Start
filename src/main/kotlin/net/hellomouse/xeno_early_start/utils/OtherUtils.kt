@@ -1,10 +1,13 @@
 package net.hellomouse.xeno_early_start.utils
 
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
+import net.minecraft.util.math.Vec3i
 import net.minecraft.world.Heightmap
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
@@ -16,17 +19,39 @@ object OtherUtils {
     }
 
     @JvmStatic
-    fun raycastSteppingOn(world: World, entityPos: Vec3d, entity: Entity): Pair<BlockHitResult, BlockState> {
-        val context = RaycastContext(
-            entityPos,
-            entityPos.add(0.0, -1.0, 0.0),
-            RaycastContext.ShapeType.OUTLINE,
-            RaycastContext.FluidHandling.NONE,
-            entity
-        )
-        val hit: BlockHitResult = world.raycast(context)
-        val hitState: BlockState = world.getBlockState(hit.blockPos)
-        return Pair(hit, hitState)
+    fun raycastSteppingOn(world: World, entityPos: Vec3d, entity: Entity): Pair<BlockPos, BlockState> {
+        val divisor = 4
+        val bound = divisor / 2
+        val halfX = entity.boundingBox.xLength / divisor
+        val halfZ = entity.boundingBox.zLength / divisor
+        var closest: Pair<BlockHitResult?, Double> = Pair(null, Double.MAX_VALUE)
+        for (i in -bound..bound) {
+            for (j in -bound..bound) {
+                val corner = entityPos.add(if (i == 0) 0.0 else halfX * i, 0.0, if (j == 0) 0.0 else halfZ * j)
+                val context = RaycastContext(
+                    corner,
+                    corner.add(0.0, -1.0, 0.0),
+                    RaycastContext.ShapeType.COLLIDER,
+                    RaycastContext.FluidHandling.NONE,
+                    entity
+                )
+                val hit: BlockHitResult = world.raycast(context)
+                if (hit.type == HitResult.Type.BLOCK) {
+                    val dist = corner.subtract(hit.pos).y
+                    if (dist < closest.component2()) {
+                        closest = Pair(hit, dist)
+                    }
+                }
+            }
+        }
+        val result = closest.component1()
+        if (result != null) {
+            val hitState: BlockState = world.getBlockState(result.blockPos)
+            return Pair(result.blockPos, hitState)
+        } else {
+            return Pair(entity.blockPos.subtract(Vec3i(0, -1, 0)), Blocks.AIR.defaultState)
+        }
+
     }
 }
 

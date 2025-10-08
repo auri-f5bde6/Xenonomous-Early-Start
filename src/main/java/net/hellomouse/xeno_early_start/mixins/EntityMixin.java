@@ -11,17 +11,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -55,22 +53,20 @@ public abstract class EntityMixin {
     @Shadow
     public abstract Vec3d getPos();
 
-    @Inject(method = "playStepSound", at = @At("HEAD"), cancellable = true)
-    void fixSmallBlockStepSound(BlockPos pos, BlockState state, CallbackInfo ci) {
+    @WrapOperation(method = "playStepSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getSoundType(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)Lnet/minecraft/sound/BlockSoundGroup;"))
+    BlockSoundGroup fixSmallBlockStepSound(BlockState instance, WorldView worldView, BlockPos blockPos, Entity entity, Operation<BlockSoundGroup> original) {
         var conf = ProgressionModConfig.blockChanges.getFixThinBlockStepSound();
         if (conf != ProgressionModConfig.BlockChanges.FixThinBlockStepSound.False) {
             var stepping_on = OtherUtils.raycastSteppingOn(world, this.pos, ((Entity) (Object) this));
-            BlockHitResult hit = stepping_on.component1();
             BlockState hitState = stepping_on.component2();
             var ident = ForgeRegistries.BLOCKS.getKey(hitState.getBlock());
             if ((conf == ProgressionModConfig.BlockChanges.FixThinBlockStepSound.True)
                     || (ident != null && Objects.equals(ident.getNamespace(), ProgressionMod.MODID)
                     && conf == ProgressionModConfig.BlockChanges.FixThinBlockStepSound.OnlyThisMod)) {
-                BlockSoundGroup sound = hitState.getSoundType(this.world, hit.getBlockPos(), ((Entity) ((Object) this)));
-                playSound(sound.getStepSound(), sound.getVolume() * 0.15F, sound.getPitch());
-                ci.cancel();
+                return hitState.getSoundType(this.world, stepping_on.component1(), ((Entity) ((Object) this)));
             }
         }
+        return original.call(instance, worldView, blockPos, entity);
     }
 
     @WrapOperation(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;onSteppedOn(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/Entity;)V"))
@@ -78,7 +74,7 @@ public abstract class EntityMixin {
         var stepping_on = OtherUtils.raycastSteppingOn(world, getPos(), ((Entity) (Object) this));
         var block = stepping_on.component2().getBlock();
         if (stepping_on.component2().isOf(ProgressionModBlockRegistry.RAW_BRICK.get())) {
-            block.onSteppedOn(world, stepping_on.component1().getBlockPos(), stepping_on.component2(), entity);
+            original.call(block, world, stepping_on.component1(), stepping_on.component2(), entity);
         } else {
             original.call(instance, world, pos, state, entity);
         }
