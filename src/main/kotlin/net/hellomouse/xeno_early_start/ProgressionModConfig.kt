@@ -41,7 +41,14 @@ object ProgressionModConfig {
     }
 
     class BlockChanges {
+        enum class FixThinBlockStepSound {
+            True,
+            False,
+            OnlyThisMod
+        }
+
         var stonecutterDamage: Float = 3f
+        var fixThinBlockStepSound: FixThinBlockStepSound = FixThinBlockStepSound.True
     }
 
     object Gui {
@@ -231,6 +238,17 @@ object ProgressionModConfig {
                     .setDefaultValue(3f)
                     .setMin(0f)
                     .setMax(5f)
+                    .build()
+            )
+            category.addEntry(
+                entryBuilder.startEnumSelector<BlockChanges.FixThinBlockStepSound>(
+                    getTranslatableTextOption("blockChanges.fixThinBlockStepSound"),
+                    BlockChanges.FixThinBlockStepSound::class.java,
+                    blockChanges.fixThinBlockStepSound
+                ).setSaveConsumer { enum: BlockChanges.FixThinBlockStepSound ->
+                    blockChanges.fixThinBlockStepSound = enum
+                }
+                    .setDefaultValue(BlockChanges.FixThinBlockStepSound.True)
                     .build()
             )
         }
