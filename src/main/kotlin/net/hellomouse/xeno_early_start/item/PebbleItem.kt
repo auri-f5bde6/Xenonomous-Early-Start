@@ -21,8 +21,10 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
                     Tags.Blocks.COBBLESTONE
                 )
             ) {
-                mainhandStack.decrement(1)
-                offhandStack.decrement(1)
+                if (!player.isCreative){
+                    mainhandStack.decrement(1)
+                    offhandStack.decrement(1)
+                }
                 player.giveItemStack(result.defaultStack)
                 world.playSound(
                     player,
