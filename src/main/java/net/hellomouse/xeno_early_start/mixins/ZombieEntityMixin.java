@@ -1,6 +1,7 @@
 package net.hellomouse.xeno_early_start.mixins;
 
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
+import net.hellomouse.xeno_early_start.entity.goal.WalkOnRawBrickGoal;
 import net.hellomouse.xeno_early_start.registries.ProgressionModItemRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.ZombieEntity;
@@ -24,5 +25,10 @@ public abstract class ZombieEntityMixin extends MobEntityMixin {
                 this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ProgressionModItemRegistry.COPPER_SHOVEL.get()));
             }
         }
+    }
+
+    @Inject(method = "initGoals", at = @At("HEAD"))
+    void addStepOnRawBrickGoal(CallbackInfo ci) {
+        goalSelector.add(5, new WalkOnRawBrickGoal(((ZombieEntity) (Object) this), 0.1, 3));
     }
 }
