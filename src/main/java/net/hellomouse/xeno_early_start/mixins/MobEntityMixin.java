@@ -8,15 +8,21 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
 import net.hellomouse.xeno_early_start.registries.ProgressionModItemRegistry;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin extends EntityMixin {
+    @Shadow
+    @Final
+    public GoalSelector goalSelector;
+
     @WrapOperation(method = "initEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getEquipmentForSlot(Lnet/minecraft/entity/EquipmentSlot;I)Lnet/minecraft/item/Item;"))
     private Item initEquipment(EquipmentSlot equipmentSlot, int equipmentLevel, Operation<Item> original) {
         if (this.random.nextFloat() < ProgressionModConfig.mobChanges.getReplaceEntityCopperArmourProbability()) {
