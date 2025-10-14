@@ -4,7 +4,6 @@ import net.hellomouse.xeno_early_start.utils.OtherUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.CampfireBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +22,7 @@ public class CampfireBlockEntityMixin {
     private static void extinguishWhenRaining(World world, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CallbackInfo ci) {
         if (OtherUtils.canSeeSky(world, pos)&&(world.isRaining()||world.isThundering())) {
             if (!world.isClient()) {
-                world.playSound((PlayerEntity)null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
             extinguish(null, world, pos,state);
             world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL);

@@ -121,6 +121,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
     @Deprecated("Deprecated in Java")
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos?, entity: Entity?) {
         if (state.get(LIT) && entity is LivingEntity && !EnchantmentHelper.hasFrostWalker(entity)) {
+            entity.setOnFireFor(1)
             entity.damage(world.damageSources.inFire(), this.fireDamage.toFloat())
         }
         @Suppress("DEPRECATION")
@@ -301,7 +302,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         hand: Hand,
         hit: BlockHitResult
     ): ActionResult {
-        val blockEntity=world.getBlockEntity(pos);
+        val blockEntity=world.getBlockEntity(pos)
         if (blockEntity is PrimitiveFireBlockEntity) {
             val itemStack = player.getStackInHand(hand)
             val optional = blockEntity.getRecipeFor(itemStack)

@@ -23,11 +23,10 @@ object MiningLevel {
         }
         return false
     }
-
     fun getTierName(material: ToolMaterial?): String {
         val name = TierSortingRegistry.getName(material)
         if (name == null) {
-            ProgressionMod.Companion.LOGGER.warn(
+            ProgressionMod.LOGGER.warn(
                 "Pickaxe Tier {} is missing from tierSortingRegistry! (pickaxe_tier's below_tier will fallback to minecraft:wood)",
                 material
             )
