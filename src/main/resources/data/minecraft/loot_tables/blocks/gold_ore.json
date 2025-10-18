@@ -31,8 +31,9 @@
               "name": "xeno_early_start:raw_gold_nugget",
               "conditions": [
                 {
-                  "condition": "xeno_early_start:pickaxe_tier",
-                  "below_tier": "minecraft:diamond"
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "minecraft:diamond",
+                  "cond": "<"
                 }
               ],
               "functions": [

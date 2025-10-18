@@ -11,6 +11,17 @@
               "type": "minecraft:item",
               "conditions": [
                 {
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "minecraft:stone",
+                  "cond": "<"
+                }
+              ],
+              "name": "minecraft:air"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
                   "condition": "minecraft:match_tool",
                   "predicate": {
                     "enchantments": [
@@ -45,8 +56,9 @@
               "name": "xeno_early_start:diamond_fragment",
               "conditions": [
                 {
-                  "condition": "xeno_early_start:pickaxe_tier",
-                  "below_tier": "minecraft:netherite"
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "minecraft:netherite",
+                  "cond": "<"
                 }
               ]
             },

@@ -38,7 +38,7 @@
                   "cond": "<"
                 }
               ],
-              "name": "xeno_early_start:pebble"
+              "name": "xeno_early_start:deepslate_pebble"
             },
             {
               "type": "minecraft:item",
@@ -47,7 +47,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "minecraft:cobblestone"
+              "name": "minecraft:deepslate"
             }
           ]
         }
@@ -55,5 +55,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:blocks/cobblestone"
+  "random_sequence": "minecraft:blocks/deepslate"
 }

@@ -5,6 +5,17 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "xeno_early_start:match_tool_tier",
+              "tier": "minecraft:stone",
+              "cond": "<"
+            }
+          ],
+          "name": "minecraft:air"
+        },
+        {
           "type": "minecraft:alternatives",
           "children": [
             {
@@ -31,8 +42,9 @@
               "name": "xeno_early_start:raw_copper_nugget",
               "conditions": [
                 {
-                  "condition": "xeno_early_start:pickaxe_tier",
-                  "below_tier": "minecraft:diamond"
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "minecraft:diamond",
+                  "cond": "<"
                 }
               ],
               "functions": [

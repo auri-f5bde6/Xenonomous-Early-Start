@@ -12,8 +12,9 @@
               "name": "minecraft:air",
               "conditions": [
                 {
-                  "condition": "xeno_early_start:pickaxe_tier",
-                  "below_tier": "xeno_early_start:copper"
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "xeno_early_start:copper",
+                  "cond": "<"
                 }
               ]
             },
@@ -41,8 +42,9 @@
               "name": "xeno_early_start:raw_iron_nugget",
               "conditions": [
                 {
-                  "condition": "xeno_early_start:pickaxe_tier",
-                  "below_tier": "minecraft:diamond"
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "minecraft:diamond",
+                  "cond": "<"
                 }
               ],
               "functions": [
