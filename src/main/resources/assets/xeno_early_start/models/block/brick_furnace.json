@@ -3,6 +3,7 @@
   "textures": {
     "front": "xeno_early_start:block/brick_furnace_front",
     "side": "xeno_early_start:block/brick_furnace_side",
-    "top": "xeno_early_start:block/brick_furnace_top"
+    "top": "xeno_early_start:block/brick_furnace_top",
+    "bottom": "xeno_early_start:block/brick_furnace_bottom"
   }
 }
