@@ -18,8 +18,11 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
+import net.minecraft.recipe.AbstractCookingRecipe
+import net.minecraft.recipe.CampfireCookingRecipe
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeManager.MatchGetter
+import net.minecraft.recipe.RecipeType
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Clearable
@@ -39,10 +42,13 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
     private val itemsBeingCooked: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
     private val cookingTimes = IntArray(2)
     private val cookingTotalTimes = IntArray(2)
-    private val matchGetter: MatchGetter<Inventory, PrimitiveFireRecipe> =
+    private val primitiveFireMatchGetter: MatchGetter<Inventory, PrimitiveFireRecipe> =
         RecipeManager.createCachedMatchGetter(ProgressionModRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
-    companion object{
-        fun litServerTick(world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+    private val campfireMatchGetter: MatchGetter<Inventory, CampfireCookingRecipe> =
+        RecipeManager.createCachedMatchGetter(RecipeType.CAMPFIRE_COOKING)
+
+    companion object {
+        fun litServerTick(world: World, pos: BlockPos, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
             if (canSeeSky(world, pos) && (world.isRaining || world.isThundering)) {
                 if (!world.isClient()) {
                     world.playSound(
@@ -60,31 +66,41 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
             }
             var bl = false
 
-            for (i in campfire.itemsBeingCooked.indices) {
-                val itemStack = campfire.itemsBeingCooked[i]
+            for (i in primitiveFire.itemsBeingCooked.indices) {
+                val itemStack = primitiveFire.itemsBeingCooked[i]
                 if (!itemStack.isEmpty) {
                     bl = true
-                    campfire.cookingTimes[i]++
-                    if (campfire.cookingTimes[i] >= campfire.cookingTotalTimes[i]) {
+                    primitiveFire.cookingTimes[i]++
+                    if (primitiveFire.cookingTimes[i] >= primitiveFire.cookingTotalTimes[i]) {
                         val inventory: Inventory = SimpleInventory(itemStack)
-                        val itemStack2 = campfire.matchGetter
+                        val primitiveRecipeResult = primitiveFire.primitiveFireMatchGetter
                             .getFirstMatch(inventory, world)
-                            .map<ItemStack?>(Function { recipe: PrimitiveFireRecipe ->
+                            .map(Function { recipe: PrimitiveFireRecipe ->
                                 recipe.craft(
                                     inventory,
                                     world.registryManager
                                 )
                             })
-                            .orElse(itemStack) as ItemStack
-                        if (itemStack2.isItemEnabled(world.enabledFeatures)) {
+                        val campfireRecipeResult =
+                            primitiveFire.campfireMatchGetter.getFirstMatch(inventory, world)
+                                .map(Function { recipe: CampfireCookingRecipe ->
+                                    recipe.craft(inventory, world.registryManager)
+                                })
+                        var spawnItem: ItemStack = itemStack
+                        if (primitiveRecipeResult.isPresent) {
+                            spawnItem = primitiveRecipeResult.get()
+                        } else if (campfireRecipeResult.isPresent) {
+                            spawnItem = campfireRecipeResult.get()
+                        }
+                        if (spawnItem.isItemEnabled(world.enabledFeatures)) {
                             ItemScatterer.spawn(
                                 world,
                                 pos.x.toDouble(),
                                 pos.y.toDouble(),
                                 pos.z.toDouble(),
-                                itemStack2
+                                spawnItem
                             )
-                            campfire.itemsBeingCooked[i] = ItemStack.EMPTY
+                            primitiveFire.itemsBeingCooked[i] = ItemStack.EMPTY
                             world.updateListeners(pos, state, state, Block.NOTIFY_ALL)
                             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(state))
                         }
@@ -97,14 +113,14 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
             }
         }
 
-        fun unlitServerTick(world: World, pos: BlockPos?, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+        fun unlitServerTick(world: World, pos: BlockPos?, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
             var bl = false
 
-            for (i in campfire.itemsBeingCooked.indices) {
-                if (campfire.cookingTimes[i] > 0) {
+            for (i in primitiveFire.itemsBeingCooked.indices) {
+                if (primitiveFire.cookingTimes[i] > 0) {
                     bl = true
-                    campfire.cookingTimes[i] =
-                        MathHelper.clamp(campfire.cookingTimes[i] - 2, 0, campfire.cookingTotalTimes[i])
+                    primitiveFire.cookingTimes[i] =
+                        MathHelper.clamp(primitiveFire.cookingTimes[i] - 2, 0, primitiveFire.cookingTotalTimes[i])
                 }
             }
 
@@ -113,7 +129,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
             }
         }
 
-        fun clientTick(world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity) {
+        fun clientTick(world: World, pos: BlockPos, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
             val random = world.random
             if (random.nextFloat() < 0.11f) {
                 for (i in 0..<random.nextInt(2) + 2) {
@@ -159,11 +175,20 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
         return nbtCompound
     }
 
-    fun getRecipeFor(stack: ItemStack): Optional<PrimitiveFireRecipe> {
-        return if (this.itemsBeingCooked.stream().noneMatch { obj: ItemStack-> obj.isEmpty })
+    fun getRecipeFor(stack: ItemStack): Optional<AbstractCookingRecipe> {
+        return if (this.itemsBeingCooked.stream().noneMatch { obj: ItemStack -> obj.isEmpty }) {
             Optional.empty()
-        else
-            this.matchGetter.getFirstMatch(SimpleInventory(stack), this.world)
+        } else {
+            val a = this.primitiveFireMatchGetter.getFirstMatch(SimpleInventory(stack), this.world)
+            val b = this.campfireMatchGetter.getFirstMatch(SimpleInventory(stack), this.world)
+            if (a.isPresent) {
+                Optional.of(a.get() as AbstractCookingRecipe)
+            } else if (b.isPresent) {
+                Optional.of(b.get() as AbstractCookingRecipe)
+            } else {
+                Optional.empty()
+            }
+        }
     }
 
     fun addItem(user: Entity?, stack: ItemStack, cookTime: Int): Boolean {
