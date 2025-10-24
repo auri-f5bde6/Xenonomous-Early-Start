@@ -22,7 +22,8 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
         GreaterEqual,
         Lesser,
         LessEqual,
-        Equal;
+        Equal,
+        NotEqual;
 
         companion object {
             fun fromJson(string: String): Condition? {
@@ -31,6 +32,7 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
                     "greaterEqual", ">=" -> return GreaterEqual
                     "lesser", "<" -> return Lesser
                     "equal", "==" -> return Equal
+                    "notEqual", "!=" -> return NotEqual
                 }
                 return null
             }
@@ -43,6 +45,7 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
                 Lesser -> "<"
                 LessEqual -> "<="
                 Equal -> "=="
+                NotEqual -> "!="
             }
         }
     }
@@ -72,6 +75,9 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
 
             Condition.Equal -> {
                 MiningLevel.isToolEqualToTier(itemStack, tier)
+            }
+            Condition.NotEqual -> {
+                !MiningLevel.isToolEqualToTier(itemStack, tier)
             }
         }
     }

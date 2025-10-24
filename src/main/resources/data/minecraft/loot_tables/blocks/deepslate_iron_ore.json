@@ -56,6 +56,11 @@
                   "condition": "xeno_early_start:match_tool_tier",
                   "tier": "minecraft:diamond",
                   "cond": "<"
+                },
+                {
+                  "condition": "xeno_early_start:match_tool_tier",
+                  "tier": "minecraft:gold",
+                  "cond": "!="
                 }
               ],
               "functions": [
