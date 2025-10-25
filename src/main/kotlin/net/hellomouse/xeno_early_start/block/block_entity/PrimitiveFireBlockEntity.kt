@@ -120,7 +120,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
                 if (primitiveFire.cookingTimes[i] > 0) {
                     bl = true
                     primitiveFire.cookingTimes[i] =
-                        MathHelper.clamp(primitiveFire.cookingTimes[i] - 2, 0, primitiveFire.cookingTotalTimes[i])
+                        MathHelper.clamp(primitiveFire.cookingTimes[i] - 4, 0, primitiveFire.cookingTotalTimes[i])
                 }
             }
 

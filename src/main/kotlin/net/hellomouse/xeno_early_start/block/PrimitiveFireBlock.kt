@@ -55,7 +55,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val SHAPE: VoxelShape = VoxelShapes.cuboid(0.125, 0.0, 0.125, 0.875, 0.3125, 0.8125)
         val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
-        fun spawnSmokeParticle(world: World, pos: BlockPos,lotsOfSmoke: Boolean) {
+        fun spawnSmokeParticle(world: World, pos: BlockPos, lotsOfSmoke: Boolean) {
             val randomSource = world.getRandom()
             val simpleParticleType = ParticleTypes.CAMPFIRE_COSY_SMOKE
             world.addImportantParticle(
@@ -68,7 +68,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                 0.07,
                 0.0
             )
-            world.addParticle(ParticleTypes.FLAME, pos.x + 0.5,  pos.y + 0.34,  pos.z + 0.5, 0.0, 0.0, 0.0)
+            world.addParticle(ParticleTypes.FLAME, pos.x + 0.5, pos.y + 0.34, pos.z + 0.5, 0.0, 0.0, 0.0)
             if (lotsOfSmoke) {
                 world.addParticle(
                     ParticleTypes.SMOKE,
@@ -81,6 +81,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                 )
             }
         }
+
         fun extinguish(entity: Entity?, world: WorldAccess, pos: BlockPos, state: BlockState) {
             if (world.isClient) {
                 for (i in 0..19) {
@@ -158,6 +159,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             .with(FACING, ctx.horizontalPlayerFacing)
             .with(WATERLOGGED, flag)
     }
+
     @Deprecated("Deprecated in Java")
     override fun getFluidState(state: BlockState): FluidState? {
         @Suppress("Deprecation")
@@ -165,6 +167,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             state
         )
     }
+
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         if (state.get(LIT)) {
             if (random.nextInt(10) == 0) {
@@ -195,8 +198,6 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             }
         }
     }
-
-
 
 
     override fun tryFillWithFluid(
@@ -279,6 +280,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                     })
         }
     }
+
     @Deprecated("Deprecated in Java")
     override fun getStateForNeighborUpdate(
         state: BlockState,
@@ -294,6 +296,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         @Suppress("Deprecation")
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
+
     override fun onUse(
         state: BlockState,
         world: World,
@@ -302,7 +305,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         hand: Hand,
         hit: BlockHitResult
     ): ActionResult {
-        val blockEntity=world.getBlockEntity(pos)
+        val blockEntity = world.getBlockEntity(pos)
         if (blockEntity is PrimitiveFireBlockEntity) {
             val itemStack = player.getStackInHand(hand)
             val optional = blockEntity.getRecipeFor(itemStack)
@@ -311,7 +314,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                     && blockEntity.addItem(
                         player,
                         if (player.abilities.creativeMode) itemStack.copy() else itemStack,
-                        optional.get().getCookTime()
+                        optional.get().getCookTime() * 2
                     )
                 ) {
                     player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE)
