@@ -15,7 +15,7 @@ import java.util.function.Supplier
 object ProgressionModItemRegistry {
     val VANILLA_ITEMS: DeferredRegister<Item> = DeferredRegister.create(ForgeRegistries.ITEMS, "minecraft")
     val DEF_REG: DeferredRegister<Item> =
-        DeferredRegister.create(ForgeRegistries.ITEMS, ProgressionMod.Companion.MODID)
+        DeferredRegister.create(ForgeRegistries.ITEMS, ProgressionMod.MODID)
 
     @JvmField
     val COPPER_SWORD: RegistryObject<Item> = DEF_REG.register(
@@ -100,7 +100,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val FLINT_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "flint_dagger",
-        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -2.4f, Item.Settings()) }
+        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -1.9f, Item.Settings()) }
     )
 
     @JvmField
@@ -112,7 +112,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val BONE_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "bone_dagger",
-        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -2.4f, Item.Settings()) }
+        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -1.9f, Item.Settings()) }
     )
 
     @JvmField
