@@ -11,11 +11,24 @@ import net.minecraft.util.math.Vec3i
 import net.minecraft.world.Heightmap
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
+import net.minecraftforge.common.Tags
 
 object OtherUtils {
     @JvmStatic
     fun canSeeSky(world: World, pos: BlockPos): Boolean {
-        return world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z) - 1 <= pos.y
+        val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
+        val topBlock = world.getBlockState(pos.withY(top - 1))
+        return top - 1 <= pos.y || (!topBlock.isAir && topBlock.isIn(Tags.Blocks.GLASS))
+    }
+
+    @JvmStatic
+    fun getBlockAbove(world: World, pos: BlockPos): BlockState? {
+        val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
+        val topBlock = world.getBlockState(pos.withY(top - 1))
+        if (top - 1 <= pos.y) {
+            return null
+        }
+        return topBlock
     }
 
     @JvmStatic

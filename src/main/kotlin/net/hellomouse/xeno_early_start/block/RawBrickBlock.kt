@@ -2,6 +2,7 @@ package net.hellomouse.xeno_early_start.block
 
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.utils.OtherUtils.canSeeSky
+import net.hellomouse.xeno_early_start.utils.OtherUtils.getBlockAbove
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
@@ -31,48 +32,67 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, rand: Random) {
-        val particlePos = Vec3d.of(pos)
-            .add(0.5 + (rand.nextFloat() - 0.5) * 0.2, rand.nextFloat() * 0.4, 0.5 + (rand.nextFloat() - 0.5) * 0.2)
-        world.addParticle(
-            ParticleTypes.POOF,
-            particlePos.x,
-            particlePos.y,
-            particlePos.z,
-            0.0,
-            0.0,
-            0.0
-        )
-        world.playSound(
-            pos.x + 0.5,
-            pos.y + 0.5,
-            pos.z + 0.5,
-            SoundEvents.BLOCK_FIRE_EXTINGUISH,
-            SoundCategory.BLOCKS,
-            0.1f + rand.nextFloat() * 0.1f,
-            rand.nextFloat() * 0.7f + 0.6f,
-            false
-        )
+        if (getDryProbability(world, pos) != null) {
+            val particlePos = Vec3d.of(pos)
+                .add(0.5 + (rand.nextFloat() - 0.5) * 0.2, rand.nextFloat() * 0.4, 0.5 + (rand.nextFloat() - 0.5) * 0.2)
+            world.addParticle(
+                ParticleTypes.POOF,
+                particlePos.x,
+                particlePos.y,
+                particlePos.z,
+                0.0,
+                0.0,
+                0.0
+            )
+            world.playSound(
+                pos.x + 0.5,
+                pos.y + 0.5,
+                pos.z + 0.5,
+                SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                SoundCategory.BLOCKS,
+                0.1f + rand.nextFloat() * 0.1f,
+                rand.nextFloat() * 0.7f + 0.6f,
+                false
+            )
+        }
     }
 
     @Deprecated("Deprecated in Java, I guess")
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         @Suppress("DEPRECATION")
-        if (world.isAreaLoaded(pos, 1) && canSeeSky(world, pos)) {
-            if (world.isDay && !(world.isRaining || world.isThundering)) {
-                if (random.nextFloat() < 0.95 && state[DRYING_LEVEL] < FINISH_DRYING_AT) {
-                    world.setBlockState(pos, state.with(DRYING_LEVEL, state[DRYING_LEVEL] + 1))
-                }
-                if (state[DRYING_LEVEL] >= FINISH_DRYING_AT) {
-                    world.removeBlock(pos, false)
-                    world.setBlockState(
-                        pos,
-                        ProgressionModBlockRegistry.BRICK.get().defaultState
-                            .with(AXIS, state[AXIS])
-                    )
-                }
-            } else if (world.isRaining || world.isThundering) {
+        if (world.isAreaLoaded(pos, 1)) {
+            val probability = getDryProbability(world, pos)
+            if (probability != null) {
+                dryTick(state, world, pos, random, probability)
+            } else {
                 world.setBlockState(pos, state.with(DRYING_LEVEL, 0))
             }
+        }
+    }
+
+    /// Return null when the drying stage should be reset back to 0
+    private fun getDryProbability(world: World, pos: BlockPos): Float? {
+        if (canSeeSky(world, pos)) {
+            if (world.isDay && !(world.isRaining || world.isThundering)) {
+                return 0.95f
+            } else if ((world.isRaining || world.isThundering) && getBlockAbove(world, pos) != null) {
+                return 0.76f
+            }
+        }
+        return null
+    }
+
+    private fun dryTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random, probability: Float) {
+        if (random.nextFloat() < probability && state[DRYING_LEVEL] < FINISH_DRYING_AT) {
+            world.setBlockState(pos, state.with(DRYING_LEVEL, state[DRYING_LEVEL] + 1))
+        }
+        if (state[DRYING_LEVEL] >= FINISH_DRYING_AT) {
+            world.removeBlock(pos, false)
+            world.setBlockState(
+                pos,
+                ProgressionModBlockRegistry.BRICK.get().defaultState
+                    .with(AXIS, state[AXIS])
+            )
         }
     }
 
