@@ -92,6 +92,11 @@
             {
               "condition": "minecraft:random_chance",
               "chance": 0.6
+            },
+            {
+              "condition": "xeno_early_start:match_tool_tier",
+              "tier": "minecraft:netherite",
+              "cond": "<"
             }
           ],
           "functions": [
