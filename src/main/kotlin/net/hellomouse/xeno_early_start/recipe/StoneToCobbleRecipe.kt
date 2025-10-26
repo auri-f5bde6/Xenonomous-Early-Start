@@ -60,7 +60,7 @@ class StoneToCobbleRecipe(
         }
         if ((this.isAnyTier || MiningLevel.isToolLowerThanTier(
                 itemStack, this.getMiningTierLowerThan()
-            )) && (!this.isOreToStone || (ProgressionModConfig.oreDropChanges.oreToStone))
+            )) && (!this.isOreToStone || (ProgressionModConfig.config.oreDropChanges.oreToStone))
         ) {
             if (minedBlockIsTag) {
                 val tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock)
@@ -76,10 +76,10 @@ class StoneToCobbleRecipe(
     fun maybeDropItemsInList(level: World, pos: BlockPos) {
         for (i in droppedItems) {
             var probability = i.probability
-            if (ProgressionModConfig.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
-                probability = ProgressionModConfig.earlyGameChanges.pebbleDropProbability / 100f
-            } else if (ProgressionModConfig.earlyGameChanges.overridePlantFiberProbability && i.isPlantFiber) {
-                probability = ProgressionModConfig.earlyGameChanges.plantFiberDropProbability / 100f
+            if (ProgressionModConfig.config.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
+                probability = ProgressionModConfig.config.earlyGameChanges.pebbleDropProbability / 100f
+            } else if (ProgressionModConfig.config.earlyGameChanges.overridePlantFiberProbability && i.isPlantFiber) {
+                probability = ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability / 100f
             }
             if (level.random.nextFloat() < probability) {
                 Block.dropStack(level, pos, i.item.defaultStack)

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mixin(TierSortingRegistry.class)
 public interface TierSortingRegistryAccessor {
-    @Accessor
+    @Accessor(remap = false)
     static List<ToolMaterial> getSortedTiers() {
         throw new AssertionError();
     }

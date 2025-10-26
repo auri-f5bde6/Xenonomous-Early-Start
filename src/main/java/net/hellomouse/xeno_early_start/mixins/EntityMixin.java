@@ -55,7 +55,7 @@ public abstract class EntityMixin {
 
     @WrapOperation(method = "playStepSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getSoundType(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)Lnet/minecraft/sound/BlockSoundGroup;"))
     BlockSoundGroup fixSmallBlockStepSound(BlockState instance, WorldView worldView, BlockPos blockPos, Entity entity, Operation<BlockSoundGroup> original) {
-        var conf = ProgressionModConfig.blockChanges.getFixThinBlockStepSound();
+        var conf = ProgressionModConfig.config.blockChanges.getFixThinBlockStepSound();
         if (conf != ProgressionModConfig.BlockChanges.FixThinBlockStepSound.False) {
             var stepping_on = OtherUtils.raycastSteppingOn(world, this.pos, ((Entity) (Object) this));
             BlockState hitState = stepping_on.component2();

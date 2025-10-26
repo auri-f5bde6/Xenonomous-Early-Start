@@ -19,7 +19,7 @@ public class BlockMixin {
     @Inject(method = "onSteppedOn", at=@At("HEAD"))
     private void damagedByCertainBlocks(World world, BlockPos pos, BlockState state, Entity entity,CallbackInfo ci){
         if (((Object)this) instanceof StonecutterBlock) {
-            entity.damage(causeStonecutterDamage(world.getRegistryManager()), ProgressionModConfig.blockChanges.getStonecutterDamage());
+            entity.damage(causeStonecutterDamage(world.getRegistryManager()), ProgressionModConfig.config.blockChanges.getStonecutterDamage());
         }
     }
 }

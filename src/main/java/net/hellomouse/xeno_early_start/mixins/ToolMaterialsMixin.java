@@ -9,9 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ToolMaterials.class)
 public abstract class ToolMaterialsMixin implements ToolMaterial {
-    @Final
-    @Shadow
-    public static ToolMaterials GOLD;
+
     @Shadow
     @Final
     private int miningLevel;

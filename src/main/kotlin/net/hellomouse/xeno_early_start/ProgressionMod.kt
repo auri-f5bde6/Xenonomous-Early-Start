@@ -1,6 +1,7 @@
 package net.hellomouse.xeno_early_start
 
 import com.mojang.logging.LogUtils
+import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml
 import net.hellomouse.xeno_early_start.registries.*
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
@@ -12,18 +13,17 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory
 import net.minecraftforge.common.TierSortingRegistry
-import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import net.minecraftforge.fml.loading.FMLPaths
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegistryObject
 import org.slf4j.Logger
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
-
+import thedarkcolour.kotlinforforge.forge.MOD_BUS
+import java.io.FileNotFoundException
 import java.util.function.Supplier
 
-@Mod(ProgressionMod.Companion.MODID)
+@Mod(ProgressionMod.MODID)
 class ProgressionMod {
     init {
         LOGGER.info("Loading Progression Mod Config...")
@@ -57,14 +57,27 @@ class ProgressionMod {
             mutableListOf<Any?>(),
             listOf<Any?>(ofMinecraft("wood"))
         )
+        try {
+            ProgressionModConfig.config =
+                Toml().read(FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile())
+                    .to(ProgressionModConfig.config.javaClass)
+        } catch (_: FileNotFoundException) {
+            val tomlWriter = me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter()
+            tomlWriter.write(
+                ProgressionModConfig.config,
+                FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
+            )
+        }
         LOADING_CONTEXT.registerExtensionPoint(
             ConfigScreenFactory::class.java,
             Supplier {
                 ConfigScreenFactory { mc: MinecraftClient?, prevScreen: Screen? ->
-                    ProgressionModConfig.Gui.configBuilder.build()
+                    XenoEarlyStartConfigGui.configBuilder.build()
                 }
             }
         )
+
+
     }
 
 

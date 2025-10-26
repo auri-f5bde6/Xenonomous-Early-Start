@@ -25,7 +25,7 @@ public abstract class MobEntityMixin extends EntityMixin {
 
     @WrapOperation(method = "initEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getEquipmentForSlot(Lnet/minecraft/entity/EquipmentSlot;I)Lnet/minecraft/item/Item;"))
     private Item initEquipment(EquipmentSlot equipmentSlot, int equipmentLevel, Operation<Item> original) {
-        if (this.random.nextFloat() < ProgressionModConfig.mobChanges.getReplaceEntityCopperArmourProbability()) {
+        if (this.random.nextFloat() < ProgressionModConfig.config.mobChanges.getReplaceEntityCopperArmourProbability()) {
             switch (equipmentSlot) {
                 case HEAD:
                     return ProgressionModItemRegistry.COPPER_HELMET.get();
@@ -44,7 +44,7 @@ public abstract class MobEntityMixin extends EntityMixin {
     @Expression("0.15 * ?.getClampedLocalDifficulty()")
     @ModifyExpressionValue(method = "initEquipment", at = @At("MIXINEXTRAS:EXPRESSION"))
     private float changeEquipmentProbability(float original) {
-        return original + ProgressionModConfig.mobChanges.getFlatAdditiveMobSpawnWithEquipment();
+        return original + ProgressionModConfig.config.mobChanges.getFlatAdditiveMobSpawnWithEquipment();
     }
 
     @Shadow

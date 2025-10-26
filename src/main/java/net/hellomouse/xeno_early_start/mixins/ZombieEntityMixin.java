@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ZombieEntityMixin extends MobEntityMixin {
     @Inject(method = "initEquipment", at = @At("TAIL"))
     protected void maybeSpawnWithCopperSword(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
-        if (random.nextFloat() < ProgressionModConfig.mobChanges.getEntitySpawnWithCopperToolProbability()) {
+        if (random.nextFloat() < ProgressionModConfig.config.mobChanges.getEntitySpawnWithCopperToolProbability()) {
             int i = random.nextInt(3);
             if (i == 0) {
                 this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ProgressionModItemRegistry.COPPER_SWORD.get()));
