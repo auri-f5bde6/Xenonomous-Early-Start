@@ -3,8 +3,13 @@ package net.hellomouse.xeno_early_start.mixins;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.hellomouse.xeno_early_start.ProgressionModConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PolarBearEntity;
@@ -20,15 +25,26 @@ public abstract class PolarBearEntityMixin extends AnimalEntity implements Anger
         super(arg, arg2);
     }
 
+    @WrapMethod(method = "createPolarBearAttributes")
+    private static DefaultAttributeContainer.Builder createMobAttributes(Operation<DefaultAttributeContainer.Builder> original) {
+        return original.call()
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, ProgressionModConfig.config.mobChanges.getPolarBearSpeed())
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, ProgressionModConfig.config.mobChanges.getPolarBearRange());
+    }
+
     @Definition(id = "shouldAngerAt", method = "Lnet/minecraft/entity/mob/Angerable;shouldAngerAt(Lnet/minecraft/entity/LivingEntity;)Z")
     @Expression("this::shouldAngerAt")
     @ModifyExpressionValue(method = "initGoals", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
     Predicate<LivingEntity> initGoals(Predicate<LivingEntity> original) {
         return livingEntity -> {
-            if (!PolarBearEntityMixin.super.canTarget(livingEntity)) {
-                return false;
+            if (ProgressionModConfig.config.mobChanges.getPolarBearAlwaysAggressive()) {
+                if (!PolarBearEntityMixin.super.canTarget(livingEntity)) {
+                    return false;
+                } else {
+                    return livingEntity.getType() == EntityType.PLAYER;
+                }
             } else {
-                return livingEntity.getType() == EntityType.PLAYER;
+                return original.test(livingEntity);
             }
         };
     }
