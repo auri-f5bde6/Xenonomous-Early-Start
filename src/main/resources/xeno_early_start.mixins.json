@@ -13,6 +13,7 @@
     "CampfireBlockMixin",
     "EntityMixin",
     "MobEntityMixin",
+    "PolarBearEntityMixin",
     "TierSortingRegistryAccessor",
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
