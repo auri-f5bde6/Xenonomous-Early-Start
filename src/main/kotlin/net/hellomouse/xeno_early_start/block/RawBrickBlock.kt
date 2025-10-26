@@ -44,16 +44,18 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
                 0.0,
                 0.0
             )
-            world.playSound(
-                pos.x + 0.5,
-                pos.y + 0.5,
-                pos.z + 0.5,
-                SoundEvents.BLOCK_FIRE_EXTINGUISH,
-                SoundCategory.BLOCKS,
-                0.1f + rand.nextFloat() * 0.1f,
-                rand.nextFloat() * 0.7f + 0.6f,
-                false
-            )
+            if (rand.nextFloat() > 0.5) {
+                world.playSound(
+                    pos.x + 0.5,
+                    pos.y + 0.5,
+                    pos.z + 0.5,
+                    SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.BLOCKS,
+                    0.05f + rand.nextFloat() * 0.05f,
+                    rand.nextFloat() * 0.7f + 0.6f,
+                    false
+                )
+            }
         }
     }
 
@@ -72,8 +74,8 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
 
     /// Return null when the drying stage should be reset back to 0
     private fun getDryProbability(world: World, pos: BlockPos): Float? {
-        if (canSeeSky(world, pos)) {
-            if (world.isDay && !(world.isRaining || world.isThundering)) {
+        if (world.isDay && canSeeSky(world, pos)) {
+            if (!(world.isRaining || world.isThundering)) {
                 return 0.95f
             } else if ((world.isRaining || world.isThundering) && getBlockAbove(world, pos) != null) {
                 return 0.76f
