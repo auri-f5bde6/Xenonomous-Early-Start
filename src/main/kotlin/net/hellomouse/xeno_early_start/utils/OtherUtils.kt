@@ -3,11 +3,13 @@ package net.hellomouse.xeno_early_start.utils
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
+import net.minecraft.world.BlockView
 import net.minecraft.world.Heightmap
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
@@ -17,18 +19,38 @@ object OtherUtils {
     @JvmStatic
     fun canSeeSky(world: World, pos: BlockPos): Boolean {
         val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
-        val topBlock = world.getBlockState(pos.withY(top - 1))
-        return top - 1 <= pos.y || (!topBlock.isAir && topBlock.isIn(Tags.Blocks.GLASS))
+        if (top - 1 <= pos.y) {
+            return true
+        }
+        val start = Vec3d.of(pos.up())
+        val end = Vec3d.of(pos.withY(top - 1))
+        val r = BlockView.raycast(
+            start,
+            end,
+            null,
+            { _, hitPos ->
+                val blockState = world.getBlockState(hitPos)
+                // TODO: I have 0 clues why raycasting from -60 to -58 can product a hit at -61 ...
+                if (blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES) || blockState.isAir || hitPos == pos) {
+                    null
+                } else {
+                    false
+                }
+
+            },
+            { _ -> true })
+        return r!!
     }
 
     @JvmStatic
-    fun getBlockAbove(world: World, pos: BlockPos): BlockState? {
+    fun getBlockAbove(world: World, pos: BlockPos): Pair<BlockPos, BlockState>? {
         val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
-        val topBlock = world.getBlockState(pos.withY(top - 1))
+        val topBlockPos = pos.withY(top - 1)
+        val topBlock = world.getBlockState(topBlockPos)
         if (top - 1 <= pos.y) {
             return null
         }
-        return topBlock
+        return Pair(topBlockPos, topBlock)
     }
 
     @JvmStatic
