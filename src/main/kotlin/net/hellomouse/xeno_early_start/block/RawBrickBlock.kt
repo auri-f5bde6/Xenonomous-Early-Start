@@ -1,8 +1,7 @@
 package net.hellomouse.xeno_early_start.block
 
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
-import net.hellomouse.xeno_early_start.utils.OtherUtils.canSeeSky
-import net.hellomouse.xeno_early_start.utils.OtherUtils.getBlockAbove
+import net.hellomouse.xeno_early_start.utils.OtherUtils.rayCastToSky
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
@@ -32,7 +31,8 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, rand: Random) {
-        if (getDryProbability(world, pos) != null) {
+        val p = getDryProbability(world, pos)
+        if (p != null && p > 0) {
             val particlePos = Vec3d.of(pos)
                 .add(0.5 + (rand.nextFloat() - 0.5) * 0.2, rand.nextFloat() * 0.4, 0.5 + (rand.nextFloat() - 0.5) * 0.2)
             world.addParticle(
@@ -74,14 +74,19 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
 
     /// Return null when the drying stage should be reset back to 0
     private fun getDryProbability(world: World, pos: BlockPos): Float? {
-        if (world.isDay && canSeeSky(world, pos)) {
-            if (!(world.isRaining || world.isThundering)) {
+        val (canSeeSky, covered) = rayCastToSky(world, pos)
+        val raining = world.isRaining || world.isThundering
+        world.calculateAmbientDarkness()
+        if (world.timeOfDay < 12000 && canSeeSky) {
+            if (!raining) {
                 return 0.95f
-            } else if ((world.isRaining || world.isThundering) && getBlockAbove(world, pos) != null) {
+            } else if (covered) {
                 return 0.76f
             }
+        } else if (raining && !covered) {
+            return null
         }
-        return null
+        return 0f
     }
 
     private fun dryTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random, probability: Float) {

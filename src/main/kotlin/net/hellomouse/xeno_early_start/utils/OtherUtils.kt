@@ -16,30 +16,37 @@ import net.minecraft.world.World
 import net.minecraftforge.common.Tags
 
 object OtherUtils {
+    /// Return (canSeeSky, isCovered)
     @JvmStatic
-    fun canSeeSky(world: World, pos: BlockPos): Boolean {
+    fun rayCastToSky(world: World, pos: BlockPos): Pair<Boolean, Boolean> {
         val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
         if (top - 1 <= pos.y) {
-            return true
+            return Pair(true, false)
         }
         val start = Vec3d.of(pos.up())
-        val end = Vec3d.of(pos.withY(top - 1))
+        val end = Vec3d.of(pos.withY(top))
+        if (start == end) {
+            return Pair(false, false)
+        }
+        var isCovered = false
         val r = BlockView.raycast(
             start,
             end,
             null,
             { _, hitPos ->
                 val blockState = world.getBlockState(hitPos)
+                if (!blockState.isAir) {
+                    isCovered = true
+                }
                 // TODO: I have 0 clues why raycasting from -60 to -58 can product a hit at -61 ...
-                if (blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES) || blockState.isAir || hitPos == pos) {
+                if (blockState.isAir || hitPos == pos || blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES)) {
                     null
                 } else {
                     false
                 }
-
             },
             { _ -> true })
-        return r!!
+        return Pair(r!!, isCovered)
     }
 
     @JvmStatic

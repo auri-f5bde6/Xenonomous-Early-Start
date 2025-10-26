@@ -20,7 +20,7 @@ import static net.minecraft.block.CampfireBlock.extinguish;
 public class CampfireBlockEntityMixin {
     @Inject(method = "litServerTick", at=@At(value = "HEAD"), cancellable = true)
     private static void extinguishWhenRaining(World world, BlockPos pos, BlockState state, CampfireBlockEntity campfire, CallbackInfo ci) {
-        if (OtherUtils.canSeeSky(world, pos)&&(world.isRaining()||world.isThundering())) {
+        if (!OtherUtils.rayCastToSky(world, pos).component2() && (world.isRaining() || world.isThundering())) {
             if (!world.isClient()) {
                 world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
