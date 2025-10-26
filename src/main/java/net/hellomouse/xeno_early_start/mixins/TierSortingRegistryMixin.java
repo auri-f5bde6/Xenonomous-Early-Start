@@ -15,7 +15,7 @@ public class TierSortingRegistryMixin {
     @WrapMethod(method = "processTier")
     private static void processTier(ToolMaterial tier, Identifier name, List<Object> afters, List<Object> befores, Operation<Void> original) {
         if (tier == ToolMaterials.GOLD) {
-            original.call(tier, name, List.of(new Identifier("stone")), List.of(new Identifier("diamond")));
+            original.call(tier, name, List.of(new Identifier("iron")), List.of(new Identifier("diamond")));
         } else {
             original.call(tier, name, afters, befores);
         }

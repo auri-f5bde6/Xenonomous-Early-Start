@@ -1,6 +1,5 @@
 package net.hellomouse.xeno_early_start.utils
 
-import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.mixins.TierSortingRegistryAccessor
 import net.minecraft.item.ItemStack
 import net.minecraft.item.MiningToolItem
@@ -63,11 +62,9 @@ object MiningLevel {
     fun getTierName(material: ToolMaterial?): String {
         val name = TierSortingRegistry.getName(material)
         if (name == null) {
-            ProgressionMod.LOGGER.warn(
-                "Pickaxe Tier {} is missing from tierSortingRegistry! (pickaxe_tier's below_tier will fallback to minecraft:wood)",
-                material
+            throw IllegalArgumentException(
+                "Pickaxe Tier $material is missing from tierSortingRegistry!",
             )
-            return "minecraft:wood"
         } else {
             return name.toString()
         }
