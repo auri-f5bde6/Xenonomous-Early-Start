@@ -17,7 +17,10 @@
     "TierSortingRegistryAccessor",
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
-    "ZombieEntityMixin"
+    "ZombieEntityMixin",
+    "spider.ActiveTargetGoalMixin",
+    "spider.SpiderTargetGoal",
+    "wolf.WolfEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

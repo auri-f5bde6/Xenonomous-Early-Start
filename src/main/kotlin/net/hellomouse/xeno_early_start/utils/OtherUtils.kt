@@ -3,6 +3,8 @@ package net.hellomouse.xeno_early_start.utils
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
@@ -98,6 +100,20 @@ object OtherUtils {
         } else {
             return Pair(entity.blockPos.subtract(Vec3i(0, -1, 0)), Blocks.AIR.defaultState)
         }
+    }
+
+    @JvmStatic
+    fun isLivingEntityWeak(livingEntity: LivingEntity?): Boolean {
+        if (livingEntity != null) {
+            if (livingEntity.health <= 6) {
+                return true
+            } else if (livingEntity is PlayerEntity) {
+                if (livingEntity.hungerManager.foodLevel <= 6) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
 
