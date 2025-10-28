@@ -29,6 +29,6 @@ public abstract class ZombieEntityMixin extends MobEntityMixin {
 
     @Inject(method = "initGoals", at = @At("HEAD"))
     void addStepOnRawBrickGoal(CallbackInfo ci) {
-        goalSelector.add(5, new WalkOnRawBrickGoal(((ZombieEntity) (Object) this), 0.5, 3));
+        goalSelector.add(5, new WalkOnRawBrickGoal(((ZombieEntity) (Object) this), 0.8, 3));
     }
 }
