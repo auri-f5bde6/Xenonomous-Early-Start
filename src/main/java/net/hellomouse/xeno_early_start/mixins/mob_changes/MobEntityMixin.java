@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.mob_changes;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
+import net.hellomouse.xeno_early_start.mixins.fix_thin_block.EntityMixin;
 import net.hellomouse.xeno_early_start.registries.ProgressionModItemRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.GoalSelector;
@@ -22,6 +23,10 @@ public abstract class MobEntityMixin extends EntityMixin {
     @Shadow
     @Final
     public GoalSelector goalSelector;
+
+    protected MobEntityMixin(boolean onGround) {
+        super(onGround);
+    }
 
     @WrapOperation(method = "initEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getEquipmentForSlot(Lnet/minecraft/entity/EquipmentSlot;I)Lnet/minecraft/item/Item;"))
     private Item initEquipment(EquipmentSlot equipmentSlot, int equipmentLevel, Operation<Item> original) {

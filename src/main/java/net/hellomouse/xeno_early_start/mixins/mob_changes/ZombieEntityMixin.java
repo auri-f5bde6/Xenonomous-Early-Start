@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.mob_changes;
 
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
 import net.hellomouse.xeno_early_start.entity.goal.WalkOnRawBrickGoal;
@@ -15,6 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ZombieEntity.class)
 public abstract class ZombieEntityMixin extends MobEntityMixin {
+    protected ZombieEntityMixin(boolean onGround) {
+        super(onGround);
+    }
+
     @Inject(method = "initEquipment", at = @At("TAIL"))
     protected void maybeSpawnWithCopperSword(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
         if (random.nextFloat() < ProgressionModConfig.config.mobChanges.getEntitySpawnWithCopperToolProbability()) {

@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.mob_changes;
 
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;

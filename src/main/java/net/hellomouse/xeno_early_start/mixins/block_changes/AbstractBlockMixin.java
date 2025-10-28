@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.block_changes;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.AbstractBlock;

@@ -1,6 +1,6 @@
 package net.hellomouse.xeno_early_start.utils
 
-import net.hellomouse.xeno_early_start.mixins.TierSortingRegistryAccessor
+import net.hellomouse.xeno_early_start.mixins.accessors.TierSortingRegistryAccessor
 import net.minecraft.item.ItemStack
 import net.minecraft.item.MiningToolItem
 import net.minecraft.item.ToolMaterial

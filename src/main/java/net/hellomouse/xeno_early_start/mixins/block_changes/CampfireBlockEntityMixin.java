@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.block_changes;
 
 import net.hellomouse.xeno_early_start.utils.OtherUtils;
 import net.minecraft.block.Block;

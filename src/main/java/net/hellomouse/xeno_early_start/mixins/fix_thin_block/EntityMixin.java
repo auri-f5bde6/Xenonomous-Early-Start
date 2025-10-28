@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.fix_thin_block;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -31,21 +30,18 @@ public abstract class EntityMixin {
     @Shadow
     private World world;
 
+    protected EntityMixin(boolean onGround) {
+        this.onGround = onGround;
+    }
+
     @Shadow
     public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
-    @Shadow
-    public float fallDistance;
-    @Shadow
-    public Optional<BlockPos> supportingBlockPos;
     @Shadow
     private Vec3d pos;
 
     @Shadow
     public abstract World getWorld();
-
-    @Shadow
-    public abstract void onLanding();
 
     @Shadow
     private boolean onGround;

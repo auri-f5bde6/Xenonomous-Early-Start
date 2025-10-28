@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins.spider;
+package net.hellomouse.xeno_early_start.mixins.mob_changes.attack_weak_player;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins.prevent_water_cheese;
+package net.hellomouse.xeno_early_start.mixins.accessors;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.FlowableFluid;

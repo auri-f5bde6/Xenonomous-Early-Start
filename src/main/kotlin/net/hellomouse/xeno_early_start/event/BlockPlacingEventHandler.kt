@@ -1,7 +1,7 @@
 package net.hellomouse.xeno_early_start.event
 
 import net.hellomouse.xeno_early_start.ProgressionMod
-import net.hellomouse.xeno_early_start.mixins.prevent_water_cheese.FlowableFluidAccessor
+import net.hellomouse.xeno_early_start.mixins.accessors.FlowableFluidAccessor
 import net.minecraft.fluid.FlowableFluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.util.math.Direction

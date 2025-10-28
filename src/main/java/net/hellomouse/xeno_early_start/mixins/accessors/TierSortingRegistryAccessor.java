@@ -1,4 +1,4 @@
-package net.hellomouse.xeno_early_start.mixins;
+package net.hellomouse.xeno_early_start.mixins.accessors;
 
 import net.minecraft.item.ToolMaterial;
 import net.minecraftforge.common.TierSortingRegistry;
