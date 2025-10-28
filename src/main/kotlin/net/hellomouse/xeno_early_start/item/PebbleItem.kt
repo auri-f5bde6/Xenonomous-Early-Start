@@ -24,6 +24,7 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
                 if (!player.isCreative){
                     mainhandStack.decrement(1)
                     offhandStack.decrement(1)
+                    player.addExhaustion(4.5f)
                 }
                 player.giveItemStack(result.defaultStack)
                 world.playSound(
@@ -39,7 +40,7 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
                 return ActionResult.PASS
             }
         } else {
-            ProgressionMod.Companion.LOGGER.warn("RockItem useOnBlock's context have no player set")
+            ProgressionMod.LOGGER.warn("RockItem useOnBlock's context have no player set")
             return ActionResult.FAIL
         }
     }
