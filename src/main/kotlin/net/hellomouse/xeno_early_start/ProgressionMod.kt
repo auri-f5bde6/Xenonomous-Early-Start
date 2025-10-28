@@ -58,8 +58,9 @@ class ProgressionMod {
             listOf<Any?>(ofMinecraft("wood"))
         )
         try {
+            val file = FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
             ProgressionModConfig.config =
-                Toml().read(FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile())
+                Toml().read(file.reader())
                     .to(ProgressionModConfig.config.javaClass)
         } catch (_: FileNotFoundException) {
             val tomlWriter = me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter()
