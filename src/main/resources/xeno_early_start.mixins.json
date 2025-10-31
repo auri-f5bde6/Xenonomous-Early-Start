@@ -18,6 +18,7 @@
     "fix_thin_block.EntityMixin",
     "mob_changes.MobEntityMixin",
     "mob_changes.PolarBearEntityMixin",
+    "mob_changes.SquidEntityMixin",
     "mob_changes.ZombieEntityMixin",
     "mob_changes.attack_weak_player.ActiveTargetGoalMixin",
     "mob_changes.attack_weak_player.SpiderTargetGoal",
