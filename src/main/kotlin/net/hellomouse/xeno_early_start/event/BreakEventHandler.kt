@@ -2,18 +2,19 @@ package net.hellomouse.xeno_early_start.event
 
 import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.ProgressionModTags
-import net.hellomouse.xeno_early_start.recipe.StoneToCobbleRecipe
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry
+import net.hellomouse.xeno_early_start.registries.XenoProgressionModParticleRegistry
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.SimpleInventory
-import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
+import net.minecraftforge.common.Tags
 import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.event.level.BlockEvent.BreakEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -39,8 +40,46 @@ object BreakEventHandler {
                         breakBlock(toolStack, level, player, state, pos, recipe.isDropBlockLootTable)
                         recipe.maybeDropItemsInList(level, pos)
                         level.setBlockState(pos, recipe.resultingBlock.defaultState)
-                        event.setCanceled(true)
+                        event.isCanceled = true
                         return
+                    }
+                }
+            }
+        }
+        if (state.isIn(Tags.Blocks.ORES_COAL) && !level.isClient) {
+            repeat(100) {
+                (level as ServerWorld).spawnParticles(
+                    XenoProgressionModParticleRegistry.COAL_DUST.get(),
+                    pos.x - 0.1 + level.random.nextFloat() * 1.1,
+                    pos.y - 0.1 + level.random.nextFloat() * 1.5,
+                    pos.z - 0.1 + level.random.nextFloat() * 1.1,
+                    1,
+                    level.random.nextFloat() * 1.5,
+                    -0.01,
+                    level.random.nextFloat() * 1.5,
+                    0.005
+                )
+            }
+            val range = 5
+            for (i in -range..range) {
+                for (j in -range..range) {
+                    for (k in -range..range) {
+                        val testPos = pos.add(i, j, k)
+                        val b = level.getBlockState(testPos)
+                        if (b.isOf(Blocks.TORCH) || b.isOf(Blocks.WALL_TORCH) || b.isOf(Blocks.CAMPFIRE) || b.isOf(
+                                ProgressionModBlockRegistry.PRIMITIVE_FIRE.get()
+                            )
+                        ) {
+                            (level as ServerWorld).createExplosion(
+                                null,
+                                testPos.x.toDouble(),
+                                testPos.y.toDouble(),
+                                testPos.z.toDouble(),
+                                2f,
+                                true,
+                                World.ExplosionSourceType.NONE
+                            )
+                        }
                     }
                 }
             }
