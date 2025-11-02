@@ -1,6 +1,6 @@
 package net.hellomouse.xeno_early_start.mixins.block_changes.coal_dust;
 
-import net.hellomouse.xeno_early_start.registries.XenoProgressionModParticleRegistry;
+import net.hellomouse.xeno_early_start.CoalDust;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
@@ -20,9 +20,7 @@ public class ServerPlayerInteractionManagerMixin {
     @Inject(method = "continueMining", at = @At("HEAD"))
     private void continueMining(BlockState state, BlockPos pos, int failedStartMiningTime, CallbackInfoReturnable<Float> cir) {
         if (state.isIn(Tags.Blocks.ORES_COAL)) {
-            for (int i = 0; i < world.random.nextBetween(5, 10); i++) {
-                this.world.spawnParticles(XenoProgressionModParticleRegistry.COAL_DUST.get(), pos.getX() - 0.1 + world.random.nextFloat() * 1.1, pos.getY() - 0.1 + world.random.nextFloat() * 1.1, pos.getZ() - 0.1 + world.random.nextFloat() * 1.1, 1, 0, -0.01d, 0, 0.005);
-            }
+            CoalDust.mining(this.world, state, pos);
         }
     }
 }

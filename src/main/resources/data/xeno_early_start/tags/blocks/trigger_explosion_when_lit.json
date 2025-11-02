@@ -1,0 +1,8 @@
+{
+  "values": [
+    "minecraft:campfire",
+    "xeno_early_start:primitive_fire",
+    "minecraft:furnace",
+    "xeno_early_start:brick_furnace"
+  ]
+}

@@ -9,9 +9,10 @@ import net.minecraft.registry.tag.TagKey
 class ProgressionModTags {
     object Blocks {
         val HAS_BLOCK_TO_BLOCK_RECIPE: TagKey<Block> = createTag("has_block_to_block_recipe")
-
+        val ALWAYS_TRIGGER_EXPLOSION: TagKey<Block> = createTag("always_trigger_explosion")
+        val TRIGGER_EXPLOSION_WHEN_LIT: TagKey<Block> = createTag("trigger_explosion_when_lit")
         private fun createTag(name: String): TagKey<Block> {
-            return BlockTags.create(ProgressionMod.Companion.of(name))
+            return BlockTags.create(ProgressionMod.of(name))
         }
     }
 
@@ -20,7 +21,7 @@ class ProgressionModTags {
         val KNAPPED_STONE: TagKey<Item> = createTag("knapped_stone")
 
         private fun createTag(name: String): TagKey<Item> {
-            return ItemTags.create(ProgressionMod.Companion.of(name))
+            return ItemTags.create(ProgressionMod.of(name))
         }
     }
 }
