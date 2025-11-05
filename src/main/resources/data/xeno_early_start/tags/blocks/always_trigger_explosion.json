@@ -2,6 +2,7 @@
   "values": [
     "minecraft:torch",
     "minecraft:wall_torch",
-    "minecraft:fire"
+    "minecraft:fire",
+    "minecraft:lava"
   ]
 }

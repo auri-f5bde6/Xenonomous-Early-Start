@@ -4,11 +4,11 @@ import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.client.block_entity.PrimitiveFireBlockEntityRenderer
 import net.hellomouse.xeno_early_start.client.entity.BrickEntityModel
 import net.hellomouse.xeno_early_start.client.entity.BrickEntityRenderer
+import net.hellomouse.xeno_early_start.client.particle.CoalDustParticle
 import net.hellomouse.xeno_early_start.client.screen.BrickFurnaceScreen
 import net.hellomouse.xeno_early_start.client.screen.BrickFurnaceScreenHandler
 import net.hellomouse.xeno_early_start.registries.*
 import net.minecraft.client.gui.screen.ingame.HandledScreens
-import net.minecraft.client.particle.SnowflakeParticle
 import net.minecraft.client.particle.SpriteProvider
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.RenderLayers
@@ -60,6 +60,6 @@ object ProgressionModClientHandler {
     fun registerParticles(event: RegisterParticleProvidersEvent) {
         event.registerSpriteSet(
             XenoProgressionModParticleRegistry.COAL_DUST.get()
-        ) { spriteProvider: SpriteProvider? -> SnowflakeParticle.Factory(spriteProvider) }
+        ) { spriteProvider: SpriteProvider -> CoalDustParticle.Factory(spriteProvider) }
     }
 }

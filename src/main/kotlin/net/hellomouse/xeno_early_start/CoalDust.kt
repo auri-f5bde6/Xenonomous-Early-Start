@@ -5,7 +5,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.particle.DefaultParticleType
 import net.minecraft.registry.Registries
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.Properties
@@ -20,7 +19,7 @@ object CoalDust {
     @JvmStatic
     fun mining(world: ServerWorld, state: BlockState, pos: BlockPos) {
         for (i in 0..<world.random.nextBetween(5, 10)) {
-            world.spawnParticles<DefaultParticleType>(
+            world.spawnParticles(
                 XenoProgressionModParticleRegistry.COAL_DUST.get(),
                 pos.x - 0.1 + world.random.nextFloat() * 1.1,
                 pos.y - 0.1 + world.random.nextFloat() * 1.1,
@@ -52,9 +51,9 @@ object CoalDust {
             repeat(100) {
                 world.spawnParticles(
                     XenoProgressionModParticleRegistry.COAL_DUST.get(),
-                    pos.x - 0.1 + world.random.nextFloat() * 1.1,
+                    pos.x - 0.1 + world.random.nextFloat() * 1.06,
                     pos.y - 0.1 + world.random.nextFloat() * 1.5,
-                    pos.z - 0.1 + world.random.nextFloat() * 1.1,
+                    pos.z - 0.1 + world.random.nextFloat() * 1.06,
                     1,
                     world.random.nextFloat() * 1.5,
                     -0.01,
@@ -92,7 +91,7 @@ object CoalDust {
             }
         }
         if (explode) {
-            var center = BlockPos.Mutable()
+            val center = BlockPos.Mutable()
             for (pos in destroy) {
                 center.x += pos.x
                 center.y += pos.y
