@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
@@ -18,7 +19,43 @@ import net.minecraft.world.World
 import net.minecraftforge.common.Tags
 
 object OtherUtils {
-    /// Return (canSeeSky, isCovered)
+    /**
+     *Return (wasBlockHitAccordingToPredicate, wasAnyBlockHit)
+     */
+    @JvmStatic
+    fun raycast(
+        world: World,
+        start: Vec3d,
+        end: Vec3d,
+        shouldIgnore: (blockState: BlockState) -> Boolean
+    ): Pair<Boolean, Boolean> {
+        if (start == end) {
+            return Pair(false, false)
+        }
+        var wasAnyBlockHit = false
+        val r = BlockView.raycast(
+            start,
+            end,
+            null,
+            { _, hitPos ->
+                val blockState = world.getBlockState(hitPos)
+                if (!blockState.isAir) {
+                    wasAnyBlockHit = true
+                }
+                // TODO: I have 0 clues why raycasting from -60 to -58 can product a hit at -61 ...
+                if (blockState.isAir || hitPos == start || shouldIgnore(blockState)) {
+                    null
+                } else {
+                    false
+                }
+            },
+            { _ -> true })
+        return Pair(r!!, wasAnyBlockHit)
+    }
+
+    /**
+     *Return (canSeeSky, isCovered)
+     */
     @JvmStatic
     fun rayCastToSky(world: World, pos: BlockPos): Pair<Boolean, Boolean> {
         val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
@@ -27,28 +64,9 @@ object OtherUtils {
         }
         val start = Vec3d.of(pos.up())
         val end = Vec3d.of(pos.withY(top))
-        if (start == end) {
-            return Pair(false, false)
-        }
-        var isCovered = false
-        val r = BlockView.raycast(
-            start,
-            end,
-            null,
-            { _, hitPos ->
-                val blockState = world.getBlockState(hitPos)
-                if (!blockState.isAir) {
-                    isCovered = true
-                }
-                // TODO: I have 0 clues why raycasting from -60 to -58 can product a hit at -61 ...
-                if (blockState.isAir || hitPos == pos || blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES)) {
-                    null
-                } else {
-                    false
-                }
-            },
-            { _ -> true })
-        return Pair(r!!, isCovered)
+        return raycast(world, start, end, { blockState ->
+            blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES)
+        })
     }
 
     @JvmStatic
@@ -114,6 +132,21 @@ object OtherUtils {
             }
         }
         return false
+    }
+
+    @JvmStatic
+    fun moveProjectileAwayFrom(
+        entity: PersistentProjectileEntity,
+        blockHitResult: BlockHitResult,
+        blocks: Float
+    ): Vec3d {
+        // This is going to be very verbose because I have math skill issues, and I am stupid
+        val blockPos = blockHitResult.getPos()
+        // Direction vector from block pos to entity
+        val directionVector = entity.pos.subtract(blockPos).normalize()
+        // Move the entity away from the block by `blocks`
+        entity.setPosition(blockPos.add(directionVector.multiply(blocks.toDouble())))
+        return directionVector
     }
 }
 

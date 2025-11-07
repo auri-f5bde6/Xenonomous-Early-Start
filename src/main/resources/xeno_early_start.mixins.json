@@ -22,6 +22,8 @@
     "mob_changes.SquidEntityMixin",
     "mob_changes.StrayEntityMixin",
     "mob_changes.ZombieEntityMixin",
+    "mob_changes.arrow_break_glass.AbstractSkeletonEntityMixin",
+    "mob_changes.arrow_break_glass.PersistentProjectileEntityMixin",
     "mob_changes.attack_weak_player.ActiveTargetGoalMixin",
     "mob_changes.attack_weak_player.SpiderTargetGoal",
     "mob_changes.attack_weak_player.WolfEntityMixin",

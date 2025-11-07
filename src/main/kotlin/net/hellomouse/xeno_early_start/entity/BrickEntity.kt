@@ -3,6 +3,7 @@ package net.hellomouse.xeno_early_start.entity
 import net.hellomouse.xeno_early_start.block.BrickBlock
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModEntityRegistry
+import net.hellomouse.xeno_early_start.utils.OtherUtils.moveProjectileAwayFrom
 import net.minecraft.block.Block.NOTIFY_ALL
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityType
@@ -65,24 +66,24 @@ class BrickEntity : PersistentProjectileEntity {
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         val world = getWorld()
         val blockState = world.getBlockState(blockHitResult.blockPos)
-        if (blockState.isIn(Tags.Blocks.GLASS)&&velocity.lengthSquared()>1.5) {
+        if (blockState.isIn(Tags.Blocks.GLASS) && velocity.lengthSquared() > 1.5) {
             world.breakBlock(blockHitResult.blockPos, false, this)
-            this.moveBrickAwayFrom(blockHitResult, 0.9f)
+            moveProjectileAwayFrom(this, blockHitResult, 0.9f)
             this.velocity = this.velocity.multiply(0.7)
             return
         } else {
             if (blockHitResult.side != Direction.UP) {
-                val directionVector = this.moveBrickAwayFrom(blockHitResult, 0.9f)
+                val directionVector = moveProjectileAwayFrom(this, blockHitResult, 0.9f)
                 futureVelocity = directionVector.multiply(0.05)
                 this.setVelocity(0.0, 0.0, 0.0)
                 this.bounced = true
             } else {
-                val above = blockHitResult.blockPos.add(0, 1, 0);
+                val above = blockHitResult.blockPos.add(0, 1, 0)
                 val block = ProgressionModBlockRegistry.BRICK.get().defaultState.with(
                     BrickBlock.AXIS, horizontalFacing.rotateClockwise(
                         Direction.Axis.Y
                     ).axis
-                );
+                )
                 if (world.getBlockState(above).isAir && block.canPlaceAt(world, above)) {
                     world.setBlockState(
                         above,
@@ -110,15 +111,6 @@ class BrickEntity : PersistentProjectileEntity {
 
     }
 
-    fun moveBrickAwayFrom(blockHitResult: BlockHitResult, blocks: Float): Vec3d {
-        // This is going to be very verbose because I have math skill issues, and I am stupid
-        val blockPos = blockHitResult.getPos()
-        // Direction vector from block pos to entity
-        val directionVector = this.pos.subtract(blockPos).normalize()
-        // Move the entity away from the block by `blocks`
-        this.setPosition(blockPos.add(directionVector.multiply(blocks.toDouble())))
-        return directionVector
-    }
 
     override fun tick() {
         super.tick()
