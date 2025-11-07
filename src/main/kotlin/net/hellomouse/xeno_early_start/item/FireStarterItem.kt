@@ -5,17 +5,22 @@ import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.recipe.RecipeType
 import net.minecraft.util.ActionResult
+import net.minecraft.util.UseAction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class FireStarterItem(settings: Settings) : Item(settings) {
+    override fun getUseAction(stack: ItemStack?): UseAction {
+        return UseAction.BOW
+    }
     private fun putBlockPos(stack: ItemStack, pos: BlockPos) {
         val tag=stack.getOrCreateNbt()
         tag.putInt("pos_x", pos.x)
@@ -56,6 +61,9 @@ class FireStarterItem(settings: Settings) : Item(settings) {
                     world.setBlockState(aboveBlock, blockState)
                 }
             }
+        }
+        if (user is PlayerEntity) {
+            user.addExhaustion(36f)
         }
         return stack
     }
