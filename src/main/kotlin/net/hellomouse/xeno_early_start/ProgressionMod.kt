@@ -39,6 +39,7 @@ class ProgressionMod {
         ProgressionModRecipeRegistry.DEF_REG.register(MOD_BUS)
         ProgressionModRecipeRegistry.TYPE_DEF_REG.register(MOD_BUS)
         XenoProgressionModParticleRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartStatusEffectRegistry.DEF_REG.register(MOD_BUS)
         CREATIVE_TAB_REG.register(MOD_BUS)
         TierSortingRegistry.registerTier(
             ProgressionModToolMaterials.COPPER,
