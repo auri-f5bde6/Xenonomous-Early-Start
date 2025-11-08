@@ -1,0 +1,22 @@
+{
+  "override": true,
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "xeno_early_start:treated_wood"
+    }
+  },
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "item": "minecraft:wooden_pickaxe"
+  },
+  "show_notification": true
+}

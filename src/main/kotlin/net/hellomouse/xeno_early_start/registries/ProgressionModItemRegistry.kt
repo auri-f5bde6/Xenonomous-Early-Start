@@ -199,6 +199,16 @@ object ProgressionModItemRegistry {
     )
 
     @JvmField
+    val treated_wood: RegistryObject<Item> =
+        DEF_REG.register("treated_wood", Supplier { Item(Item.Settings()) }
+        )
+
+    @JvmField
+    val bow_piece: RegistryObject<Item> =
+        DEF_REG.register("bow_piece", Supplier { Item(Item.Settings()) }
+        )
+
+    @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
         COPPER_SWORD,
         COPPER_SHOVEL,

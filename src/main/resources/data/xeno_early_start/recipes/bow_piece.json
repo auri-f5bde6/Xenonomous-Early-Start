@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "result": {
+    "item": "xeno_early_start:bow_piece"
+  },
+  "show_notification": true
+}

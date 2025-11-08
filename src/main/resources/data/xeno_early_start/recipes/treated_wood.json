@@ -3,17 +3,20 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "minecraft:clay_ball"
+      "tag": "minecraft:planks"
     },
     {
-      "item": "minecraft:clay_ball"
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:sugar"
     },
     {
       "item": "minecraft:charcoal"
     }
   ],
   "result": {
-    "item": "xeno_early_start:raw_brick"
+    "item": "xeno_early_start:treated_wood"
   },
   "show_notification": true
 }

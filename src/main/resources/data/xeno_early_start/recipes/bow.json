@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "xeno_early_start:bow_piece"
+    },
+    {
+      "item": "xeno_early_start:bow_piece"
+    },
+    {
+      "item": "xeno_early_start:bow_piece"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bow"
+  },
+  "show_notification": true
+}
