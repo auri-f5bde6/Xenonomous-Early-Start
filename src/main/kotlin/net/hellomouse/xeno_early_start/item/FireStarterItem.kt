@@ -2,6 +2,7 @@ package net.hellomouse.xeno_early_start.item
 
 import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
+import net.hellomouse.xeno_early_start.utils.OtherUtils.rayCastToSky
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
@@ -10,64 +11,102 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.recipe.RecipeType
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.ActionResult
 import net.minecraft.util.UseAction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import net.minecraftforge.common.Tags
+import kotlin.math.abs
 
 class FireStarterItem(settings: Settings) : Item(settings) {
     override fun getUseAction(stack: ItemStack?): UseAction {
         return UseAction.BOW
     }
+
     private fun putBlockPos(stack: ItemStack, pos: BlockPos) {
-        val tag=stack.getOrCreateNbt()
+        val tag = stack.getOrCreateNbt()
         tag.putInt("pos_x", pos.x)
         tag.putInt("pos_y", pos.y)
         tag.putInt("pos_z", pos.z)
     }
+
     private fun getBlockPos(stack: ItemStack): BlockPos {
-        val tag=stack.getOrCreateNbt()
+        val tag = stack.getOrCreateNbt()
         return BlockPos(tag.getInt("pos_x"), tag.getInt("pos_y"), tag.getInt("pos_z"))
     }
 
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
-        stack.damage(
+        val aboveBlock = getBlockPos(stack)
+        var newStack = stack.copy()
+        newStack.damage(
             1, user
         ) { e: LivingEntity -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) }
-        if (!(0.25 > world.random.nextFloat())) {
-            val aboveBlock=getBlockPos(stack)
+        var chance = 0.25
+        if (world.isRaining && !rayCastToSky(world, aboveBlock).component2()) {
+            chance = 0.0
+        } else if (world.getBiome(aboveBlock).isIn(Tags.Biomes.IS_DRY)) {
+            chance = 0.5
+        }
+        if (chance > world.random.nextFloat()) {
             val box = Box(aboveBlock, aboveBlock.add(1, 1, 1))
             val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
             val burnables = mutableListOf<ItemEntity>()
-            var burnablesTotal = 0
             for (item in items) {
                 if (getBurnTime(item.stack, RecipeType.SMELTING) != 0) {
-                    burnablesTotal += item.stack.count
                     burnables.add(item)
-                } else {
-                    burnablesTotal = 0
+                }
+            }
+            val toKill = List<ItemEntity?>(burnables.size) { null }.toMutableList()
+            var required = 5
+            for (i in burnables.indices) {
+                val item = burnables[i]
+                required -= item.stack.count
+                var blockState = ProgressionModBlockRegistry.PRIMITIVE_FIRE.get().defaultState
+                toKill[i] = item
+                blockState = blockState.with(
+                    PrimitiveFireBlock.FACING, user.horizontalFacing
+                )
+                if (world.getBlockState(aboveBlock).isAir || world.getBlockState(aboveBlock)
+                        .isIn(BlockTags.REPLACEABLE_BY_TREES)
+                ) {
+                    if (!(user is PlayerEntity && user.isCreative)) {
+                        newStack = ItemStack.EMPTY
+                    }
+                    world.setBlockState(aboveBlock, blockState)
+                }
+                if (required < 0) {
+                    val itemPos = item.pos
+                    world.spawnEntity(
+                        ItemEntity(
+                            world,
+                            itemPos.x,
+                            itemPos.y,
+                            itemPos.z + 0.5,
+                            ItemStack(item.stack.item, abs(required))
+                        )
+                    )
+                }
+                if (required <= 0) {
                     break
                 }
             }
-            if (burnablesTotal == 5) {
-                for (item in burnables) {
-                    var blockState = ProgressionModBlockRegistry.PRIMITIVE_FIRE.get().defaultState
-                    item.kill()
-                    blockState = blockState.with(
-                        PrimitiveFireBlock.FACING, user.horizontalFacing
-                    )
-                    world.setBlockState(aboveBlock, blockState)
-                }
+            for (item in toKill) {
+                item?.kill()
             }
         }
         if (user is PlayerEntity) {
             user.addExhaustion(36f)
         }
-        return stack
+        return newStack
     }
+
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
+        if (context.world.isClient) {
+            PrimitiveFireBlock.spawnSmokeParticle(context.world, context.blockPos, false)
+        }
         if (context.side == Direction.UP) {
             val stack = context.stack
             val aboveBlock = context.blockPos.add(0, 1, 0)
@@ -77,6 +116,13 @@ class FireStarterItem(settings: Settings) : Item(settings) {
         }
         return ActionResult.FAIL
 
+    }
+
+    override fun usageTick(world: World, user: LivingEntity?, stack: ItemStack, remainingUseTicks: Int) {
+        super.usageTick(world, user, stack, remainingUseTicks)
+        if (world.isClient && world.random.nextFloat() < 0.15) {
+            PrimitiveFireBlock.spawnSmokeParticle(world, getBlockPos(stack), true)
+        }
     }
 
     override fun getMaxUseTime(stack: ItemStack?): Int {

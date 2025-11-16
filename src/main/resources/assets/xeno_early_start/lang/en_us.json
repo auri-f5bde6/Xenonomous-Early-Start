@@ -59,5 +59,6 @@
   "text.config.xeno_early_start.option.oreDropChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreDropChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
   "text.config.xeno_early_start.title": "Progression Change",
-  "death.damage.stonecutter_0": "%s was split into half"
+  "death.damage.stonecutter_0": "%s was split into half",
+  "xeno_early_start.item.tooltip.fire_starter": "Requires 5 dropped burnables to use"
 }
