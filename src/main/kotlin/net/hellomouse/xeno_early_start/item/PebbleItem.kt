@@ -17,9 +17,9 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
         if (player != null) {
             val mainhandStack = player.mainHandStack
             val offhandStack = player.offHandStack
-            if (offhandStack.isOf(mainhandStack.item) && offhandStack.item is PebbleItem && blockState.isIn(
+            if (offhandStack.isOf(mainhandStack.item) && offhandStack.item is PebbleItem && (blockState.isIn(
                     Tags.Blocks.COBBLESTONE
-                )
+                ) || blockState.isIn(Tags.Blocks.STONE))
             ) {
                 if (!player.isCreative){
                     mainhandStack.decrement(1)
