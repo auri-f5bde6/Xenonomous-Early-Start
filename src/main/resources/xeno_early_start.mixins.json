@@ -7,6 +7,8 @@
   ],
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
+    "FlintAndSteelMixin",
+    "FoodComponentsMixin",
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
     "accessors.FlowableFluidAccessor",
