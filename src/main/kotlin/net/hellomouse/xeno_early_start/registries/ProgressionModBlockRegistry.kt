@@ -67,7 +67,6 @@ object ProgressionModBlockRegistry {
                 .luminance(createLightLevelFromLitBlockState(15))
                 .nonOpaque()
                 .burnable()
-                .dropsNothing()
         )
     })
 

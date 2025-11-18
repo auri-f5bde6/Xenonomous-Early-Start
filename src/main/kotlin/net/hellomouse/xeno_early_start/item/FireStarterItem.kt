@@ -3,6 +3,7 @@ package net.hellomouse.xeno_early_start.item
 import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.utils.OtherUtils.rayCastToSky
+import net.minecraft.block.Block
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
@@ -12,13 +13,18 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
+import net.minecraft.state.property.Properties
 import net.minecraft.util.ActionResult
 import net.minecraft.util.UseAction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import net.minecraft.world.event.GameEvent
 import net.minecraftforge.common.Tags
+import java.util.function.Consumer
 import kotlin.math.abs
 
 class FireStarterItem(settings: Settings) : Item(settings) {
@@ -104,17 +110,47 @@ class FireStarterItem(settings: Settings) : Item(settings) {
     }
 
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
-        if (context.world.isClient) {
-            PrimitiveFireBlock.spawnSmokeParticle(context.world, context.blockPos, false)
+        val world = context.world
+        val blockPos = context.blockPos
+        val blockState = context.world.getBlockState(context.blockPos)
+        if (PrimitiveFireBlock.canBeLit(blockState)) {
+            val player = context.player
+            world.playSound(
+                player,
+                blockPos,
+                SoundEvents.ITEM_FLINTANDSTEEL_USE,
+                SoundCategory.BLOCKS,
+                1.0f,
+                world.getRandom().nextFloat() * 0.4f + 0.8f
+            )
+            world.setBlockState(
+                blockPos,
+                blockState.with(Properties.LIT, true),
+                Block.NOTIFY_ALL or Block.REDRAW_ON_MAIN_THREAD
+            )
+            world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, blockPos)
+            if (player != null) {
+                context.stack.damage(
+                    Int.MAX_VALUE,
+                    player,
+                    Consumer { p: PlayerEntity -> p.sendToolBreakStatus(context.hand) })
+            }
+
+            return ActionResult.success(world.isClient())
+        } else {
+            if (context.world.isClient) {
+                PrimitiveFireBlock.spawnSmokeParticle(context.world, context.blockPos, false)
+            }
+            if (context.side == Direction.UP) {
+                val stack = context.stack
+                val aboveBlock = context.blockPos.add(0, 1, 0)
+                putBlockPos(stack, aboveBlock)
+                context.player?.setCurrentHand(context.hand)
+                return ActionResult.CONSUME
+            }
+            return ActionResult.FAIL
         }
-        if (context.side == Direction.UP) {
-            val stack = context.stack
-            val aboveBlock = context.blockPos.add(0, 1, 0)
-            putBlockPos(stack, aboveBlock)
-            context.player?.setCurrentHand(context.hand)
-            return ActionResult.CONSUME
-        }
-        return ActionResult.FAIL
+
 
     }
 

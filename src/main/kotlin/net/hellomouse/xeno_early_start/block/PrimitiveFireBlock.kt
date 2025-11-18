@@ -2,6 +2,7 @@ package net.hellomouse.xeno_early_start.block
 
 import net.hellomouse.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.utils.TransUtils
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
@@ -97,6 +98,12 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                 blockEntity.spawnItemsBeingCooked()
             }
             world.emitGameEvent(entity, GameEvent.BLOCK_CHANGE, pos)
+        }
+
+        @JvmStatic
+        fun canBeLit(state: BlockState): Boolean {
+            return state.isOf(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get())
+                    && !state.get(WATERLOGGED) && !state.get(LIT)
         }
     }
 
