@@ -29,7 +29,8 @@ public abstract class PolarBearEntityMixin extends AnimalEntity implements Anger
     private static DefaultAttributeContainer.Builder createMobAttributes(Operation<DefaultAttributeContainer.Builder> original) {
         return original.call()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, ProgressionModConfig.config.mobChanges.getPolarBearSpeed())
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, ProgressionModConfig.config.mobChanges.getPolarBearRange());
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, ProgressionModConfig.config.mobChanges.getPolarBearRange())
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 50);
     }
 
     @Definition(id = "shouldAngerAt", method = "Lnet/minecraft/entity/mob/Angerable;shouldAngerAt(Lnet/minecraft/entity/LivingEntity;)Z")
