@@ -1,11 +1,15 @@
 package net.hellomouse.xeno_early_start.mixins.mob_changes;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.hellomouse.xeno_early_start.entity.goal.SquidAttackGoal;
 import net.hellomouse.xeno_early_start.utils.OtherUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.SquidEntity;
@@ -39,23 +43,22 @@ public abstract class SquidEntityMixin extends WaterCreatureEntity implements An
         this.xeno_early_start$angryAt = angryAt;
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T> T unchecked(Object o) {
-        return (T) o;
+    @WrapMethod(method = "createSquidAttributes")
+    private static DefaultAttributeContainer.Builder addSquidAttributes(Operation<DefaultAttributeContainer.Builder> original) {
+
+        return original.call()
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 5)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0);
     }
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     private void initGoals(CallbackInfo ci) {
-        this.targetSelector.add(0, new RevengeGoal(this));
-        this.targetSelector.add(1, new ActiveTargetGoal<>((SquidEntity) (Object) this, PlayerEntity.class, 10, true, false,
+        this.targetSelector.add(-2, new RevengeGoal(this));
+        this.targetSelector.add(-1, new ActiveTargetGoal<>((SquidEntity) (Object) this, PlayerEntity.class, 10, true, false,
                 livingEntity -> this.shouldAngerAt(livingEntity) || OtherUtils.isLivingEntityWeak(livingEntity))
         );
-        this.targetSelector.add(2, new UniversalAngerGoal<>(unchecked(this), true));
-    }
-
-    @WrapOperation(method = "initGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/goal/GoalSelector;add(ILnet/minecraft/entity/ai/goal/Goal;)V", ordinal = 1))
-    private void doNotRun(GoalSelector instance, int priority, Goal goal, Operation<Void> original) {
-        this.goalSelector.add(1, new MeleeAttackGoal(this, 1, false));
+        this.targetSelector.add(2, new UniversalAngerGoal<>(this, true));
     }
 
     @Override
@@ -84,14 +87,9 @@ public abstract class SquidEntityMixin extends WaterCreatureEntity implements An
         this.xeno_early_start$angryAt = angryAt;
     }
 
-    @Override
-    public boolean tryAttack(Entity target) {
-        boolean bl = target.damage(this.getDamageSources().mobAttack(this), 10);
-        if (bl) {
-            this.applyDamageEffects(this, target);
-        }
-
-        return bl;
+    @WrapOperation(method = "initGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ai/goal/GoalSelector;add(ILnet/minecraft/entity/ai/goal/Goal;)V", ordinal = 1))
+    private void doNotRun(GoalSelector instance, int priority, Goal goal, Operation<Void> original) {
+        this.goalSelector.add(-1, new SquidAttackGoal((SquidEntity) (Object) this));
     }
 
     @Inject(method = "tickMovement", at = @At("TAIL"))
@@ -100,4 +98,16 @@ public abstract class SquidEntityMixin extends WaterCreatureEntity implements An
             this.tickAngerLogic((ServerWorld) this.getWorld(), true);
         }
     }
+
+    @Override
+    public boolean tryAttack(Entity target) {
+        /*boolean bl = target.damage(this.getDamageSources().mobAttack(this), 10);
+        if (bl) {
+            this.applyDamageEffects(this, target);
+        }
+
+        return bl;*/
+        return super.tryAttack(target);
+    }
+
 }

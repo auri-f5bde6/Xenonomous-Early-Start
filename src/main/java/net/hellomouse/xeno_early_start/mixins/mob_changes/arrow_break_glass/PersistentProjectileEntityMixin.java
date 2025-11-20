@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import org.spongepowered.asm.mixin.Mixin;
 
-import static net.hellomouse.xeno_early_start.utils.OtherUtils.moveProjectileAwayFrom;
+import static net.hellomouse.xeno_early_start.utils.OtherUtils.moveEntityAwayFrom;
 
 @Mixin(PersistentProjectileEntity.class)
 public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
@@ -26,7 +26,7 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
             var blockState = world.getBlockState(blockHitResult.getBlockPos());
             if (blockState.isIn(Tags.Blocks.GLASS)) {
                 world.breakBlock(blockHitResult.getBlockPos(), false, (ArrowEntity) (Object) (this));
-                moveProjectileAwayFrom((ArrowEntity) (Object) (this), blockHitResult, 0.9f);
+                moveEntityAwayFrom((ArrowEntity) (Object) (this), blockHitResult.getPos(), 0.9f);
                 this.setVelocity(this.getVelocity().multiply(0.7));
                 return;
             }

@@ -135,13 +135,12 @@ object OtherUtils {
     }
 
     @JvmStatic
-    fun moveProjectileAwayFrom(
-        entity: PersistentProjectileEntity,
-        blockHitResult: BlockHitResult,
+    fun moveEntityAwayFrom(
+        entity: Entity,
+        blockPos: Vec3d,
         blocks: Float
     ): Vec3d {
         // This is going to be very verbose because I have math skill issues, and I am stupid
-        val blockPos = blockHitResult.getPos()
         // Direction vector from block pos to entity
         val directionVector = entity.pos.subtract(blockPos).normalize()
         // Move the entity away from the block by `blocks`

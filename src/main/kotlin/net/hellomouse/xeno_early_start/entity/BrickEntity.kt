@@ -3,7 +3,7 @@ package net.hellomouse.xeno_early_start.entity
 import net.hellomouse.xeno_early_start.block.BrickBlock
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModEntityRegistry
-import net.hellomouse.xeno_early_start.utils.OtherUtils.moveProjectileAwayFrom
+import net.hellomouse.xeno_early_start.utils.OtherUtils.moveEntityAwayFrom
 import net.minecraft.block.Block.NOTIFY_ALL
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.EntityType
@@ -68,12 +68,12 @@ class BrickEntity : PersistentProjectileEntity {
         val blockState = world.getBlockState(blockHitResult.blockPos)
         if (blockState.isIn(Tags.Blocks.GLASS) && velocity.lengthSquared() > 1.5) {
             world.breakBlock(blockHitResult.blockPos, false, this)
-            moveProjectileAwayFrom(this, blockHitResult, 0.9f)
+            moveEntityAwayFrom(this, blockHitResult.pos, 0.9f)
             this.velocity = this.velocity.multiply(0.7)
             return
         } else {
             if (blockHitResult.side != Direction.UP) {
-                val directionVector = moveProjectileAwayFrom(this, blockHitResult, 0.9f)
+                val directionVector = moveEntityAwayFrom(this, blockHitResult.pos, 0.9f)
                 futureVelocity = directionVector.multiply(0.05)
                 this.setVelocity(0.0, 0.0, 0.0)
                 this.bounced = true

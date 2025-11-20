@@ -12,6 +12,7 @@
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
     "accessors.FlowableFluidAccessor",
+    "accessors.MeleeAttackGoalAccessor",
     "accessors.TierSortingRegistryAccessor",
     "block_changes.AbstractBlockMixin",
     "block_changes.BlockMixin",

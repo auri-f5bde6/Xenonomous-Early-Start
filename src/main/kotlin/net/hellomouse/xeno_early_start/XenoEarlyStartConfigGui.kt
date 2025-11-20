@@ -156,22 +156,26 @@ object XenoEarlyStartConfigGui {
                 .requireRestart()
                 .build()
         )
+        category.addEntry(
+            entryBuilder.startBooleanToggle(
+                getTranslatableTextOption("modChanges.mobAttackWeakPlayer"),
+                ProgressionModConfig.config.mobChanges.mobAttackWeakPlayer
+            )
+                .setDefaultValue(true)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startBooleanToggle(
+                getTranslatableTextOption("modChanges.wolfAggressiveAtNight"),
+                ProgressionModConfig.config.mobChanges.wolfAggressiveAtNight
+            )
+                .setDefaultValue(true)
+                .build()
+        )
     }
 
     private fun addOreDropChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
         val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("oreDropChanges"))
-        category.addEntry(
-            entryBuilder.startBooleanToggle(
-                getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround"),
-                ProgressionModConfig.config.oreDropChanges.moddedPickaxeWorkaround
-            )
-                .setSaveConsumer { aBoolean: Boolean ->
-                    ProgressionModConfig.config.oreDropChanges.moddedPickaxeWorkaround = aBoolean
-                }
-                .setTooltip(getTranslatableTextOption("oreDropChanges.moddedPickaxeWorkaround.tooltip"))
-                .setDefaultValue(true)
-                .build()
-        )
         category.addEntry(
             entryBuilder.startIntSlider(
                 getTranslatableTextOption("oreDropChanges.rawCopperNuggetDrop"),
