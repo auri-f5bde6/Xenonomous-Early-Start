@@ -1,11 +1,11 @@
 package net.hellomouse.xeno_early_start.utils
 
+import net.hellomouse.xeno_early_start.ProgressionModConfig
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.PersistentProjectileEntity
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
@@ -122,6 +122,9 @@ object OtherUtils {
 
     @JvmStatic
     fun isLivingEntityWeak(livingEntity: LivingEntity?): Boolean {
+        if (!ProgressionModConfig.config.mobChanges.mobAttackWeakPlayer) {
+            return false
+        }
         if (livingEntity != null) {
             if (livingEntity.health <= 6) {
                 return true

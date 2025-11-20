@@ -3,6 +3,7 @@ package net.hellomouse.xeno_early_start.mixins.mob_changes.attack_weak_player;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import net.hellomouse.xeno_early_start.ProgressionModConfig;
 import net.hellomouse.xeno_early_start.utils.OtherUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -24,7 +25,7 @@ import static net.minecraft.sound.SoundEvents.ENTITY_WOLF_HOWL;
 public abstract class WolfEntityMixin extends TameableEntity implements Angerable {
 
     @Unique
-    boolean nightHowled = false;
+    boolean xeno_early_start$nightHowled = false;
 
     protected WolfEntityMixin(EntityType<? extends TameableEntity> arg, World arg2) {
         super(arg, arg2);
@@ -38,17 +39,17 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
             var world = this.getWorld();
             var isNight = world.isNight();
             if (!isNight) {
-                nightHowled = false;
+                xeno_early_start$nightHowled = false;
             }
             var isWeak = OtherUtils.isLivingEntityWeak(livingEntity);
             var nightHostility = isNight && world.random.nextFloat() <= 0.7;
-            if ((isNight && !nightHowled) || isWeak) {
+            if ((isNight && !xeno_early_start$nightHowled) || isWeak) {
                 if (isNight) {
-                    nightHowled = true;
+                    xeno_early_start$nightHowled = true;
                 }
                 this.getWorld().playSoundFromEntity(null, (Entity) this, ENTITY_WOLF_HOWL, SoundCategory.HOSTILE, 1.0F, 1.0F);
             }
-            return original.test(livingEntity) || isNight || livingEntity.isBaby() || isWeak;
+            return original.test(livingEntity) || (nightHostility && ProgressionModConfig.config.mobChanges.getWolfAggressiveAtNight()) || livingEntity.isBaby() || isWeak;
         };
     }
 }
