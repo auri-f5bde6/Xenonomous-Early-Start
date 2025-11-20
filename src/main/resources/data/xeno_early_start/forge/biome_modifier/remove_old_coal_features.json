@@ -1,0 +1,9 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#xeno_early_start:changed_coal_biomes",
+  "features": [
+    "minecraft:ore_coal_upper",
+    "minecraft:ore_coal_lower"
+  ],
+  "steps": "underground_ores"
+}

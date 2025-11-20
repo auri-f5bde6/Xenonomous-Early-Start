@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#minecraft:is_river",
+    "minecraft:dripstone_caves",
+    "minecraft:sunflower_plains",
+    "minecraft:snowy_plains",
+    "minecraft:plains",
+    "minecraft:ice_spikes"
+  ]
+}

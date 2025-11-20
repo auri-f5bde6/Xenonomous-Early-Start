@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#xeno_early_start:normal_iron_biomes",
+  "features": [
+    "xeno_early_start:ore_diamond",
+    "xeno_early_start:ore_diamond_buried",
+    "xeno_early_start:ore_diamond_large"
+  ],
+  "step": "underground_ores"
+}

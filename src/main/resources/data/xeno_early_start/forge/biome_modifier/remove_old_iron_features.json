@@ -1,0 +1,10 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#xeno_early_start:normal_iron_biomes",
+  "features": [
+    "minecraft:ore_iron_middle",
+    "minecraft:ore_iron_small",
+    "minecraft:ore_iron_upper"
+  ],
+  "steps": "underground_ores"
+}

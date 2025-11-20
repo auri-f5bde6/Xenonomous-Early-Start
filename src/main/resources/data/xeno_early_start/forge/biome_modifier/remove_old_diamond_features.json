@@ -1,0 +1,10 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#xeno_early_start:buffed_diamond_biomes",
+  "features": [
+    "minecraft:ore_diamond",
+    "minecraft:ore_diamond_buried",
+    "minecraft:ore_diamond_large"
+  ],
+  "steps": "underground_ores"
+}

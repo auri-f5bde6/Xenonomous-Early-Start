@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#minecraft:has_structure/ancient_city",
+    "minecraft:deep_dark",
+    "#minecraft:lush_caves",
+    "#minecraft:is_jungle"
+  ]
+}
