@@ -8,14 +8,17 @@
     "B": {
       "item": "xeno_early_start:brick_furnace"
     },
-    "F": {
-      "item": "minecraft:iron_ingot"
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "&": {
+      "tag": "minecraft:copper"
     }
   },
   "pattern": [
     "###",
     "#B#",
-    "FFF"
+    "S&S"
   ],
   "result": {
     "item": "minecraft:furnace"

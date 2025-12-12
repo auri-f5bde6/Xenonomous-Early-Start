@@ -199,14 +199,24 @@ object ProgressionModItemRegistry {
     )
 
     @JvmField
-    val treated_wood: RegistryObject<Item> =
+    val TREATED_WOOD: RegistryObject<Item> =
         DEF_REG.register("treated_wood", Supplier { Item(Item.Settings()) }
         )
 
     @JvmField
-    val bow_piece: RegistryObject<Item> =
+    val BOW_PIECES: RegistryObject<Item> =
         DEF_REG.register("bow_piece", Supplier { Item(Item.Settings()) }
         )
+
+    @JvmField
+    val FLINT_SHARD: RegistryObject<Item> = DEF_REG.register(
+        "flint_shard", Supplier { Item(Item.Settings()) }
+    )
+
+    @JvmField
+    val PRIMITIVE_ARROW: RegistryObject<Item> = DEF_REG.register(
+        "primitive_arrow", Supplier { ArrowItem(Item.Settings()) }
+    )
 
     @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
@@ -240,6 +250,10 @@ object ProgressionModItemRegistry {
         PRIMITIVE_FIRE,
         FLINT_DAGGER,
         BONE_DAGGER,
+        TREATED_WOOD,
+        BOW_PIECES,
+        FLINT_SHARD,
+        PRIMITIVE_ARROW
     )
 
     @Suppress("UNUSED")

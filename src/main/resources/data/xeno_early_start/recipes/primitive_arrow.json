@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "xeno_early_start:flint_shard"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "xeno_early_start:primitive_arrow"
+  },
+  "show_notification": true
+}
