@@ -6,6 +6,7 @@ import net.hellomouse.xeno_early_start.ProgressionModToolMaterials
 import net.hellomouse.xeno_early_start.item.BrickItem
 import net.hellomouse.xeno_early_start.item.FireStarterItem
 import net.hellomouse.xeno_early_start.item.PebbleItem
+import net.hellomouse.xeno_early_start.item.PrimitiveArrowItem
 import net.minecraft.item.*
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
@@ -215,7 +216,7 @@ object ProgressionModItemRegistry {
 
     @JvmField
     val PRIMITIVE_ARROW: RegistryObject<Item> = DEF_REG.register(
-        "primitive_arrow", Supplier { ArrowItem(Item.Settings()) }
+        "primitive_arrow", Supplier { PrimitiveArrowItem(Item.Settings()) }
     )
 
     @JvmField
