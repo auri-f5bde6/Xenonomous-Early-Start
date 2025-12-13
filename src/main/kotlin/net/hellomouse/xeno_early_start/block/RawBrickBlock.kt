@@ -121,6 +121,6 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
 
     companion object {
         const val FINISH_DRYING_AT = 18
-        val DRYING_LEVEL: IntProperty = IntProperty.of("dying_level", 0, FINISH_DRYING_AT)
+        val DRYING_LEVEL: IntProperty = IntProperty.of("drying_level", 0, FINISH_DRYING_AT)
     }
 }
