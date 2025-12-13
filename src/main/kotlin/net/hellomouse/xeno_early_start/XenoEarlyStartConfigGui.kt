@@ -132,19 +132,19 @@ object XenoEarlyStartConfigGui {
         )
         category.addEntry(
             entryBuilder.startFloatField(
-                getTranslatableTextOption("modChanges.polarBearSpeed"),
+                getTranslatableTextOption("mobChanges.polarBearSpeed"),
                 ProgressionModConfig.config.mobChanges.polarBearSpeed
             ).setSaveConsumer { aFloat: Float ->
                 ProgressionModConfig.config.mobChanges.polarBearSpeed = aFloat
             }
                 .setDefaultValue(0.35f)
-                .setTooltip(getTranslatableTextOption("modChanges.onlyApplyOnNewlySpawnedMob"))
+                .setTooltip(getTranslatableTextOption("mobChanges.onlyApplyOnNewlySpawnedMob"))
                 .requireRestart()
                 .build()
         )
         category.addEntry(
             entryBuilder.startIntSlider(
-                getTranslatableTextOption("modChanges.polarBearRange"),
+                getTranslatableTextOption("mobChanges.polarBearRange"),
                 ProgressionModConfig.config.mobChanges.polarBearRange,
                 1,
                 64
@@ -152,13 +152,13 @@ object XenoEarlyStartConfigGui {
                 ProgressionModConfig.config.mobChanges.polarBearRange = aInt
             }
                 .setDefaultValue(40)
-                .setTooltip(getTranslatableTextOption("modChanges.onlyApplyOnNewlySpawnedMob"))
+                .setTooltip(getTranslatableTextOption("mobChanges.onlyApplyOnNewlySpawnedMob"))
                 .requireRestart()
                 .build()
         )
         category.addEntry(
             entryBuilder.startBooleanToggle(
-                getTranslatableTextOption("modChanges.mobAttackWeakPlayer"),
+                getTranslatableTextOption("mobChanges.mobAttackWeakPlayer"),
                 ProgressionModConfig.config.mobChanges.mobAttackWeakPlayer
             )
                 .setDefaultValue(true)
@@ -166,7 +166,7 @@ object XenoEarlyStartConfigGui {
         )
         category.addEntry(
             entryBuilder.startBooleanToggle(
-                getTranslatableTextOption("modChanges.wolfAggressiveAtNight"),
+                getTranslatableTextOption("mobChanges.wolfAggressiveAtNight"),
                 ProgressionModConfig.config.mobChanges.wolfAggressiveAtNight
             )
                 .setDefaultValue(true)
