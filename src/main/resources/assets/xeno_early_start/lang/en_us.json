@@ -69,8 +69,10 @@
   "text.config.xeno_early_start.option.oreDropChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
   "text.config.xeno_early_start.option.blockChanges": "Block Changes",
   "text.config.xeno_early_start.option.blockChanges.stonecutterDamage": "Damage Dealt When Entity Step On Stonecutter",
+  "text.config.xeno_early_start.option.blockChanges.amethystFallDamageMultiplier": "Damage Multiplier When Player Fall On Amethyst",
   "text.config.xeno_early_start.option.blockChanges.fixThinBlockStepSound": "Fix Vanilla Issue Where Walking On Block With Thin Hitbox Doesn't Play The Correct Sound",
   "text.config.xeno_early_start.title": "Progression Change",
-  "death.damage.stonecutter_0": "%s was split into half",
+  "death.damage.stonecutter_0": "%s was split in half",
+  "death.damage.amethyst_0": "%s was punctured by sharp crystal",
   "xeno_early_start.item.tooltip.fire_starter": "Requires 5 dropped burnables to use"
 }

@@ -247,6 +247,18 @@ object XenoEarlyStartConfigGui {
                 .build()
         )
         category.addEntry(
+            entryBuilder.startFloatField(
+                getTranslatableTextOption("blockChanges.amethystFallDamageMultiplier"),
+                ProgressionModConfig.config.blockChanges.amethystFallDamageMultiplier,
+            ).setSaveConsumer { aFloat: Float ->
+                ProgressionModConfig.config.blockChanges.amethystFallDamageMultiplier = aFloat
+            }
+                .setDefaultValue(1f)
+                .setMin(0f)
+                .setMax(5f)
+                .build()
+        )
+        category.addEntry(
             entryBuilder.startEnumSelector(
                 getTranslatableTextOption("blockChanges.fixThinBlockStepSound"),
                 ProgressionModConfig.BlockChanges.FixThinBlockStepSound::class.java,

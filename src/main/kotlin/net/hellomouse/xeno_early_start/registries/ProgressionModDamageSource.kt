@@ -6,21 +6,28 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.damage.DamageType
 import net.minecraft.registry.DynamicRegistryManager
-import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
-import net.minecraft.world.event.listener.GameEventListener.Holder
 
 
 class ProgressionModDamageSource {
     companion object {
         @JvmField
-        val STONCUTTER: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("stonecutter"))
+        val STONECUTTER: RegistryKey<DamageType> =
+            RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("stonecutter"))
+
+        @JvmField
+        val AMETHYST: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("amethyst"))
         @JvmStatic
         fun causeStonecutterDamage(dynamicRegistryManager: DynamicRegistryManager): DamageSource {
-            return DamageSourceRandomMessages(dynamicRegistryManager[RegistryKeys.DAMAGE_TYPE].entryOf(STONCUTTER), 1)
+            return DamageSourceRandomMessages(dynamicRegistryManager[RegistryKeys.DAMAGE_TYPE].entryOf(STONECUTTER), 1)
+        }
+
+        @JvmStatic
+        fun causeAmethystDamage(dynamicRegistryManager: DynamicRegistryManager): DamageSource {
+            return DamageSourceRandomMessages(dynamicRegistryManager[RegistryKeys.DAMAGE_TYPE].entryOf(AMETHYST), 1)
         }
 
         private class DamageSourceRandomMessages : DamageSource {
