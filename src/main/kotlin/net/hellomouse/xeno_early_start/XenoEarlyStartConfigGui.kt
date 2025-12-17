@@ -253,7 +253,7 @@ object XenoEarlyStartConfigGui {
             ).setSaveConsumer { aFloat: Float ->
                 ProgressionModConfig.config.blockChanges.amethystFallDamageMultiplier = aFloat
             }
-                .setDefaultValue(1f)
+                .setDefaultValue(1.5f)
                 .setMin(0f)
                 .setMax(5f)
                 .build()

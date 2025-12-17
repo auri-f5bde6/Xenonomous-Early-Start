@@ -1,21 +1,29 @@
 package net.hellomouse.xeno_early_start.mixins.block_changes;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.hellomouse.xeno_early_start.ProgressionModConfig;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CoralParentBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(AbstractBlock.AbstractBlockState.class)
-public abstract class AbstractBlockMixin {
-    @Shadow
-    public abstract boolean isIn(TagKey<Block> tag);
+import static net.hellomouse.xeno_early_start.registries.ProgressionModDamageSource.CORAL;
+import static net.hellomouse.xeno_early_start.registries.ProgressionModDamageSource.getDamageSource;
 
-    @ModifyReturnValue(method = "isToolRequired()Z", at = @At("RETURN"))
-    public boolean logRequireTool(boolean original) {
-        return this.isIn(BlockTags.LOGS) || original;
+@Mixin(AbstractBlock.class)
+public class AbstractBlockMixin {
+
+    @WrapMethod(method = "onEntityCollision")
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, Operation<Void> original) {
+        if (state.getBlock() instanceof CoralParentBlock && entity instanceof LivingEntity le && le.getEquippedStack(EquipmentSlot.FEET).isEmpty()) {
+            entity.damage(getDamageSource(CORAL, world.getRegistryManager()), ProgressionModConfig.config.blockChanges.getCoralDamage());
+        }
+        original.call(state, world, pos, entity);
     }
 }

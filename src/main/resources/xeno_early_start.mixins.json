@@ -16,6 +16,7 @@
     "accessors.MeleeAttackGoalAccessor",
     "accessors.TierSortingRegistryAccessor",
     "block_changes.AbstractBlockMixin",
+    "block_changes.AbstractBlockStateMixin",
     "block_changes.BlockMixin",
     "block_changes.CampfireBlockEntityMixin",
     "block_changes.CampfireBlockMixin",

@@ -14,20 +14,22 @@ import net.minecraft.text.Text
 
 class ProgressionModDamageSource {
     companion object {
-        @JvmField
-        val STONECUTTER: RegistryKey<DamageType> =
-            RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("stonecutter"))
+        data class XenoDamageSource(val key: RegistryKey<DamageType>, val messageCount: Int)
 
         @JvmField
-        val AMETHYST: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("amethyst"))
-        @JvmStatic
-        fun causeStonecutterDamage(dynamicRegistryManager: DynamicRegistryManager): DamageSource {
-            return DamageSourceRandomMessages(dynamicRegistryManager[RegistryKeys.DAMAGE_TYPE].entryOf(STONECUTTER), 1)
-        }
+        val STONECUTTER =
+            XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("stonecutter")), 1)
+        @JvmField
+        val AMETHYST = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("amethyst")), 1)
 
+        @JvmField
+        val CORAL = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("coral")), 1)
         @JvmStatic
-        fun causeAmethystDamage(dynamicRegistryManager: DynamicRegistryManager): DamageSource {
-            return DamageSourceRandomMessages(dynamicRegistryManager[RegistryKeys.DAMAGE_TYPE].entryOf(AMETHYST), 1)
+        fun getDamageSource(source: XenoDamageSource, dynamicRegistryManager: DynamicRegistryManager): DamageSource {
+            return DamageSourceRandomMessages(
+                dynamicRegistryManager[RegistryKeys.DAMAGE_TYPE].entryOf(source.key),
+                source.messageCount
+            )
         }
 
         private class DamageSourceRandomMessages : DamageSource {

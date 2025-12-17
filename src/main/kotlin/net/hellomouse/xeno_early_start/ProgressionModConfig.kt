@@ -67,7 +67,8 @@ object ProgressionModConfig {
         }
 
         var stonecutterDamage: Float = 3f
-        var amethystFallDamageMultiplier: Float = 1f
+        var coralDamage: Float = 1.5f
+        var amethystFallDamageMultiplier: Float = 1.5f
         var fixThinBlockStepSound: FixThinBlockStepSound = FixThinBlockStepSound.True
     }
 

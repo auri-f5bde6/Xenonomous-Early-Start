@@ -74,5 +74,6 @@
   "text.config.xeno_early_start.title": "Progression Change",
   "death.damage.stonecutter_0": "%s was split in half",
   "death.damage.amethyst_0": "%s was punctured by sharp crystal",
+  "death.damage.coral_0": "%s found out coral isn't fun to step on",
   "xeno_early_start.item.tooltip.fire_starter": "Requires 5 dropped burnables to use"
 }
