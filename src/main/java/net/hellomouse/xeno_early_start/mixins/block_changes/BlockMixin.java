@@ -3,6 +3,7 @@ package net.hellomouse.xeno_early_start.mixins.block_changes;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
+import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry;
 import net.minecraft.block.AmethystClusterBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,6 +22,15 @@ public class BlockMixin {
     private void damagedByCertainBlocks(World world, BlockPos pos, BlockState state, Entity entity, Operation<Void> original) {
         if (state.isOf(Blocks.STONECUTTER)) {
             entity.damage(getDamageSource(STONECUTTER, world.getRegistryManager()), ProgressionModConfig.config.blockChanges.getStonecutterDamage());
+        } else if (state.isOf(Blocks.SMOKER)) {
+            entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 0.5f);
+        } else if (state.isOf(ProgressionModBlockRegistry.BRICK_FURNACE.get())) {
+            entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 1f);
+        } else if (state.isOf(Blocks.FURNACE)) {
+            entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 1.5f);
+        } else if (state.isOf(Blocks.BLAST_FURNACE)) {
+            entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 2f);
+            entity.setOnFireFor(3);
         }
         original.call(world, pos, state, entity);
 

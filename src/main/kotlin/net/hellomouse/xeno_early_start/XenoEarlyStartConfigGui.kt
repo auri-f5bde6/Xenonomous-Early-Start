@@ -259,6 +259,55 @@ object XenoEarlyStartConfigGui {
                 .build()
         )
         category.addEntry(
+            entryBuilder.startFloatField(
+                getTranslatableTextOption("blockChanges.cookerDamage"),
+                ProgressionModConfig.config.blockChanges.cookerDamage,
+            ).setSaveConsumer { aFloat: Float ->
+                ProgressionModConfig.config.blockChanges.cookerDamage = aFloat
+            }
+                .setDefaultValue(0.5f)
+                .setMin(0f)
+                .setMax(5f)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startFloatField(
+                getTranslatableTextOption("blockChanges.brickFurnaceDamage"),
+                ProgressionModConfig.config.blockChanges.brickFurnaceDamage,
+            ).setSaveConsumer { aFloat: Float ->
+                ProgressionModConfig.config.blockChanges.brickFurnaceDamage = aFloat
+            }
+                .setDefaultValue(1f)
+                .setMin(0f)
+                .setMax(5f)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startFloatField(
+                getTranslatableTextOption("blockChanges.furnaceDamage"),
+                ProgressionModConfig.config.blockChanges.furnaceDamage,
+            ).setSaveConsumer { aFloat: Float ->
+                ProgressionModConfig.config.blockChanges.furnaceDamage = aFloat
+            }
+                .setDefaultValue(1.5f)
+                .setMin(0f)
+                .setMax(5f)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startFloatField(
+                getTranslatableTextOption("blockChanges.blastFurnaceDamage"),
+                ProgressionModConfig.config.blockChanges.blastFurnaceDamage,
+            ).setSaveConsumer { aFloat: Float ->
+                ProgressionModConfig.config.blockChanges.blastFurnaceDamage = aFloat
+            }
+                .setDefaultValue(2.5f)
+                .setMin(0f)
+                .setMax(5f)
+                .build()
+        )
+
+        category.addEntry(
             entryBuilder.startEnumSelector(
                 getTranslatableTextOption("blockChanges.fixThinBlockStepSound"),
                 ProgressionModConfig.BlockChanges.FixThinBlockStepSound::class.java,

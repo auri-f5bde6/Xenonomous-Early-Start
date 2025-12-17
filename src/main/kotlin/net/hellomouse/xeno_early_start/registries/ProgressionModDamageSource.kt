@@ -19,11 +19,16 @@ class ProgressionModDamageSource {
         @JvmField
         val STONECUTTER =
             XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("stonecutter")), 1)
+
         @JvmField
         val AMETHYST = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("amethyst")), 1)
 
         @JvmField
         val CORAL = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("coral")), 1)
+
+        @JvmField
+        val FURNACE = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("furnace")), 1)
+
         @JvmStatic
         fun getDamageSource(source: XenoDamageSource, dynamicRegistryManager: DynamicRegistryManager): DamageSource {
             return DamageSourceRandomMessages(
