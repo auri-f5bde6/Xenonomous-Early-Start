@@ -4,7 +4,7 @@
   "category": "misc",
   "key": {
     "L": {
-      "tag": "minecraft:planks"
+      "item": "xeno_early_start:treated_wood"
     },
     "B": {
       "item": "minecraft:brick"

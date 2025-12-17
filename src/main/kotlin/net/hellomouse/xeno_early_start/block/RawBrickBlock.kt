@@ -77,14 +77,15 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
         val (canSeeSky, covered) = rayCastToSky(world, pos)
         val raining = world.isRaining || world.isThundering
         world.calculateAmbientDarkness()
-        if (world.timeOfDay % 24000 < 12000 && canSeeSky) {
-            if (!raining) {
-                return 0.95f
-            } else if (covered) {
-                return 0.76f
-            }
-        } else if (raining && !covered) {
+        if (raining && !covered) {
             return null
+        }
+        if (world.timeOfDay % 24000 < 12000 && canSeeSky) {
+            return if (!raining) {
+                0.95f
+            } else {
+                0.76f
+            }
         }
         return 0f
     }

@@ -34,7 +34,7 @@
               "conditions": [
                 {
                   "condition": "xeno_early_start:match_tool_tier",
-                  "tier": "xeno_early_start:copper",
+                  "tier": "minecraft:stone",
                   "cond": "<"
                 }
               ],
