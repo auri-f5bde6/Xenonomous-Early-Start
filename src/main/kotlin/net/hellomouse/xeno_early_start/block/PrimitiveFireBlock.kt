@@ -38,7 +38,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.event.GameEvent
 
-
+// Some code borrowed form vanilla campfire
 class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
     var fireDamage: Int
 

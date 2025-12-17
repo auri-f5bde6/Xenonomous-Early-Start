@@ -6,6 +6,7 @@ import net.minecraft.item.ToolMaterial
 import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 
+// Some code borrowed from vanilla ToolMaterials
 object ProgressionModToolMaterials {
     @JvmField
     val FLINT: ToolMaterial = Material(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT))
