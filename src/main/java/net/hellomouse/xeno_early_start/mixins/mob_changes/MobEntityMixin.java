@@ -31,15 +31,15 @@ public abstract class MobEntityMixin extends EntityMixin {
     @WrapOperation(method = "initEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getEquipmentForSlot(Lnet/minecraft/entity/EquipmentSlot;I)Lnet/minecraft/item/Item;"))
     private Item initEquipment(EquipmentSlot equipmentSlot, int equipmentLevel, Operation<Item> original) {
         if (this.random.nextFloat() < ProgressionModConfig.config.mobChanges.getReplaceEntityCopperArmourProbability()) {
-            switch (equipmentSlot) {
-                case HEAD:
-                    return ProgressionModItemRegistry.COPPER_HELMET.get();
-                case CHEST:
-                    return ProgressionModItemRegistry.COPPER_CHESTPLATE.get();
-                case LEGS:
-                    return ProgressionModItemRegistry.COPPER_LEGGINGS.get();
-                case FEET:
-                    return ProgressionModItemRegistry.COPPER_BOOTS.get();
+            // Not using a switch as that cause weird issue related to whatever a "switch map" is
+            if (equipmentSlot == EquipmentSlot.HEAD) {
+                return ProgressionModItemRegistry.COPPER_HELMET.get();
+            } else if (equipmentSlot == EquipmentSlot.CHEST) {
+                return ProgressionModItemRegistry.COPPER_CHESTPLATE.get();
+            } else if (equipmentSlot == EquipmentSlot.LEGS) {
+                return ProgressionModItemRegistry.COPPER_LEGGINGS.get();
+            } else if (equipmentSlot == EquipmentSlot.FEET) {
+                return ProgressionModItemRegistry.COPPER_BOOTS.get();
             }
         }
         return original.call(equipmentSlot, equipmentLevel);
