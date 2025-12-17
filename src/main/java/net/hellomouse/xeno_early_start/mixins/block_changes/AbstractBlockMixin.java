@@ -9,6 +9,7 @@ import net.minecraft.block.CoralParentBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +22,7 @@ public class AbstractBlockMixin {
 
     @WrapMethod(method = "onEntityCollision")
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, Operation<Void> original) {
-        if (state.getBlock() instanceof CoralParentBlock && entity instanceof LivingEntity le && le.getEquippedStack(EquipmentSlot.FEET).isEmpty()) {
+        if (state.getBlock() instanceof CoralParentBlock && !(entity instanceof WaterCreatureEntity) && entity instanceof LivingEntity le && le.getEquippedStack(EquipmentSlot.FEET).isEmpty()) {
             entity.damage(getDamageSource(CORAL, world.getRegistryManager()), ProgressionModConfig.config.blockChanges.getCoralDamage());
         }
         original.call(state, world, pos, entity);
