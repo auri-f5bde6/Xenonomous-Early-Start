@@ -66,7 +66,7 @@ object CoalDust {
                 if (entity.pos.squaredDistanceTo(Vec3d.of(pos)) <= 9) {
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
-                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 250))
+                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))
                 }
                 return@getEntitiesByClass false
             }
