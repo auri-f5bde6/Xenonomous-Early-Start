@@ -6,7 +6,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
@@ -16,7 +15,6 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.Heightmap
 import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
-import net.minecraftforge.common.Tags
 
 object OtherUtils {
     /**
@@ -53,20 +51,9 @@ object OtherUtils {
         return Pair(r!!, wasAnyBlockHit)
     }
 
-    /**
-     *Return (canSeeSky, isCovered)
-     */
     @JvmStatic
-    fun rayCastToSky(world: World, pos: BlockPos): Pair<Boolean, Boolean> {
-        val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
-        if (top - 1 <= pos.y) {
-            return Pair(true, false)
-        }
-        val start = Vec3d.of(pos.up())
-        val end = Vec3d.of(pos.withY(top))
-        return raycast(world, start, end, { blockState ->
-            blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES)
-        })
+    fun isCovered(world: World, pos: BlockPos): Boolean {
+        return world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, pos).y > pos.y
     }
 
     @JvmStatic

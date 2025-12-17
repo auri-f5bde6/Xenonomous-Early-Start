@@ -2,7 +2,6 @@ package net.hellomouse.xeno_early_start.item
 
 import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
-import net.hellomouse.xeno_early_start.utils.OtherUtils.rayCastToSky
 import net.minecraft.block.Block
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
@@ -51,7 +50,7 @@ class FireStarterItem(settings: Settings) : Item(settings) {
             1, user
         ) { e: LivingEntity -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) }
         var chance = 0.25
-        if (world.isRaining && !rayCastToSky(world, aboveBlock).component2()) {
+        if (world.hasRain(aboveBlock)) {
             chance = 0.0
         } else if (world.getBiome(aboveBlock).isIn(Tags.Biomes.IS_DRY)) {
             chance = 0.5

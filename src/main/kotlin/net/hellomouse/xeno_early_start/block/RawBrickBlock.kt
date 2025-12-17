@@ -1,7 +1,7 @@
 package net.hellomouse.xeno_early_start.block
 
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
-import net.hellomouse.xeno_early_start.utils.OtherUtils.rayCastToSky
+import net.hellomouse.xeno_early_start.utils.OtherUtils.isCovered
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
@@ -74,7 +74,8 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
 
     /// Return null when the drying stage should be reset back to 0
     private fun getDryProbability(world: World, pos: BlockPos): Float? {
-        val (canSeeSky, covered) = rayCastToSky(world, pos)
+        val canSeeSky = world.isSkyVisible(pos)
+        val covered = isCovered(world, pos)
         val raining = world.isRaining || world.isThundering
         world.calculateAmbientDarkness()
         if (raining && !covered) {

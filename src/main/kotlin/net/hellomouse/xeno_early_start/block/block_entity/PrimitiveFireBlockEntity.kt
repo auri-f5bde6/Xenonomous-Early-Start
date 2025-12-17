@@ -4,7 +4,6 @@ import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
 import net.hellomouse.xeno_early_start.recipe.PrimitiveFireRecipe
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry
-import net.hellomouse.xeno_early_start.utils.OtherUtils.rayCastToSky
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.CampfireBlock
@@ -49,8 +48,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
 
     companion object {
         fun litServerTick(world: World, pos: BlockPos, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
-            val (_, covered) = rayCastToSky(world, pos)
-            if (!covered && (world.isRaining || world.isThundering)) {
+            if (world.hasRain(pos)) {
                 if (!world.isClient()) {
                     world.playSound(
                         null as PlayerEntity?,
