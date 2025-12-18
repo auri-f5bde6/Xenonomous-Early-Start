@@ -75,6 +75,7 @@ object ProgressionModConfig {
         var brickFurnaceDamage: Float = 1f
         var furnaceDamage: Float = 1.5f
         var blastFurnaceDamage: Float = 2.5f
+        var blastFurnaceSetNearbyBlockOnFire: Boolean = true
         var fixThinBlockStepSound: FixThinBlockStepSound = FixThinBlockStepSound.True
     }
 

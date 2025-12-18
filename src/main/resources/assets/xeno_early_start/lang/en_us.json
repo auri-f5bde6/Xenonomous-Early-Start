@@ -57,7 +57,6 @@
   "text.config.xeno_early_start.option.mobChanges.polarBearSpeed": "Speed Of A Polar Bear",
   "text.config.xeno_early_start.option.mobChanges.polarBearRange": "Follow Range Of A Polar Bear",
   "text.config.xeno_early_start.option.mobChanges.onlyApplyOnNewlySpawnedMob.tooltip": "Only apply on newly spawned mob",
-
   "text.config.xeno_early_start.option.mobChanges.mobAttackWeakPlayer": "Make Some Mob Attack Player That're On Low Health Or Hunger",
   "text.config.xeno_early_start.option.mobChanges.wolfAggressiveAtNight": "Make Wolf Aggressive At Player At Night",
   "text.config.xeno_early_start.option.oreChanges": "Ore Changes",
@@ -76,7 +75,7 @@
   "text.config.xeno_early_start.option.blockChanges.brickFurnaceDamage": "Damage Dealt When Entity Step On Brick Furnace",
   "text.config.xeno_early_start.option.blockChanges.furnaceDamage": "Damage Dealt When Entity Step On Furnace",
   "text.config.xeno_early_start.option.blockChanges.blastFurnaceDamage": "Damage Dealt When Entity Step On Blast Furnace",
-
+  "text.config.xeno_early_start.option.blockChanges.blastFurnaceSetNearbyBlockOnFire": "Blast Furnace Set Nearby Block On Fire",
   "text.config.xeno_early_start.option.blockChanges.amethystFallDamageMultiplier": "Damage Multiplier When Player Fall On Amethyst",
   "text.config.xeno_early_start.option.blockChanges.fixThinBlockStepSound": "Fix Vanilla Issue Where Walking On Block With Thin Hitbox Doesn't Play The Correct Sound",
   "text.config.xeno_early_start.title": "Progression Change",

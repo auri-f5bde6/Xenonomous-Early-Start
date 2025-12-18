@@ -40,7 +40,7 @@ public class AbstractBlockMixin {
     @WrapMethod(method = "scheduledTick")
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random, Operation<Void> original) {
         original.call(state, world, pos, random);
-        if (state.isOf(Blocks.BLAST_FURNACE)) {
+        if (state.isOf(Blocks.BLAST_FURNACE) && state.get(BlastFurnaceBlock.LIT) && ProgressionModConfig.config.blockChanges.getBlastFurnaceSetNearbyBlockOnFire()) {
             world.scheduleBlockTick(pos, (BlastFurnaceBlock) (Object) this, xeno_early_start$getBlastFireTickDelay(world.random));
             // Copied off vanilla lava
             if (world.getGameRules().getBoolean(GameRules.DO_FIRE_TICK)) {

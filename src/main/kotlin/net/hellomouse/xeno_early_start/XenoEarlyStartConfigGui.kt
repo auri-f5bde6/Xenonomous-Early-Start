@@ -321,6 +321,18 @@ object XenoEarlyStartConfigGui {
         )
 
         category.addEntry(
+            entryBuilder.startBooleanToggle(
+                getTranslatableTextOption("blockChanges.blastFurnaceSetNearbyBlockOnFire"),
+                ProgressionModConfig.config.blockChanges.blastFurnaceSetNearbyBlockOnFire
+            )
+                .setSaveConsumer { aBoolean: Boolean ->
+                    ProgressionModConfig.config.blockChanges.blastFurnaceSetNearbyBlockOnFire = aBoolean
+                }
+                .setDefaultValue(true)
+                .build()
+        )
+
+        category.addEntry(
             entryBuilder.startEnumSelector(
                 getTranslatableTextOption("blockChanges.fixThinBlockStepSound"),
                 ProgressionModConfig.BlockChanges.FixThinBlockStepSound::class.java,
