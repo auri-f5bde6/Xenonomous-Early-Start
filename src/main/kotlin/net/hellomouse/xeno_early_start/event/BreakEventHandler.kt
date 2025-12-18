@@ -1,6 +1,6 @@
 package net.hellomouse.xeno_early_start.event
 
-import net.hellomouse.xeno_early_start.CoalDust
+import net.hellomouse.xeno_early_start.CoalDust.tryDetonate
 import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.ProgressionModTags
 import net.hellomouse.xeno_early_start.registries.ProgressionModRecipeRegistry
@@ -45,7 +45,7 @@ object BreakEventHandler {
             }
         }
         if (state.isIn(Tags.Blocks.ORES_COAL) && !level.isClient) {
-            CoalDust.mineFinish(level as ServerWorld, state, pos)
+            tryDetonate(level as ServerWorld, pos, false, null)
         }
     }
 

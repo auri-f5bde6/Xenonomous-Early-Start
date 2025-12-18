@@ -2,6 +2,7 @@ package net.hellomouse.xeno_early_start
 
 import net.hellomouse.xeno_early_start.registries.XenoProgressionModParticleRegistry
 import net.minecraft.block.BlockState
+import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -14,6 +15,7 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import net.minecraftforge.common.Tags
 import kotlin.math.log2
+import kotlin.math.min
 
 object CoalDust {
     @JvmStatic
@@ -33,83 +35,106 @@ object CoalDust {
         }
     }
 
-    @JvmStatic
-    fun mineFinish(world: ServerWorld, state: BlockState, blockPos: BlockPos) {
+    fun shouldExplode(world: World, centerPos: BlockPos): Boolean {
+        val range = 4
+        for (i in -range..range) {
+            for (j in -range..range) {
+                for (k in -range..range) {
+                    val testPos = centerPos.add(i, j, k)
+                    val dist = testPos.getSquaredDistance(centerPos)
+                    if (dist <= 25) {
+                        val b = world.getBlockState(testPos)
+                        if (canTriggerExplosion(b)
+                        ) {
+                            return true
+                        }
+                    }
+
+                }
+            }
+        }
+        return false
+    }
+
+    fun tryDetonate(world: ServerWorld, blockPos: BlockPos, alwaysDetonate: Boolean, owner: Entity?) {
+        if (!world.getBlockState(blockPos).isIn(Tags.Blocks.ORES_COAL)) {
+            return
+        }
         val destroy = ArrayList<BlockPos>()
         destroy.add(blockPos)
         var index = 0
-        var first = true
-        var explode = false
-        while (index < destroy.size && (explode || first)) {
+        val explode = if (alwaysDetonate) {
+            true
+        } else {
+            shouldExplode(world, blockPos)
+        }
+        while (index < destroy.size) {
             val pos = destroy[index]
-            if (first) {
-                first = false
-            } else {
-                world.breakBlock(pos, false)
-            }
-            index++
-            repeat(100) {
-                world.spawnParticles(
-                    XenoProgressionModParticleRegistry.COAL_DUST.get(),
-                    pos.x - 0.1 + world.random.nextFloat() * 1.06,
-                    pos.y - 0.1 + world.random.nextFloat() * 1.5,
-                    pos.z - 0.1 + world.random.nextFloat() * 1.06,
-                    1,
-                    world.random.nextFloat() * 1.5,
-                    -0.01,
-                    world.random.nextFloat() * 1.5,
-                    0.005
-                )
-            }
-            val box = Box(pos.add(-2, -2, -2), pos.add(2, 2, 2))
-            world.getEntitiesByClass(LivingEntity::class.java, box) { entity ->
-                if (entity.pos.squaredDistanceTo(Vec3d.of(pos)) <= 9) {
-                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
-                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
-                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))
-                }
-                return@getEntitiesByClass false
-            }
-            val range = 4
+
+            val range = 1
             for (i in -range..range) {
                 for (j in -range..range) {
                     for (k in -range..range) {
                         val testPos = pos.add(i, j, k)
-                        val dist = testPos.getSquaredDistance(pos)
-                        if (dist <= 25) {
-                            val b = world.getBlockState(testPos)
-                            if (b.isIn(Tags.Blocks.ORES_COAL) && !destroy.contains(testPos)) {
-                                destroy.add(testPos)
-                            }
-                            if (canTriggerExplosion(b)
-                            ) {
-                                explode = true
-                            }
+
+                        val b = world.getBlockState(testPos)
+                        if (b.isIn(Tags.Blocks.ORES_COAL) && !destroy.contains(testPos)) {
+                            destroy.add(testPos)
+
                         }
 
                     }
                 }
             }
+            index++
         }
         if (explode) {
-            val center = BlockPos.Mutable()
-            for (pos in destroy) {
-                center.x += pos.x
-                center.y += pos.y
-                center.z += pos.z
+            var i = 0
+            while (i < destroy.size) {
+                val center = BlockPos.Mutable()
+                val clusterSize = min(5, destroy.size - i)
+                for (j in 0..<clusterSize) {
+                    world.breakBlock(destroy[i], false)
+                    center.x += destroy[i].x
+                    center.y += destroy[i].y
+                    center.z += destroy[i].z
+                    i++
+                }
+                center.x /= clusterSize
+                center.y /= clusterSize
+                center.z /= clusterSize
+                repeat(100) {
+                    world.spawnParticles(
+                        XenoProgressionModParticleRegistry.COAL_DUST.get(),
+                        center.x - 0.1 + world.random.nextFloat() * 1.06,
+                        center.y - 0.1 + world.random.nextFloat() * 1.5,
+                        center.z - 0.1 + world.random.nextFloat() * 1.06,
+                        1,
+                        world.random.nextFloat() * 1.5,
+                        -0.01,
+                        world.random.nextFloat() * 1.5,
+                        0.005
+                    )
+                }
+                val box = Box(center.add(-2, -2, -2).multiply(clusterSize), center.add(2, 2, 2).multiply(clusterSize))
+                world.getEntitiesByClass(LivingEntity::class.java, box) { entity ->
+                    if (entity.pos.squaredDistanceTo(Vec3d.of(center)) <= 9) {
+                        entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
+                        entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
+                        entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))
+                    }
+                    return@getEntitiesByClass false
+                }
+                world.createExplosion(
+                    owner,
+                    center.x.toDouble(),
+                    center.y.toDouble(),
+                    center.z.toDouble(),
+                    1.5f * log2(destroy.size + 1f),
+                    true,
+                    World.ExplosionSourceType.NONE
+                )
             }
-            center.x /= destroy.size
-            center.y /= destroy.size
-            center.z /= destroy.size
-            world.createExplosion(
-                null,
-                center.x.toDouble(),
-                center.y.toDouble(),
-                center.z.toDouble(),
-                1.5f * log2(destroy.size + 1f),
-                true,
-                World.ExplosionSourceType.NONE
-            )
         }
     }
 
