@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Direction;
@@ -34,34 +35,35 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;raycast(Lnet/minecraft/world/RaycastContext;)Lnet/minecraft/util/hit/BlockHitResult;"))
     public BlockHitResult fakeNoCollision(World instance, RaycastContext raycastContext, Operation<BlockHitResult> original) {
         var result = original.call(instance, raycastContext);
-        if ((PersistentProjectileEntity) (Object) this instanceof ArrowEntity arrowEntity) {
+        var entity = (PersistentProjectileEntity) (Object) this;
+        if (entity instanceof ArrowEntity || entity instanceof TridentEntity) {
             var blockState = instance.getBlockState(result.getBlockPos());
             var isLeaf = blockState.isIn(BlockTags.LEAVES);
             var isGlass = blockState.isIn(Tags.Blocks.GLASS);
             if (isGlass || isLeaf) {
                 if (isGlass) {
-                    instance.breakBlock(result.getBlockPos(), false, arrowEntity);
-                    arrowEntity.setVelocity(arrowEntity.getVelocity().multiply(0.7));
+                    instance.breakBlock(result.getBlockPos(), false, entity);
+                    entity.setVelocity(entity.getVelocity().multiply(0.7));
                 } else {
                     var r = BlockView.raycast(raycastContext.getStart(), raycastContext.getEnd(), null, (_a, hitPos) -> {
                         var hitState = instance.getBlockState(hitPos);
                         if (hitState.isAir() || Objects.equals(Vec3d.of(hitPos), raycastContext.getStart()) || hitState.isIn(BlockTags.LEAVES) || hitState.isIn(Tags.Blocks.GLASS)) {
                             if (hitState.isIn(Tags.Blocks.GLASS)) {
-                                instance.breakBlock(hitPos, false, arrowEntity);
-                                arrowEntity.setVelocity(arrowEntity.getVelocity().multiply(0.7));
+                                instance.breakBlock(hitPos, false, entity);
+                                entity.setVelocity(entity.getVelocity().multiply(0.7));
                             }
                             return null;
                         } else {
                             return hitPos;
                         }
                     }, (_a) -> null);
-                    arrowEntity.setVelocity(arrowEntity.getVelocity().multiply(0.85));
+                    entity.setVelocity(entity.getVelocity().multiply(0.85));
                     if (r != null) {
                         Vec3d vec3 = raycastContext.getStart().subtract(raycastContext.getEnd());
                         return new BlockHitResult(raycastContext.getEnd(), Direction.getFacing(vec3.x, vec3.y, vec3.z), r, false);
                     }
                 }
-                arrowEntity.velocityDirty = true;
+                entity.velocityDirty = true;
                 return BlockHitResult.createMissed(result.getPos(), result.getSide(), result.getBlockPos());
             }
 

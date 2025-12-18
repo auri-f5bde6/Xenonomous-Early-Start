@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.registry.tag.BlockTags;
@@ -33,7 +34,10 @@ public abstract class LivingEntityMixin extends Entity {
     @WrapOperation(method = "canSee", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
     HitResult.Type canSeePastGlass(BlockHitResult instance, Operation<HitResult.Type> original, @Local(ordinal = 0) Vec3d vec3, @Local(ordinal = 1) Vec3d vec31) {
         var entity = (LivingEntity) (Object) this;
-        if (entity instanceof AbstractSkeletonEntity || entity instanceof PillagerEntity || (entity instanceof PiglinEntity piglinEntity && piglinEntity.getMainHandStack().isIn(Tags.Items.TOOLS_CROSSBOWS))) {
+        if (entity instanceof AbstractSkeletonEntity
+                || entity instanceof PillagerEntity
+                || (entity instanceof PiglinEntity piglinEntity && piglinEntity.getMainHandStack().isIn(Tags.Items.TOOLS_CROSSBOWS))
+                || (entity instanceof DrownedEntity drownedEntity && drownedEntity.getMainHandStack().isIn(Tags.Items.TOOLS_TRIDENTS))) {
             if (OtherUtils.raycast(this.getWorld(), vec3, vec31, blockState -> blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES)).component1()) {
                 return HitResult.Type.MISS;
             } else {
