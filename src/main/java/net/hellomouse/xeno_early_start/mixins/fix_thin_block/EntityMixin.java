@@ -85,7 +85,8 @@ public abstract class EntityMixin {
     @WrapMethod(method = "onPlayerCollision")
     public void batApplyNausea(PlayerEntity player, Operation<Void> original) {
         if ((Entity) (Object) this instanceof BatEntity batEntity) {
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 1000), batEntity);
+            // 10 second, 20 tick per second
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 10), batEntity);
         }
         original.call(player);
     }
