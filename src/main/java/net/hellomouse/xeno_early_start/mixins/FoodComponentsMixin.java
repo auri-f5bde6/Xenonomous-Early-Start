@@ -106,4 +106,6 @@ public class FoodComponentsMixin {
             }, 1F)
             .meat()
             .build();
+    @Shadow
+    public static final FoodComponent SWEET_BERRIES = new FoodComponent.Builder().hunger(2).saturationModifier(0.05F).build();
 }
