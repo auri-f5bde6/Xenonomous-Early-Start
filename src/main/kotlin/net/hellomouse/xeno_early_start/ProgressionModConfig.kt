@@ -59,6 +59,8 @@ object ProgressionModConfig {
 
         var wolfAggressiveAtNight: Boolean = true
 
+        var batGivesPlayerNausea: Boolean = true
+
     }
 
     class BlockChanges {

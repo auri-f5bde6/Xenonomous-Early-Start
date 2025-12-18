@@ -1,6 +1,5 @@
 package net.hellomouse.xeno_early_start.mixins.fix_thin_block;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.hellomouse.xeno_early_start.ProgressionMod;
@@ -10,10 +9,6 @@ import net.hellomouse.xeno_early_start.utils.OtherUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -80,14 +75,5 @@ public abstract class EntityMixin {
         } else {
             original.call(instance, world, pos, state, entity);
         }
-    }
-
-    @WrapMethod(method = "onPlayerCollision")
-    public void batApplyNausea(PlayerEntity player, Operation<Void> original) {
-        if ((Entity) (Object) this instanceof BatEntity batEntity) {
-            // 10 second, 20 tick per second
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 10), batEntity);
-        }
-        original.call(player);
     }
 }

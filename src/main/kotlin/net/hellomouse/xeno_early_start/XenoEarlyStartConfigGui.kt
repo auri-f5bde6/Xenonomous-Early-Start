@@ -160,7 +160,9 @@ object XenoEarlyStartConfigGui {
             entryBuilder.startBooleanToggle(
                 getTranslatableTextOption("mobChanges.mobAttackWeakPlayer"),
                 ProgressionModConfig.config.mobChanges.mobAttackWeakPlayer
-            )
+            ).setSaveConsumer { aBool: Boolean ->
+                ProgressionModConfig.config.mobChanges.mobAttackWeakPlayer = aBool
+            }
                 .setDefaultValue(true)
                 .build()
         )
@@ -168,7 +170,19 @@ object XenoEarlyStartConfigGui {
             entryBuilder.startBooleanToggle(
                 getTranslatableTextOption("mobChanges.wolfAggressiveAtNight"),
                 ProgressionModConfig.config.mobChanges.wolfAggressiveAtNight
-            )
+            ).setSaveConsumer { aBool: Boolean ->
+                ProgressionModConfig.config.mobChanges.wolfAggressiveAtNight = aBool
+            }
+                .setDefaultValue(true)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startBooleanToggle(
+                getTranslatableTextOption("mobChanges.batGivesPlayerNausea"),
+                ProgressionModConfig.config.mobChanges.batGivesPlayerNausea
+            ).setSaveConsumer { aBool: Boolean ->
+                ProgressionModConfig.config.mobChanges.batGivesPlayerNausea = aBool
+            }
                 .setDefaultValue(true)
                 .build()
         )

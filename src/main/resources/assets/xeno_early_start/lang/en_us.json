@@ -59,6 +59,8 @@
   "text.config.xeno_early_start.option.mobChanges.onlyApplyOnNewlySpawnedMob.tooltip": "Only apply on newly spawned mob",
   "text.config.xeno_early_start.option.mobChanges.mobAttackWeakPlayer": "Make Some Mob Attack Player That're On Low Health Or Hunger",
   "text.config.xeno_early_start.option.mobChanges.wolfAggressiveAtNight": "Make Wolf Aggressive At Player At Night",
+  "text.config.xeno_early_start.option.mobChanges.batGivesPlayerNausea": "Bat Gives Player Nausea When Touched",
+
   "text.config.xeno_early_start.option.oreChanges": "Ore Changes",
   "text.config.xeno_early_start.option.oreChanges.moddedPickaxeWorkaround": "Modded Pickaxe Workaround",
   "text.config.xeno_early_start.option.oreChanges.moddedPickaxeWorkaround.tooltip": "Use vanilla's mining int level, as a workaround for modded pickaxe that didn't register their material to TierSortingRegistry.",
