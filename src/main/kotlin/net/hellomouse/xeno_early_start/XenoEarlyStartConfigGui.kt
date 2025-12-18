@@ -138,7 +138,7 @@ object XenoEarlyStartConfigGui {
                 ProgressionModConfig.config.mobChanges.polarBearSpeed = aFloat
             }
                 .setDefaultValue(0.35f)
-                .setTooltip(getTranslatableTextOption("mobChanges.onlyApplyOnNewlySpawnedMob"))
+                .setTooltip(getTranslatableTextOption("mobChanges.onlyApplyOnNewlySpawnedMob.tooltip"))
                 .requireRestart()
                 .build()
         )
@@ -152,7 +152,7 @@ object XenoEarlyStartConfigGui {
                 ProgressionModConfig.config.mobChanges.polarBearRange = aInt
             }
                 .setDefaultValue(40)
-                .setTooltip(getTranslatableTextOption("mobChanges.onlyApplyOnNewlySpawnedMob"))
+                .setTooltip(getTranslatableTextOption("mobChanges.onlyApplyOnNewlySpawnedMob.tooltip"))
                 .requireRestart()
                 .build()
         )
