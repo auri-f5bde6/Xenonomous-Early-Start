@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.mob.PillagerEntity;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -33,7 +34,7 @@ public abstract class LivingEntityMixin extends Entity {
     HitResult.Type canSeePastGlass(BlockHitResult instance, Operation<HitResult.Type> original, @Local(ordinal = 0) Vec3d vec3, @Local(ordinal = 1) Vec3d vec31) {
         var entity = (LivingEntity) (Object) this;
         if (entity instanceof AbstractSkeletonEntity || entity instanceof PillagerEntity || (entity instanceof PiglinEntity piglinEntity && piglinEntity.getMainHandStack().isIn(Tags.Items.TOOLS_CROSSBOWS))) {
-            if (OtherUtils.raycast(this.getWorld(), vec3, vec31, blockState -> blockState.isIn(Tags.Blocks.GLASS)).component1()) {
+            if (OtherUtils.raycast(this.getWorld(), vec3, vec31, blockState -> blockState.isIn(Tags.Blocks.GLASS) || blockState.isIn(BlockTags.LEAVES)).component1()) {
                 return HitResult.Type.MISS;
             } else {
                 return HitResult.Type.BLOCK;
