@@ -55,4 +55,5 @@ public abstract class MobEntityMixin extends EntityMixin {
     @Shadow
     public void equipStack(EquipmentSlot equipmentSlot, ItemStack stack) {
     }
+
 }
