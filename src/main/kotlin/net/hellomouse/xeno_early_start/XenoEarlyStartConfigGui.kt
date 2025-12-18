@@ -20,7 +20,7 @@ object XenoEarlyStartConfigGui {
                 .setTitle(getTranslatableText("title"))
                 .transparentBackground()  // heh, rewriting the entire config just for this
             val entryBuilder = ConfigEntryBuilder.create()
-            addOreDropChangesEntries(builder, entryBuilder)
+            addoreChangesEntries(builder, entryBuilder)
             addEarlyGameEntries(builder, entryBuilder)
             addMobChangesEntries(builder, entryBuilder)
             addBlockChangesEntries(builder, entryBuilder)
@@ -174,62 +174,75 @@ object XenoEarlyStartConfigGui {
         )
     }
 
-    private fun addOreDropChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
-        val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("oreDropChanges"))
+    private fun addoreChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
+        val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("oreChanges"))
         category.addEntry(
             entryBuilder.startIntSlider(
-                getTranslatableTextOption("oreDropChanges.rawCopperNuggetDrop"),
-                ProgressionModConfig.config.oreDropChanges.rawCopperNuggetDrop,
+                getTranslatableTextOption("oreChanges.rawCopperNuggetDrop"),
+                ProgressionModConfig.config.oreChanges.rawCopperNuggetDrop,
                 1,
                 9
             )
-                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreDropChanges.rawCopperNuggetDrop = aInt }
+                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.rawCopperNuggetDrop = aInt }
                 .setDefaultValue(1)
                 .build()
         )
         category.addEntry(
             entryBuilder.startIntSlider(
-                getTranslatableTextOption("oreDropChanges.rawIronNuggetDrop"),
-                ProgressionModConfig.config.oreDropChanges.rawIronNuggetDrop,
+                getTranslatableTextOption("oreChanges.rawIronNuggetDrop"),
+                ProgressionModConfig.config.oreChanges.rawIronNuggetDrop,
                 1,
                 9
             )
-                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreDropChanges.rawIronNuggetDrop = aInt }
+                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.rawIronNuggetDrop = aInt }
                 .setDefaultValue(1)
                 .build()
         )
         category.addEntry(
             entryBuilder.startIntSlider(
-                getTranslatableTextOption("oreDropChanges.rawGoldNuggetDrop"),
-                ProgressionModConfig.config.oreDropChanges.rawGoldNuggetDrop,
+                getTranslatableTextOption("oreChanges.rawGoldNuggetDrop"),
+                ProgressionModConfig.config.oreChanges.rawGoldNuggetDrop,
                 1,
                 9
             )
-                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreDropChanges.rawGoldNuggetDrop = aInt }
+                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.rawGoldNuggetDrop = aInt }
                 .setDefaultValue(1)
                 .build()
         )
         category.addEntry(
             entryBuilder.startIntSlider(
-                getTranslatableTextOption("oreDropChanges.rawDiamondFragmentDrop"),
-                ProgressionModConfig.config.oreDropChanges.diamondFragmentDrop,
+                getTranslatableTextOption("oreChanges.rawDiamondFragmentDrop"),
+                ProgressionModConfig.config.oreChanges.diamondFragmentDrop,
                 1,
                 9
             )
-                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreDropChanges.diamondFragmentDrop = aInt }
+                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.diamondFragmentDrop = aInt }
                 .setDefaultValue(1)
                 .build()
         )
         category.addEntry(
             entryBuilder.startBooleanToggle(
-                getTranslatableTextOption("oreDropChanges.oreToStone"),
-                ProgressionModConfig.config.oreDropChanges.oreToStone
+                getTranslatableTextOption("oreChanges.oreToStone"),
+                ProgressionModConfig.config.oreChanges.oreToStone
             )
                 .setSaveConsumer { aBoolean: Boolean ->
-                    ProgressionModConfig.config.oreDropChanges.oreToStone = aBoolean
+                    ProgressionModConfig.config.oreChanges.oreToStone = aBoolean
                 }
-                .setTooltip(getTranslatableTextOption("oreDropChanges.oreToStone.tooltip"))
+                .setTooltip(getTranslatableTextOption("oreChanges.oreToStone.tooltip"))
                 .setDefaultValue(false)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startIntSlider(
+                getTranslatableTextOption("oreChanges.coalDustExplosionClusterSize"),
+                ProgressionModConfig.config.oreChanges.coalDustExplosionClusterSize,
+                5,
+                50
+            )
+                .setSaveConsumer { aInt: Int ->
+                    ProgressionModConfig.config.oreChanges.coalDustExplosionClusterSize = aInt
+                }
+                .setDefaultValue(6)
                 .build()
         )
     }

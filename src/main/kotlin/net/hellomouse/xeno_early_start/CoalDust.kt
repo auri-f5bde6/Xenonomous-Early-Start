@@ -92,7 +92,8 @@ object CoalDust {
             var i = 0
             while (i < destroy.size) {
                 val center = BlockPos.Mutable()
-                val clusterSize = min(5, destroy.size - i)
+                val clusterSize =
+                    min(ProgressionModConfig.config.oreChanges.coalDustExplosionClusterSize, destroy.size - i)
                 for (j in 0..<clusterSize) {
                     world.breakBlock(destroy[i], false)
                     center.x += destroy[i].x

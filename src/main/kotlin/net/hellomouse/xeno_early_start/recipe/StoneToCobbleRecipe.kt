@@ -60,7 +60,7 @@ class StoneToCobbleRecipe(
         }
         if ((this.isAnyTier || MiningLevel.isToolLowerThanTier(
                 itemStack, this.getMiningTierLowerThan()
-            )) && (!this.isOreToStone || (ProgressionModConfig.config.oreDropChanges.oreToStone))
+            )) && (!this.isOreToStone || (ProgressionModConfig.config.oreChanges.oreToStone))
         ) {
             if (minedBlockIsTag) {
                 val tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock)

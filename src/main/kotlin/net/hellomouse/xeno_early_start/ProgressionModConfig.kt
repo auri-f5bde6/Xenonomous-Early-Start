@@ -3,7 +3,7 @@ package net.hellomouse.xeno_early_start
 object ProgressionModConfig {
     class Config {
         @JvmField
-        var oreDropChanges: OreDropChanges = OreDropChanges()
+        var oreChanges: oreChanges = oreChanges()
 
         @JvmField
         var earlyGameChanges: EarlyGameChanges = EarlyGameChanges()
@@ -18,7 +18,7 @@ object ProgressionModConfig {
     @JvmField
     var config: Config = Config()
 
-    class OreDropChanges {
+    class oreChanges {
         var rawCopperNuggetDrop: Int = 1
 
         var rawIronNuggetDrop: Int = 1
@@ -28,6 +28,8 @@ object ProgressionModConfig {
         var diamondFragmentDrop: Int = 1
 
         var oreToStone: Boolean = false
+
+        var coalDustExplosionClusterSize: Int = 6
     }
 
     class EarlyGameChanges {

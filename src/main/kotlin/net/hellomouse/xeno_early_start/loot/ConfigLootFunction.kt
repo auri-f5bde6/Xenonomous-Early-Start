@@ -19,19 +19,19 @@ class ConfigLootFunction private constructor(private val dropType: DropType) : L
     override fun apply(itemStack: ItemStack, lootContext: LootContext): ItemStack {
         when (dropType) {
             DropType.Copper -> {
-                itemStack.count = ProgressionModConfig.config.oreDropChanges.rawCopperNuggetDrop
+                itemStack.count = ProgressionModConfig.config.oreChanges.rawCopperNuggetDrop
             }
 
             DropType.Iron -> {
-                itemStack.count = ProgressionModConfig.config.oreDropChanges.rawIronNuggetDrop
+                itemStack.count = ProgressionModConfig.config.oreChanges.rawIronNuggetDrop
             }
 
             DropType.Gold -> {
-                itemStack.count = ProgressionModConfig.config.oreDropChanges.rawGoldNuggetDrop
+                itemStack.count = ProgressionModConfig.config.oreChanges.rawGoldNuggetDrop
             }
 
             DropType.Diamond -> {
-                itemStack.count = ProgressionModConfig.config.oreDropChanges.diamondFragmentDrop
+                itemStack.count = ProgressionModConfig.config.oreChanges.diamondFragmentDrop
             }
         }
         return itemStack
