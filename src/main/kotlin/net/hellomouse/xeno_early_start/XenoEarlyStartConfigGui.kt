@@ -20,7 +20,7 @@ object XenoEarlyStartConfigGui {
                 .setTitle(getTranslatableText("title"))
                 .transparentBackground()  // heh, rewriting the entire config just for this
             val entryBuilder = ConfigEntryBuilder.create()
-            addoreChangesEntries(builder, entryBuilder)
+            addOreChangesEntries(builder, entryBuilder)
             addEarlyGameEntries(builder, entryBuilder)
             addMobChangesEntries(builder, entryBuilder)
             addBlockChangesEntries(builder, entryBuilder)
@@ -188,17 +188,28 @@ object XenoEarlyStartConfigGui {
         )
     }
 
-    private fun addoreChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
+    private fun addOreChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
         val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("oreChanges"))
         category.addEntry(
             entryBuilder.startIntSlider(
-                getTranslatableTextOption("oreChanges.rawCopperNuggetDrop"),
-                ProgressionModConfig.config.oreChanges.rawCopperNuggetDrop,
+                getTranslatableTextOption("oreChanges.rawCopperNuggetDropMin"),
+                ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMin,
                 1,
                 9
             )
-                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.rawCopperNuggetDrop = aInt }
+                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMin = aInt }
                 .setDefaultValue(1)
+                .build()
+        )
+        category.addEntry(
+            entryBuilder.startIntSlider(
+                getTranslatableTextOption("oreChanges.rawCopperNuggetDropMax"),
+                ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMax,
+                1,
+                9
+            )
+                .setSaveConsumer { aInt: Int -> ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMax = aInt }
+                .setDefaultValue(3)
                 .build()
         )
         category.addEntry(

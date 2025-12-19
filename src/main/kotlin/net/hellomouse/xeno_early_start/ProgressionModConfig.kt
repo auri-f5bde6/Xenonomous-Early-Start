@@ -19,7 +19,8 @@ object ProgressionModConfig {
     var config: Config = Config()
 
     class oreChanges {
-        var rawCopperNuggetDrop: Int = 1
+        var rawCopperNuggetDropMin: Int = 1
+        var rawCopperNuggetDropMax: Int = 3
 
         var rawIronNuggetDrop: Int = 1
 
