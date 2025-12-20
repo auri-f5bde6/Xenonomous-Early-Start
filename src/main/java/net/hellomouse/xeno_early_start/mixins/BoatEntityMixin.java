@@ -29,7 +29,7 @@ public abstract class BoatEntityMixin extends Entity implements IForgeBoat {
     public void tick(CallbackInfo ci) {
         var entity = getControllingPassenger();
         if (entity instanceof PlayerEntity player) {
-            player.getHungerManager().addExhaustion(0.5);
+            player.getHungerManager().addExhaustion(0.2f / 4f);
         }
     }
 }
