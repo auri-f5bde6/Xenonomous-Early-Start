@@ -22,7 +22,7 @@ object BlockPlacingEventHandler {
         if (!fluidState.isEmpty) {
             val fluid = fluidState.fluid
             if (fluid is FlowableFluid) {
-                if ((fluid as FlowableFluidAccessor).callCanFlow(
+                if ((fluid as FlowableFluidAccessor).`xeno_early_start$canFlow`(
                         world,
                         blockPos.up(),
                         fluidState.blockState,

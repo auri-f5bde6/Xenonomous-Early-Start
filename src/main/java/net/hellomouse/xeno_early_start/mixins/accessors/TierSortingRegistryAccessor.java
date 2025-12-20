@@ -9,8 +9,8 @@ import java.util.List;
 
 @Mixin(TierSortingRegistry.class)
 public interface TierSortingRegistryAccessor {
-    @Accessor(remap = false)
-    static List<ToolMaterial> getSortedTiers() {
+    @Accessor(remap = false, value = "sortedTiers")
+    static List<ToolMaterial> xeno_early_start$getSortedTiers() {
         throw new AssertionError();
     }
 }

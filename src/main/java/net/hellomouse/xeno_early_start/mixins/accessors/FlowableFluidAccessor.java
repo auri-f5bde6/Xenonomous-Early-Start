@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(FlowableFluid.class)
 public interface FlowableFluidAccessor {
-    @Invoker
-    boolean callCanFlow(
+    @Invoker("canFlow")
+    boolean xeno_early_start$canFlow(
             BlockView world,
             BlockPos fluidPos,
             BlockState fluidBlockState,

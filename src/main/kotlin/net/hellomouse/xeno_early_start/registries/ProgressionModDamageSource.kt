@@ -29,6 +29,10 @@ class ProgressionModDamageSource {
         @JvmField
         val FURNACE = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("furnace")), 1)
 
+        @JvmField
+        val FURNACE_EXPLOSIONS =
+            XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("furnace")), 1)
+
         @JvmStatic
         fun getDamageSource(source: XenoDamageSource, dynamicRegistryManager: DynamicRegistryManager): DamageSource {
             return DamageSourceRandomMessages(

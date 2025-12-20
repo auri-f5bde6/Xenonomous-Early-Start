@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(MeleeAttackGoal.class)
 public interface MeleeAttackGoalAccessor {
-    @Accessor
-    void setCooldown(int cooldown);
-
+    @Accessor("cooldown")
+    void xeno_early_start$setCooldown(int cooldown);
 }

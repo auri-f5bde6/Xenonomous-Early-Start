@@ -7,11 +7,13 @@
   ],
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
+    "BoatEntityMixin",
     "BowItemMixin",
     "FlintAndSteelMixin",
     "FoodComponentsMixin",
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
+    "accessors.AbstractFurnaceEntityAccessor",
     "accessors.FlowableFluidAccessor",
     "accessors.MeleeAttackGoalAccessor",
     "accessors.TierSortingRegistryAccessor",

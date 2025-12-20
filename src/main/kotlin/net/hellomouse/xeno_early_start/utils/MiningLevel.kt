@@ -55,7 +55,7 @@ object MiningLevel {
 
     fun getTiersGreaterThan(tier: ToolMaterial?): MutableList<ToolMaterial?> {
         if (!TierSortingRegistry.isTierSorted(tier)) return mutableListOf()
-        return TierSortingRegistryAccessor.getSortedTiers().reversed().stream()
+        return TierSortingRegistryAccessor.`xeno_early_start$getSortedTiers`().reversed().stream()
             .takeWhile { t: ToolMaterial? -> t !== tier }.toList()
     }
 

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:cobblestone"
+      "tags": "forge:cobblestones"
     },
     "B": {
       "item": "xeno_early_start:brick_furnace"
@@ -12,7 +12,7 @@
       "item": "minecraft:smooth_stone"
     },
     "&": {
-      "tag": "minecraft:copper"
+      "tag": "minecraft:copper_block"
     }
   },
   "pattern": [

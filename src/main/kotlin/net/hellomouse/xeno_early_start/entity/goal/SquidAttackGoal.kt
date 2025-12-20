@@ -36,7 +36,12 @@ class SquidAttackGoal(entity: SquidEntity) : MeleeAttackGoal(entity, 10.0, true)
                 velocity.y,
                 velocity.z
             )
-            (this as MeleeAttackGoal as MeleeAttackGoalAccessor).setCooldown(max(this.cooldown - 1, 0))
+            (this as MeleeAttackGoal as MeleeAttackGoalAccessor).`xeno_early_start$setCooldown`(
+                max(
+                    this.cooldown - 1,
+                    0
+                )
+            )
             this.attack(target, distSquared)
         }
     }
