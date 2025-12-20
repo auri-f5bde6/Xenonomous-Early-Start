@@ -28,6 +28,8 @@
     "mob_changes.CaveSpiderEntityMixin",
     "mob_changes.EntityMixin",
     "mob_changes.MobEntityMixin",
+    "mob_changes.OpenDoorTaskMixin",
+    "mob_changes.PiglinBruteEntityMixin",
     "mob_changes.PolarBearEntityMixin",
     "mob_changes.SquidEntityMixin",
     "mob_changes.StrayEntityMixin",
