@@ -11,6 +11,7 @@
     "BowItemMixin",
     "FlintAndSteelMixin",
     "FoodComponentsMixin",
+    "ItemMixin",
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
     "accessors.AbstractFurnaceEntityAccessor",
