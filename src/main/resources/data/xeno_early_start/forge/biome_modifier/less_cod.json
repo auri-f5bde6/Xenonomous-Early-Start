@@ -1,0 +1,9 @@
+{
+  "type": "xeno_early_start:multiplicative_spawn_modifier",
+  "spawn_group": "water_ambient",
+  "entity_types": [
+    "minecraft:cod",
+    "minecraft:salmon"
+  ],
+  "multiplier": 3
+}
