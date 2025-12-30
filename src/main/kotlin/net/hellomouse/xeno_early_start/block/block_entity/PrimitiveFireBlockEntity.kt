@@ -161,6 +161,14 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
         return this.itemsBeingCooked
     }
 
+    fun writeCustomNbt(nbt: NbtCompound) {
+        nbt.putInt("BurnTime", this.burnTime)
+    }
+
+    fun readCustomNbt(nbt: NbtCompound) {
+        this.burnTime = nbt.getInt("BurnTime")
+    }
+
     override fun readNbt(nbt: NbtCompound) {
         super.readNbt(nbt)
         this.itemsBeingCooked.clear()
@@ -174,8 +182,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
             val array = nbt.getIntArray("CookingTotalTimes")
             System.arraycopy(array, 0, this.cookingTotalTimes, 0, min(this.cookingTotalTimes.size, array.size))
         }
-
-        this.burnTime = nbt.getInt("burnTime")
+        readCustomNbt(nbt)
     }
 
     override fun writeNbt(nbt: NbtCompound) {
@@ -183,18 +190,23 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
         Inventories.writeNbt(nbt, this.itemsBeingCooked, true)
         nbt.putIntArray("CookingTimes", this.cookingTimes)
         nbt.putIntArray("CookingTotalTimes", this.cookingTotalTimes)
-        nbt.putInt("BurnTime", this.burnTime)
+        writeCustomNbt(nbt)
     }
 
+
     override fun toUpdatePacket(): BlockEntityUpdateS2CPacket? {
+        val nbt = NbtCompound()
+        writeCustomNbt(nbt)
         return BlockEntityUpdateS2CPacket.create(this)
     }
 
     override fun toInitialChunkDataNbt(): NbtCompound {
         val nbtCompound = NbtCompound()
         Inventories.writeNbt(nbtCompound, this.itemsBeingCooked, true)
+        writeCustomNbt(nbtCompound)
         return nbtCompound
     }
+
 
     fun getRecipeFor(stack: ItemStack): Optional<AbstractCookingRecipe> {
         return if (this.itemsBeingCooked.stream().noneMatch { obj: ItemStack -> obj.isEmpty }) {
