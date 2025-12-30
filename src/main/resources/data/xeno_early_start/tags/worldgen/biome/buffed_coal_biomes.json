@@ -1,6 +1,6 @@
 {
   "values": [
-    "#minecraft:lush_caves",
+    "minecraft:lush_caves",
     "minecraft:desert",
     "#has_structure/village_desert",
     "#minecraft:is_ocean"
