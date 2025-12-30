@@ -82,7 +82,7 @@ class Serializer : RecipeSerializer<StoneToCobbleRecipe> {
         val droppedItemSize = buf.readInt()
         val droppedItems = arrayOfNulls<StoneToCobbleRecipe.DroppedItem>(droppedItemSize)
         for (i in 0..<droppedItemSize) {
-            droppedItems[i] = StoneToCobbleRecipe.DroppedItem.Companion.read(buf)
+            droppedItems[i] = StoneToCobbleRecipe.DroppedItem.read(buf)
         }
         val miningTierLowerThan = buf.readIdentifier()
         val dropBlockLootTable = buf.readBoolean()

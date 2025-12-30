@@ -78,8 +78,6 @@ class StoneToCobbleRecipe(
             var probability = i.probability
             if (ProgressionModConfig.config.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
                 probability = ProgressionModConfig.config.earlyGameChanges.pebbleDropProbability / 100f
-            } else if (ProgressionModConfig.config.earlyGameChanges.overridePlantFiberProbability && i.isPlantFiber) {
-                probability = ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability / 100f
             }
             if (level.random.nextFloat() < probability) {
                 Block.dropStack(level, pos, i.item.defaultStack)
@@ -123,14 +121,12 @@ class StoneToCobbleRecipe(
         var probability: Float,
         var isAffectedByFortune: Boolean,
         var isPebble: Boolean,
-        var isPlantFiber: Boolean
     ) {
         fun write(buf: PacketByteBuf) {
             buf.writeIdentifier(ForgeRegistries.ITEMS.getKey(item))
             buf.writeFloat(this.probability)
             buf.writeBoolean(this.isAffectedByFortune)
             buf.writeBoolean(this.isPebble)
-            buf.writeBoolean(this.isPlantFiber)
         }
 
         companion object {
@@ -139,8 +135,7 @@ class StoneToCobbleRecipe(
                 val probability = buf.readFloat()
                 val affectedByFortune = buf.readBoolean()
                 val pebble = buf.readBoolean()
-                val plantFiber = buf.readBoolean()
-                return DroppedItem(item, probability, affectedByFortune, pebble, plantFiber)
+                return DroppedItem(item, probability, affectedByFortune, pebble)
             }
 
             fun fromJson(element: JsonElement): DroppedItem {
@@ -156,8 +151,7 @@ class StoneToCobbleRecipe(
                 val probability = getFloat(obj, "probability") ?: 1.0f
                 val affectedByFortune = getBool(obj, "affected_by_fortune") ?: false
                 val pebble = getBool(obj, "pebble") ?: false
-                val plantFiber = getBool(obj, "plant_fiber") ?: false
-                return DroppedItem(item, probability, affectedByFortune, pebble, plantFiber)
+                return DroppedItem(item, probability, affectedByFortune, pebble)
             }
         }
     }
