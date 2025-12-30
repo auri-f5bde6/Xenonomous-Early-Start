@@ -85,5 +85,6 @@
   "death.damage.stonecutter_0": "%s was split in half",
   "death.damage.amethyst_0": "%s was punctured by sharp crystal",
   "death.damage.coral_0": "%s found out coral isn't fun to step on",
+  "death.damage.furnace": "%s was smelted by a furnace",
   "xeno_early_start.item.tooltip.fire_starter": "Requires 5 dropped burnables to use"
 }
