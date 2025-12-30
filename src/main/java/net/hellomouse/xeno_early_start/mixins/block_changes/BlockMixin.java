@@ -3,11 +3,9 @@ package net.hellomouse.xeno_early_start.mixins.block_changes;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.hellomouse.xeno_early_start.ProgressionModConfig;
+import net.hellomouse.xeno_early_start.block.BrickFurnaceBlock;
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry;
-import net.minecraft.block.AmethystClusterBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -22,13 +20,13 @@ public class BlockMixin {
     private void damagedByCertainBlocks(World world, BlockPos pos, BlockState state, Entity entity, Operation<Void> original) {
         if (state.isOf(Blocks.STONECUTTER)) {
             entity.damage(getDamageSource(STONECUTTER, world.getRegistryManager()), ProgressionModConfig.config.blockChanges.getStonecutterDamage());
-        } else if (state.isOf(Blocks.SMOKER)) {
+        } else if (state.isOf(Blocks.SMOKER) && state.get(SmokerBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 0.5f);
-        } else if (state.isOf(ProgressionModBlockRegistry.BRICK_FURNACE.get())) {
+        } else if (state.isOf(ProgressionModBlockRegistry.BRICK_FURNACE.get()) && state.get(BrickFurnaceBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 1f);
-        } else if (state.isOf(Blocks.FURNACE)) {
+        } else if (state.isOf(Blocks.FURNACE) && state.get(FurnaceBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 1.5f);
-        } else if (state.isOf(Blocks.BLAST_FURNACE)) {
+        } else if (state.isOf(Blocks.BLAST_FURNACE) && state.get(BlastFurnaceBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 2f);
             entity.setOnFireFor(3);
         }
