@@ -41,6 +41,15 @@ object ProgressionModConfig {
         var overridePebbleDropProbability: Boolean = false
 
         var pebbleDropProbability: Int = 40
+
+        // 15/(20*60*5)=0.025
+        var primitiveFire: PrimitiveFire = PrimitiveFire()
+
+        class PrimitiveFire {
+            var maxBurnTime: Int = 3200
+            var percentageRequiredForMaxBrightness: Float = 0.5f
+            var fuelTimeMultiplier: Float = 1f
+        }
     }
 
     class MobChanges {

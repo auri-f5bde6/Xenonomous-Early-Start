@@ -1,5 +1,6 @@
 package net.hellomouse.xeno_early_start.block.block_entity
 
+import net.hellomouse.xeno_early_start.ProgressionModConfig
 import net.hellomouse.xeno_early_start.block.PrimitiveFireBlock
 import net.hellomouse.xeno_early_start.recipe.PrimitiveFireRecipe
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
@@ -41,6 +42,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
     private val itemsBeingCooked: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
     private val cookingTimes = IntArray(2)
     private val cookingTotalTimes = IntArray(2)
+    var burnTime = 0
     private val primitiveFireMatchGetter: MatchGetter<Inventory, PrimitiveFireRecipe> =
         RecipeManager.createCachedMatchGetter(ProgressionModRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
     private val campfireMatchGetter: MatchGetter<Inventory, CampfireCookingRecipe> =
@@ -48,19 +50,8 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
 
     companion object {
         fun litServerTick(world: World, pos: BlockPos, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
-            val currentLevel = state.get(PrimitiveFireBlock.LIGHT_LEVEL)
-            val nextLevel = currentLevel - 1
-            // 15/(20*60*5)=0.025
-            if (world.random.nextDouble() < 0.0025 && nextLevel >= 0) {
-                world.setBlockState(
-                    pos, state.with(
-                        PrimitiveFireBlock.LIGHT_LEVEL,
-                        nextLevel
-                    ),
-                    Block.NOTIFY_ALL
-                )
-            }
-            if (world.hasRain(pos) || nextLevel <= 0) {
+
+            if (world.hasRain(pos) || primitiveFire.burnTime <= 0) {
                 if (!world.isClient()) {
                     world.playSound(
                         null as PlayerEntity?,
@@ -74,6 +65,21 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
                 CampfireBlock.extinguish(null, world, pos, state)
                 world.setBlockState(pos, state.with(PrimitiveFireBlock.LIT, false), Block.NOTIFY_ALL)
                 return
+            } else {
+                val newLightLevel = (min(
+                    1.0f, primitiveFire.burnTime
+                            / (ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime.toFloat() * ProgressionModConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness)
+                ) * 15f).toInt()
+                if (newLightLevel != state.get(PrimitiveFireBlock.LIGHT_LEVEL)) {
+                    world.setBlockState(
+                        pos,
+                        state.with(PrimitiveFireBlock.LIGHT_LEVEL, newLightLevel),
+                        Block.NOTIFY_ALL
+                    )
+                }
+            }
+            if (world.random.nextDouble() < (1f / 20f) && primitiveFire.burnTime > 0) {
+                primitiveFire.burnTime -= 20
             }
             var bl = false
 
@@ -168,6 +174,8 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
             val array = nbt.getIntArray("CookingTotalTimes")
             System.arraycopy(array, 0, this.cookingTotalTimes, 0, min(this.cookingTotalTimes.size, array.size))
         }
+
+        this.burnTime = nbt.getInt("burnTime")
     }
 
     override fun writeNbt(nbt: NbtCompound) {
@@ -175,6 +183,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
         Inventories.writeNbt(nbt, this.itemsBeingCooked, true)
         nbt.putIntArray("CookingTimes", this.cookingTimes)
         nbt.putIntArray("CookingTotalTimes", this.cookingTotalTimes)
+        nbt.putInt("BurnTime", this.burnTime)
     }
 
     override fun toUpdatePacket(): BlockEntityUpdateS2CPacket? {

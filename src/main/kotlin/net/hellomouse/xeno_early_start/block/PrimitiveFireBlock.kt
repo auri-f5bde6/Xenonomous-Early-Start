@@ -1,5 +1,6 @@
 package net.hellomouse.xeno_early_start.block
 
+import net.hellomouse.xeno_early_start.ProgressionModConfig
 import net.hellomouse.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockEntityRegistry
 import net.hellomouse.xeno_early_start.registries.ProgressionModBlockRegistry
@@ -10,12 +11,15 @@ import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.recipe.RecipeType
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.stat.Stats
@@ -38,9 +42,12 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.event.GameEvent
+import net.minecraftforge.common.ForgeHooks.getBurnTime
 
 // Some code borrowed form vanilla campfire
 class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
+
+
     var fireDamage: Int
 
     constructor(fireDamage: Int, settings: Settings) : super(settings) {
@@ -49,21 +56,25 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             .with(LIT, true)
             .with(FACING, Direction.NORTH)
             .with(WATERLOGGED, false)
-            .with(LIGHT_LEVEL, 15)
     }
 
     companion object {
         val LIT: BooleanProperty = Properties.LIT
-
-        @JvmField
         val LIGHT_LEVEL: IntProperty = IntProperty.of("light_level", 0, 15)
         val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val SHAPE: VoxelShape = VoxelShapes.cuboid(0.125, 0.0, 0.125, 0.875, 0.3125, 0.8125)
         val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
         fun createLightLevel(): (BlockState) -> Int {
-            return { blockState: BlockState -> if (blockState.get(LIT)) blockState.get(LIGHT_LEVEL) else 0 }
+            return { blockState: BlockState ->
+                if (blockState.get(LIT)) {
+                    blockState.get(LIGHT_LEVEL)
+                } else {
+                    0
+                }
+            }
         }
+
         fun spawnSmokeParticle(world: World, pos: BlockPos, lotsOfSmoke: Boolean) {
             val randomSource = world.getRandom()
             val simpleParticleType = ParticleTypes.CAMPFIRE_COSY_SMOKE
@@ -113,6 +124,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             return state.isOf(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get())
                     && !state.get(WATERLOGGED) && !state.get(LIT)
         }
+
     }
 
     override fun createBlockEntity(
@@ -120,7 +132,6 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
     ): BlockEntity {
         return PrimitiveFireBlockEntity(pos, state)
     }
-
 
     @Deprecated("Deprecated in Java")
     override fun getOutlineShape(
@@ -213,6 +224,27 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         }
     }
 
+    override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
+        if (entity is ItemEntity) {
+            val maximumBurnTime = ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime
+            val mult = ProgressionModConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier
+            val total = (getBurnTime(entity.stack, RecipeType.SMELTING) * mult).toInt()
+            if (total != 0) {
+                val individual = (getBurnTime(ItemStack(entity.stack.item, 1), RecipeType.SMELTING) * mult).toInt()
+                val blockEntity = world.getBlockEntity(pos) as PrimitiveFireBlockEntity
+                val currentBurnTime = blockEntity.burnTime
+                val x = currentBurnTime + total
+                if (x > maximumBurnTime) {
+                    val toConsume = ((maximumBurnTime - currentBurnTime) / individual)
+                    entity.stack.decrement(toConsume)
+                    blockEntity.burnTime = currentBurnTime + individual * toConsume
+                } else {
+                    entity.kill()
+                    blockEntity.burnTime = x
+                }
+            }
+        }
+    }
 
     override fun tryFillWithFluid(
         world: WorldAccess,

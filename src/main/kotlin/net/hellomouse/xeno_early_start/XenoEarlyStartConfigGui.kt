@@ -78,6 +78,48 @@ object XenoEarlyStartConfigGui {
                 .setDefaultValue(40)
                 .build()
         )
+        val primitiveFireCategory = entryBuilder
+            .startSubCategory(getTranslatableTextOption("earlyGameChanges.primitiveFire"))
+            .setExpanded(true)
+        primitiveFireCategory.add(
+            entryBuilder.startIntSlider(
+                getTranslatableTextOption("earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness"),
+                (ProgressionModConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness * 100).toInt(),
+                1,
+                100
+            ).setSaveConsumer { aInt: Int ->
+                ProgressionModConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness =
+                    aInt / 100f
+            }
+                .setDefaultValue(80)
+                .build()
+        )
+        primitiveFireCategory.add(
+            entryBuilder.startIntSlider(
+                getTranslatableTextOption("earlyGameChanges.primitiveFire.maxBurnTime"),
+                ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime / 60 / 20,
+                1,
+                60,
+            ).setSaveConsumer { aInt: Int ->
+                ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime = aInt * 60 * 20
+            }
+                .setTooltip(getTranslatableTextOption("earlyGameChanges.primitiveFire.maxBurnTime.tooltip"))
+                .setDefaultValue(5)
+                .build()
+        )
+        primitiveFireCategory.add(
+            entryBuilder.startIntSlider(
+                getTranslatableTextOption("earlyGameChanges.primitiveFire.fuelTimeMultiplier"),
+                (ProgressionModConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier * 100).toInt(),
+                1,
+                200
+            ).setSaveConsumer { aInt: Int ->
+                ProgressionModConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier = aInt / 100f
+            }
+                .setDefaultValue(100)
+                .build()
+        )
+        category.addEntry(primitiveFireCategory.build())
     }
 
     private fun addMobChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
