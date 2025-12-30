@@ -4,8 +4,10 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.hellomouse.xeno_early_start.MultiplicativeSpawnModifier
 import net.hellomouse.xeno_early_start.ProgressionMod
+import net.hellomouse.xeno_early_start.loot.AddTableLootModifier
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryCodecs
+import net.minecraftforge.common.loot.IGlobalLootModifier
 import net.minecraftforge.common.world.BiomeModifier
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
@@ -13,10 +15,10 @@ import java.util.function.Supplier
 
 
 object XenoEarlyStartCodecRegistry {
-    var DEF_REG: DeferredRegister<Codec<out BiomeModifier?>?> =
+    var BIOME_MODIFIER_DEF_REG: DeferredRegister<Codec<out BiomeModifier?>?> =
         DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, ProgressionMod.MODID)
     var MULTIPLICATIVE_SPAWN_MODIFIER: Supplier<Codec<MultiplicativeSpawnModifier>> =
-        DEF_REG.register<Codec<MultiplicativeSpawnModifier>>("multiplicative_spawn_modifier") {
+        BIOME_MODIFIER_DEF_REG.register<Codec<MultiplicativeSpawnModifier>>("multiplicative_spawn_modifier") {
             RecordCodecBuilder.create { builder ->
                 builder.group(
                     Codec.STRING.fieldOf("spawn_group").forGetter { it.spawnGroup },
@@ -26,4 +28,8 @@ object XenoEarlyStartCodecRegistry {
                 ).apply(builder, ::MultiplicativeSpawnModifier)
             }
         }
+    val GLOBAL_LOOT_MODIFIER_DEF_REG: DeferredRegister<Codec<out IGlobalLootModifier>> =
+        DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ProgressionMod.MODID)
+    var ADD_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<AddTableLootModifier>> =
+        GLOBAL_LOOT_MODIFIER_DEF_REG.register("add_table") { AddTableLootModifier.CODEC.codec() }
 }

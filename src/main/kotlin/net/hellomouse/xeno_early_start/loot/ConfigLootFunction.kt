@@ -45,6 +45,13 @@ class ConfigLootFunction private constructor(
             DropType.Diamond -> {
                 itemStack.count = ProgressionModConfig.config.oreChanges.diamondFragmentDrop
             }
+            DropType.PlantFiber -> {
+                if (lootContext.random.nextFloat() < ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability) {
+                    itemStack.count = 1
+                } else {
+                    itemStack.count = 0
+                }
+            }
         }
         return itemStack
     }
@@ -60,7 +67,10 @@ class ConfigLootFunction private constructor(
         Gold,
 
         @SerializedName("diamond")
-        Diamond
+        Diamond,
+
+        @SerializedName("plant_fiber")
+        PlantFiber,
     }
 
     class Serializer : JsonSerializer<ConfigLootFunction> {

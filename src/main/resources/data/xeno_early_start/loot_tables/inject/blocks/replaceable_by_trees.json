@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "xeno_early_start:plant_fiber"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "function": "xeno_early_start:config",
+      "drop_type": "plant_fiber"
+    }
+  ]
+}

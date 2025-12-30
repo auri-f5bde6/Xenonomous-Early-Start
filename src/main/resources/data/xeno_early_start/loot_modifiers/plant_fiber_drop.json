@@ -1,0 +1,21 @@
+{
+  "type": "xeno_early_start:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "tag": "xeno_early_start:shards"
+          }
+        },
+        {
+          "condition": "xeno_early_start:block_is_in_tag",
+          "tag": "minecraft:replaceable_by_trees"
+        }
+      ]
+    }
+  ],
+  "table": "xeno_early_start:inject/blocks/replaceable_by_trees"
+}

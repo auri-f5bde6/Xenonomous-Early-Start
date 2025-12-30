@@ -36,7 +36,7 @@ object ProgressionModConfig {
     class EarlyGameChanges {
         var overridePlantFiberProbability: Boolean = false
 
-        var plantFiberDropProbability: Int = 5
+        var plantFiberDropProbability: Float = 0.05f
 
         var overridePebbleDropProbability: Boolean = false
 

@@ -49,11 +49,11 @@ object XenoEarlyStartConfigGui {
         category.addEntry(
             entryBuilder.startIntSlider(
                 getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
-                ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability,
+                (ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt(),
                 1,
                 100
             ).setSaveConsumer { aInt: Int ->
-                ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability = aInt
+                ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability = aInt / 100.0f
             }
                 .setDefaultValue(5)
                 .build()
