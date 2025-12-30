@@ -22,6 +22,7 @@ import net.minecraft.stat.Stats
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.DirectionProperty
+import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockMirror
@@ -48,14 +49,21 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             .with(LIT, true)
             .with(FACING, Direction.NORTH)
             .with(WATERLOGGED, false)
+            .with(LIGHT_LEVEL, 15)
     }
 
     companion object {
         val LIT: BooleanProperty = Properties.LIT
+
+        @JvmField
+        val LIGHT_LEVEL: IntProperty = IntProperty.of("light_level", 0, 15)
         val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val SHAPE: VoxelShape = VoxelShapes.cuboid(0.125, 0.0, 0.125, 0.875, 0.3125, 0.8125)
         val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
+        fun createLightLevel(): (BlockState) -> Int {
+            return { blockState: BlockState -> if (blockState.get(LIT)) blockState.get(LIGHT_LEVEL) else 0 }
+        }
         fun spawnSmokeParticle(world: World, pos: BlockPos, lotsOfSmoke: Boolean) {
             val randomSource = world.getRandom()
             val simpleParticleType = ParticleTypes.CAMPFIRE_COSY_SMOKE
@@ -154,7 +162,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(LIT, FACING, WATERLOGGED)
+        builder.add(LIT, FACING, WATERLOGGED, LIGHT_LEVEL)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {

@@ -48,7 +48,19 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
 
     companion object {
         fun litServerTick(world: World, pos: BlockPos, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
-            if (world.hasRain(pos)) {
+            val currentLevel = state.get(PrimitiveFireBlock.LIGHT_LEVEL)
+            val nextLevel = currentLevel - 1
+            // 15/(20*60*5)=0.025
+            if (world.random.nextDouble() < 0.0025 && nextLevel >= 0) {
+                world.setBlockState(
+                    pos, state.with(
+                        PrimitiveFireBlock.LIGHT_LEVEL,
+                        nextLevel
+                    ),
+                    Block.NOTIFY_ALL
+                )
+            }
+            if (world.hasRain(pos) || nextLevel <= 0) {
                 if (!world.isClient()) {
                     world.playSound(
                         null as PlayerEntity?,
@@ -60,7 +72,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
                     )
                 }
                 CampfireBlock.extinguish(null, world, pos, state)
-                world.setBlockState(pos, state.with(CampfireBlock.LIT, false), Block.NOTIFY_ALL)
+                world.setBlockState(pos, state.with(PrimitiveFireBlock.LIT, false), Block.NOTIFY_ALL)
                 return
             }
             var bl = false

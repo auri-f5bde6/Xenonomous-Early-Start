@@ -64,7 +64,7 @@ object ProgressionModBlockRegistry {
                 .instrument(Instrument.BASS)
                 .strength(1f)
                 .sounds(BlockSoundGroup.WOOD)
-                .luminance(createLightLevelFromLitBlockState(15))
+                .luminance(PrimitiveFireBlock.createLightLevel())
                 .nonOpaque()
                 .burnable()
         )
