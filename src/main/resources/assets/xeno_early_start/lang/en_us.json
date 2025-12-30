@@ -44,7 +44,6 @@
   "tag.item.xeno_early_start.shards": "Shards",
   "text.config.xeno_early_start.option.earlyGameChanges": "Early Game",
   "text.config.xeno_early_start.option.earlyGameChanges.overridePebbleDropProbability": "Override Pebble Drop Probability",
-  "text.config.xeno_early_start.option.earlyGameChanges.overridePlantFiberDropProbability": "Override Plant Fiber Drop Probability",
   "text.config.xeno_early_start.option.earlyGameChanges.pebbleDropProbability": "Pebble Drop Probability (%)",
   "text.config.xeno_early_start.option.earlyGameChanges.plantFiberDropProbability": "Plant Fiber Drop Probability (%)",
   "text.config.xeno_early_start.option.earlyGameChanges.primitiveFire": "Primitive Fire",

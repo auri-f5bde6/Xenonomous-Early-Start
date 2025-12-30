@@ -37,16 +37,6 @@ object XenoEarlyStartConfigGui {
     private fun addEarlyGameEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {
         val category = configBuilder.getOrCreateCategory(getTranslatableTextOption("earlyGameChanges"))
         category.addEntry(
-            entryBuilder.startBooleanToggle(
-                getTranslatableTextOption("earlyGameChanges.overridePlantFiberDropProbability"),
-                ProgressionModConfig.config.earlyGameChanges.overridePlantFiberProbability
-            ).setSaveConsumer { aBoolean: Boolean ->
-                ProgressionModConfig.config.earlyGameChanges.overridePlantFiberProbability = aBoolean
-            }
-                .setDefaultValue(false)
-                .build()
-        )
-        category.addEntry(
             entryBuilder.startIntSlider(
                 getTranslatableTextOption("earlyGameChanges.plantFiberDropProbability"),
                 (ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt(),
