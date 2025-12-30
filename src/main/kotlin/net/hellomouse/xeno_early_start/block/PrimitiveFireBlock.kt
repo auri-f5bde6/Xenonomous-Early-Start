@@ -63,7 +63,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                 simpleParticleType,
                 true,
                 pos.x + 0.2 + randomSource.nextDouble() / 3.0 * (if (randomSource.nextBoolean()) 1 else -1),
-                pos.y + randomSource.nextDouble() + randomSource.nextDouble(),
+                pos.y - 0.05 + randomSource.nextDouble() + randomSource.nextDouble(),
                 pos.z + 0.2 + randomSource.nextDouble() / 3.0 * (if (randomSource.nextBoolean()) 1 else -1),
                 0.0,
                 0.07,
@@ -126,15 +126,14 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos?, entity: Entity?) {
+    override fun onSteppedOn(world: World, pos: BlockPos, state: BlockState, entity: Entity) {
         if (state.get(LIT) && entity is LivingEntity && !EnchantmentHelper.hasFrostWalker(entity)) {
             entity.setOnFireFor(1)
             entity.damage(world.damageSources.inFire(), this.fireDamage.toFloat())
         }
-        @Suppress("DEPRECATION")
-        super.onEntityCollision(state, world, pos, entity)
+        super.onSteppedOn(world, pos, state, entity)
     }
+
 
     override fun getRenderType(state: BlockState?): BlockRenderType {
         return BlockRenderType.MODEL

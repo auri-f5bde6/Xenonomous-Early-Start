@@ -136,6 +136,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
                 }
             }
         }
+
     }
 
     fun getItemsBeingCooked(): DefaultedList<ItemStack> {
