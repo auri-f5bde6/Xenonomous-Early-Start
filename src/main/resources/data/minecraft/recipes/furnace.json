@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tags": "forge:cobblestones"
+      "tag": "forge:cobblestones"
     },
     "B": {
       "item": "xeno_early_start:brick_furnace"
