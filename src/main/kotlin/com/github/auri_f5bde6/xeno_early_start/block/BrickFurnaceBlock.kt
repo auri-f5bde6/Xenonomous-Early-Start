@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.BrickFurnaceBlockEntity
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockEntityRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.block.FurnaceBlock
 import net.minecraft.block.entity.BlockEntity
@@ -31,6 +31,6 @@ class BrickFurnaceBlock(arg: Settings) : FurnaceBlock(arg) {
         state: BlockState?,
         type: BlockEntityType<T?>?
     ): BlockEntityTicker<T?>? {
-        return checkType<T?>(world, type, ProgressionModBlockEntityRegistry.BRICK_FURNACE.get())
+        return checkType<T?>(world, type, XenoEarlyStartBlockEntityRegistry.BRICK_FURNACE.get())
     }
 }

@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.entity
 
 import com.github.auri_f5bde6.xeno_early_start.block.BrickBlock
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockRegistry
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModEntityRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartEntityRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils.moveEntityAwayFrom
 import net.minecraft.block.Block.NOTIFY_ALL
 import net.minecraft.enchantment.EnchantmentHelper
@@ -28,7 +28,7 @@ class BrickEntity : PersistentProjectileEntity {
 
 
     constructor(world: World, owner: LivingEntity, stack: ItemStack) : super(
-        ProgressionModEntityRegistry.BRICK.get(),
+        XenoEarlyStartEntityRegistry.BRICK.get(),
         owner,
         world
     ) {
@@ -79,7 +79,7 @@ class BrickEntity : PersistentProjectileEntity {
                 this.bounced = true
             } else {
                 val above = blockHitResult.blockPos.add(0, 1, 0)
-                val block = ProgressionModBlockRegistry.BRICK.get().defaultState.with(
+                val block = XenoEarlyStartBlockRegistry.BRICK.get().defaultState.with(
                     BrickBlock.AXIS, horizontalFacing.rotateClockwise(
                         Direction.Axis.Y
                     ).axis

@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.WalkOnRawBrickGoal;
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModItemRegistry;
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.item.ItemStack;
@@ -21,12 +21,12 @@ public abstract class ZombieEntityMixin extends MobEntityMixin {
 
     @Inject(method = "initEquipment", at = @At("TAIL"))
     protected void maybeSpawnWithCopperSword(Random random, LocalDifficulty localDifficulty, CallbackInfo ci) {
-        if (random.nextFloat() < ProgressionModConfig.config.mobChanges.getEntitySpawnWithCopperToolProbability()) {
+        if (random.nextFloat() < XenoEarlyStartConfig.config.mobChanges.getEntitySpawnWithCopperToolProbability()) {
             int i = random.nextInt(3);
             if (i == 0) {
-                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ProgressionModItemRegistry.COPPER_SWORD.get()));
+                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(XenoEarlyStartItemRegistry.COPPER_SWORD.get()));
             } else {
-                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(ProgressionModItemRegistry.COPPER_SHOVEL.get()));
+                this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(XenoEarlyStartItemRegistry.COPPER_SHOVEL.get()));
             }
         }
     }

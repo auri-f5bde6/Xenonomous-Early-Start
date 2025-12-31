@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start
 
-import com.github.auri_f5bde6.xeno_early_start.registries.XenoProgressionModParticleRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartParticleRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -21,7 +21,7 @@ object CoalDust {
     fun mining(world: ServerWorld, state: BlockState, pos: BlockPos) {
         for (i in 0..<world.random.nextBetween(5, 10)) {
             world.spawnParticles(
-                XenoProgressionModParticleRegistry.COAL_DUST.get(),
+                XenoEarlyStartParticleRegistry.COAL_DUST.get(),
                 pos.x - 0.1 + world.random.nextFloat() * 1.1,
                 pos.y - 0.1 + world.random.nextFloat() * 1.1,
                 pos.z - 0.1 + world.random.nextFloat() * 1.1,
@@ -74,7 +74,7 @@ object CoalDust {
         var first = true
         var count = 0
         val collection =
-            MutableList<BlockPos?>(ProgressionModConfig.config.oreChanges.coalDustExplosionClusterSize) { null }
+            MutableList<BlockPos?>(XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize) { null }
         var currentIndex = 0
         while (index < destroy.size) {
             val pos = destroy[index]
@@ -93,7 +93,7 @@ object CoalDust {
                                 createExplosionAtCluster(owner, world, collection)
                             }
                             count++
-                            currentIndex = count % ProgressionModConfig.config.oreChanges.coalDustExplosionClusterSize
+                            currentIndex = count % XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize
                         }
 
                     }
@@ -123,7 +123,7 @@ object CoalDust {
         center.z /= size
         repeat(100) {
             world.spawnParticles(
-                XenoProgressionModParticleRegistry.COAL_DUST.get(),
+                XenoEarlyStartParticleRegistry.COAL_DUST.get(),
                 center.x - 0.1 + world.random.nextFloat() * 1.06,
                 center.y - 0.1 + world.random.nextFloat() * 1.5,
                 center.z - 0.1 + world.random.nextFloat() * 1.06,
@@ -155,10 +155,10 @@ object CoalDust {
     }
 
     private fun canTriggerExplosion(state: BlockState): Boolean {
-        if (state.isIn(ProgressionModTags.Blocks.ALWAYS_TRIGGER_EXPLOSION)) {
+        if (state.isIn(XenoEarlyStartTags.Blocks.ALWAYS_TRIGGER_EXPLOSION)) {
             return true
         }
-        if (state.isIn(ProgressionModTags.Blocks.TRIGGER_EXPLOSION_WHEN_LIT)) {
+        if (state.isIn(XenoEarlyStartTags.Blocks.TRIGGER_EXPLOSION_WHEN_LIT)) {
             val lit: Boolean
             try {
                 lit = state.get(Properties.LIT)
@@ -166,7 +166,7 @@ object CoalDust {
                     return true
                 }
             } catch (_: IllegalArgumentException) {
-                ProgressionMod.LOGGER.error("${Registries.BLOCK.getId(state.block)} does not have state LIT, desipe being added to xeno_early_start:trigger_explosion_when_lit tag")
+                XenoEarlyStart.LOGGER.error("${Registries.BLOCK.getId(state.block)} does not have state LIT, desipe being added to xeno_early_start:trigger_explosion_when_lit tag")
             }
         }
         return false

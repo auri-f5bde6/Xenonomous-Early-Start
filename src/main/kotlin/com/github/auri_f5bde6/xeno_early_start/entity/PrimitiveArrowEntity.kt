@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.entity
 
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModItemRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.item.ItemStack
@@ -12,6 +12,6 @@ class PrimitiveArrowEntity : ArrowEntity {
     constructor(world: World, livingEntity: LivingEntity) : super(world, livingEntity)
 
     override fun asItemStack(): ItemStack {
-        return ItemStack(ProgressionModItemRegistry.PRIMITIVE_ARROW.get())
+        return ItemStack(XenoEarlyStartItemRegistry.PRIMITIVE_ARROW.get())
     }
 }

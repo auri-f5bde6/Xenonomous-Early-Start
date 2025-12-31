@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.client.screen
 
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModScreenHandlerRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartScreenHandlerRegistry
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.recipe.RecipeType
@@ -13,7 +13,7 @@ class BrickFurnaceScreenHandler : AbstractFurnaceScreenHandler {
         syncId: Int,
         playerInventory: PlayerInventory
     ) : super(
-        ProgressionModScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get(),
+        XenoEarlyStartScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get(),
         RecipeType.SMELTING,
         RecipeBookCategory.FURNACE,
         syncId,
@@ -26,7 +26,7 @@ class BrickFurnaceScreenHandler : AbstractFurnaceScreenHandler {
         inventory: Inventory,
         propertyDelegate: PropertyDelegate
     ) : super(
-        ProgressionModScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get(),
+        XenoEarlyStartScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get(),
         RecipeType.SMELTING,
         RecipeBookCategory.FURNACE,
         syncId,

@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.client.entity
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.entity.BrickEntity
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
@@ -38,6 +38,6 @@ class BrickEntityRenderer(arg: EntityRendererFactory.Context) :
     }
 
     companion object {
-        val TEXTURE: Identifier = ProgressionMod.of("textures/entity/brick.png")
+        val TEXTURE: Identifier = XenoEarlyStart.of("textures/entity/brick.png")
     }
 }

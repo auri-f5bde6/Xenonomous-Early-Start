@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.loot
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModLootTypeRegistry
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
 import net.minecraft.item.ItemStack
@@ -18,35 +18,35 @@ class ConfigLootFunction private constructor(
 ) : LootFunction {
 
     override fun getType(): LootFunctionType {
-        return ProgressionModLootTypeRegistry.configLootFunction.get()
+        return XenoEarlyStartLootTypeRegistry.configLootFunction.get()
     }
 
     override fun apply(itemStack: ItemStack, lootContext: LootContext): ItemStack {
         when (dropType) {
             DropType.Copper -> {
-                if (ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMax < ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMin) {
-                    ProgressionMod.LOGGER.error("rawCopperNuggetDropMin cannot be less than rawCopperNuggetDropMax, please check your mod config")
+                if (XenoEarlyStartConfig.config.oreChanges.rawCopperNuggetDropMax < XenoEarlyStartConfig.config.oreChanges.rawCopperNuggetDropMin) {
+                    XenoEarlyStart.LOGGER.error("rawCopperNuggetDropMin cannot be less than rawCopperNuggetDropMax, please check your mod config")
                 }
                 itemStack.count = MathHelper.nextInt(
                     lootContext.random,
-                    ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMin,
-                    ProgressionModConfig.config.oreChanges.rawCopperNuggetDropMax
+                    XenoEarlyStartConfig.config.oreChanges.rawCopperNuggetDropMin,
+                    XenoEarlyStartConfig.config.oreChanges.rawCopperNuggetDropMax
                 )
             }
 
             DropType.Iron -> {
-                itemStack.count = ProgressionModConfig.config.oreChanges.rawIronNuggetDrop
+                itemStack.count = XenoEarlyStartConfig.config.oreChanges.rawIronNuggetDrop
             }
 
             DropType.Gold -> {
-                itemStack.count = ProgressionModConfig.config.oreChanges.rawGoldNuggetDrop
+                itemStack.count = XenoEarlyStartConfig.config.oreChanges.rawGoldNuggetDrop
             }
 
             DropType.Diamond -> {
-                itemStack.count = ProgressionModConfig.config.oreChanges.diamondFragmentDrop
+                itemStack.count = XenoEarlyStartConfig.config.oreChanges.diamondFragmentDrop
             }
             DropType.PlantFiber -> {
-                if (lootContext.random.nextFloat() < ProgressionModConfig.config.earlyGameChanges.plantFiberDropProbability) {
+                if (lootContext.random.nextFloat() < XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability) {
                     itemStack.count = 1
                 } else {
                     itemStack.count = 0

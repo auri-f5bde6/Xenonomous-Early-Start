@@ -1,13 +1,13 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import net.minecraft.entity.LivingEntity
 import net.minecraftforge.event.entity.living.LivingAttackEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 @Suppress("UNUSED_PARAMETER")
-@EventBusSubscriber(modid = ProgressionMod.MODID, bus = EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
 object LivingAttackEventHandler {
     @SubscribeEvent
     fun onAttackEvent(event: LivingAttackEvent) {

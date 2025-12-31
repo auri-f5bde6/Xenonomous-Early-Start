@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.fix_thin_block;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod;
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockRegistry;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry;
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -52,14 +52,14 @@ public abstract class EntityMixin {
 
     @WrapOperation(method = "playStepSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getSoundType(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)Lnet/minecraft/sound/BlockSoundGroup;"))
     BlockSoundGroup fixSmallBlockStepSound(BlockState instance, WorldView worldView, BlockPos blockPos, Entity entity, Operation<BlockSoundGroup> original) {
-        var conf = ProgressionModConfig.config.blockChanges.getFixThinBlockStepSound();
-        if (conf != ProgressionModConfig.BlockChanges.FixThinBlockStepSound.False) {
+        var conf = XenoEarlyStartConfig.config.blockChanges.getFixThinBlockStepSound();
+        if (conf != XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound.False) {
             var stepping_on = OtherUtils.raycastSteppingOn(world, this.pos, ((Entity) (Object) this));
             BlockState hitState = stepping_on.component2();
             var ident = ForgeRegistries.BLOCKS.getKey(hitState.getBlock());
-            if ((conf == ProgressionModConfig.BlockChanges.FixThinBlockStepSound.True)
-                    || (ident != null && Objects.equals(ident.getNamespace(), ProgressionMod.MODID)
-                    && conf == ProgressionModConfig.BlockChanges.FixThinBlockStepSound.OnlyThisMod)) {
+            if ((conf == XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound.True)
+                    || (ident != null && Objects.equals(ident.getNamespace(), XenoEarlyStart.MODID)
+                    && conf == XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound.OnlyThisMod)) {
                 return hitState.getSoundType(this.world, stepping_on.component1(), ((Entity) ((Object) this)));
             }
         }
@@ -70,7 +70,7 @@ public abstract class EntityMixin {
     void move(Block instance, World world, BlockPos pos, BlockState state, Entity entity, Operation<Void> original) {
         var stepping_on = OtherUtils.raycastSteppingOn(world, getPos(), ((Entity) (Object) this));
         var block = stepping_on.component2().getBlock();
-        if (stepping_on.component2().isOf(ProgressionModBlockRegistry.RAW_BRICK.get())) {
+        if (stepping_on.component2().isOf(XenoEarlyStartBlockRegistry.RAW_BRICK.get())) {
             original.call(block, world, stepping_on.component1(), stepping_on.component2(), entity);
         } else {
             original.call(instance, world, pos, state, entity);

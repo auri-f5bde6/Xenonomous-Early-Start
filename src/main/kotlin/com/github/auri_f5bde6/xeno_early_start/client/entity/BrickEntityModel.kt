@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.client.entity
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import net.minecraft.client.model.*
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.entity.model.EntityModel
@@ -35,7 +35,7 @@ class BrickEntityModel(root: ModelPart) : EntityModel<Entity>() {
     }
 
     companion object {
-        val LAYER_LOCATION: EntityModelLayer = EntityModelLayer(ProgressionMod.of("brick"), "main")
+        val LAYER_LOCATION: EntityModelLayer = EntityModelLayer(XenoEarlyStart.of("brick"), "main")
         val texturedModelData: TexturedModelData
             get() {
                 val modelData = ModelData()

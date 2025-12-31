@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModArmourMaterials
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModToolMaterials
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartArmourMaterials
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartToolMaterials
 import com.github.auri_f5bde6.xeno_early_start.item.BrickItem
 import com.github.auri_f5bde6.xeno_early_start.item.FireStarterItem
 import com.github.auri_f5bde6.xeno_early_start.item.PebbleItem
@@ -13,17 +13,17 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 
-object ProgressionModItemRegistry {
+object XenoEarlyStartItemRegistry {
     val VANILLA_ITEMS: DeferredRegister<Item> = DeferredRegister.create(ForgeRegistries.ITEMS, "minecraft")
     val DEF_REG: DeferredRegister<Item> =
-        DeferredRegister.create(ForgeRegistries.ITEMS, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.ITEMS, XenoEarlyStart.MODID)
 
     @JvmField
     val COPPER_SWORD: RegistryObject<Item> = DEF_REG.register(
         "copper_sword",
         Supplier {
             SwordItem(
-                ProgressionModToolMaterials.COPPER,
+                XenoEarlyStartToolMaterials.COPPER,
                 3,
                 -2.4f,
                 Item.Settings()
@@ -36,7 +36,7 @@ object ProgressionModItemRegistry {
         "copper_shovel",
         Supplier {
             ShovelItem(
-                ProgressionModToolMaterials.COPPER,
+                XenoEarlyStartToolMaterials.COPPER,
                 1f,
                 -2.0f,
                 Item.Settings()
@@ -47,73 +47,73 @@ object ProgressionModItemRegistry {
     @JvmField
     val COPPER_PICKAXE: RegistryObject<Item> = DEF_REG.register(
         "copper_pickaxe",
-        Supplier { PickaxeItem(ProgressionModToolMaterials.COPPER, 1, -2.8f, Item.Settings()) }
+        Supplier { PickaxeItem(XenoEarlyStartToolMaterials.COPPER, 1, -2.8f, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_AXE: RegistryObject<Item> = DEF_REG.register(
         "copper_axe",
-        Supplier { AxeItem(ProgressionModToolMaterials.COPPER, 7f, -3.2f, Item.Settings()) }
+        Supplier { AxeItem(XenoEarlyStartToolMaterials.COPPER, 7f, -3.2f, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_HOE: RegistryObject<Item> = DEF_REG.register(
         "copper_hoe",
-        Supplier { HoeItem(ProgressionModToolMaterials.COPPER, -1, -2.0f, Item.Settings()) }
+        Supplier { HoeItem(XenoEarlyStartToolMaterials.COPPER, -1, -2.0f, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_HELMET: RegistryObject<Item> = DEF_REG.register(
         "copper_helmet",
-        Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.HELMET, Item.Settings()) }
+        Supplier { ArmorItem(XenoEarlyStartArmourMaterials.COPPER, ArmorItem.Type.HELMET, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_CHESTPLATE: RegistryObject<Item> = DEF_REG.register(
         "copper_chestplate",
-        Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.CHESTPLATE, Item.Settings()) }
+        Supplier { ArmorItem(XenoEarlyStartArmourMaterials.COPPER, ArmorItem.Type.CHESTPLATE, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_LEGGINGS: RegistryObject<Item> = DEF_REG.register(
         "copper_leggings",
-        Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.LEGGINGS, Item.Settings()) }
+        Supplier { ArmorItem(XenoEarlyStartArmourMaterials.COPPER, ArmorItem.Type.LEGGINGS, Item.Settings()) }
     )
 
     @JvmField
     val COPPER_BOOTS: RegistryObject<Item> = DEF_REG.register(
         "copper_boots",
-        Supplier { ArmorItem(ProgressionModArmourMaterials.COPPER, ArmorItem.Type.BOOTS, Item.Settings()) }
+        Supplier { ArmorItem(XenoEarlyStartArmourMaterials.COPPER, ArmorItem.Type.BOOTS, Item.Settings()) }
     )
 
     @JvmField
     val FLINT_HATCHET: RegistryObject<Item> = DEF_REG.register(
         "flint_hatchet",
-        Supplier { AxeItem(ProgressionModToolMaterials.FLINT, 4.5f, -3.2f, Item.Settings()) }
+        Supplier { AxeItem(XenoEarlyStartToolMaterials.FLINT, 4.5f, -3.2f, Item.Settings()) }
     )
 
     @JvmField
     val FLINT_PICKAXE: RegistryObject<Item> = DEF_REG.register(
         "flint_pickaxe",
-        Supplier { PickaxeItem(ProgressionModToolMaterials.FLINT, 1, -2.8f, Item.Settings()) }
+        Supplier { PickaxeItem(XenoEarlyStartToolMaterials.FLINT, 1, -2.8f, Item.Settings()) }
     )
 
     @JvmField
     val FLINT_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "flint_dagger",
-        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -1.9f, Item.Settings()) }
+        Supplier { SwordItem(XenoEarlyStartToolMaterials.FLINT, 2, -1.9f, Item.Settings()) }
     )
 
     @JvmField
     val BONE_PICKAXE: RegistryObject<Item> = DEF_REG.register(
         "bone_pickaxe",
-        Supplier { PickaxeItem(ProgressionModToolMaterials.BONE, 1, -2.8f, Item.Settings()) }
+        Supplier { PickaxeItem(XenoEarlyStartToolMaterials.BONE, 1, -2.8f, Item.Settings()) }
     )
 
     @JvmField
     val BONE_DAGGER: RegistryObject<Item> = DEF_REG.register(
         "bone_dagger",
-        Supplier { SwordItem(ProgressionModToolMaterials.FLINT, 2, -1.9f, Item.Settings()) }
+        Supplier { SwordItem(XenoEarlyStartToolMaterials.FLINT, 2, -1.9f, Item.Settings()) }
     )
 
     @JvmField
@@ -144,7 +144,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val RAW_BRICK: RegistryObject<Item> = DEF_REG.register(
         "raw_brick",
-        Supplier { BlockItem(ProgressionModBlockRegistry.RAW_BRICK.get(), Item.Settings()) }
+        Supplier { BlockItem(XenoEarlyStartBlockRegistry.RAW_BRICK.get(), Item.Settings()) }
     )
 
     @JvmField
@@ -184,7 +184,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val BRICK_FURNACE: RegistryObject<Item> = DEF_REG.register(
         "brick_furnace",
-        Supplier { BlockItem(ProgressionModBlockRegistry.BRICK_FURNACE.get(), Item.Settings()) }
+        Supplier { BlockItem(XenoEarlyStartBlockRegistry.BRICK_FURNACE.get(), Item.Settings()) }
     )
 
     @JvmField
@@ -196,7 +196,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val PRIMITIVE_FIRE: RegistryObject<Item> = DEF_REG.register(
         "primitive_fire",
-        Supplier { BlockItem(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get(), Item.Settings()) }
+        Supplier { BlockItem(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get(), Item.Settings()) }
     )
 
     @JvmField
@@ -261,7 +261,7 @@ object ProgressionModItemRegistry {
     @JvmField
     val BRICK: RegistryObject<Item> = VANILLA_ITEMS.register(
         "brick",
-        Supplier { BrickItem(ProgressionModBlockRegistry.BRICK.get(), Item.Settings()) }
+        Supplier { BrickItem(XenoEarlyStartBlockRegistry.BRICK.get(), Item.Settings()) }
     )
 
     fun addItemToCreativeTab(entries: ItemGroup.Entries) {

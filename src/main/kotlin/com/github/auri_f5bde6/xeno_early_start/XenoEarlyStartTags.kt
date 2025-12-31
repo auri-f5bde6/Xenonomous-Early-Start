@@ -6,13 +6,13 @@ import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 
-class ProgressionModTags {
+class XenoEarlyStartTags {
     object Blocks {
         val HAS_BLOCK_TO_BLOCK_RECIPE: TagKey<Block> = createTag("has_block_to_block_recipe")
         val ALWAYS_TRIGGER_EXPLOSION: TagKey<Block> = createTag("always_trigger_explosion")
         val TRIGGER_EXPLOSION_WHEN_LIT: TagKey<Block> = createTag("trigger_explosion_when_lit")
         private fun createTag(name: String): TagKey<Block> {
-            return BlockTags.create(ProgressionMod.of(name))
+            return BlockTags.create(XenoEarlyStart.of(name))
         }
     }
 
@@ -21,7 +21,7 @@ class ProgressionModTags {
         val KNAPPED_STONE: TagKey<Item> = createTag("knapped_stone")
 
         private fun createTag(name: String): TagKey<Item> {
-            return ItemTags.create(ProgressionMod.of(name))
+            return ItemTags.create(XenoEarlyStart.of(name))
         }
     }
 }

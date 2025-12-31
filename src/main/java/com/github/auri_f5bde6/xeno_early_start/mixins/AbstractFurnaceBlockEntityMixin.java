@@ -26,8 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
-import static com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModDamageSource.FURNACE_EXPLOSIONS;
-import static com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModDamageSource.getDamageSource;
+import static com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartDamageSource.FURNACE_EXPLOSIONS;
+import static com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartDamageSource.getDamageSource;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerBlockEntity implements SidedInventory, RecipeUnlocker, RecipeInputProvider {

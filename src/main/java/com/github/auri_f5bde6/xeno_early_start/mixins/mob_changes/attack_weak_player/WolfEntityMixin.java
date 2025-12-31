@@ -1,11 +1,10 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.attack_weak_player;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.Angerable;
@@ -49,7 +48,7 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
                 }
                 this.getWorld().playSoundFromEntity(null, this, ENTITY_WOLF_HOWL, SoundCategory.HOSTILE, 1.0F, 1.0F);
             }
-            return original.test(livingEntity) || (nightHostility && ProgressionModConfig.config.mobChanges.getWolfAggressiveAtNight()) || livingEntity.isBaby() || isWeak;
+            return original.test(livingEntity) || (nightHostility && XenoEarlyStartConfig.config.mobChanges.getWolfAggressiveAtNight()) || livingEntity.isBaby() || isWeak;
         };
     }
 }

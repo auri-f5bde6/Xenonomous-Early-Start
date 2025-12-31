@@ -1,10 +1,10 @@
 package com.github.auri_f5bde6.xeno_early_start.block.block_entity
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
 import com.github.auri_f5bde6.xeno_early_start.recipe.PrimitiveFireRecipe
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockEntityRegistry
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModRecipeRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.CampfireBlock
@@ -37,14 +37,14 @@ import java.util.function.Function
 import kotlin.math.min
 
 class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
-    ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(), pos, state
+    XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(), pos, state
 ), Clearable {
     private val itemsBeingCooked: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
     private val cookingTimes = IntArray(2)
     private val cookingTotalTimes = IntArray(2)
     var burnTime = 0
     private val primitiveFireMatchGetter: MatchGetter<Inventory, PrimitiveFireRecipe> =
-        RecipeManager.createCachedMatchGetter(ProgressionModRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
+        RecipeManager.createCachedMatchGetter(XenoEarlyStartRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
     private val campfireMatchGetter: MatchGetter<Inventory, CampfireCookingRecipe> =
         RecipeManager.createCachedMatchGetter(RecipeType.CAMPFIRE_COOKING)
 
@@ -68,7 +68,7 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
             } else {
                 val newLightLevel = (min(
                     1.0f, primitiveFire.burnTime
-                            / (ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime.toFloat() * ProgressionModConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness)
+                            / (XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime.toFloat() * XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness)
                 ) * 15f).toInt()
                 if (newLightLevel != state.get(PrimitiveFireBlock.LIGHT_LEVEL)) {
                     world.setBlockState(

@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import net.minecraft.block.Blocks
 import net.minecraftforge.event.level.BlockEvent
 import net.minecraftforge.eventbus.api.Event
@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 @Suppress("UNUSED_PARAMETER")
-@EventBusSubscriber(modid = ProgressionMod.MODID, bus = EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
 object CropGrowEventHandler {
     @SubscribeEvent
     fun cropGrowPre(event: BlockEvent.CropGrowEvent.Pre) {

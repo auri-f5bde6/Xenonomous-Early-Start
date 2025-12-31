@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
@@ -42,7 +42,7 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
                     return ActionResult.PASS
                 }
             } else {
-                ProgressionMod.LOGGER.warn("RockItem useOnBlock's context have no player set")
+                XenoEarlyStart.LOGGER.warn("RockItem useOnBlock's context have no player set")
                 return ActionResult.FAIL
             }
         }

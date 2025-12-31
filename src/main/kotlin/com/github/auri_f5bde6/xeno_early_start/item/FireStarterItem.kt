@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
@@ -68,7 +68,7 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
             for (i in burnables.indices) {
                 val item = burnables[i]
                 required -= item.stack.count
-                var blockState = ProgressionModBlockRegistry.PRIMITIVE_FIRE.get().defaultState
+                var blockState = XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get().defaultState
                 toKill[i] = item
                 blockState = blockState.with(
                     PrimitiveFireBlock.FACING, user.horizontalFacing

@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins;
 
 import com.github.auri_f5bde6.xeno_early_start.item.PebbleItem;
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModItemRegistry;
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.item.Item;
@@ -24,7 +24,7 @@ public class ItemMixin {
     public ActionResult useOnBlock(ItemUsageContext context, Operation<ActionResult> original) {
         if (this.registryEntry.matchesKey(Items.FLINT.getRegistryEntry().registryKey())) {
             return PebbleItem.Companion.useOnBlock(context,
-                    new ItemStack(ProgressionModItemRegistry.FLINT_SHARD.get(),
+                    new ItemStack(XenoEarlyStartItemRegistry.FLINT_SHARD.get(),
                             context.getWorld().getRandom().nextBetween(2, 5))
             );
         }

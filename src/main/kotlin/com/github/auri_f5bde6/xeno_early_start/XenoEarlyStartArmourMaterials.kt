@@ -13,7 +13,7 @@ import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.Util
 import java.util.*
 
-enum class ProgressionModArmourMaterials(
+enum class XenoEarlyStartArmourMaterials(
     private val enumName: String,
     private val durabilityMultiplier: Int,
     private val protectionAmounts: EnumMap<ArmorItem.Type, Int>,

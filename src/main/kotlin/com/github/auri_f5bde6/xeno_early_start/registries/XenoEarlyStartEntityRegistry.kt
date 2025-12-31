@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.entity.BrickEntity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
@@ -10,9 +10,9 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 
-object ProgressionModEntityRegistry {
+object XenoEarlyStartEntityRegistry {
     val DEF_REG: DeferredRegister<EntityType<*>> =
-        DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, XenoEarlyStart.MODID)
 
     @JvmField
     val BRICK: RegistryObject<EntityType<BrickEntity>> = DEF_REG.register(

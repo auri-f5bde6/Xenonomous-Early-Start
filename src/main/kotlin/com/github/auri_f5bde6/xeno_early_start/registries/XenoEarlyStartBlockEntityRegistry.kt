@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.BrickFurnaceBlockEntity
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import net.minecraft.block.BlockState
@@ -12,9 +12,9 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 
-object ProgressionModBlockEntityRegistry {
+object XenoEarlyStartBlockEntityRegistry {
     val DEF_REG: DeferredRegister<BlockEntityType<*>> =
-        DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, XenoEarlyStart.MODID)
 
     @JvmField
     val BRICK_FURNACE: RegistryObject<BlockEntityType<BrickFurnaceBlockEntity>> =
@@ -23,7 +23,7 @@ object ProgressionModBlockEntityRegistry {
                 BrickFurnaceBlockEntity(
                     pos, state
                 )
-            }, ProgressionModBlockRegistry.BRICK_FURNACE.get()).build(null)
+            }, XenoEarlyStartBlockRegistry.BRICK_FURNACE.get()).build(null)
         })
 
     @JvmField
@@ -33,6 +33,6 @@ object ProgressionModBlockEntityRegistry {
                 PrimitiveFireBlockEntity(
                     pos, state
                 )
-            }, ProgressionModBlockRegistry.PRIMITIVE_FIRE.get()).build(null)
+            }, XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get()).build(null)
         })
 }

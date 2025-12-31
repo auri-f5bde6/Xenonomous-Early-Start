@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.Entity;
@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class EntityMixin {
     @WrapMethod(method = "onPlayerCollision")
     public void batApplyNausea(PlayerEntity player, Operation<Void> original) {
-        if ((Entity) (Object) this instanceof BatEntity batEntity && ProgressionModConfig.config.mobChanges.getBatGivesPlayerNausea()) {
+        if ((Entity) (Object) this instanceof BatEntity batEntity && XenoEarlyStartConfig.config.mobChanges.getBatGivesPlayerNausea()) {
             // 10 second, 20 tick per second
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 10), batEntity);
         }

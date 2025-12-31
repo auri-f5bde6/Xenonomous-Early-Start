@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.loot
 
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModLootTypeRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
@@ -18,7 +18,7 @@ class BlockIsInTagCondition private constructor(private val tag: Identifier) : L
 
 
     override fun getType(): LootConditionType {
-        return ProgressionModLootTypeRegistry.blockIsInTagCondition.get()
+        return XenoEarlyStartLootTypeRegistry.blockIsInTagCondition.get()
     }
 
     override fun test(lootContext: LootContext): Boolean {

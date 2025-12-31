@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.compat
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModItemRegistry
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.render.EmiTexture
@@ -18,11 +18,11 @@ class DryingEmiRecipe : EmiRecipe {
     }
 
     override fun getId(): Identifier {
-        return ProgressionMod.of("/drying")
+        return XenoEarlyStart.of("/drying")
     }
 
     override fun getInputs(): List<EmiIngredient> {
-        return listOf(EmiIngredient.of(Ingredient.ofItems(ProgressionModItemRegistry.RAW_BRICK.get())))
+        return listOf(EmiIngredient.of(Ingredient.ofItems(XenoEarlyStartItemRegistry.RAW_BRICK.get())))
     }
 
     override fun getOutputs(): List<EmiStack> {

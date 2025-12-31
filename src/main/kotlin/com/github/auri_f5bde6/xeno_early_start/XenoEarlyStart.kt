@@ -24,53 +24,53 @@ import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import java.io.FileNotFoundException
 import java.util.function.Supplier
 
-@Mod(ProgressionMod.MODID)
-class ProgressionMod {
+@Mod(XenoEarlyStart.MODID)
+class XenoEarlyStart {
     init {
         LOGGER.info("Loading Progression Mod Config...")
 
-        ProgressionModBlockRegistry.DEF_REG.register(MOD_BUS)
-        ProgressionModItemRegistry.VANILLA_ITEMS.register(MOD_BUS)
-        ProgressionModItemRegistry.DEF_REG.register(MOD_BUS)
-        ProgressionModEntityRegistry.DEF_REG.register(MOD_BUS)
-        ProgressionModScreenHandlerRegistry.DEF_REG.register(MOD_BUS)
-        ProgressionModBlockEntityRegistry.DEF_REG.register(MOD_BUS)
-        ProgressionModLootTypeRegistry.FUNC_DEF_REG.register(MOD_BUS)
-        ProgressionModLootTypeRegistry.COND_DEF_REG.register(MOD_BUS)
-        ProgressionModRecipeRegistry.DEF_REG.register(MOD_BUS)
-        ProgressionModRecipeRegistry.TYPE_DEF_REG.register(MOD_BUS)
-        XenoProgressionModParticleRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartBlockRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartItemRegistry.VANILLA_ITEMS.register(MOD_BUS)
+        XenoEarlyStartItemRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartEntityRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartScreenHandlerRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartBlockEntityRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartLootTypeRegistry.FUNC_DEF_REG.register(MOD_BUS)
+        XenoEarlyStartLootTypeRegistry.COND_DEF_REG.register(MOD_BUS)
+        XenoEarlyStartRecipeRegistry.DEF_REG.register(MOD_BUS)
+        XenoEarlyStartRecipeRegistry.TYPE_DEF_REG.register(MOD_BUS)
+        XenoEarlyStartParticleRegistry.DEF_REG.register(MOD_BUS)
         XenoEarlyStartStatusEffectRegistry.DEF_REG.register(MOD_BUS)
         XenoEarlyStartCodecRegistry.BIOME_MODIFIER_DEF_REG.register(MOD_BUS)
         XenoEarlyStartCodecRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(MOD_BUS)
         CREATIVE_TAB_REG.register(MOD_BUS)
         TierSortingRegistry.registerTier(
-            ProgressionModToolMaterials.COPPER,
-            ProgressionModToolMaterials.COPPER_ID,
+            XenoEarlyStartToolMaterials.COPPER,
+            XenoEarlyStartToolMaterials.COPPER_ID,
             listOf<Any?>(ofMinecraft("stone")),
             listOf<Any?>(ofMinecraft("iron"))
         )
         TierSortingRegistry.registerTier(
-            ProgressionModToolMaterials.FLINT,
-            ProgressionModToolMaterials.FLINT_ID,
+            XenoEarlyStartToolMaterials.FLINT,
+            XenoEarlyStartToolMaterials.FLINT_ID,
             mutableListOf<Any?>(),
             listOf<Any?>(ofMinecraft("wood"))
         )
         TierSortingRegistry.registerTier(
-            ProgressionModToolMaterials.BONE,
-            ProgressionModToolMaterials.BONE_ID,
+            XenoEarlyStartToolMaterials.BONE,
+            XenoEarlyStartToolMaterials.BONE_ID,
             mutableListOf<Any?>(),
             listOf<Any?>(ofMinecraft("wood"))
         )
         try {
             val file = FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
-            ProgressionModConfig.config =
+            XenoEarlyStartConfig.config =
                 Toml().read(file.reader())
-                    .to(ProgressionModConfig.config.javaClass)
+                    .to(XenoEarlyStartConfig.config.javaClass)
         } catch (_: FileNotFoundException) {
             val tomlWriter = TomlWriter()
             tomlWriter.write(
-                ProgressionModConfig.config,
+                XenoEarlyStartConfig.config,
                 FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
             )
         }
@@ -97,10 +97,10 @@ class ProgressionMod {
         val CREATIVE_TAB: RegistryObject<ItemGroup> = CREATIVE_TAB_REG.register<ItemGroup>(MODID, Supplier {
             ItemGroup.builder()
                 .displayName(Text.translatable("itemGroup.$MODID.creative_tab"))
-                .icon { ItemStack(ProgressionModItemRegistry.COPPER_PICKAXE.get()) }
+                .icon { ItemStack(XenoEarlyStartItemRegistry.COPPER_PICKAXE.get()) }
                 .withTabsBefore(ItemGroups.SPAWN_EGGS)
                 .entries { enabledFeatures: ItemGroup.DisplayContext?, output: ItemGroup.Entries ->
-                    ProgressionModItemRegistry.addItemToCreativeTab(output)
+                    XenoEarlyStartItemRegistry.addItemToCreativeTab(output)
                 }
                 .build()
         })

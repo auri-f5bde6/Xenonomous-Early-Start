@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.compat
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModItemRegistry
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
@@ -12,11 +12,11 @@ import dev.emi.emi.api.stack.EmiStack
 @EmiEntrypoint
 class XenoEarlyStartEmiPlugin : EmiPlugin {
     companion object {
-        val RAW_BRICK: EmiStack = EmiStack.of(ProgressionModItemRegistry.RAW_BRICK.get())
+        val RAW_BRICK: EmiStack = EmiStack.of(XenoEarlyStartItemRegistry.RAW_BRICK.get())
         val DRYING = EmiRecipeCategory(
-            ProgressionMod.of("drying"),
+            XenoEarlyStart.of("drying"),
             RAW_BRICK,
-            EmiTexture(ProgressionMod.of("textures/item/raw_brick.png"), 0, 0, 16, 16)
+            EmiTexture(XenoEarlyStart.of("textures/item/raw_brick.png"), 0, 0, 16, 16)
         )
     }
 

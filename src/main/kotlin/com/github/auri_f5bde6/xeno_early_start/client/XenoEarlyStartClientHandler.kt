@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.client
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.client.block_entity.PrimitiveFireBlockEntityRenderer
 import com.github.auri_f5bde6.xeno_early_start.client.entity.BrickEntityModel
 import com.github.auri_f5bde6.xeno_early_start.client.entity.BrickEntityRenderer
@@ -25,27 +25,27 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import java.util.function.Supplier
 
-@EventBusSubscriber(value = [Dist.CLIENT], modid = ProgressionMod.MODID, bus = EventBusSubscriber.Bus.MOD)
-object ProgressionModClientHandler {
+@EventBusSubscriber(value = [Dist.CLIENT], modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.MOD)
+object XenoEarlyStartClientHandler {
     @SubscribeEvent
     fun onFMLClientSetupEvent(event: FMLClientSetupEvent) {
         event.enqueueWork(Runnable {
             HandledScreens.register(
-                ProgressionModScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get()
+                XenoEarlyStartScreenHandlerRegistry.BRICK_FURNACE_SCREEN.get()
             ) { handler: BrickFurnaceScreenHandler, playerInventory: PlayerInventory, title: Text ->
                 BrickFurnaceScreen(handler, playerInventory, title)
             }
         })
         BlockEntityRendererFactories.register(
-            ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(), ::PrimitiveFireBlockEntityRenderer
+            XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(), ::PrimitiveFireBlockEntityRenderer
         )
-        RenderLayers.setRenderLayer(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get(), RenderLayer.getCutout())
+        RenderLayers.setRenderLayer(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get(), RenderLayer.getCutout())
     }
 
     @SubscribeEvent
     fun registerRenderers(event: RegisterRenderers) {
         event.registerEntityRenderer(
-            ProgressionModEntityRegistry.BRICK.get(),
+            XenoEarlyStartEntityRegistry.BRICK.get(),
             EntityRendererFactory { arg: EntityRendererFactory.Context -> BrickEntityRenderer(arg) })
     }
 
@@ -59,7 +59,7 @@ object ProgressionModClientHandler {
     @SubscribeEvent
     fun registerParticles(event: RegisterParticleProvidersEvent) {
         event.registerSpriteSet(
-            XenoProgressionModParticleRegistry.COAL_DUST.get()
+            XenoEarlyStartParticleRegistry.COAL_DUST.get()
         ) { spriteProvider: SpriteProvider -> CoalDustParticle.Factory(spriteProvider) }
     }
 }

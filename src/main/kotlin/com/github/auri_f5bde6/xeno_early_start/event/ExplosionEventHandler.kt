@@ -1,14 +1,14 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
 import com.github.auri_f5bde6.xeno_early_start.CoalDust
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import net.minecraft.server.world.ServerWorld
 import net.minecraftforge.event.level.ExplosionEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 @Suppress("UNUSED_PARAMETER")
-@EventBusSubscriber(modid = ProgressionMod.MODID, bus = EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
 object ExplosionEventHandler {
     @SubscribeEvent
     fun onDetonate(event: ExplosionEvent.Detonate) {

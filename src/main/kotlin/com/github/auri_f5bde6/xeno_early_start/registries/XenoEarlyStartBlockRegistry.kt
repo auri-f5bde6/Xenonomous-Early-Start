@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.block.BrickBlock
 import com.github.auri_f5bde6.xeno_early_start.block.BrickFurnaceBlock
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
@@ -18,9 +18,9 @@ import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 import java.util.function.ToIntFunction
 
-object ProgressionModBlockRegistry {
+object XenoEarlyStartBlockRegistry {
     val DEF_REG: DeferredRegister<Block> =
-        DeferredRegister.create(ForgeRegistries.BLOCKS, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.BLOCKS, XenoEarlyStart.MODID)
 
     @JvmField
     val RAW_BRICK: RegistryObject<Block> = DEF_REG.register("raw_brick", Supplier {

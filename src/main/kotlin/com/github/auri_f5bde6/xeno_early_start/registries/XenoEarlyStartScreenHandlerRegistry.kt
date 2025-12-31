@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.client.screen.BrickFurnaceScreenHandler
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.resource.featuretoggle.FeatureFlags
@@ -10,9 +10,9 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 
-object ProgressionModScreenHandlerRegistry {
+object XenoEarlyStartScreenHandlerRegistry {
     val DEF_REG: DeferredRegister<ScreenHandlerType<*>> =
-        DeferredRegister.create(ForgeRegistries.MENU_TYPES, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.MENU_TYPES, XenoEarlyStart.MODID)
 
     @JvmField
     val BRICK_FURNACE_SCREEN: RegistryObject<ScreenHandlerType<BrickFurnaceScreenHandler>> =

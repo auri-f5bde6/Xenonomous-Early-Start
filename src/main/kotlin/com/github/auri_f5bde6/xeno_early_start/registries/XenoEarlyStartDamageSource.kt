@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.damage.DamageSource
@@ -12,26 +12,26 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 
 
-class ProgressionModDamageSource {
+class XenoEarlyStartDamageSource {
     companion object {
         data class XenoDamageSource(val key: RegistryKey<DamageType>, val messageCount: Int)
 
         @JvmField
         val STONECUTTER =
-            XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("stonecutter")), 1)
+            XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, XenoEarlyStart.of("stonecutter")), 1)
 
         @JvmField
-        val AMETHYST = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("amethyst")), 1)
+        val AMETHYST = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, XenoEarlyStart.of("amethyst")), 1)
 
         @JvmField
-        val CORAL = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("coral")), 1)
+        val CORAL = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, XenoEarlyStart.of("coral")), 1)
 
         @JvmField
-        val FURNACE = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("furnace")), 1)
+        val FURNACE = XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, XenoEarlyStart.of("furnace")), 1)
 
         @JvmField
         val FURNACE_EXPLOSIONS =
-            XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, ProgressionMod.of("furnace")), 1)
+            XenoDamageSource(RegistryKey.of(RegistryKeys.DAMAGE_TYPE, XenoEarlyStart.of("furnace")), 1)
 
         @JvmStatic
         fun getDamageSource(source: XenoDamageSource, dynamicRegistryManager: DynamicRegistryManager): DamageSource {

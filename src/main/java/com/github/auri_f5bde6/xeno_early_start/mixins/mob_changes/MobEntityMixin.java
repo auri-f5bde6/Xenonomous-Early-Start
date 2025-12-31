@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.mixins.fix_thin_block.EntityMixin;
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModItemRegistry;
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -30,16 +30,16 @@ public abstract class MobEntityMixin extends EntityMixin {
 
     @WrapOperation(method = "initEquipment", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;getEquipmentForSlot(Lnet/minecraft/entity/EquipmentSlot;I)Lnet/minecraft/item/Item;"))
     private Item initEquipment(EquipmentSlot equipmentSlot, int equipmentLevel, Operation<Item> original) {
-        if (this.random.nextFloat() < ProgressionModConfig.config.mobChanges.getReplaceEntityCopperArmourProbability()) {
+        if (this.random.nextFloat() < XenoEarlyStartConfig.config.mobChanges.getReplaceEntityCopperArmourProbability()) {
             // Not using a switch as that cause weird issue related to whatever a "switch map" is
             if (equipmentSlot == EquipmentSlot.HEAD) {
-                return ProgressionModItemRegistry.COPPER_HELMET.get();
+                return XenoEarlyStartItemRegistry.COPPER_HELMET.get();
             } else if (equipmentSlot == EquipmentSlot.CHEST) {
-                return ProgressionModItemRegistry.COPPER_CHESTPLATE.get();
+                return XenoEarlyStartItemRegistry.COPPER_CHESTPLATE.get();
             } else if (equipmentSlot == EquipmentSlot.LEGS) {
-                return ProgressionModItemRegistry.COPPER_LEGGINGS.get();
+                return XenoEarlyStartItemRegistry.COPPER_LEGGINGS.get();
             } else if (equipmentSlot == EquipmentSlot.FEET) {
-                return ProgressionModItemRegistry.COPPER_BOOTS.get();
+                return XenoEarlyStartItemRegistry.COPPER_BOOTS.get();
             }
         }
         return original.call(equipmentSlot, equipmentLevel);
@@ -49,7 +49,7 @@ public abstract class MobEntityMixin extends EntityMixin {
     @Expression("0.15 * ?.getClampedLocalDifficulty()")
     @ModifyExpressionValue(method = "initEquipment", at = @At("MIXINEXTRAS:EXPRESSION"))
     private float changeEquipmentProbability(float original) {
-        return original + ProgressionModConfig.config.mobChanges.getFlatAdditiveMobSpawnWithEquipment();
+        return original + XenoEarlyStartConfig.config.mobChanges.getFlatAdditiveMobSpawnWithEquipment();
     }
 
     @Shadow

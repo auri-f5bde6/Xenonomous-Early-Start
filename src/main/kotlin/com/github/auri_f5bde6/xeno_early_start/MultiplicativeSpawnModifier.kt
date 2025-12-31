@@ -27,7 +27,7 @@ data class MultiplicativeSpawnModifier(
         if (phase == BiomeModifier.Phase.MODIFY) {
             val spawnGroup = SpawnGroup.byName(this.spawnGroup)
             if (spawnGroup == null) {
-                ProgressionMod.LOGGER.error("No spawn group found for $spawnGroup, skipping")
+                XenoEarlyStart.LOGGER.error("No spawn group found for $spawnGroup, skipping")
                 return
             }
             val spawners = builder.mobSpawnSettings.getSpawner(spawnGroup)

@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start
 
-object ProgressionModConfig {
+object XenoEarlyStartConfig {
     class Config {
         @JvmField
         var oreChanges: oreChanges = oreChanges()

@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.loot
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModLootTypeRegistry
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.MiningLevel
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
@@ -51,7 +51,7 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
     }
 
     override fun getType(): LootConditionType {
-        return ProgressionModLootTypeRegistry.matchToolTier.get()
+        return XenoEarlyStartLootTypeRegistry.matchToolTier.get()
     }
 
     override fun test(lootContext: LootContext): Boolean {
@@ -98,7 +98,7 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
         ): MatchToolTier {
             val tier = jsonObject.get("tier")
             if (tier == null) {
-                ProgressionMod.LOGGER.error(
+                XenoEarlyStart.LOGGER.error(
                     "Failed to parse lootable MatchToolTier predicate",
                     IllegalArgumentException("Missing tier key in MatchToolTier predicate")
                 )

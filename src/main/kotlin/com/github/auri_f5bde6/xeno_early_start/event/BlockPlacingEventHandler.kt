@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.mixins.accessors.FlowableFluidAccessor
 import net.minecraft.fluid.FlowableFluid
 import net.minecraft.fluid.Fluids
@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 @Suppress("UNUSED_PARAMETER")
-@EventBusSubscriber(modid = ProgressionMod.MODID, bus = EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
 object BlockPlacingEventHandler {
     @SubscribeEvent
     fun onBlockPlaced(event: BlockEvent.EntityPlaceEvent) {

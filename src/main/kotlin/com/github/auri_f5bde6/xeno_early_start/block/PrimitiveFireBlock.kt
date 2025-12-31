@@ -1,9 +1,9 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockEntityRegistry
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.TransUtils
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
@@ -121,7 +121,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
 
         @JvmStatic
         fun canBeLit(state: BlockState): Boolean {
-            return state.isOf(ProgressionModBlockRegistry.PRIMITIVE_FIRE.get())
+            return state.isOf(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get())
                     && !state.get(WATERLOGGED) && !state.get(LIT)
         }
 
@@ -226,8 +226,8 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
 
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (entity is ItemEntity) {
-            val maximumBurnTime = ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime
-            val mult = ProgressionModConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier
+            val maximumBurnTime = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime
+            val mult = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier
             val individual = (getBurnTime(ItemStack(entity.stack.item, 1), RecipeType.SMELTING) * mult).toInt()
             if (individual != 0) {
                 val blockEntity = world.getBlockEntity(pos) as PrimitiveFireBlockEntity
@@ -286,7 +286,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         if (world.isClient) {
             return if (state.get(LIT)) checkType(
                 type,
-                ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(),
+                XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(),
                 BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity ->
                     PrimitiveFireBlockEntity.clientTick(
                         world,
@@ -299,7 +299,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             return if (state.get(LIT))
                 checkType(
                     type,
-                    ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(),
+                    XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(),
                     BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity ->
                         PrimitiveFireBlockEntity.litServerTick(
                             world,
@@ -311,7 +311,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
             else
                 checkType(
                     type,
-                    ProgressionModBlockEntityRegistry.PRIMITIVE_FIRE.get(),
+                    XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(),
                     BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, campfire: PrimitiveFireBlockEntity ->
                         PrimitiveFireBlockEntity.unlitServerTick(
                             world,

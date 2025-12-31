@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -28,8 +28,8 @@ public abstract class PolarBearEntityMixin extends AnimalEntity implements Anger
     @WrapMethod(method = "createPolarBearAttributes")
     private static DefaultAttributeContainer.Builder createMobAttributes(Operation<DefaultAttributeContainer.Builder> original) {
         return original.call()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, ProgressionModConfig.config.mobChanges.getPolarBearSpeed())
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, ProgressionModConfig.config.mobChanges.getPolarBearRange())
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, XenoEarlyStartConfig.config.mobChanges.getPolarBearSpeed())
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, XenoEarlyStartConfig.config.mobChanges.getPolarBearRange())
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 50);
     }
 
@@ -38,7 +38,7 @@ public abstract class PolarBearEntityMixin extends AnimalEntity implements Anger
     @ModifyExpressionValue(method = "initGoals", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
     Predicate<LivingEntity> initGoals(Predicate<LivingEntity> original) {
         return livingEntity -> {
-            if (ProgressionModConfig.config.mobChanges.getPolarBearAlwaysAggressive()) {
+            if (XenoEarlyStartConfig.config.mobChanges.getPolarBearAlwaysAggressive()) {
                 if (!PolarBearEntityMixin.super.canTarget(livingEntity)) {
                     return false;
                 } else {

@@ -7,7 +7,7 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 
 // Some code borrowed from vanilla ToolMaterials
-object ProgressionModToolMaterials {
+object XenoEarlyStartToolMaterials {
     @JvmField
     val FLINT: ToolMaterial = Material(MiningLevels.WOOD, 48, 1.0f, 0f, 10, Ingredient.ofItems(Items.FLINT))
 
@@ -18,13 +18,13 @@ object ProgressionModToolMaterials {
     val COPPER: ToolMaterial = Material(MiningLevels.STONE, 210, 5.0f, 1.0f, 13, Ingredient.ofItems(Items.COPPER_INGOT))
 
     @JvmField
-    val FLINT_ID: Identifier = ProgressionMod.of("flint")
+    val FLINT_ID: Identifier = XenoEarlyStart.of("flint")
 
     @JvmField
-    val BONE_ID: Identifier = ProgressionMod.of("bone")
+    val BONE_ID: Identifier = XenoEarlyStart.of("bone")
 
     @JvmField
-    val COPPER_ID: Identifier = ProgressionMod.of("copper")
+    val COPPER_ID: Identifier = XenoEarlyStart.of("copper")
 
     @JvmRecord
     private data class Material(

@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.recipe
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModRecipeRegistry
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getBool
 import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getFloat
 import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getItem
@@ -60,7 +60,7 @@ class StoneToCobbleRecipe(
         }
         if ((this.isAnyTier || MiningLevel.isToolLowerThanTier(
                 itemStack, this.getMiningTierLowerThan()
-            )) && (!this.isOreToStone || (ProgressionModConfig.config.oreChanges.oreToStone))
+            )) && (!this.isOreToStone || (XenoEarlyStartConfig.config.oreChanges.oreToStone))
         ) {
             if (minedBlockIsTag) {
                 val tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock)
@@ -76,8 +76,8 @@ class StoneToCobbleRecipe(
     fun maybeDropItemsInList(level: World, pos: BlockPos) {
         for (i in droppedItems) {
             var probability = i.probability
-            if (ProgressionModConfig.config.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
-                probability = ProgressionModConfig.config.earlyGameChanges.pebbleDropProbability / 100f
+            if (XenoEarlyStartConfig.config.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
+                probability = XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability / 100f
             }
             if (level.random.nextFloat() < probability) {
                 Block.dropStack(level, pos, i.item.defaultStack)
@@ -96,11 +96,11 @@ class StoneToCobbleRecipe(
 
 
     override fun getSerializer(): RecipeSerializer<*> {
-        return ProgressionModRecipeRegistry.BLOCK_TO_BLOCK.get()
+        return XenoEarlyStartRecipeRegistry.BLOCK_TO_BLOCK.get()
     }
 
     override fun getType(): RecipeType<*> {
-        return ProgressionModRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get()
+        return XenoEarlyStartRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get()
     }
 
     // These methods aren't used here but must be implemented

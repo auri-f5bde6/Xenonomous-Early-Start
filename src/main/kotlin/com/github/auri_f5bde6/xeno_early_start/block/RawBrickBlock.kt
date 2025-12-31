@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
-import com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModBlockRegistry
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils.isCovered
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -99,7 +99,7 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
             world.removeBlock(pos, false)
             world.setBlockState(
                 pos,
-                ProgressionModBlockRegistry.BRICK.get().defaultState
+                XenoEarlyStartBlockRegistry.BRICK.get().defaultState
                     .with(AXIS, state[AXIS])
             )
         }

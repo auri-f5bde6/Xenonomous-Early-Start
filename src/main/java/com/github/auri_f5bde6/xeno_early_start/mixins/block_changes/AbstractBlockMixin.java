@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.block_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.*;
@@ -18,8 +18,8 @@ import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import static com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModDamageSource.CORAL;
-import static com.github.auri_f5bde6.xeno_early_start.registries.ProgressionModDamageSource.getDamageSource;
+import static com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartDamageSource.CORAL;
+import static com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartDamageSource.getDamageSource;
 
 @Mixin(AbstractBlock.class)
 public class AbstractBlockMixin {
@@ -27,7 +27,7 @@ public class AbstractBlockMixin {
     @WrapMethod(method = "onEntityCollision")
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, Operation<Void> original) {
         if (state.getBlock() instanceof CoralParentBlock && !(entity instanceof WaterCreatureEntity) && entity instanceof LivingEntity le && le.getEquippedStack(EquipmentSlot.FEET).isEmpty()) {
-            entity.damage(getDamageSource(CORAL, world.getRegistryManager()), ProgressionModConfig.config.blockChanges.getCoralDamage());
+            entity.damage(getDamageSource(CORAL, world.getRegistryManager()), XenoEarlyStartConfig.config.blockChanges.getCoralDamage());
         }
         original.call(state, world, pos, entity);
     }
@@ -40,7 +40,7 @@ public class AbstractBlockMixin {
     @WrapMethod(method = "scheduledTick")
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random, Operation<Void> original) {
         original.call(state, world, pos, random);
-        if (state.isOf(Blocks.BLAST_FURNACE) && state.get(BlastFurnaceBlock.LIT) && ProgressionModConfig.config.blockChanges.getBlastFurnaceSetNearbyBlockOnFire()) {
+        if (state.isOf(Blocks.BLAST_FURNACE) && state.get(BlastFurnaceBlock.LIT) && XenoEarlyStartConfig.config.blockChanges.getBlastFurnaceSetNearbyBlockOnFire()) {
             world.scheduleBlockTick(pos, (BlastFurnaceBlock) (Object) this, xeno_early_start$getBlastFireTickDelay(world.random));
             // Copied off vanilla lava
             if (world.getGameRules().getBoolean(GameRules.DO_FIRE_TICK)) {

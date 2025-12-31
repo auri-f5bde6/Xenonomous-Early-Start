@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
 import com.github.auri_f5bde6.xeno_early_start.MultiplicativeSpawnModifier
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.loot.AddTableLootModifier
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -16,7 +16,7 @@ import java.util.function.Supplier
 
 object XenoEarlyStartCodecRegistry {
     var BIOME_MODIFIER_DEF_REG: DeferredRegister<Codec<out BiomeModifier?>?> =
-        DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, XenoEarlyStart.MODID)
     var MULTIPLICATIVE_SPAWN_MODIFIER: Supplier<Codec<MultiplicativeSpawnModifier>> =
         BIOME_MODIFIER_DEF_REG.register<Codec<MultiplicativeSpawnModifier>>("multiplicative_spawn_modifier") {
             RecordCodecBuilder.create { builder ->
@@ -29,7 +29,7 @@ object XenoEarlyStartCodecRegistry {
             }
         }
     val GLOBAL_LOOT_MODIFIER_DEF_REG: DeferredRegister<Codec<out IGlobalLootModifier>> =
-        DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ProgressionMod.MODID)
+        DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, XenoEarlyStart.MODID)
     var ADD_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<AddTableLootModifier>> =
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("add_table") { AddTableLootModifier.CODEC.codec() }
 }

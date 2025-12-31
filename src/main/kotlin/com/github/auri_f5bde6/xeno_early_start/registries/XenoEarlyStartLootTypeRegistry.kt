@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionMod
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.loot.BlockIsInTagCondition
 import com.github.auri_f5bde6.xeno_early_start.loot.ConfigLootFunction
 import com.github.auri_f5bde6.xeno_early_start.loot.LootTableIdCondition
@@ -12,10 +12,10 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegistryObject
 import java.util.function.Supplier
 
-object ProgressionModLootTypeRegistry {
+object XenoEarlyStartLootTypeRegistry {
     val COND_DEF_REG: DeferredRegister<LootConditionType> = DeferredRegister.create(
         Registries.LOOT_CONDITION_TYPE.getKey(),
-        ProgressionMod.MODID
+        XenoEarlyStart.MODID
     )
 
     @JvmField
@@ -36,7 +36,7 @@ object ProgressionModLootTypeRegistry {
     @JvmField
     val FUNC_DEF_REG: DeferredRegister<LootFunctionType> = DeferredRegister.create(
         Registries.LOOT_FUNCTION_TYPE.getKey(),
-        ProgressionMod.MODID
+        XenoEarlyStart.MODID
     )
 
     @JvmField

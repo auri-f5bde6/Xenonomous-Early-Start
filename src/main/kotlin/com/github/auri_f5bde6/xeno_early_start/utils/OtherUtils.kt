@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.utils
 
-import com.github.auri_f5bde6.xeno_early_start.ProgressionModConfig
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
@@ -109,7 +109,7 @@ object OtherUtils {
 
     @JvmStatic
     fun isLivingEntityWeak(livingEntity: LivingEntity?): Boolean {
-        if (!ProgressionModConfig.config.mobChanges.mobAttackWeakPlayer) {
+        if (!XenoEarlyStartConfig.config.mobChanges.mobAttackWeakPlayer) {
             return false
         }
         if (livingEntity != null) {
