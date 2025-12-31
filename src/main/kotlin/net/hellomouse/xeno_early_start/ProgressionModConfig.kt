@@ -45,7 +45,7 @@ object ProgressionModConfig {
 
         class PrimitiveFire {
             var maxBurnTime: Int = 3200
-            var percentageRequiredForMaxBrightness: Float = 0.5f
+            var percentageRequiredForMaxBrightness: Float = 0.25f
             var fuelTimeMultiplier: Float = 1f
         }
     }

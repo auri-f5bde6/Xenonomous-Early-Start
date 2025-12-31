@@ -81,7 +81,7 @@ object XenoEarlyStartConfigGui {
                 ProgressionModConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness =
                     aInt / 100f
             }
-                .setDefaultValue(80)
+                .setDefaultValue(25)
                 .build()
         )
         primitiveFireCategory.add(

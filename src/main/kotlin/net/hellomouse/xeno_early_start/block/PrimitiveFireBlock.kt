@@ -228,20 +228,16 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         if (entity is ItemEntity) {
             val maximumBurnTime = ProgressionModConfig.config.earlyGameChanges.primitiveFire.maxBurnTime
             val mult = ProgressionModConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier
-            val total = (getBurnTime(entity.stack, RecipeType.SMELTING) * mult).toInt()
-            if (total != 0) {
-                val individual = (getBurnTime(ItemStack(entity.stack.item, 1), RecipeType.SMELTING) * mult).toInt()
+            val individual = (getBurnTime(ItemStack(entity.stack.item, 1), RecipeType.SMELTING) * mult).toInt()
+            if (individual != 0) {
                 val blockEntity = world.getBlockEntity(pos) as PrimitiveFireBlockEntity
                 val currentBurnTime = blockEntity.burnTime
-                val x = currentBurnTime + total
-                if (x > maximumBurnTime) {
                     val toConsume = ((maximumBurnTime - currentBurnTime) / individual)
+                if (toConsume > 0) {
                     entity.stack.decrement(toConsume)
                     blockEntity.burnTime = currentBurnTime + individual * toConsume
-                } else {
-                    entity.kill()
-                    blockEntity.burnTime = x
                 }
+
             }
         }
     }
