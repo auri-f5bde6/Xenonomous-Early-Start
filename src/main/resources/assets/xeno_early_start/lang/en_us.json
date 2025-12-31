@@ -94,5 +94,7 @@
   "xeno_early_start.item.tooltip.fire_starter": "Requires 5 dropped burnables to use",
   "xeno_early_start.item.tooltip.raw_brick": "Dries into a brick when placed down and exposed to sun unobstructed",
   "xeno_early_start.item.tooltip.brick": "Can also be obtained by drying raw brick",
+  "xeno_early_start.item.tooltip.primitive_fire1": "Fuel will slowly deplete, throw burnables to refill",
+  "xeno_early_start.item.tooltip.primitive_fire2": "Flint and Steel or Fire Starter is required to relight",
   "emi.category.xeno_early_start.drying": "Drying"
 }

@@ -19,6 +19,10 @@ object ItemTooltipEventListener {
             event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.raw_brick"))
         } else if (event.itemStack.isOf(Items.BRICK)) {
             event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.brick"))
+        } else if (event.itemStack.isOf(ProgressionModItemRegistry.PRIMITIVE_FIRE.get())) {
+            event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.primitive_fire1"))
+            event.toolTip.add(2, Text.translatable("xeno_early_start.item.tooltip.primitive_fire2"))
+
         }
     }
 }
