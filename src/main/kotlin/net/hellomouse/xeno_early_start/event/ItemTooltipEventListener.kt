@@ -2,6 +2,7 @@ package net.hellomouse.xeno_early_start.event
 
 import net.hellomouse.xeno_early_start.ProgressionMod
 import net.hellomouse.xeno_early_start.registries.ProgressionModItemRegistry
+import net.minecraft.item.Items
 import net.minecraft.text.Text
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -14,6 +15,10 @@ object ItemTooltipEventListener {
     fun onItemTooltipEvent(event: ItemTooltipEvent) {
         if (event.itemStack.isOf(ProgressionModItemRegistry.FIRE_STARTER.get())) {
             event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.fire_starter"))
+        } else if (event.itemStack.isOf(ProgressionModItemRegistry.RAW_BRICK.get())) {
+            event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.raw_brick"))
+        } else if (event.itemStack.isOf(Items.BRICK)) {
+            event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.brick"))
         }
     }
 }
