@@ -15,6 +15,7 @@ object ItemTooltipEventListener {
     fun onItemTooltipEvent(event: ItemTooltipEvent) {
         if (event.itemStack.isOf(XenoEarlyStartItemRegistry.FIRE_STARTER.get())) {
             event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.fire_starter"))
+            event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.fire_starter_chance"))
         } else if (event.itemStack.isOf(XenoEarlyStartItemRegistry.RAW_BRICK.get())) {
             event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.raw_brick"))
         } else if (event.itemStack.isOf(Items.BRICK)) {
@@ -22,7 +23,6 @@ object ItemTooltipEventListener {
         } else if (event.itemStack.isOf(XenoEarlyStartItemRegistry.PRIMITIVE_FIRE.get())) {
             event.toolTip.add(1, Text.translatable("xeno_early_start.item.tooltip.primitive_fire1"))
             event.toolTip.add(2, Text.translatable("xeno_early_start.item.tooltip.primitive_fire2"))
-
         }
     }
 }

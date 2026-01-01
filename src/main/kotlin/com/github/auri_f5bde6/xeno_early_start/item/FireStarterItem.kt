@@ -1,6 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
+import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.EquipmentSlot
@@ -9,7 +11,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
-import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
@@ -23,7 +24,6 @@ import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 import net.minecraftforge.common.Tags
 import java.util.function.Consumer
-import kotlin.math.abs
 
 class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
     override fun getUseAction(stack: ItemStack?): UseAction {
@@ -43,6 +43,7 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
     }
 
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
+
         val aboveBlock = getBlockPos(stack)
         var newStack = stack.copy()
         newStack.damage(
@@ -57,48 +58,36 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
         if (chance > world.random.nextFloat()) {
             val box = Box(aboveBlock, aboveBlock.add(1, 1, 1))
             val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
-            val burnables = mutableListOf<ItemEntity>()
+            var burnTime = 0
             for (item in items) {
-                if (getBurnTime(item.stack, RecipeType.SMELTING) != 0) {
-                    burnables.add(item)
-                }
+                burnTime = PrimitiveFireBlock.maybeConsumeStack(item.stack, 0, false)
             }
-            val toKill = List<ItemEntity?>(burnables.size) { null }.toMutableList()
-            var required = 5
-            for (i in burnables.indices) {
-                val item = burnables[i]
-                required -= item.stack.count
-                var blockState = XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get().defaultState
-                toKill[i] = item
-                blockState = blockState.with(
-                    PrimitiveFireBlock.FACING, user.horizontalFacing
-                )
+            // At least 30 second worth of burn time required
+            if (burnTime >= 600) {
+
+                // I mean it works, and the alternative is O(n) still so /shrug
+                for (item in items) {
+                    var x = 0
+                    x = PrimitiveFireBlock.maybeConsumeStack(item.stack, x, true)
+                    if (x > XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime) {
+                        break
+                    }
+                }
+
                 if (world.getBlockState(aboveBlock).isAir || world.getBlockState(aboveBlock)
                         .isIn(BlockTags.REPLACEABLE_BY_TREES)
                 ) {
                     if (!(user is PlayerEntity && user.isCreative)) {
                         newStack = ItemStack.EMPTY
                     }
-                    world.setBlockState(aboveBlock, blockState)
-                }
-                if (required < 0) {
-                    val itemPos = item.pos
-                    world.spawnEntity(
-                        ItemEntity(
-                            world,
-                            itemPos.x,
-                            itemPos.y,
-                            itemPos.z + 0.5,
-                            ItemStack(item.stack.item, abs(required))
+                    world.setBlockState(
+                        aboveBlock,
+                        XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get().defaultState.with(
+                            PrimitiveFireBlock.FACING, user.horizontalFacing
                         )
                     )
+                    (world.getBlockEntity(aboveBlock) as PrimitiveFireBlockEntity).burnTime = burnTime
                 }
-                if (required <= 0) {
-                    break
-                }
-            }
-            for (item in toKill) {
-                item?.kill()
             }
         }
         if (user is PlayerEntity) {

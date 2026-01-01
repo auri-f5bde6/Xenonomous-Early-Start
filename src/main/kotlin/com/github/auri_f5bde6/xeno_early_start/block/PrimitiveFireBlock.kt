@@ -43,6 +43,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.event.GameEvent
 import net.minecraftforge.common.ForgeHooks.getBurnTime
+import kotlin.math.min
 
 // Some code borrowed form vanilla campfire
 class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
@@ -125,6 +126,25 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                     && !state.get(WATERLOGGED) && !state.get(LIT)
         }
 
+        fun maybeConsumeStack(stack: ItemStack, oldFuelTime: Int, consume: Boolean): Int {
+            val maximumBurnTime = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime
+            val multi = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier
+            val individual = (getBurnTime(ItemStack(stack.item, 1), RecipeType.SMELTING) * multi).toInt()
+            if (individual != 0) {
+                val toConsume = min(((maximumBurnTime - oldFuelTime) / individual), stack.count)
+                if (toConsume > 0) {
+                    if (consume) {
+                        stack.decrement(toConsume)
+                    }
+                    return oldFuelTime + individual * toConsume
+                }
+            }
+            return oldFuelTime
+        }
+
+        fun maybeConsumeStack(stack: ItemStack, oldFuelTime: Int): Int {
+            return maybeConsumeStack(stack, oldFuelTime, true)
+        }
     }
 
     override fun createBlockEntity(
@@ -226,19 +246,8 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
 
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (entity is ItemEntity) {
-            val maximumBurnTime = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime
-            val mult = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier
-            val individual = (getBurnTime(ItemStack(entity.stack.item, 1), RecipeType.SMELTING) * mult).toInt()
-            if (individual != 0) {
-                val blockEntity = world.getBlockEntity(pos) as PrimitiveFireBlockEntity
-                val currentBurnTime = blockEntity.burnTime
-                    val toConsume = ((maximumBurnTime - currentBurnTime) / individual)
-                if (toConsume > 0) {
-                    entity.stack.decrement(toConsume)
-                    blockEntity.burnTime = currentBurnTime + individual * toConsume
-                }
-
-            }
+            val primitiveFire = (world.getBlockEntity(pos)) as PrimitiveFireBlockEntity
+            primitiveFire.burnTime = maybeConsumeStack(entity.stack, primitiveFire.burnTime)
         }
     }
 
