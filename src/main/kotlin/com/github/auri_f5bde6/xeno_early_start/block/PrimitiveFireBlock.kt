@@ -60,6 +60,7 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
     }
 
     companion object {
+        @JvmField
         val LIT: BooleanProperty = Properties.LIT
         val LIGHT_LEVEL: IntProperty = IntProperty.of("light_level", 0, 15)
         val FACING: DirectionProperty = Properties.HORIZONTAL_FACING
