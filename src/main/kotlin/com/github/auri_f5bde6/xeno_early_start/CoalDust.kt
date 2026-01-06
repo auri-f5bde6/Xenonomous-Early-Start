@@ -76,7 +76,7 @@ object CoalDust {
         val collection =
             MutableList<BlockPos?>(XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize) { null }
         var currentIndex = 0
-        while (index < destroy.size) {
+        while (destroy.size in (index + 1)..XenoEarlyStartConfig.config.oreChanges.coalDustExplosionBlockLimit) {
             val pos = destroy[index]
             val range = 1
             for (i in -range..range) {

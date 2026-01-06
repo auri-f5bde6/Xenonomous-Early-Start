@@ -303,6 +303,19 @@ object XenoEarlyStartConfigGui {
                 .setDefaultValue(6)
                 .build()
         )
+        category.addEntry(
+            entryBuilder.startIntSlider(
+                getTranslatableTextOption("oreChanges.coalDustExplosionBlockLimit"),
+                XenoEarlyStartConfig.config.oreChanges.coalDustExplosionBlockLimit,
+                10,
+                1024
+            )
+                .setSaveConsumer { aInt: Int ->
+                    XenoEarlyStartConfig.config.oreChanges.coalDustExplosionBlockLimit = aInt
+                }
+                .setDefaultValue(256)
+                .build()
+        )
     }
 
     private fun addBlockChangesEntries(configBuilder: ConfigBuilder, entryBuilder: ConfigEntryBuilder) {

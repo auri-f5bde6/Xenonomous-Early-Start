@@ -77,6 +77,8 @@
   "text.config.xeno_early_start.option.oreChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreChanges.coalDustExplosionClusterSize": "Coal Dust Explosion Cluster Size",
+  "text.config.xeno_early_start.option.oreChanges.coalDustExplosionBlockLimit": "Coal Dust Explosion Block Limit",
+
   "text.config.xeno_early_start.option.blockChanges": "Block Changes",
   "text.config.xeno_early_start.option.blockChanges.stonecutterDamage": "Damage Dealt When Entity Step On Stonecutter",
   "text.config.xeno_early_start.option.blockChanges.cookerDamage": "Damage Dealt When Entity Step On Cooker",

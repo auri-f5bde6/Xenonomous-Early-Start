@@ -31,6 +31,8 @@ object XenoEarlyStartConfig {
         var oreToStone: Boolean = false
 
         var coalDustExplosionClusterSize: Int = 6
+
+        var coalDustExplosionBlockLimit: Int = 256
     }
 
     class EarlyGameChanges {
