@@ -3,6 +3,7 @@ package com.github.auri_f5bde6.xeno_early_start.registries
 import com.github.auri_f5bde6.xeno_early_start.MultiplicativeSpawnModifier
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.loot.AddTableLootModifier
+import com.github.auri_f5bde6.xeno_early_start.loot.CapItemCountModifier
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.registry.Registries
@@ -32,4 +33,6 @@ object XenoEarlyStartCodecRegistry {
         DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, XenoEarlyStart.MODID)
     var ADD_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<AddTableLootModifier>> =
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("add_table") { AddTableLootModifier.CODEC.codec() }
+    var CAP_ITEM_COUNT_MODIFIER_TYPE: Supplier<Codec<CapItemCountModifier>> =
+        GLOBAL_LOOT_MODIFIER_DEF_REG.register("cap_item_count") { CapItemCountModifier.CODEC.codec() }
 }

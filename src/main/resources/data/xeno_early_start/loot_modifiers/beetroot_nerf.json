@@ -1,0 +1,11 @@
+{
+  "type": "xeno_early_start:cap_item_count",
+  "conditions": [
+    {
+      "condition": "xeno_early_start:loot_table_id",
+      "loot_table_id": "minecraft:blocks/beetroots"
+    }
+  ],
+  "item": "minecraft:beetroot_seeds",
+  "max": 2
+}

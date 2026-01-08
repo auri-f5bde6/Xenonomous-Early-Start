@@ -1,6 +1,9 @@
 {
   "replace": false,
   "entries": [
-    "xeno_early_start:plant_fiber_drop"
+    "xeno_early_start:plant_fiber_drop",
+    "xeno_early_start:wheat_nerf",
+    "xeno_early_start:beetroot_nerf"
+
   ]
 }
