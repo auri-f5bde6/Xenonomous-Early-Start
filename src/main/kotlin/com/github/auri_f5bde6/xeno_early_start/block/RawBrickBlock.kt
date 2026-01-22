@@ -19,6 +19,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
+import net.minecraftforge.registries.ForgeRegistries
 
 class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     init {
@@ -45,15 +46,13 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
                 0.0
             )
             if (rand.nextFloat() > 0.5) {
-                world.playSound(
-                    pos.x + 0.5,
-                    pos.y + 0.5,
-                    pos.z + 0.5,
+                world.playSoundAtBlockCenter(
+                    pos,
                     SoundEvents.BLOCK_FIRE_EXTINGUISH,
                     SoundCategory.BLOCKS,
                     0.05f + rand.nextFloat() * 0.05f,
                     rand.nextFloat() * 0.7f + 0.6f,
-                    false
+                    true
                 )
             }
         }
@@ -96,12 +95,24 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
             world.setBlockState(pos, state.with(DRYING_LEVEL, state[DRYING_LEVEL] + 1))
         }
         if (state[DRYING_LEVEL] >= FINISH_DRYING_AT) {
+            world.playSound(
+                null,
+                pos.x + 0.5,
+                pos.y + 0.5,
+                pos.z + 0.5,
+                ForgeRegistries.SOUND_EVENTS.getHolder(SoundEvents.BLOCK_DEEPSLATE_BRICKS_PLACE).get(),
+                SoundCategory.BLOCKS,
+                0.95f + random.nextFloat() * 0.05f,
+                random.nextFloat() * 0.7f + 0.6f,
+                world.random.nextLong()
+            )
             world.removeBlock(pos, false)
             world.setBlockState(
                 pos,
                 XenoEarlyStartBlockRegistry.BRICK.get().defaultState
                     .with(AXIS, state[AXIS])
             )
+
         }
     }
 
