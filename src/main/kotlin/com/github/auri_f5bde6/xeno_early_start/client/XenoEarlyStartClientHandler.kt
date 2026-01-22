@@ -4,6 +4,8 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.client.block_entity.PrimitiveFireBlockEntityRenderer
 import com.github.auri_f5bde6.xeno_early_start.client.entity.BrickEntityModel
 import com.github.auri_f5bde6.xeno_early_start.client.entity.BrickEntityRenderer
+import com.github.auri_f5bde6.xeno_early_start.client.entity.ProwlerEntityModel
+import com.github.auri_f5bde6.xeno_early_start.client.entity.ProwlerEntityRenderer
 import com.github.auri_f5bde6.xeno_early_start.client.particle.CoalDustParticle
 import com.github.auri_f5bde6.xeno_early_start.client.screen.BrickFurnaceScreen
 import com.github.auri_f5bde6.xeno_early_start.client.screen.BrickFurnaceScreenHandler
@@ -45,8 +47,11 @@ object XenoEarlyStartClientHandler {
     @SubscribeEvent
     fun registerRenderers(event: RegisterRenderers) {
         event.registerEntityRenderer(
-            XenoEarlyStartEntityRegistry.BRICK.get(),
-            EntityRendererFactory { arg: EntityRendererFactory.Context -> BrickEntityRenderer(arg) })
+            XenoEarlyStartEntityRegistry.BRICK.get()
+        ) { arg: EntityRendererFactory.Context -> BrickEntityRenderer(arg) }
+        event.registerEntityRenderer(
+            XenoEarlyStartEntityRegistry.PROWLER.get()
+        ) { arg: EntityRendererFactory.Context -> ProwlerEntityRenderer(arg) }
     }
 
     @SubscribeEvent
@@ -54,6 +59,8 @@ object XenoEarlyStartClientHandler {
         event.registerLayerDefinition(
             BrickEntityModel.LAYER_LOCATION,
             Supplier { BrickEntityModel.texturedModelData })
+        event.registerLayerDefinition(ProwlerEntityModel.LAYER_LOCATION)
+        { ProwlerEntityModel.texturedModelData }
     }
 
     @SubscribeEvent
