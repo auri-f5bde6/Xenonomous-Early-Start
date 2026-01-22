@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start
 
+import com.github.auri_f5bde6.xeno_early_start.entity.CoalDustExplosion
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartParticleRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
@@ -67,33 +68,30 @@ object CoalDust {
         if (!explode) {
             return
         }
-
-        val destroy = ArrayList<BlockPos>()
-        destroy.add(blockPos)
+        applyStatusEffect(world, blockPos, 3, listOf(blockPos))
+        var count = 1
         var index = 0
-        var first = true
-        var count = 0
         val collection =
             MutableList<BlockPos?>(XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize) { null }
-        var currentIndex = 0
+        val destroy = ArrayList<BlockPos>()
+        destroy.add(blockPos)
+        collection[0] = blockPos
         while (destroy.size in (index + 1)..XenoEarlyStartConfig.config.oreChanges.coalDustExplosionBlockLimit) {
             val pos = destroy[index]
-            val range = 1
-            for (i in -range..range) {
-                for (j in -range..range) {
-                    for (k in -range..range) {
+            for (i in -1..1) {
+                for (j in -1..1) {
+                    for (k in -1..1) {
                         val testPos = pos.add(i, j, k)
-
                         val b = world.getBlockState(testPos)
                         if (b.isIn(Tags.Blocks.ORES_COAL) && !destroy.contains(testPos)) {
+                            val currentIndex =
+                                count % XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize
                             destroy.add(testPos)
                             collection[currentIndex] = testPos
-                            if (currentIndex == 0 || first) {
-                                first = false
+                            if (currentIndex == XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize - 1) {
                                 createExplosionAtCluster(owner, world, collection)
                             }
                             count++
-                            currentIndex = count % XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize
                         }
 
                     }
@@ -101,6 +99,7 @@ object CoalDust {
             }
             index++
         }
+        val currentIndex = count % XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize
         if (currentIndex > 0) {
             createExplosionAtCluster(owner, world, collection.subList(0, currentIndex))
         }
@@ -134,23 +133,18 @@ object CoalDust {
                 0.005
             )
         }
-        val box = Box(center.add(-2, -2, -2).multiply(size), center.add(2, 2, 2).multiply(size))
-        world.getEntitiesByClass(LivingEntity::class.java, box) { entity ->
-            if (entity.pos.squaredDistanceTo(Vec3d.of(center)) <= 9) {
-                entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
-                entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
-                entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))
-            }
-            return@getEntitiesByClass false
-        }
-        world.createExplosion(
+        applyStatusEffect(world, center, size + 1, blockPoss)
+        CoalDustExplosion.createExplosion(
+            world,
             owner,
+            null,
+            null,
             center.x.toDouble(),
             center.y.toDouble(),
             center.z.toDouble(),
             1.5f * log2(size + 1f),
-            true,
-            World.ExplosionSourceType.NONE
+            createFire = true,
+            particles = true
         )
     }
 
@@ -170,5 +164,19 @@ object CoalDust {
             }
         }
         return false
+    }
+
+    private fun applyStatusEffect(world: World, center: BlockPos, size: Int, blockPoss: List<BlockPos?>) {
+        val box = Box(center.add(-(size + 1), -(size + 1), -(size + 1)), center.add((size + 1), (size + 1), (size + 1)))
+        world.getEntitiesByClass(LivingEntity::class.java, box) { entity ->
+            for (pos in blockPoss) {
+                if (pos != null && entity.pos.squaredDistanceTo(Vec3d.of(pos)) <= 9) {
+                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
+                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
+                    entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))
+                }
+            }
+            return@getEntitiesByClass false
+        }
     }
 }
