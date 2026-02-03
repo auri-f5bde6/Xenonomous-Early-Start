@@ -7,13 +7,18 @@ import net.minecraft.client.render.entity.MobEntityRenderer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 
-class ProwlerEntityRenderer : MobEntityRenderer<ProwlerEntity, ProwlerEntityModel<ProwlerEntity>> {
+@OnlyIn(Dist.CLIENT)
+class ProwlerEntityRenderer : MobEntityRenderer<ProwlerEntity, ProwlerEntityModel> {
 
     constructor(arg: EntityRendererFactory.Context) : super(
         arg,
-        ProwlerEntityModel<ProwlerEntity>(arg.getPart(ProwlerEntityModel.LAYER_LOCATION)), 0.5f
-    )
+        ProwlerEntityModel(arg.getPart(ProwlerEntityModel.LAYER_LOCATION)), 0.5f
+    ) {
+        this.addFeature(ProwlerEmissivityFeature(this, arg.modelLoader))
+    }
 
     companion object {
         @JvmField
