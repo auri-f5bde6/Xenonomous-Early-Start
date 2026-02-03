@@ -57,17 +57,6 @@ object OtherUtils {
     }
 
     @JvmStatic
-    fun getBlockAbove(world: World, pos: BlockPos): Pair<BlockPos, BlockState>? {
-        val top = world.getTopY(Heightmap.Type.WORLD_SURFACE, pos.x, pos.z)
-        val topBlockPos = pos.withY(top - 1)
-        val topBlock = world.getBlockState(topBlockPos)
-        if (top - 1 <= pos.y) {
-            return null
-        }
-        return Pair(topBlockPos, topBlock)
-    }
-
-    @JvmStatic
     fun raycastSteppingOn(world: World, entityPos: Vec3d, entity: Entity): Pair<BlockPos, BlockState> {
         val divisor = 4
         val bound = divisor / 2

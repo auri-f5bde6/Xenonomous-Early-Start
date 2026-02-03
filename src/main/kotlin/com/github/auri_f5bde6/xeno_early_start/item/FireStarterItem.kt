@@ -43,57 +43,59 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
     }
 
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
-
-        val aboveBlock = getBlockPos(stack)
-        var newStack = stack.copy()
-        newStack.damage(
-            1, user
-        ) { e: LivingEntity -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) }
-        var chance = 0.25
-        if (world.hasRain(aboveBlock)) {
-            chance = 0.0
-        } else if (world.getBiome(aboveBlock).isIn(Tags.Biomes.IS_DRY)) {
-            chance = 0.5
-        }
-        if (chance > world.random.nextFloat()) {
-            val box = Box(aboveBlock, aboveBlock.add(1, 1, 1))
-            val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
-            var burnTime = 0
-            for (item in items) {
-                burnTime = PrimitiveFireBlock.maybeConsumeStack(item.stack, 0, false)
+        if (!world.isClient) {
+            val aboveBlock = getBlockPos(stack)
+            var newStack = stack.copy()
+            newStack.damage(
+                1, user
+            ) { e: LivingEntity -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND) }
+            var chance = 0.25
+            if (world.hasRain(aboveBlock)) {
+                chance = 0.0
+            } else if (world.getBiome(aboveBlock).isIn(Tags.Biomes.IS_DRY)) {
+                chance = 0.5
             }
-            // At least 30 second worth of burn time required
-            if (burnTime >= 600) {
-
-                // I mean it works, and the alternative is O(n) still so /shrug
+            if (chance > world.random.nextFloat()) {
+                val box = Box(aboveBlock, aboveBlock.add(1, 1, 1))
+                val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
+                var burnTime = 0
                 for (item in items) {
-                    var x = 0
-                    x = PrimitiveFireBlock.maybeConsumeStack(item.stack, x, true)
-                    if (x > XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime) {
-                        break
-                    }
+                    burnTime = PrimitiveFireBlock.maybeConsumeStack(item.stack, 0, false)
                 }
+                // At least 30 second worth of burn time required
+                if (burnTime >= 600) {
 
-                if (world.getBlockState(aboveBlock).isAir || world.getBlockState(aboveBlock)
-                        .isIn(BlockTags.REPLACEABLE_BY_TREES)
-                ) {
-                    if (!(user is PlayerEntity && user.isCreative)) {
-                        newStack = ItemStack.EMPTY
+                    // I mean it works, and the alternative is O(n) still so /shrug
+                    for (item in items) {
+                        var x = 0
+                        x = PrimitiveFireBlock.maybeConsumeStack(item.stack, x, true)
+                        if (x > XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime) {
+                            break
+                        }
                     }
-                    world.setBlockState(
-                        aboveBlock,
-                        XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get().defaultState.with(
-                            PrimitiveFireBlock.FACING, user.horizontalFacing
+
+                    if (world.getBlockState(aboveBlock).isAir || world.getBlockState(aboveBlock)
+                            .isIn(BlockTags.REPLACEABLE_BY_TREES)
+                    ) {
+                        if (!(user is PlayerEntity && user.isCreative)) {
+                            newStack = ItemStack.EMPTY
+                        }
+                        world.setBlockState(
+                            aboveBlock,
+                            XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get().defaultState.with(
+                                PrimitiveFireBlock.FACING, user.horizontalFacing
+                            )
                         )
-                    )
-                    (world.getBlockEntity(aboveBlock) as PrimitiveFireBlockEntity).burnTime = burnTime
+                        (world.getBlockEntity(aboveBlock) as PrimitiveFireBlockEntity).burnTime = burnTime
+                    }
                 }
             }
+            if (user is PlayerEntity) {
+                user.addExhaustion(28f)
+            }
+            return newStack
         }
-        if (user is PlayerEntity) {
-            user.addExhaustion(36f)
-        }
-        return newStack
+        return stack
     }
 
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
