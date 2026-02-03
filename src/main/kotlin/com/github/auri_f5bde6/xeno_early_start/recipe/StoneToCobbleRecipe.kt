@@ -77,7 +77,7 @@ class StoneToCobbleRecipe(
         for (i in droppedItems) {
             var probability = i.probability
             if (XenoEarlyStartConfig.config.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
-                probability = XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability / 100f
+                probability = XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability
             }
             if (level.random.nextFloat() < probability) {
                 Block.dropStack(level, pos, i.item.defaultStack)
