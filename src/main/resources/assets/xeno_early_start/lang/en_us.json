@@ -89,6 +89,10 @@
   "text.config.xeno_early_start.option.blockChanges.blastFurnaceSetNearbyBlockOnFire": "Blast Furnace Set Nearby Block On Fire",
   "text.config.xeno_early_start.option.blockChanges.amethystFallDamageMultiplier": "Damage Multiplier When Player Fall On Amethyst",
   "text.config.xeno_early_start.option.blockChanges.fixThinBlockStepSound": "Fix Vanilla Issue Where Walking On Block With Thin Hitbox Doesn't Play The Correct Sound",
+  "text.config.xeno_early_start.option.hungerChanges": "Hunger Changes",
+  "text.config.xeno_early_start.option.hungerChanges.wakingUpExhaustion": "Exhaustion When Player Wake Up From Bed",
+  "text.config.xeno_early_start.option.hungerChanges.boatRowingExhaustion": "Exhaustion When Player Row A Boat",
+
   "text.config.xeno_early_start.title": "Progression Change",
   "text.emi.xeno_early_start.fire_starter_non_exhaustive": "Fire Starter can be used on any fuel item",
 

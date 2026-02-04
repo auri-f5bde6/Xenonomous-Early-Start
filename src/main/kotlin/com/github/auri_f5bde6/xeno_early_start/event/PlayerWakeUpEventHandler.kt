@@ -1,6 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
@@ -10,6 +11,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 object PlayerWakeUpEventHandler {
     @SubscribeEvent
     fun onPlayerWakeUpEvent(event: PlayerWakeUpEvent) {
-        event.entity.hungerManager.addExhaustion(144f)
+        event.entity.hungerManager.addExhaustion(XenoEarlyStartConfig.config.hungerChanges.wakingUpExhaustion)
     }
 }

@@ -3,7 +3,7 @@ package com.github.auri_f5bde6.xeno_early_start
 object XenoEarlyStartConfig {
     class Config {
         @JvmField
-        var oreChanges: oreChanges = oreChanges()
+        var oreChanges: OreChanges = OreChanges()
 
         @JvmField
         var earlyGameChanges: EarlyGameChanges = EarlyGameChanges()
@@ -13,12 +13,15 @@ object XenoEarlyStartConfig {
 
         @JvmField
         var blockChanges: BlockChanges = BlockChanges()
+
+        @JvmField
+        var hungerChanges: HungerChanges = HungerChanges()
     }
 
     @JvmField
     var config: Config = Config()
 
-    class oreChanges {
+    class OreChanges {
         var rawCopperNuggetDropMin: Int = 1
         var rawCopperNuggetDropMax: Int = 3
 
@@ -91,4 +94,8 @@ object XenoEarlyStartConfig {
         var fixThinBlockStepSound: FixThinBlockStepSound = FixThinBlockStepSound.True
     }
 
+    class HungerChanges {
+        var wakingUpExhaustion: Float = 40.0f
+        var boatRowingExhaustion: Float = 0.05f
+    }
 }

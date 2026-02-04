@@ -13,6 +13,7 @@ object XenoEarlyStartConfigGui {
             addEarlyGameEntries(config)
             addMobChangesEntries(config)
             addBlockChangesEntries(config)
+            addHungerChangesEntries(config)
             config.configBuilder.setSavingRunnable {
                 val tomlWriter = TomlWriter()
                 tomlWriter.write(
@@ -232,6 +233,25 @@ object XenoEarlyStartConfigGui {
             XenoEarlyStartConfig.config.blockChanges::fixThinBlockStepSound,
             XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound::class.java,
             XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound.True
+        )
+    }
+
+    private fun addHungerChangesEntries(config: ConfigWrapper) {
+        val category = config.newCategory("hungerChanges")
+        category.addIntSlider(
+            "wakingUpExhaustion",
+            XenoEarlyStartConfig.config.hungerChanges::wakingUpExhaustion,
+            40f,
+            0f,
+            40f,
+            { f: Float -> f.toInt() },
+            { i: Int -> i.toFloat() }
+        )
+        category.addFloatField(
+            "boatRowingExhaustion",
+            XenoEarlyStartConfig.config.hungerChanges::boatRowingExhaustion,
+            0.05f,
+            Pair(0f, 40f)
         )
     }
 }
