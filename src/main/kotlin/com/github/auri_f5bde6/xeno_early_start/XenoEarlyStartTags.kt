@@ -19,6 +19,9 @@ class XenoEarlyStartTags {
     object Items {
         val SHARDS: TagKey<Item> = createTag("shards")
         val KNAPPED_STONE: TagKey<Item> = createTag("knapped_stone")
+        val PEBBLES: TagKey<Item> = createTag("pebbles")
+        val FOOD_WARNING: TagKey<Item> = createTag("food_warning")
+        val RAW_FOOD_WARNING: TagKey<Item> = createTag("raw_food_warning")
 
         private fun createTag(name: String): TagKey<Item> {
             return ItemTags.create(XenoEarlyStart.of(name))

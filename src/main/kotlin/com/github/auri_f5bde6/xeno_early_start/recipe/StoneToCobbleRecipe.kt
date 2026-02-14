@@ -75,10 +75,7 @@ class StoneToCobbleRecipe(
 
     fun maybeDropItemsInList(level: World, pos: BlockPos) {
         for (i in droppedItems) {
-            var probability = i.probability
-            if (XenoEarlyStartConfig.config.earlyGameChanges.overridePebbleDropProbability && i.isPebble) {
-                probability = XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability
-            }
+            val probability = i.probability
             if (level.random.nextFloat() < probability) {
                 Block.dropStack(level, pos, i.item.defaultStack)
             }
@@ -118,13 +115,20 @@ class StoneToCobbleRecipe(
 
     class DroppedItem(
         var item: Item,
-        var probability: Float,
+        var normalProbability: Float,
         var isAffectedByFortune: Boolean,
         var isPebble: Boolean,
     ) {
+        val probability: Float
+            get() = if (XenoEarlyStartConfig.config.earlyGameChanges.overridePebbleDropProbability && isPebble) {
+                XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability
+            } else {
+                normalProbability
+            }
+
         fun write(buf: PacketByteBuf) {
             buf.writeIdentifier(ForgeRegistries.ITEMS.getKey(item))
-            buf.writeFloat(this.probability)
+            buf.writeFloat(this.normalProbability)
             buf.writeBoolean(this.isAffectedByFortune)
             buf.writeBoolean(this.isPebble)
         }
