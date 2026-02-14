@@ -1,20 +1,20 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 import net.minecraftforge.common.Tags
 
 class PebbleItem(private val result: Item, settings: Settings) : Item(settings) {
     companion object {
-        fun useOnBlock(context: ItemUsageContext, result: ItemStack): ActionResult {
-            val world = context.world
-            val blockPos = context.blockPos
+        fun useOnBlock(world: World, blockPos: BlockPos, player: PlayerEntity?, result: ItemStack): ActionResult {
             val blockState = world.getBlockState(blockPos)
-            val player = context.player
             if (player != null) {
                 val mainhandStack = player.mainHandStack
                 val offhandStack = player.offHandStack
@@ -47,6 +47,6 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
     }
 
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
-        return useOnBlock(context, result.defaultStack)
+        return useOnBlock(context.world, context.blockPos, context.player, result.defaultStack)
     }
 }
