@@ -118,5 +118,6 @@
   "emi.category.xeno_early_start.world_interaction": "World Interaction",
   "emi.category.xeno_early_start.block_to_block": "World Interaction (Mine Block)",
   "emi.category.xeno_early_start.block_to_block.drop_loot_table": "(Will rop loot table)",
-  "emi.category.xeno_early_start.block_to_block.ore_to_stone_disabled": "Disabled in setting"
+  "emi.category.xeno_early_start.block_to_block.ore_to_stone_disabled": "Disabled in setting",
+  "emi.category.xeno_early_start.knapping": "World Interaction (Knapping)"
 }
