@@ -3,7 +3,16 @@
   "entries": [
     "xeno_early_start:plant_fiber_drop",
     "xeno_early_start:wheat_nerf",
-    "xeno_early_start:beetroot_nerf"
-
+    "xeno_early_start:beetroot_nerf",
+    "xeno_early_start:iron_ore",
+    "xeno_early_start:gold_ore",
+    "xeno_early_start:copper_ore",
+    "xeno_early_start:diamond_ore",
+    "xeno_early_start:cobbled_deepslate",
+    "xeno_early_start:remove_cobbled_deepslate_block_drop",
+    "xeno_early_start:blackstone",
+    "xeno_early_start:remove_blackstone_block_drop",
+    "xeno_early_start:cobblestone",
+    "xeno_early_start:remove_cobblestone_block_drop"
   ]
 }

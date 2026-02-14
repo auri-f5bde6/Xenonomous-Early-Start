@@ -1,0 +1,36 @@
+{
+  "type": "xeno_early_start:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "xeno_early_start:block_is_in_tag",
+          "tag": "forge:cobblestone/deepslate"
+        },
+        {
+          "condition": "xeno_early_start:match_tool_tier",
+          "tier": "xeno_early_start:copper",
+          "cond": "<"
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "table": "xeno_early_start:inject/blocks/deepslate_pebble"
+}

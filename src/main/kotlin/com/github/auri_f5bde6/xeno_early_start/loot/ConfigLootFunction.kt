@@ -45,11 +45,26 @@ class ConfigLootFunction private constructor(
             DropType.Diamond -> {
                 itemStack.count = XenoEarlyStartConfig.config.oreChanges.diamondFragmentDrop
             }
+
             DropType.PlantFiber -> {
                 if (lootContext.random.nextFloat() < XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability) {
                     itemStack.count = 1
                 } else {
                     itemStack.count = 0
+                }
+            }
+
+            DropType.Pebble -> {
+                val prob = if (XenoEarlyStartConfig.config.earlyGameChanges.overridePebbleDropProbability) {
+                    XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability
+                } else {
+                    0.4f
+                }
+                if (lootContext.random.nextFloat() < prob) {
+                    itemStack.count += 1
+                }
+                if (lootContext.random.nextFloat() < prob) {
+                    itemStack.count += 1
                 }
             }
         }
@@ -71,6 +86,9 @@ class ConfigLootFunction private constructor(
 
         @SerializedName("plant_fiber")
         PlantFiber,
+
+        @SerializedName("pebble")
+        Pebble
     }
 
     class Serializer : JsonSerializer<ConfigLootFunction> {

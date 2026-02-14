@@ -1,0 +1,41 @@
+{
+  "type": "xeno_early_start:replace_table",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "xeno_early_start:block_is_in_tag",
+          "tag": "forge:ores/iron"
+        },
+        {
+          "condition": "xeno_early_start:match_tool_tier",
+          "tier": "minecraft:diamond",
+          "cond": "<"
+        },
+        {
+          "condition": "xeno_early_start:match_tool_tier",
+          "tier": "minecraft:gold",
+          "cond": "!="
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "table": "xeno_early_start:inject/blocks/iron_ore_nugget"
+}

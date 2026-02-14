@@ -1,0 +1,36 @@
+{
+  "type": "xeno_early_start:remove_items",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "xeno_early_start:block_is_in_tag",
+          "tag": "xeno_early_start:blackstone"
+        },
+        {
+          "condition": "xeno_early_start:match_tool_tier",
+          "tier": "xeno_early_start:copper",
+          "cond": "<"
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "remove": "#xeno_early_start:blackstone"
+}

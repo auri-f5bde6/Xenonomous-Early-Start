@@ -4,6 +4,8 @@ import com.github.auri_f5bde6.xeno_early_start.MultiplicativeSpawnModifier
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.loot.AddTableLootModifier
 import com.github.auri_f5bde6.xeno_early_start.loot.CapItemCountModifier
+import com.github.auri_f5bde6.xeno_early_start.loot.RemoveItemLootModifier
+import com.github.auri_f5bde6.xeno_early_start.loot.ReplaceTableLootModifier
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.registry.Registries
@@ -16,9 +18,9 @@ import java.util.function.Supplier
 
 
 object XenoEarlyStartCodecRegistry {
-    var BIOME_MODIFIER_DEF_REG: DeferredRegister<Codec<out BiomeModifier?>?> =
+    val BIOME_MODIFIER_DEF_REG: DeferredRegister<Codec<out BiomeModifier?>?> =
         DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, XenoEarlyStart.MODID)
-    var MULTIPLICATIVE_SPAWN_MODIFIER: Supplier<Codec<MultiplicativeSpawnModifier>> =
+    val MULTIPLICATIVE_SPAWN_MODIFIER: Supplier<Codec<MultiplicativeSpawnModifier>> =
         BIOME_MODIFIER_DEF_REG.register<Codec<MultiplicativeSpawnModifier>>("multiplicative_spawn_modifier") {
             RecordCodecBuilder.create { builder ->
                 builder.group(
@@ -31,8 +33,12 @@ object XenoEarlyStartCodecRegistry {
         }
     val GLOBAL_LOOT_MODIFIER_DEF_REG: DeferredRegister<Codec<out IGlobalLootModifier>> =
         DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, XenoEarlyStart.MODID)
-    var ADD_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<AddTableLootModifier>> =
+    val ADD_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<AddTableLootModifier>> =
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("add_table") { AddTableLootModifier.CODEC.codec() }
-    var CAP_ITEM_COUNT_MODIFIER_TYPE: Supplier<Codec<CapItemCountModifier>> =
+    val REPLACE_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<ReplaceTableLootModifier>> =
+        GLOBAL_LOOT_MODIFIER_DEF_REG.register("replace_table") { ReplaceTableLootModifier.CODEC.codec() }
+    val CAP_ITEM_COUNT_MODIFIER_TYPE: Supplier<Codec<CapItemCountModifier>> =
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("cap_item_count") { CapItemCountModifier.CODEC.codec() }
+    val REMOVE_ITEM_LOOT_MODIFIER_TYPE: Supplier<Codec<RemoveItemLootModifier>> =
+        GLOBAL_LOOT_MODIFIER_DEF_REG.register("remove_items") { RemoveItemLootModifier.CODEC.codec() }
 }
