@@ -49,7 +49,7 @@ object XenoEarlyStartConfig {
         var primitiveFire: PrimitiveFire = PrimitiveFire()
 
         class PrimitiveFire {
-            var maxBurnTime: Int = 3200
+            var maxBurnTime: Int = 5 * 60 * 20
             var percentageRequiredForMaxBrightness: Float = 0.25f
             var fuelTimeMultiplier: Float = 1f
         }

@@ -56,7 +56,7 @@ object XenoEarlyStartConfigGui {
             5 * 60 * 20,
             1 * 60 * 60,
             60 * 60 * 20,
-            { i: Int -> i / 60 / 60 },
+            { i: Int -> i / 60 / 20 },
             { i: Int -> i * 60 * 20 },
             tooltip = ConfigWrapper.DefaultTooltip()
         )
