@@ -20,6 +20,7 @@ import kotlin.math.log2
 object CoalDust {
     @JvmStatic
     fun mining(world: ServerWorld, state: BlockState, pos: BlockPos) {
+        applyStatusEffect(world, pos, 2, listOf(pos))
         for (i in 0..<world.random.nextBetween(5, 10)) {
             world.spawnParticles(
                 XenoEarlyStartParticleRegistry.COAL_DUST.get(),
