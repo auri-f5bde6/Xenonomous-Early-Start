@@ -3,10 +3,7 @@ package com.github.auri_f5bde6.xeno_early_start.registries
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartArmourMaterials
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartToolMaterials
-import com.github.auri_f5bde6.xeno_early_start.item.BrickItem
-import com.github.auri_f5bde6.xeno_early_start.item.FireStarterItem
-import com.github.auri_f5bde6.xeno_early_start.item.PebbleItem
-import com.github.auri_f5bde6.xeno_early_start.item.PrimitiveArrowItem
+import com.github.auri_f5bde6.xeno_early_start.item.*
 import net.minecraft.item.*
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
@@ -148,8 +145,9 @@ object XenoEarlyStartItemRegistry {
     )
 
     @JvmField
-    val PLANT_FIBER: RegistryObject<Item> = DEF_REG.register("plant_fiber", Supplier { Item(Item.Settings()) }
-    )
+    val PLANT_FIBER: RegistryObject<Item> =
+        DEF_REG.register("plant_fiber", Supplier { BurnableItem(Item.Settings(), 100) }
+        )
 
     @JvmField
     val KNAPPED_STONE: RegistryObject<Item> =
