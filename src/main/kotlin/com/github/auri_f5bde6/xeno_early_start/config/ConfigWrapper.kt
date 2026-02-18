@@ -63,8 +63,18 @@ class ConfigWrapper {
     }
 
     abstract class Category {
+        fun newSubCategory(subCategoryName: String, expanded: Boolean = false): SubCategory {
+            return SubCategory(
+                entryBuilder,
+                subCategoryName,
+                expanded,
+                getCategoryTranslationKey()
+            )
+        }
 
-
+        fun addSubCategory(subCategory: SubCategory) {
+            addEntry(subCategory.builder.build())
+        }
         class MainCategory(
             configBuilder: ConfigBuilder,
             override val entryBuilder: ConfigEntryBuilder,
@@ -73,20 +83,6 @@ class ConfigWrapper {
         ) : Category() {
             override val translationKeyPrefix: String = configTranslationPrefix
             val category: ConfigCategory = configBuilder.getOrCreateCategory(getCategoryTranslatedText())
-
-
-            fun newSubCategory(subCategoryName: String, expanded: Boolean = false): SubCategory {
-                return SubCategory(
-                    entryBuilder,
-                    subCategoryName,
-                    expanded,
-                    getCategoryTranslationKey()
-                )
-            }
-
-            fun addSubCategory(subCategory: SubCategory) {
-                category.addEntry(subCategory.builder.build())
-            }
 
             override fun <T> addEntry(entry: AbstractConfigListEntry<T>) {
                 category.addEntry(entry)
