@@ -114,10 +114,14 @@
   "xeno_early_start.item.tooltip.knapped_stone": "Obtained by clicking on a cobbled block with pebble in both hand",
   "xeno_early_start.item.tooltip.food_warning": "You probably don't want to eat this",
   "xeno_early_start.item.tooltip.raw_food_warning1": "You probably don't want to eat this raw",
+  "xeno_early_start.item.tooltip.flint": "Obtained by breaking gravel or clicking gravel on grindstone (with chances of failure)",
+
   "emi.category.xeno_early_start.drying": "Drying",
   "emi.category.xeno_early_start.world_interaction": "World Interaction",
   "emi.category.xeno_early_start.block_to_block": "World Interaction (Mine Block)",
-  "emi.category.xeno_early_start.block_to_block.drop_loot_table": "(Will rop loot table)",
+  "emi.category.xeno_early_start.block_to_block.drop_loot_table": "And drop loot table",
   "emi.category.xeno_early_start.block_to_block.ore_to_stone_disabled": "Disabled in setting",
-  "emi.category.xeno_early_start.knapping": "World Interaction (Knapping)"
+  "emi.category.xeno_early_start.knapping": "World Interaction (Right Click)",
+  "emi.category.xeno_early_start.plant_fiber": "World Interaction (Break Block)"
+
 }

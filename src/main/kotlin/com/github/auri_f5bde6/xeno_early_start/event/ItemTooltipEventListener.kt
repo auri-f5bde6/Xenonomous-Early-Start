@@ -51,5 +51,13 @@ object ItemTooltipEventListener {
                 )
             )
         }
+        if (event.itemStack.isOf(Items.FLINT)) {
+            event.toolTip.add(
+                1,
+                Text.translatable(
+                    "xeno_early_start.item.tooltip.flint"
+                )
+            )
+        }
     }
 }
