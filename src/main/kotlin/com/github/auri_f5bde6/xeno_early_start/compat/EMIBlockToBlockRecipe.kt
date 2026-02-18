@@ -34,7 +34,7 @@ class EMIBlockToBlockRecipe(val recipe: StoneToCobbleRecipe) : EmiRecipe {
     }
 
     override fun getCategory(): EmiRecipeCategory {
-        return XenoEarlyStartEmiPlugin.BLOCK_TO_BLOCK
+        return XenoEarlyStartEmiPlugin.BLOCK_TO_BLOCK_CATEGORY
     }
 
     override fun getId(): Identifier {
@@ -56,10 +56,6 @@ class EMIBlockToBlockRecipe(val recipe: StoneToCobbleRecipe) : EmiRecipe {
     override fun getDisplayHeight(): Int {
         return 18 + 1 + (recipe.droppedItems.lastIndex.floorDiv(4) + 1) * 19 + if (recipe.isDropBlockLootTable)
             MinecraftClient.getInstance().textRenderer.fontHeight - 1 else 0
-    }
-
-    override fun hideCraftable(): Boolean {
-        return !(recipe.isOreToStone && XenoEarlyStartConfig.config.oreChanges.oreToStone || !recipe.isOreToStone)
     }
 
     override fun addWidgets(widgets: WidgetHolder) {

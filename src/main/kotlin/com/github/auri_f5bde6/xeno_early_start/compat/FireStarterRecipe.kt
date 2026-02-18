@@ -11,13 +11,12 @@ import dev.emi.emi.api.widget.WidgetHolder
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.tag.ItemTags
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraftforge.common.Tags
 
-class WorldInteractionRecipe : EmiRecipe {
+class FireStarterRecipe : EmiRecipe {
     override fun getCategory(): EmiRecipeCategory {
-        return XenoEarlyStartEmiPlugin.WORLD_INTERACTION
+        return XenoEarlyStartEmiPlugin.FIRE_STARTER_CATEGORY
     }
 
     override fun getId(): Identifier {
@@ -43,7 +42,7 @@ class WorldInteractionRecipe : EmiRecipe {
     }
 
     override fun getDisplayWidth(): Int {
-        return 200
+        return 76
     }
 
     override fun getDisplayHeight(): Int {
@@ -51,16 +50,8 @@ class WorldInteractionRecipe : EmiRecipe {
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addTexture(EmiTexture.EMPTY_ARROW, 95, 1)
-        widgets.addGeneratedSlot({ random -> inputs[random.nextInt(inputs.size)] }, 1234, 70, 0)
-        widgets.addSlot(outputs[0], 125, 0).recipeContext(this)
-        // slot is 18, 18
-        widgets.addText(
-            Text.translatable("text.emi.${XenoEarlyStart.MODID}.fire_starter_non_exhaustive"),
-            0,
-            26,
-            0xFFFFFFFF.toInt(),
-            true
-        )
+        widgets.addTexture(EmiTexture.EMPTY_ARROW, 25, 1)
+        widgets.addGeneratedSlot({ random -> inputs[random.nextInt(inputs.size)] }, 1234, 0, 0)
+        widgets.addSlot(outputs[0], 55, 0).recipeContext(this)
     }
 }

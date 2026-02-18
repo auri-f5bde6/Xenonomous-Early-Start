@@ -16,15 +16,14 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class KnappingRecipe(val pebble: Item, val result: Item) : EmiRecipe {
+class KnappingRecipe(val id: String, val pebble: Item, val result: EmiStack) : EmiRecipe {
     val input = listOf(EmiIngredient.of(Ingredient.ofItems(pebble)), EmiIngredient.of(Ingredient.ofItems(pebble)))
-    val output = listOf(EmiStack.of(result))
     override fun getCategory(): EmiRecipeCategory {
-        return XenoEarlyStartEmiPlugin.KNAPPING
+        return XenoEarlyStartEmiPlugin.KNAPPING_CATEGORY
     }
 
     override fun getId(): Identifier {
-        return XenoEarlyStart.of("/knapping")
+        return XenoEarlyStart.of("/knapping_$id")
     }
 
     override fun getInputs(): List<EmiIngredient> {
@@ -32,7 +31,7 @@ class KnappingRecipe(val pebble: Item, val result: Item) : EmiRecipe {
     }
 
     override fun getOutputs(): List<EmiStack> {
-        return output
+        return listOf(result)
     }
 
     override fun getDisplayWidth(): Int {
@@ -50,7 +49,7 @@ class KnappingRecipe(val pebble: Item, val result: Item) : EmiRecipe {
         addRotatedTexture(widgets, EmiTexture.EMPTY_ARROW, 11, 17, 65f)
         addRotatedTexture(widgets, EmiTexture.EMPTY_ARROW, 43, 27, 115f)
         addRotatedTexture(widgets, EmiTexture.EMPTY_ARROW, 26, 67, 90f)
-        widgets.addSlot(EmiIngredient.of(Ingredient.ofItems(result)), 29, 88).recipeContext(this)
+        widgets.addSlot(result, 29, 88).recipeContext(this)
 
     }
 
