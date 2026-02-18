@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 @Suppress("UNUSED_PARAMETER")
-@EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.MOD)
 object SpawnPlacementRegisterEventHandler {
     @SubscribeEvent
     fun register(event: SpawnPlacementRegisterEvent) {

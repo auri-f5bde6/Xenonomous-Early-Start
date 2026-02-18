@@ -66,45 +66,46 @@ class ProwlerEntityModel(var root: ModelPart) : SinglePartEntityModel<ProwlerEnt
     companion object {
         val LAYER_LOCATION: EntityModelLayer = EntityModelLayer(XenoEarlyStart.of("prowler"), "main")
         val texturedModelData: TexturedModelData
-            get() {
-                val modelData = ModelData()
-                val modelPartData = modelData.root
-                modelPartData.addChild(
-                    EntityModelPartNames.HEAD,
-                    ModelPartBuilder.create().uv(0, 0).cuboid(-4.0f, -30.0f, -4.0f, 8.0f, 8.0f, 8.0f, Dilation(0.0f)),
-                    ModelTransform.pivot(0.0f, 24.0f, 0.0f)
-                )
 
-                modelPartData.addChild(
-                    EntityModelPartNames.BODY,
-                    ModelPartBuilder.create().uv(0, 16).cuboid(-4.0f, -22.0f, -2.0f, 8.0f, 12.0f, 4.0f, Dilation(0.0f)),
-                    ModelTransform.pivot(0.0f, 24.0f, 0.0f)
-                )
+        init {
+            val modelData = ModelData()
+            val modelPartData = modelData.root
+            modelPartData.addChild(
+                EntityModelPartNames.HEAD,
+                ModelPartBuilder.create().uv(0, 0)
+                    .cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, Dilation(0.0F)),
+                ModelTransform.pivot(0.0F, 2.0F, 0.0F)
+            )
+            modelPartData.addChild(
+                EntityModelPartNames.BODY,
+                ModelPartBuilder.create().uv(0, 16).cuboid(-4.0f, -22.0f, -2.0f, 8.0f, 12.0f, 4.0f, Dilation(0.0f)),
+                ModelTransform.pivot(0.0f, 24.0f, 0.0f)
+            )
 
-                modelPartData.addChild(
-                    EntityModelPartNames.LEFT_FRONT_LEG,
-                    ModelPartBuilder.create().uv(24, 30).cuboid(-2.0f, 0.0f, -4.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
-                    ModelTransform.pivot(2.0f, 14.0f, -2.0f)
-                )
+            modelPartData.addChild(
+                EntityModelPartNames.LEFT_FRONT_LEG,
+                ModelPartBuilder.create().uv(24, 30).cuboid(-2.0f, 0.0f, -4.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
+                ModelTransform.pivot(2.0f, 14.0f, -2.0f)
+            )
 
-                modelPartData.addChild(
-                    EntityModelPartNames.RIGHT_FRONT_LEG,
-                    ModelPartBuilder.create().uv(24, 16).cuboid(-2.0f, 0.0f, -4.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
-                    ModelTransform.pivot(-2.0f, 14.0f, -2.0f)
-                )
+            modelPartData.addChild(
+                EntityModelPartNames.RIGHT_FRONT_LEG,
+                ModelPartBuilder.create().uv(24, 16).cuboid(-2.0f, 0.0f, -4.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
+                ModelTransform.pivot(-2.0f, 14.0f, -2.0f)
+            )
 
-                modelPartData.addChild(
-                    EntityModelPartNames.LEFT_HIND_LEG,
-                    ModelPartBuilder.create().uv(0, 32).cuboid(-2.0f, 0.0f, 0.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
-                    ModelTransform.pivot(2.0f, 14.0f, 2.0f)
-                )
+            modelPartData.addChild(
+                EntityModelPartNames.LEFT_HIND_LEG,
+                ModelPartBuilder.create().uv(0, 32).cuboid(-2.0f, 0.0f, 0.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
+                ModelTransform.pivot(2.0f, 14.0f, 2.0f)
+            )
 
-                modelPartData.addChild(
-                    EntityModelPartNames.RIGHT_HIND_LEG,
-                    ModelPartBuilder.create().uv(32, 0).cuboid(-2.0f, 0.0f, 0.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
-                    ModelTransform.pivot(-2.0f, 14.0f, 2.0f)
-                )
-                return TexturedModelData.of(modelData, 64, 64)
-            }
+            modelPartData.addChild(
+                EntityModelPartNames.RIGHT_HIND_LEG,
+                ModelPartBuilder.create().uv(32, 0).cuboid(-2.0f, 0.0f, 0.0f, 4.0f, 10.0f, 4.0f, Dilation(0.0f)),
+                ModelTransform.pivot(-2.0f, 14.0f, 2.0f)
+            )
+            texturedModelData = TexturedModelData.of(modelData, 64, 64)
+        }
     }
 }

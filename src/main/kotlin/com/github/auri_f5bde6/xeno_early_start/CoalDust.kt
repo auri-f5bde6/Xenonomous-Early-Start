@@ -16,6 +16,7 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import net.minecraftforge.common.Tags
 import kotlin.math.log2
+import kotlin.math.pow
 
 object CoalDust {
     @JvmStatic
@@ -134,7 +135,6 @@ object CoalDust {
                 0.005
             )
         }
-        applyStatusEffect(world, center, size + 1, blockPoss)
         CoalDustExplosion.createExplosion(
             world,
             owner,
@@ -167,11 +167,11 @@ object CoalDust {
         return false
     }
 
-    private fun applyStatusEffect(world: World, center: BlockPos, size: Int, blockPoss: List<BlockPos?>) {
+    fun applyStatusEffect(world: World, center: BlockPos, size: Int, blockPoss: List<BlockPos?>) {
         val box = Box(center.add(-(size + 1), -(size + 1), -(size + 1)), center.add((size + 1), (size + 1), (size + 1)))
         world.getEntitiesByClass(LivingEntity::class.java, box) { entity ->
             for (pos in blockPoss) {
-                if (pos != null && entity.pos.squaredDistanceTo(Vec3d.of(pos)) <= 9) {
+                if (pos != null && entity.pos.squaredDistanceTo(Vec3d.of(pos)) <= size.toDouble().pow(2.0).toInt()) {
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))

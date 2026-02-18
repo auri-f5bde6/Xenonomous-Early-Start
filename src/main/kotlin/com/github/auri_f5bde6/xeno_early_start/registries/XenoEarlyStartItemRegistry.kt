@@ -5,6 +5,7 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartArmourMaterials
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartToolMaterials
 import com.github.auri_f5bde6.xeno_early_start.item.*
 import net.minecraft.item.*
+import net.minecraftforge.common.ForgeSpawnEggItem
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
@@ -218,6 +219,12 @@ object XenoEarlyStartItemRegistry {
     )
 
     @JvmField
+    val PROWLER_SPAWN_EGG: RegistryObject<Item> = DEF_REG.register(
+        "prowler_spawn_egg",
+        Supplier { ForgeSpawnEggItem(XenoEarlyStartEntityRegistry.PROWLER, 0x141313, 0x290404, Item.Settings()) }
+    )
+
+    @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
         COPPER_SWORD,
         COPPER_SHOVEL,
@@ -252,7 +259,8 @@ object XenoEarlyStartItemRegistry {
         TREATED_WOOD,
         BOW_PIECES,
         FLINT_SHARD,
-        PRIMITIVE_ARROW
+        PRIMITIVE_ARROW,
+        PROWLER_SPAWN_EGG,
     )
 
     @Suppress("UNUSED")

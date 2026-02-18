@@ -1,13 +1,16 @@
 package com.github.auri_f5bde6.xeno_early_start.entity
 
+import com.github.auri_f5bde6.xeno_early_start.CoalDust.applyStatusEffect
 import net.minecraft.entity.Entity
 import net.minecraft.entity.damage.DamageSource
 import net.minecraft.network.packet.s2c.play.ExplosionS2CPacket
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.ExplosionBehavior
 import net.minecraftforge.event.ForgeEventFactory
+import kotlin.math.max
 
 class CoalDustExplosion : Explosion {
     constructor(
@@ -36,6 +39,8 @@ class CoalDustExplosion : Explosion {
             createFire: Boolean,
             particles: Boolean
         ): Explosion {
+            val pos = BlockPos(x.toInt(), y.toInt(), z.toInt())
+            applyStatusEffect(world, pos, max(1, power.toInt()), listOf(pos))
             val explosion = CoalDustExplosion(
                 world,
                 entity,
