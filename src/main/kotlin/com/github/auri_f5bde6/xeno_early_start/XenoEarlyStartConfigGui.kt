@@ -14,6 +14,7 @@ object XenoEarlyStartConfigGui {
             addMobChangesEntries(config)
             addBlockChangesEntries(config)
             addHungerChangesEntries(config)
+            addClientEntries(config)
             config.configBuilder.setSavingRunnable {
                 val tomlWriter = TomlWriter()
                 tomlWriter.write(
@@ -253,5 +254,35 @@ object XenoEarlyStartConfigGui {
             0.05f,
             Pair(0f, 40f)
         )
+    }
+
+    private fun addClientEntries(config: ConfigWrapper) {
+        val category = config.newCategory("client")
+        val tooltips = category.newSubCategory("tooltips")
+        val tutorialTooltips = ConfigWrapper.CustomTooltip("tutorialTooltips")
+        tooltips.addBooleanToggle(
+            "disableAllTooltip",
+            XenoEarlyStartConfig.config.client.tooltips::disableAllTooltips,
+            false,
+            tooltip = tutorialTooltips
+        )
+        tooltips.addBooleanToggle(
+            "disableFoodWarningTooltips",
+            XenoEarlyStartConfig.config.client.tooltips::disableFoodWarningTooltips,
+            false
+        )
+        tooltips.addBooleanToggle(
+            "disableTutorialTooltips",
+            XenoEarlyStartConfig.config.client.tooltips::disableTutorialTooltips,
+            false,
+            tooltip = tutorialTooltips
+        )
+        tooltips.addBooleanToggle(
+            "disableItemDescriptionTooltips",
+            XenoEarlyStartConfig.config.client.tooltips::disableItemDescriptionTooltips,
+            false,
+            tooltip = tutorialTooltips
+        )
+        category.addSubCategory(tooltips)
     }
 }

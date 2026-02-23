@@ -16,6 +16,9 @@ object XenoEarlyStartConfig {
 
         @JvmField
         var hungerChanges: HungerChanges = HungerChanges()
+
+        @JvmField
+        var client: ClientConfig = ClientConfig()
     }
 
     @JvmField
@@ -78,9 +81,7 @@ object XenoEarlyStartConfig {
 
     class BlockChanges {
         enum class FixThinBlockStepSound {
-            True,
-            False,
-            OnlyThisMod
+            True, False, OnlyThisMod
         }
 
         var stonecutterDamage: Float = 3f
@@ -97,5 +98,19 @@ object XenoEarlyStartConfig {
     class HungerChanges {
         var wakingUpExhaustion: Float = 40.0f
         var boatRowingExhaustion: Float = 0.05f
+    }
+
+    class ClientConfig {
+        class Tooltips {
+            var disableAllTooltips: Boolean = false
+
+            var disableFoodWarningTooltips: Boolean = false
+
+            var disableTutorialTooltips: Boolean = false
+
+            var disableItemDescriptionTooltips: Boolean = false
+        }
+
+        var tooltips: Tooltips = Tooltips()
     }
 }

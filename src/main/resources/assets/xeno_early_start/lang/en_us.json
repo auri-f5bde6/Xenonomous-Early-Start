@@ -40,6 +40,8 @@
   "item.xeno_early_start.bow_piece": "Bow Piece",
   "item.xeno_early_start.flint_shard": "Flint Shard",
   "item.xeno_early_start.primitive_arrow": "Primitive Arrow",
+  "item.xeno_early_start.prowler_spawn_egg": "Prowler Spawn Egg",
+
   "itemGroup.xeno_early_start.creative_tab": "Xenonomous' Early Start",
   "tag.item.xeno_early_start.knapped_stone": "Knapped Stone",
   "tag.item.xeno_early_start.shards": "Shards",
@@ -92,6 +94,14 @@
   "text.config.xeno_early_start.option.hungerChanges": "Hunger Changes",
   "text.config.xeno_early_start.option.hungerChanges.wakingUpExhaustion": "Exhaustion When Player Wake Up From Bed",
   "text.config.xeno_early_start.option.hungerChanges.boatRowingExhaustion": "Exhaustion When Player Row A Boat",
+  "text.config.xeno_early_start.option.client": "Client Configs",
+  "text.config.xeno_early_start.option.client.tooltips": "Tooltips",
+  "text.config.xeno_early_start.option.client.tooltips.disableAllTooltip": "Disable All Tooltip",
+  "text.config.xeno_early_start.option.client.tooltips.disableFoodWarningTooltips": "Disable Food Warnings Tooltips",
+  "text.config.xeno_early_start.option.client.tooltips.disableTutorialTooltips": "Disable Tutorial Tooltips",
+  "text.config.xeno_early_start.option.client.tooltips.disableItemDescriptionTooltips": "Disable Item Description Tooltips",
+  "text.config.xeno_early_start.option.client.tooltips.tutorialTooltips.tooltip": "DO NOT ENABLE THIS unless you already know how this mod works",
+
 
   "text.config.xeno_early_start.title": "Progression Change",
   "text.emi.xeno_early_start.fire_starter_non_exhaustive": "Fire Starter can be used on any fuel item",
@@ -100,8 +110,9 @@
   "death.damage.amethyst_0": "%s was punctured by sharp crystal",
   "death.damage.coral_0": "%s found out coral isn't fun to step on",
   "death.damage.furnace": "%s was smelted by a furnace",
+  "xeno_early_start.item.tooltip.fire_starter_purpose": "Can be used to create primitive fire",
   "xeno_early_start.item.tooltip.fire_starter_creation": "Can be created with fire starter",
-  "xeno_early_start.item.tooltip.fire_starter": "Requires 30 second worth of dropped burnables (at least 6 stick on default setting) to use",
+  "xeno_early_start.item.tooltip.fire_starter_description": "Requires 30 second worth of dropped burnables (at least 6 stick on default setting) to use",
   "xeno_early_start.item.tooltip.fire_starter_chance": "Have 25% chance of success, 50% when in dry biome, but always fails in rain",
   "xeno_early_start.item.tooltip.raw_brick": "Dries into a brick when placed down and exposed to sun unobstructed",
   "xeno_early_start.item.tooltip.brick": "Can also be obtained by drying raw brick",
@@ -113,7 +124,7 @@
   "xeno_early_start.item.tooltip.shards": "Breaking grass/leaves with this have a chance of dropping plant fiber",
   "xeno_early_start.item.tooltip.knapped_stone": "Obtained by clicking on a cobbled block with pebble in both hand",
   "xeno_early_start.item.tooltip.food_warning": "You probably don't want to eat this",
-  "xeno_early_start.item.tooltip.raw_food_warning1": "You probably don't want to eat this raw",
+  "xeno_early_start.item.tooltip.raw_food_warning": "You probably don't want to eat this raw",
   "xeno_early_start.item.tooltip.flint": "Obtained by breaking gravel or clicking gravel on grindstone (with chances of failure)",
 
   "emi.category.xeno_early_start.drying": "Drying",
