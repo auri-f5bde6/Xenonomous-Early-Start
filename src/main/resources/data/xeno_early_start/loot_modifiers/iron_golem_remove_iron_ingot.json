@@ -1,0 +1,10 @@
+{
+  "type": "xeno_early_start:remove_items",
+  "conditions": [
+    {
+      "condition": "xeno_early_start:loot_table_id",
+      "loot_table_id": "minecraft:entities/iron_golem"
+    }
+  ],
+  "remove": "#forge:ingots/iron"
+}

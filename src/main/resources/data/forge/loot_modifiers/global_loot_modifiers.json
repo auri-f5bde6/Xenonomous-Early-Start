@@ -13,6 +13,8 @@
     "xeno_early_start:blackstone",
     "xeno_early_start:remove_blackstone_block_drop",
     "xeno_early_start:cobblestone",
-    "xeno_early_start:remove_cobblestone_block_drop"
+    "xeno_early_start:remove_cobblestone_block_drop",
+    "xeno_early_start:iron_golem_remove_iron_ingot",
+    "xeno_early_start:iron_golem_new_lootable"
   ]
 }

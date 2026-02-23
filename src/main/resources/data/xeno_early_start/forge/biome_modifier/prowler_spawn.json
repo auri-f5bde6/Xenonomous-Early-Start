@@ -3,7 +3,7 @@
   "biomes": "#minecraft:is_overworld",
   "spawners": {
     "type": "xeno_early_start:prowler",
-    "weight": 95,
+    "weight": 75,
     "minCount": 1,
     "maxCount": 1
   }

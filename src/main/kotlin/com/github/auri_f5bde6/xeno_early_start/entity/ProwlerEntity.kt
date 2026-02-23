@@ -47,14 +47,14 @@ class ProwlerEntity(entityType: EntityType<out ProwlerEntity>, world: World) :
 
     override fun tickMovement() {
         // Random speed ~ every 1.5 second (30 tick)
-        if (random.nextFloat() < (1.0 / 30.0)) {
+        if (random.nextFloat() < (1.0 / (0.5 * 20))) {
             val multimap = HashMultimap.create<EntityAttribute, EntityAttributeModifier>()
             multimap.put(
                 EntityAttributes.GENERIC_MOVEMENT_SPEED,
                 EntityAttributeModifier(
                     SPEED_MODIFIER_UUID,
                     "erratic_prowler",
-                    0.8 + (world.random.nextFloat()) * 0.25,
+                    0.5 + (world.random.nextFloat()) * 0.55,
                     EntityAttributeModifier.Operation.MULTIPLY_BASE
                 )
             )
