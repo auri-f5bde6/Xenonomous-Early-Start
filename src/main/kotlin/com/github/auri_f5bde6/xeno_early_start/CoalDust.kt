@@ -20,7 +20,7 @@ import kotlin.math.pow
 
 object CoalDust {
     @JvmStatic
-    fun mining(world: ServerWorld, state: BlockState, pos: BlockPos) {
+    fun mining(world: ServerWorld, state: BlockState, pos: BlockPos, delta: Int) {
         applyStatusEffect(world, pos, 2, listOf(pos))
         for (i in 0..<world.random.nextBetween(5, 10)) {
             world.spawnParticles(

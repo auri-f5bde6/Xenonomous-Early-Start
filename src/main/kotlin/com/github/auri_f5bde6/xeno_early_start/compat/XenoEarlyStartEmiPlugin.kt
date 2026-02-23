@@ -9,6 +9,7 @@ import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
@@ -18,6 +19,7 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.util.Identifier
 import net.minecraftforge.common.Tags
+import net.minecraftforge.registries.RegistryObject
 
 @EmiEntrypoint
 class XenoEarlyStartEmiPlugin : EmiPlugin {
@@ -79,28 +81,28 @@ class XenoEarlyStartEmiPlugin : EmiPlugin {
             KnappingRecipe(
                 "stone",
                 XenoEarlyStartItemRegistry.PEBBLE.get(),
-                getStack(XenoEarlyStartItemRegistry.KNAPPED_STONE.get())
+                getStack(XenoEarlyStartItemRegistry.KNAPPED_STONE)
             )
         )
         registry.addRecipe(
             KnappingRecipe(
                 "deepslate",
                 XenoEarlyStartItemRegistry.DEEPSLATE_PEBBLE.get(),
-                getStack(XenoEarlyStartItemRegistry.KNAPPED_DEEPSLATE.get())
+                getStack(XenoEarlyStartItemRegistry.KNAPPED_DEEPSLATE)
             )
         )
         registry.addRecipe(
             KnappingRecipe(
                 "blackstone",
                 XenoEarlyStartItemRegistry.BLACKSTONE_PEBBLE.get(),
-                getStack(XenoEarlyStartItemRegistry.KNAPPED_BLACKSTONE.get())
+                getStack(XenoEarlyStartItemRegistry.KNAPPED_BLACKSTONE)
             )
         )
         registry.addRecipe(
             KnappingRecipe(
                 "flint",
                 Items.FLINT,
-                getStack(XenoEarlyStartItemRegistry.FLINT_SHARD.get(), amount = 2)
+                getStack(XenoEarlyStartItemRegistry.FLINT_SHARD, amount = 2)
             )
         )
 
@@ -123,5 +125,8 @@ class XenoEarlyStartEmiPlugin : EmiPlugin {
         stack.amount = amount
         stack.chance = chance
         return stack
+    }
+    private fun getStack(item: RegistryObject<Item>, chance: Float = 1.0f, amount: Long = 1): EmiStack {
+        return getStack(item.get(), chance, amount)
     }
 }

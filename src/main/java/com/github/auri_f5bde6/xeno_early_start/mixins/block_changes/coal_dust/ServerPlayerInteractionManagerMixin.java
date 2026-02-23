@@ -17,10 +17,13 @@ public class ServerPlayerInteractionManagerMixin {
     @Shadow
     protected ServerWorld world;
 
+    @Shadow
+    private int tickCounter;
+
     @Inject(method = "continueMining", at = @At("HEAD"))
     private void continueMining(BlockState state, BlockPos pos, int failedStartMiningTime, CallbackInfoReturnable<Float> cir) {
         if (state.isIn(Tags.Blocks.ORES_COAL)) {
-            CoalDust.mining(this.world, state, pos);
+            CoalDust.mining(this.world, state, pos, tickCounter - failedStartMiningTime);
         }
     }
 }
