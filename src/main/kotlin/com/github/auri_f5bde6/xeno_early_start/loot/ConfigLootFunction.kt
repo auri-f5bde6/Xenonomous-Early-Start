@@ -36,6 +36,9 @@ class ConfigLootFunction private constructor(
 
             DropType.Iron -> {
                 itemStack.count = XenoEarlyStartConfig.config.oreChanges.rawIronNuggetDrop
+                if (lootContext.random.nextFloat() > 0.5) {
+                    itemStack.count += 1
+                }
             }
 
             DropType.Gold -> {

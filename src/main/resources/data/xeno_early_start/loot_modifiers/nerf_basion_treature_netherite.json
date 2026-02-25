@@ -1,0 +1,11 @@
+{
+  "type": "xeno_early_start:remove_items",
+  "conditions": [
+    {
+      "condition": "xeno_early_start:loot_table_id",
+      "loot_table_id": "minecraft:chests/bastion_treasure"
+    }
+  ],
+  "remove": "minecraft:netherite_ingot",
+  "chance": 0.762470309
+}
