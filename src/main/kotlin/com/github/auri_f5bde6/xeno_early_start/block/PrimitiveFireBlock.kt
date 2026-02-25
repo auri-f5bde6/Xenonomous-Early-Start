@@ -1,6 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.advancements.PrimitiveFireCriterion
+import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
@@ -20,6 +22,7 @@ import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.recipe.RecipeType
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.stat.Stats
@@ -245,8 +248,9 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
-        if (entity is ItemEntity) {
+        if (entity is ItemEntity && entity.owner != PrimitiveFireBlockEntity.ITEM_UUID) {
             val primitiveFire = (world.getBlockEntity(pos)) as PrimitiveFireBlockEntity
             primitiveFire.burnTime = maybeConsumeStack(entity.stack, primitiveFire.burnTime)
         }

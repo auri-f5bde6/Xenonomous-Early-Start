@@ -1,10 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.recipe.PrimitiveFireRecipe
 import com.github.auri_f5bde6.xeno_early_start.recipe.Serializer
 import com.github.auri_f5bde6.xeno_early_start.recipe.StoneToCobbleRecipe
-import net.minecraft.recipe.CookingRecipeSerializer
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.RegistryKeys
@@ -30,17 +28,4 @@ object XenoEarlyStartRecipeRegistry {
         DEF_REG.register(
             "block_to_block",
             Supplier { Serializer() })
-
-    @JvmField
-    val PRIMITIVE_FIRE_TYPE: RegistryObject<RecipeType<PrimitiveFireRecipe>> =
-        TYPE_DEF_REG.register("primitive_fire", Supplier {
-            object : RecipeType<PrimitiveFireRecipe> {
-            }
-        })
-
-    @JvmField
-    val PRIMITIVE_FIRE: RegistryObject<RecipeSerializer<PrimitiveFireRecipe>> =
-        DEF_REG.register(
-            "primitive_fire",
-            Supplier { CookingRecipeSerializer(::PrimitiveFireRecipe, 200) })
 }

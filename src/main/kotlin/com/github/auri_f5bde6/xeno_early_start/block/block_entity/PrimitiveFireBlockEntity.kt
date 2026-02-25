@@ -2,14 +2,14 @@ package com.github.auri_f5bde6.xeno_early_start.block.block_entity
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
-import com.github.auri_f5bde6.xeno_early_start.recipe.PrimitiveFireRecipe
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
-import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.CampfireBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
@@ -26,7 +26,6 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Clearable
-import net.minecraft.util.ItemScatterer
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
@@ -34,6 +33,7 @@ import net.minecraft.world.World
 import net.minecraft.world.event.GameEvent
 import java.util.*
 import java.util.function.Function
+import kotlin.math.floor
 import kotlin.math.min
 
 class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
@@ -43,12 +43,33 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
     private val cookingTimes = IntArray(2)
     private val cookingTotalTimes = IntArray(2)
     var burnTime = 0
-    private val primitiveFireMatchGetter: MatchGetter<Inventory, PrimitiveFireRecipe> =
-        RecipeManager.createCachedMatchGetter(XenoEarlyStartRecipeRegistry.PRIMITIVE_FIRE_TYPE.get())
     private val campfireMatchGetter: MatchGetter<Inventory, CampfireCookingRecipe> =
         RecipeManager.createCachedMatchGetter(RecipeType.CAMPFIRE_COOKING)
 
     companion object {
+        val ITEM_UUID = UUID.randomUUID()
+
+        // Copied off ItemScatterer.spawn
+        private fun spawn(world: World, x: Double, y: Double, z: Double, stack: ItemStack) {
+            val d = EntityType.ITEM.width.toDouble()
+            val e = 1.0 - d
+            val f = d / 2.0
+            val g = floor(x) + world.random.nextDouble() * e + f
+            val h = floor(y) + world.random.nextDouble() * e
+            val i = floor(z) + world.random.nextDouble() * e + f
+
+            while (!stack.isEmpty) {
+                val itemEntity = ItemEntity(world, g, h, i, stack.split(world.random.nextInt(21) + 10))
+                itemEntity.setThrower(ITEM_UUID)
+                itemEntity.setVelocity(
+                    world.random.nextTriangular(0.0, 0.11485000171139836),
+                    world.random.nextTriangular(0.2, 0.11485000171139836),
+                    world.random.nextTriangular(0.0, 0.11485000171139836)
+                )
+                world.spawnEntity(itemEntity)
+            }
+        }
+
         fun litServerTick(world: World, pos: BlockPos, state: BlockState, primitiveFire: PrimitiveFireBlockEntity) {
 
             if (world.hasRain(pos) || primitiveFire.burnTime <= 0) {
@@ -90,27 +111,17 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
                     primitiveFire.cookingTimes[i]++
                     if (primitiveFire.cookingTimes[i] >= primitiveFire.cookingTotalTimes[i]) {
                         val inventory: Inventory = SimpleInventory(itemStack)
-                        val primitiveRecipeResult = primitiveFire.primitiveFireMatchGetter
-                            .getFirstMatch(inventory, world)
-                            .map(Function { recipe: PrimitiveFireRecipe ->
-                                recipe.craft(
-                                    inventory,
-                                    world.registryManager
-                                )
-                            })
                         val campfireRecipeResult =
                             primitiveFire.campfireMatchGetter.getFirstMatch(inventory, world)
                                 .map(Function { recipe: CampfireCookingRecipe ->
                                     recipe.craft(inventory, world.registryManager)
                                 })
                         var spawnItem: ItemStack = itemStack
-                        if (primitiveRecipeResult.isPresent) {
-                            spawnItem = primitiveRecipeResult.get()
-                        } else if (campfireRecipeResult.isPresent) {
+                        if (campfireRecipeResult.isPresent) {
                             spawnItem = campfireRecipeResult.get()
                         }
                         if (spawnItem.isItemEnabled(world.enabledFeatures)) {
-                            ItemScatterer.spawn(
+                            spawn(
                                 world,
                                 pos.x.toDouble(),
                                 pos.y.toDouble(),
@@ -212,11 +223,8 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
         return if (this.itemsBeingCooked.stream().noneMatch { obj: ItemStack -> obj.isEmpty }) {
             Optional.empty()
         } else {
-            val a = this.primitiveFireMatchGetter.getFirstMatch(SimpleInventory(stack), this.world)
             val b = this.campfireMatchGetter.getFirstMatch(SimpleInventory(stack), this.world)
-            if (a.isPresent) {
-                Optional.of(a.get() as AbstractCookingRecipe)
-            } else if (b.isPresent) {
+            if (b.isPresent) {
                 Optional.of(b.get() as AbstractCookingRecipe)
             } else {
                 Optional.empty()

@@ -1,5 +1,5 @@
 {
-  "type": "xeno_early_start:primitive_fire",
+  "type": "minecraft:campfire_cooking",
   "ingredient": {
     "tag": "minecraft:logs"
   },

@@ -118,6 +118,11 @@ class XenoEarlyStartEmiPlugin : EmiPlugin {
             ).output(getStack(Items.FLINT, chance = 0.8f))
                 .build()
         )
+
+        registry.addWorkstation(
+            VanillaEmiRecipeCategories.CAMPFIRE_COOKING,
+            getStack(XenoEarlyStartItemRegistry.PRIMITIVE_FIRE)
+        )
     }
 
     private fun getStack(item: Item, chance: Float = 1.0f, amount: Long = 1): EmiStack {
