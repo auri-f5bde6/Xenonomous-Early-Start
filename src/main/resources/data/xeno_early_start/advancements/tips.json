@@ -4,15 +4,14 @@
       "item": "minecraft:cherry_leaves"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.tips.title",
-      "color": "#f5bde6"
+      "translate": "advancements.xeno_early_start.tips.title"
     },
     "description": {
       "translate": "advancements.xeno_early_start.tips.description"
     },
     "show_toast": false,
     "announce_to_chat": false,
-    "frame": "goal"
+    "frame": "task"
   },
   "parent": "xeno_early_start:root",
   "criteria": {

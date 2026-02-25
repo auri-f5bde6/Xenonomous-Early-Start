@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.xeno_early_start.crafting_table.description"
     },
-    "frame": "goal"
+    "frame": "challenge"
   },
   "parent": "xeno_early_start:treated_wood_gate",
   "criteria": {

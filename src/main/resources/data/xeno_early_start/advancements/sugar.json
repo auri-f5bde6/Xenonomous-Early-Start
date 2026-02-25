@@ -26,5 +26,10 @@
       },
       "trigger": "minecraft:inventory_changed"
     }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:treated_wood"
+    ]
   }
 }

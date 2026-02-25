@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.cobblestone.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.cobblestone.description"
+    },
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "parent": "xeno_early_start:crafting_table_gate1",
+  "criteria": {
+    "has_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:cobblestone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

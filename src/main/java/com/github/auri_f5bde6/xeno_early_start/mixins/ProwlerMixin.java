@@ -19,7 +19,7 @@ public class ProwlerMixin {
     private void explode(Operation<Void> original) {
         original.call();
         if ((CreeperEntity) (Object) this instanceof ProwlerEntity e && !e.getWorld().isClient) {
-            CoalDust.INSTANCE.applyStatusEffect(e.getWorld(), e.getBlockPos(), explosionRadius + 3, List.of(e.getBlockPos()));
+            CoalDust.INSTANCE.applyStatusEffect(e.getWorld(), e.getBlockPos(), explosionRadius + 3, List.of(e.getBlockPos()), false);
         }
     }
 }

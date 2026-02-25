@@ -4,12 +4,12 @@
       "item": "xeno_early_start:plant_fiber"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.plant_fiber.title",
-      "color": "#233d24"
+      "translate": "advancements.xeno_early_start.plant_fiber.title"
     },
     "description": {
       "translate": "advancements.xeno_early_start.plant_fiber.description"
-    }
+    },
+    "frame": "task"
   },
   "parent": "xeno_early_start:grass",
   "criteria": {
@@ -25,5 +25,16 @@
       },
       "trigger": "minecraft:inventory_changed"
     }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:bone_dagger",
+      "xeno_early_start:bone_pickaxe",
+      "xeno_early_start:bow_piece",
+      "xeno_early_start:flint_hatchet",
+      "xeno_early_start:flint_pickaxe",
+      "xeno_early_start:flint_dagger",
+      "xeno_early_start:primitive_arrow"
+    ]
   }
 }

@@ -11,7 +11,7 @@
     },
     "frame": "goal"
   },
-  "parent": "xeno_early_start:flint_pickaxe_gate",
+  "parent": "xeno_early_start:stone",
   "criteria": {
     "has_plant_fiber": {
       "conditions": {

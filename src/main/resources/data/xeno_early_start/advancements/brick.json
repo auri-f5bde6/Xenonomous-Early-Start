@@ -11,7 +11,7 @@
     },
     "frame": "goal"
   },
-  "parent": "xeno_early_start:raw_brick",
+  "parent": "xeno_early_start:raw_brick_placed",
   "criteria": {
     "has_plant_fiber": {
       "conditions": {

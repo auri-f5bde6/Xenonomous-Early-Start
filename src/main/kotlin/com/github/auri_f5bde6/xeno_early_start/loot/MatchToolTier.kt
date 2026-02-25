@@ -6,6 +6,7 @@ import com.github.auri_f5bde6.xeno_early_start.utils.MiningLevel
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonObject
 import com.google.gson.JsonSerializationContext
+import net.minecraft.item.ItemStack
 import net.minecraft.item.ToolMaterial
 import net.minecraft.loot.condition.LootCondition
 import net.minecraft.loot.condition.LootConditionType
@@ -53,9 +54,7 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
     override fun getType(): LootConditionType {
         return XenoEarlyStartLootTypeRegistry.matchToolTier.get()
     }
-
-    override fun test(lootContext: LootContext): Boolean {
-        val itemStack = lootContext.get(LootContextParameters.TOOL)
+    fun test(itemStack: ItemStack?): Boolean {
         return when (cond) {
             Condition.Greater -> {
                 MiningLevel.isToolGreaterThanTier(itemStack, tier)
@@ -80,6 +79,11 @@ class MatchToolTier(var tier: ToolMaterial?, var cond: Condition) : LootConditio
                 !MiningLevel.isToolEqualToTier(itemStack, tier)
             }
         }
+    }
+
+    override fun test(lootContext: LootContext): Boolean {
+        val itemStack = lootContext.get(LootContextParameters.TOOL)
+        return test(itemStack)
     }
 
     class Serializer : JsonSerializer<MatchToolTier> {

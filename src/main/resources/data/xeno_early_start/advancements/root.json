@@ -5,8 +5,7 @@
       "nbt": "{SkullOwner:xenonomous}"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.root.title",
-      "color": "#814a93"
+      "translate": "advancements.xeno_early_start.root.title"
     },
     "description": {
       "translate": "advancements.xeno_early_start.root.description"
@@ -18,5 +17,13 @@
     "start": {
       "trigger": "minecraft:location"
     }
+  },
+  "rewards": {
+    "loot": [
+      "xeno_early_start:gameplay/guide"
+    ],
+    "recipes": [
+      "xeno_early_start:guide"
+    ]
   }
 }

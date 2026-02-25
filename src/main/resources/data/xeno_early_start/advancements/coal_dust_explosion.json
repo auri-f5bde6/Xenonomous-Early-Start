@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:tnt"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.coal_dust_explosion.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.coal_dust_explosion.description"
+    },
+    "frame": "challenge",
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "xeno_early_start:coal_ore",
+  "criteria": {
+    "create": {
+      "conditions": {
+        "type": "explosion"
+      },
+      "trigger": "xeno_early_start:coal_dust"
+    }
+  }
+}

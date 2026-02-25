@@ -17,6 +17,11 @@ object XenoEarlyStartItemRegistry {
         DeferredRegister.create(ForgeRegistries.ITEMS, XenoEarlyStart.MODID)
 
     @JvmField
+    val GUIDE: RegistryObject<Item> =
+        DEF_REG.register("guide", Supplier { XenoEarlyStartGuide(Item.Settings().maxCount(1)) }
+        )
+
+    @JvmField
     val COPPER_SWORD: RegistryObject<Item> = DEF_REG.register(
         "copper_sword",
         Supplier {
@@ -226,6 +231,7 @@ object XenoEarlyStartItemRegistry {
 
     @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
+        GUIDE,
         COPPER_SWORD,
         COPPER_SHOVEL,
         COPPER_PICKAXE,

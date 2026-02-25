@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
+    "accessors.AdvancementsScreenAccessor"
   ],
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
@@ -19,7 +20,6 @@
     "accessors.DefaultAttributeContainerBuilderAccessor",
     "accessors.FlowableFluidAccessor",
     "accessors.MeleeAttackGoalAccessor",
-    "accessors.TierSortingRegistryAccessor",
     "block_changes.AbstractBlockMixin",
     "block_changes.AbstractBlockStateMixin",
     "block_changes.BlastFurnaceBlockMixin",

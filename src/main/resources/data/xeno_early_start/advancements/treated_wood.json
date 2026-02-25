@@ -8,7 +8,8 @@
     },
     "description": {
       "translate": "advancements.xeno_early_start.treated_wood.description"
-    }
+    },
+    "frame": "challenge"
   },
   "parent": "xeno_early_start:charcoal_gate",
   "criteria": {

@@ -11,7 +11,7 @@
     },
     "frame": "goal"
   },
-  "parent": "xeno_early_start:root",
+  "parent": "xeno_early_start:getting_started",
   "criteria": {
     "has_plant_fiber": {
       "conditions": {

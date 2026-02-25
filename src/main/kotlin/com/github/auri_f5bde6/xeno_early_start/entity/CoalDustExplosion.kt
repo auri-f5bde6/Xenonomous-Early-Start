@@ -40,7 +40,7 @@ class CoalDustExplosion : Explosion {
             particles: Boolean
         ): Explosion {
             val pos = BlockPos(x.toInt(), y.toInt(), z.toInt())
-            applyStatusEffect(world, pos, max(1, power.toInt()), listOf(pos))
+            applyStatusEffect(world, pos, max(1, power.toInt()), listOf(pos), true)
             val explosion = CoalDustExplosion(
                 world,
                 entity,

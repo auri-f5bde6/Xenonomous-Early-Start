@@ -11,9 +11,9 @@
     },
     "show_toast": false,
     "announce_to_chat": false,
-    "frame": "task"
+    "frame": "challenge"
   },
-  "parent": "xeno_early_start:root",
+  "parent": "xeno_early_start:stone_age",
   "criteria": {
     "has_plant_fiber": {
       "conditions": {

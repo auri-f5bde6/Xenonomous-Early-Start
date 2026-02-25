@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:copper_ingot"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.copper.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.copper.description"
+    },
+    "frame": "task"
+  },
+  "parent": "xeno_early_start:brick_furnace_gate",
+  "criteria": {
+    "has_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:copper_ingot",
+              "xeno_early_start:copper_nugget"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:copper_pickaxe"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:brick_furnace"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.brick_furnace.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.brick_furnace.description"
+    },
+    "frame": "challenge"
+  },
+  "parent": "xeno_early_start:bricks",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "xeno_early_start:brick_furnace"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

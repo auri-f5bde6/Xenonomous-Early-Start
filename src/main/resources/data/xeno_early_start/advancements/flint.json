@@ -4,8 +4,7 @@
       "item": "minecraft:flint"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.flint.title",
-      "color": "#2d2d2d"
+      "translate": "advancements.xeno_early_start.flint.title"
     },
     "description": {
       "translate": "advancements.xeno_early_start.flint.description"

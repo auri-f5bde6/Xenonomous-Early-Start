@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.xeno_early_start.charcoal.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "announce_to_chat": false
   },
   "parent": "xeno_early_start:primitive_fire_use",

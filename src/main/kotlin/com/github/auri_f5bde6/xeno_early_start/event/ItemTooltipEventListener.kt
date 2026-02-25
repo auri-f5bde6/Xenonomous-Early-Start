@@ -30,7 +30,8 @@ object ItemTooltipEventListener {
                 t.addItemDescriptionTooltip("raw_brick")
             }
             if (event.itemStack.isOf(Items.BRICK)) {
-                t.addTutorialTooltip("brick")
+                t.addItemDescriptionTooltip("brick_throwable")
+                t.addTutorialTooltip("brick_obtain")
             }
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.PRIMITIVE_FIRE.get())) {
                 t.addItemDescriptionTooltip("fire_starter_creation")
@@ -63,6 +64,15 @@ object ItemTooltipEventListener {
             if (event.itemStack.isOf(Items.WOODEN_PICKAXE)) {
                 t.addTutorialTooltip("starting_guide")
             }
+            if (event.itemStack.isOf(XenoEarlyStartItemRegistry.GUIDE.get())) {
+                t.addItemDescriptionTooltip(
+                    t.getTranslatedText("guide").append(
+                        Text.keybind("key.advancements").setStyle(
+                            Style.EMPTY.withItalic(true).withColor(0xf5bde6)
+                        )
+                    )
+                )
+            }
             t.insertTooltips(event, 1)
 
         }
@@ -71,9 +81,19 @@ object ItemTooltipEventListener {
     private class Tooltips {
         var tooltips = arrayListOf<MutableText>()
 
-        private fun getTranslatedText(name: String): MutableText {
+        private fun getTranslatedText(text: MutableText): MutableText {
+            return text
+        }
+
+        fun getTranslatedText(name: String): MutableText {
             return Text.translatable(
                 "xeno_early_start.item.tooltip.$name"
+            )
+        }
+
+        fun addToolTip(text: MutableText) {
+            tooltips.add(
+                text
             )
         }
 
@@ -83,9 +103,21 @@ object ItemTooltipEventListener {
             )
         }
 
+        fun addTutorialTooltip(text: MutableText) {
+            if (!XenoEarlyStartConfig.config.client.tooltips.disableTutorialTooltips) {
+                addToolTip(text)
+            }
+        }
+
         fun addTutorialTooltip(name: String) {
             if (!XenoEarlyStartConfig.config.client.tooltips.disableTutorialTooltips) {
                 addToolTip(name)
+            }
+        }
+
+        fun addItemDescriptionTooltip(text: MutableText) {
+            if (!XenoEarlyStartConfig.config.client.tooltips.disableItemDescriptionTooltips) {
+                addToolTip(text)
             }
         }
 
@@ -106,10 +138,12 @@ object ItemTooltipEventListener {
             } else {
                 event.toolTip.add(
                     at,
-                    this.tooltips[0].append(
-                        getTranslatedText("shift_hidden").setStyle(
-                            Style.EMPTY.withItalic(true).withColor(0x3e3e3e)
-                        )
+                    this.tooltips[0]
+                )
+                event.toolTip.add(
+                    at + 1,
+                    getTranslatedText("shift_hidden").setStyle(
+                        Style.EMPTY.withItalic(true).withColor(0x3e3e3e)
                     )
                 )
             }

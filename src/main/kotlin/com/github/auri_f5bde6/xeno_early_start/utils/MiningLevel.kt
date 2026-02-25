@@ -1,6 +1,5 @@
 package com.github.auri_f5bde6.xeno_early_start.utils
 
-import com.github.auri_f5bde6.xeno_early_start.mixins.accessors.TierSortingRegistryAccessor
 import net.minecraft.item.ItemStack
 import net.minecraft.item.MiningToolItem
 import net.minecraft.item.ToolMaterial
@@ -55,7 +54,7 @@ object MiningLevel {
 
     fun getTiersGreaterThan(tier: ToolMaterial?): MutableList<ToolMaterial?> {
         if (!TierSortingRegistry.isTierSorted(tier)) return mutableListOf()
-        return TierSortingRegistryAccessor.`xeno_early_start$getSortedTiers`().reversed().stream()
+        return TierSortingRegistry.getSortedTiers().reversed().stream()
             .takeWhile { t: ToolMaterial? -> t !== tier }.toList()
     }
 

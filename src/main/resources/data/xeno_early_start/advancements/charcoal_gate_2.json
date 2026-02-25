@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.xeno_early_start.charcoal_gate.description"
     },
-    "frame": "task",
+    "frame": "challenge",
     "announce_to_chat": false,
     "show_toast": false
   },

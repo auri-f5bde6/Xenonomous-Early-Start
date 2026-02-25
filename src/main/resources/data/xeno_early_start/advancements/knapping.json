@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:knapped_stone"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.knapped_stone.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.knapped_stone.description"
+    },
+    "frame": "task"
+  },
+  "parent": "xeno_early_start:pebble",
+  "criteria": {
+    "has_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "xeno_early_start:knapped_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

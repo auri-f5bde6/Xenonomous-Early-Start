@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.xeno_early_start.flint_pickaxe.description"
     },
-    "frame": "goal"
+    "frame": "challenge"
   },
   "parent": "xeno_early_start:plant_fiber",
   "criteria": {

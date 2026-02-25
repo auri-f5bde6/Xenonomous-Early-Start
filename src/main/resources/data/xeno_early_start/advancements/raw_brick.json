@@ -9,7 +9,8 @@
     "description": {
       "translate": "advancements.xeno_early_start.raw_brick.description"
     },
-    "frame": "goal"
+    "frame": "task",
+    "announce_to_chat": false
   },
   "parent": "xeno_early_start:charcoal_gate_2",
   "criteria": {

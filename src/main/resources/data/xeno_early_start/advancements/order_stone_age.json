@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:stone_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.order_stone_age.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.order_stone_age.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "parent": "xeno_early_start:order_getting_started",
+  "criteria": {
+    "start": {
+      "trigger": "minecraft:location"
+    }
+  }
+}

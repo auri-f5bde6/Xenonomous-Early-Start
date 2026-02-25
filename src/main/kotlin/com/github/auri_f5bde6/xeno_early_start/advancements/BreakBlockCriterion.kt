@@ -26,18 +26,19 @@ class BreakBlockCriterion : AbstractCriterion<BreakBlockCriterion.Conditions>() 
         predicateDeserializer: AdvancementEntityPredicateDeserializer
     ): Conditions {
         val block = obj.get("block").asString
-        return if (block.startsWith("#")) {
-            Conditions(
-                id,
-                playerPredicate,
+        val either = if (block.startsWith("#")) {
+            Either.right<Block, TagKey<Block>>(
                 TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), Identifier.parse(block.substring(1)))
             )
         } else {
-            Conditions(
-                id, playerPredicate, ForgeRegistries.BLOCKS.getValue(Identifier.parse(block))
+            Either.left(
+                ForgeRegistries.BLOCKS.getValue(Identifier.parse(block))
                     ?: throw IllegalArgumentException("Unknown block: $block")
             )
         }
+        return Conditions(
+            id, playerPredicate, either
+        )
     }
 
     fun trigger(player: ServerPlayerEntity, blockState: BlockState) {
@@ -54,19 +55,15 @@ class BreakBlockCriterion : AbstractCriterion<BreakBlockCriterion.Conditions>() 
         return ID
     }
 
-    class Conditions : AbstractCriterionConditions {
+    class Conditions(
+        id: Identifier,
+        val entity: LootContextPredicate,
         val blockOrTag: Either<Block, TagKey<Block>>
-
-        constructor(id: Identifier, entity: LootContextPredicate, block: Block) : super(id, entity) {
-            blockOrTag = Either.left(block)
-        }
-
-        constructor(id: Identifier, entity: LootContextPredicate, tag: TagKey<Block>) : super(id, entity) {
-            blockOrTag = Either.right(tag)
-        }
-
+    ) : AbstractCriterionConditions(id, entity) {
         fun matches(blockState: BlockState): Boolean {
-            return blockOrTag.map({ block -> blockState.isOf(block) }, { tag -> blockState.isIn(tag) })
+            return blockOrTag.map(
+                { block -> blockState.isOf(block) },
+                { tag -> blockState.isIn(tag) })
         }
 
         override fun toJson(predicateSerializer: AdvancementEntityPredicateSerializer?): JsonObject? {

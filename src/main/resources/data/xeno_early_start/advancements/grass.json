@@ -4,8 +4,7 @@
       "item": "minecraft:fern"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.grass.title",
-      "color": "#3c5c33"
+      "translate": "advancements.xeno_early_start.grass.title"
     },
     "description": {
       "translate": "advancements.xeno_early_start.grass.description"

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:stone_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.stone_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.stone_pickaxe.description"
+    },
+    "frame": "challenge"
+  },
+  "parent": "xeno_early_start:crafting_table_gate2",
+  "criteria": {
+    "has_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stone_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

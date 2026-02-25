@@ -9,10 +9,10 @@
     "description": {
       "translate": "advancements.xeno_early_start.wooden_hoe.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "hidden": true
   },
-  "parent": "xeno_early_start:treated_plank",
+  "parent": "xeno_early_start:treated_wood",
   "criteria": {
     "has_plant_fiber": {
       "conditions": {

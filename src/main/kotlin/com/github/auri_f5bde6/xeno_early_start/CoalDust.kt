@@ -1,5 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start
 
+import com.github.auri_f5bde6.xeno_early_start.advancements.CoalDustCriterion
+import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.entity.CoalDustExplosion
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartParticleRegistry
 import net.minecraft.block.BlockState
@@ -8,6 +10,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.registry.Registries
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
@@ -21,7 +24,7 @@ import kotlin.math.pow
 object CoalDust {
     @JvmStatic
     fun mining(world: ServerWorld, state: BlockState, pos: BlockPos, delta: Int) {
-        applyStatusEffect(world, pos, 2, listOf(pos))
+        applyStatusEffect(world, pos, 2, listOf(pos), true)
         for (i in 0..<world.random.nextBetween(5, 10)) {
             world.spawnParticles(
                 XenoEarlyStartParticleRegistry.COAL_DUST.get(),
@@ -58,9 +61,10 @@ object CoalDust {
         return false
     }
 
-    fun tryDetonate(world: ServerWorld, blockPos: BlockPos, alwaysDetonate: Boolean, owner: Entity?) {
+    fun tryDetonate(world: ServerWorld, blockPos: BlockPos, alwaysDetonate: Boolean, owner: Entity?): Boolean {
+        var exploded = false
         if (!world.getBlockState(blockPos).isIn(Tags.Blocks.ORES_COAL)) {
-            return
+            return false
         }
         val explode = if (alwaysDetonate) {
             true
@@ -68,9 +72,9 @@ object CoalDust {
             shouldExplode(world, blockPos)
         }
         if (!explode) {
-            return
+            return false
         }
-        applyStatusEffect(world, blockPos, 3, listOf(blockPos))
+        applyStatusEffect(world, blockPos, 3, listOf(blockPos), true)
         var count = 1
         var index = 0
         val collection =
@@ -92,6 +96,7 @@ object CoalDust {
                             collection[currentIndex] = testPos
                             if (currentIndex == XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize - 1) {
                                 createExplosionAtCluster(owner, world, collection)
+                                exploded = true
                             }
                             count++
                         }
@@ -104,7 +109,9 @@ object CoalDust {
         val currentIndex = count % XenoEarlyStartConfig.config.oreChanges.coalDustExplosionClusterSize
         if (currentIndex > 0) {
             createExplosionAtCluster(owner, world, collection.subList(0, currentIndex))
+            exploded = true
         }
+        return exploded
     }
 
     private fun createExplosionAtCluster(owner: Entity?, world: ServerWorld, blockPoss: List<BlockPos?>) {
@@ -167,11 +174,15 @@ object CoalDust {
         return false
     }
 
-    fun applyStatusEffect(world: World, center: BlockPos, size: Int, blockPoss: List<BlockPos?>) {
+    fun applyStatusEffect(world: World, center: BlockPos, size: Int, blockPoss: List<BlockPos?>, coalDust: Boolean) {
+
         val box = Box(center.add(-(size + 1), -(size + 1), -(size + 1)), center.add((size + 1), (size + 1), (size + 1)))
         world.getEntitiesByClass(LivingEntity::class.java, box) { entity ->
             for (pos in blockPoss) {
                 if (pos != null && entity.pos.squaredDistanceTo(Vec3d.of(pos)) <= size.toDouble().pow(2.0).toInt()) {
+                    if (coalDust && entity is ServerPlayerEntity) {
+                        XenoEarlyStartCriteria.COAL_DUST.trigger(entity, CoalDustCriterion.Conditions.Type.INFLICTION)
+                    }
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.WITHER, 100))
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.MINING_FATIGUE, 200))
                     entity.addStatusEffect(StatusEffectInstance(StatusEffects.BLINDNESS, 1000))

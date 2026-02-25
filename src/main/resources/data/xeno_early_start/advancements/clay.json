@@ -12,7 +12,7 @@
     "frame": "task",
     "announce_to_chat": false
   },
-  "parent": "xeno_early_start:root",
+  "parent": "xeno_early_start:getting_started",
   "criteria": {
     "block": {
       "trigger": "xeno_early_start:break_block",
