@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:primitive_fire"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.primitive_fire.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.primitive_fire.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:fire_starter",
+  "criteria": {
+    "create": {
+      "conditions": {
+        "type": "create"
+      },
+      "trigger": "xeno_early_start:primitive_fire"
+    }
+  }
+}

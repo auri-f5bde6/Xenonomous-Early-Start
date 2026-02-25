@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:flint"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.flint.title",
+      "color": "#2d2d2d"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.flint.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:gravel",
+  "criteria": {
+    "has_flint": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:flint"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

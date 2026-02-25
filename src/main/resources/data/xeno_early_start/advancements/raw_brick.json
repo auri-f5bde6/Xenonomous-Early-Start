@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:raw_brick"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.raw_brick.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.raw_brick.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:charcoal_gate_2",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "xeno_early_start:raw_brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

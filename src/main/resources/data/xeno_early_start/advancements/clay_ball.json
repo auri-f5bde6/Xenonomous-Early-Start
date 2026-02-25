@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:clay_ball"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.clay_ball.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.clay_ball.description"
+    },
+    "frame": "goal",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:clay",
+  "criteria": {
+    "has_flint": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:clay_ball"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

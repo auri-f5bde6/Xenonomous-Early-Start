@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:charcoal"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.charcoal.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.charcoal.description"
+    },
+    "frame": "goal",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:primitive_fire_use",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:charcoal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

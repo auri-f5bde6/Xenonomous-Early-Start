@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:fire_starter"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.fire_starter.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.fire_starter.description"
+    },
+    "frame": "task"
+  },
+  "parent": "xeno_early_start:log",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "xeno_early_start:fire_starter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

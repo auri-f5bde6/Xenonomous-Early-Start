@@ -1,6 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.advancements.PrimitiveFireCriterion
+import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
@@ -12,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
@@ -77,9 +80,6 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
                     if (world.getBlockState(aboveBlock).isAir || world.getBlockState(aboveBlock)
                             .isIn(BlockTags.REPLACEABLE_BY_TREES)
                     ) {
-                        if (!(user is PlayerEntity && user.isCreative)) {
-                            newStack = ItemStack.EMPTY
-                        }
                         world.setBlockState(
                             aboveBlock,
                             XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get().defaultState.with(
@@ -87,6 +87,15 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
                             )
                         )
                         (world.getBlockEntity(aboveBlock) as PrimitiveFireBlockEntity).burnTime = burnTime
+                        if (user is PlayerEntity) {
+                            XenoEarlyStartCriteria.PRIMITIVE_FIRE_CREATION.trigger(
+                                user as ServerPlayerEntity,
+                                PrimitiveFireCriterion.Conditions.Type.CREATE
+                            )
+                            if (!user.isCreative) {
+                                newStack = ItemStack.EMPTY
+                            }
+                        }
                     }
                 }
             }

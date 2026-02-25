@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:brick"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.brick.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.brick.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:raw_brick",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

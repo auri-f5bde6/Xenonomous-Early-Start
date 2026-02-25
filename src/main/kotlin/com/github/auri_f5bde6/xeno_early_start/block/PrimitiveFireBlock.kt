@@ -252,7 +252,15 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (entity is ItemEntity && entity.owner != PrimitiveFireBlockEntity.ITEM_UUID) {
             val primitiveFire = (world.getBlockEntity(pos)) as PrimitiveFireBlockEntity
-            primitiveFire.burnTime = maybeConsumeStack(entity.stack, primitiveFire.burnTime)
+            val oldTime = primitiveFire.burnTime
+            primitiveFire.burnTime = maybeConsumeStack(entity.stack, oldTime)
+            val owner = entity.owner
+            if (oldTime != primitiveFire.burnTime && !world.isClient && owner is ServerPlayerEntity) {
+                XenoEarlyStartCriteria.PRIMITIVE_FIRE_CREATION.trigger(
+                    owner,
+                    PrimitiveFireCriterion.Conditions.Type.REFUEL
+                )
+            }
         }
     }
 
@@ -374,6 +382,12 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                     )
                 ) {
                     player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE)
+                    if (player is ServerPlayerEntity) {
+                        XenoEarlyStartCriteria.PRIMITIVE_FIRE_CREATION.trigger(
+                            player,
+                            PrimitiveFireCriterion.Conditions.Type.USE, itemStack
+                        )
+                    }
                     return ActionResult.SUCCESS
                 }
 

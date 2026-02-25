@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:pink_petals"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.configs.title",
+      "color": "#f5bde6"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.configs.description"
+    },
+    "show_toast": false,
+    "announce_to_chat": false,
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:tips",
+  "criteria": {
+    "start": {
+      "trigger": "minecraft:location"
+    }
+  }
+}

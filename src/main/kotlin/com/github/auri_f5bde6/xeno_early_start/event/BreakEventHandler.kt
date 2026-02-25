@@ -3,10 +3,12 @@ package com.github.auri_f5bde6.xeno_early_start.event
 import com.github.auri_f5bde6.xeno_early_start.CoalDust.tryDetonate
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags
+import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
@@ -23,13 +25,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 object BreakEventHandler {
     @SubscribeEvent
     fun onBreakEvent(event: BreakEvent) {
-        val eventState = event.state
         val level = event.level
         val pos = event.pos
         val player = event.player
         val toolStack = player.mainHandStack
         val state = event.state
-        if (eventState.canHarvestBlock(level, pos, player)) {
+        if (state.canHarvestBlock(level, pos, player)) {
             if (state.isIn(XenoEarlyStartTags.Blocks.HAS_BLOCK_TO_BLOCK_RECIPE)) {
                 val recipes = (level as World).recipeManager
                     .listAllOfType(XenoEarlyStartRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())
@@ -46,6 +47,9 @@ object BreakEventHandler {
         }
         if (state.isIn(Tags.Blocks.ORES_COAL) && !level.isClient) {
             tryDetonate(level as ServerWorld, pos, false, null)
+        }
+        if (!level.isClient) {
+            XenoEarlyStartCriteria.BREAK_BLOCK.trigger(player as ServerPlayerEntity, state)
         }
     }
 

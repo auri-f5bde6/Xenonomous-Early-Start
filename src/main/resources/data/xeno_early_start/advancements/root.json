@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:player_head",
+      "nbt": "{SkullOwner:xenonomous}"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.root.title",
+      "color": "#814a93"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "frame": "goal"
+  },
+  "criteria": {
+    "start": {
+      "trigger": "minecraft:location"
+    }
+  }
+}

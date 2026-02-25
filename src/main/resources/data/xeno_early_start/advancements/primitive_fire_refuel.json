@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:stick"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.primitive_fire_refuel.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.primitive_fire_refuel.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:primitive_fire",
+  "criteria": {
+    "create": {
+      "conditions": {
+        "type": "refuel"
+      },
+      "trigger": "xeno_early_start:primitive_fire"
+    }
+  }
+}

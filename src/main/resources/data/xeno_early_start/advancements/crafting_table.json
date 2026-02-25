@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:crafting_table"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.crafting_table.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.crafting_table.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:treated_wood_gate",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:crafting_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

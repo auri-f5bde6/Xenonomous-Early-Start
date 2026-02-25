@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:fern"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.grass.title",
+      "color": "#3c5c33"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.grass.description"
+    },
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:flint",
+  "criteria": {
+    "break_grass": {
+      "trigger": "xeno_early_start:break_block",
+      "conditions": {
+        "player": {
+          "equipment": {
+            "mainhand": {
+              "items": [
+                "minecraft:flint"
+              ]
+            }
+          }
+        },
+        "block": "#minecraft:replaceable_by_trees"
+      }
+    }
+  }
+}

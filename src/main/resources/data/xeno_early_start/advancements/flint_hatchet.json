@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:flint_hatchet"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.flint_hatchet.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.flint_hatchet.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:plant_fiber",
+  "criteria": {
+    "has_plant_fiber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "xeno_early_start:flint_hatchet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}
