@@ -1,10 +1,13 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins;
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartToolMaterials;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.util.Identifier;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.TierSortingRegistry;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -19,5 +22,13 @@ public class TierSortingRegistryMixin {
         } else {
             original.call(tier, name, afters, befores);
         }
+    }
+
+    @WrapMethod(method = "isCorrectTierForDrops")
+    private static boolean flintCantMineOre(ToolMaterial tier, BlockState state, Operation<Boolean> original) {
+        if ((tier == XenoEarlyStartToolMaterials.FLINT || tier == XenoEarlyStartToolMaterials.BONE) && state.isIn(Tags.Blocks.ORES)) {
+            return false;
+        }
+        return original.call(tier, state);
     }
 }
