@@ -28,6 +28,8 @@ object ItemTooltipEventListener {
             }
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.RAW_BRICK.get())) {
                 t.addItemDescriptionTooltip("raw_brick")
+                t.addTutorialTooltip("raw_brick_warning")
+                t.addTutorialTooltip("raw_brick_zombie")
             }
             if (event.itemStack.isOf(Items.BRICK)) {
                 t.addItemDescriptionTooltip("brick_throwable")
@@ -45,11 +47,11 @@ object ItemTooltipEventListener {
                 t.addTutorialTooltip("pebble")
                 t.addItemDescriptionTooltip("pebble_to_shard")
             }
-            if (event.itemStack.isIn(XenoEarlyStartTags.Items.SHARDS)) {
-                t.addTutorialTooltip("shards")
-            }
             if (event.itemStack.isIn(XenoEarlyStartTags.Items.KNAPPED_STONE)) {
                 t.addTutorialTooltip("knapped_stone")
+            }
+            if (event.itemStack.isIn(XenoEarlyStartTags.Items.SHARDS)) {
+                t.addTutorialTooltip("shards")
             }
             if (!XenoEarlyStartConfig.config.client.tooltips.disableFoodWarningTooltips) {
                 if (event.itemStack.isIn(XenoEarlyStartTags.Items.RAW_FOOD_WARNING)) {
@@ -143,7 +145,7 @@ object ItemTooltipEventListener {
                 event.toolTip.add(
                     at + 1,
                     getTranslatedText("shift_hidden").setStyle(
-                        Style.EMPTY.withItalic(true).withColor(0x3e3e3e)
+                        Style.EMPTY.withItalic(true).withColor(0xf5bde6)
                     )
                 )
             }

@@ -117,6 +117,9 @@
   "xeno_early_start.item.tooltip.fire_starter_description": "Requires 30 second worth of dropped burnables (at least 6 stick on default setting) to use",
   "xeno_early_start.item.tooltip.fire_starter_chance": "Have 25% chance of success, 50% when in dry biome, but always fails in rain",
   "xeno_early_start.item.tooltip.raw_brick": "Dries into a brick when placed down and exposed to sun unobstructed",
+  "xeno_early_start.item.tooltip.raw_brick_warning": "Drying progress reset when exposed to rain, this can be avoided by placing glass over the raw brick, at the cost of drying speed",
+  "xeno_early_start.item.tooltip.raw_brick_zombie": "It is also advisable to protect the raw brick from being trample on by zombie",
+
   "xeno_early_start.item.tooltip.brick_throwable": "Throwable (please exercise caution and restraint near glass)",
   "xeno_early_start.item.tooltip.brick_obtain": "Can also be obtained by drying raw brick",
   "xeno_early_start.item.tooltip.primitive_fire1": "Fuel will slowly deplete, throw burnables to refill",

@@ -18,13 +18,17 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
             if (player != null) {
                 val mainhandStack = player.mainHandStack
                 val offhandStack = player.offHandStack
-                if (offhandStack.isOf(mainhandStack.item) && (blockState.isIn(
-                        Tags.Blocks.COBBLESTONE
-                    ) || blockState.isIn(Tags.Blocks.STONE))
-                ) {
+                if (blockState.isIn(Tags.Blocks.COBBLESTONE) || blockState.isIn(Tags.Blocks.STONE)) {
                     if (!player.isCreative) {
-                        mainhandStack.decrement(1)
-                        offhandStack.decrement(1)
+                        if (offhandStack.isOf(mainhandStack.item)) {
+                            mainhandStack.decrement(1)
+                            offhandStack.decrement(1)
+                        } else if (mainhandStack.count >= 2) {
+                            mainhandStack.decrement(2)
+                        } else {
+                            return ActionResult.FAIL
+                        }
+
                         player.addExhaustion(4.5f)
                     }
                     player.giveItemStack(result)
