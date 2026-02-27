@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.mixins.accessors.AdvancementsScreenAccessor
+import com.github.auri_f5bde6.xeno_early_start.mixins.client.accessors.AdvancementsScreenAccessor
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen
 import net.minecraft.client.network.ClientPlayerEntity

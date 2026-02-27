@@ -1,25 +1,25 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:gold_ingot"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.copper.title"
+      "translate": "advancements.xeno_early_start.iron_age.iron.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.copper.description"
+      "translate": "advancements.xeno_early_start.iron_age.iron.description"
     },
     "frame": "goal"
   },
-  "parent": "xeno_early_start:brick_furnace_gate",
+  "parent": "xeno_early_start:iron_age/brick_furnace_gate2",
   "criteria": {
     "has_cobblestone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:copper_ingot",
-              "xeno_early_start:copper_nugget"
+              "minecraft:gold_ingot",
+              "minecraft:gold_nugget"
             ]
           }
         ]
@@ -29,7 +29,7 @@
   },
   "rewards": {
     "recipes": [
-      "xeno_early_start:copper_pickaxe"
+      "minecraft:golden_pickaxe"
     ]
   }
 }

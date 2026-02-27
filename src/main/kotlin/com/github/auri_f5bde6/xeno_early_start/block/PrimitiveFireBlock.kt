@@ -20,6 +20,7 @@ import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
+import net.minecraft.item.ItemUsageContext
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.recipe.RecipeType
 import net.minecraft.server.network.ServerPlayerEntity
@@ -31,6 +32,7 @@ import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.DirectionProperty
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
+import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
@@ -125,9 +127,28 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
         }
 
         @JvmStatic
-        fun canBeLit(state: BlockState): Boolean {
-            return state.isOf(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get())
-                    && !state.get(WATERLOGGED) && !state.get(LIT)
+        fun canBeLit(state: BlockState, context: ItemUsageContext, refuel: Int? = null): Boolean {
+            if (!(state.isOf(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get())
+                        && !state.get(WATERLOGGED) && !state.get(LIT))
+            ) {
+                return false
+            }
+            val blockEntity = context.world.getBlockEntity(context.blockPos)
+            if (blockEntity is PrimitiveFireBlockEntity) {
+                if (refuel != null) {
+                    blockEntity.burnTime = blockEntity.burnTime + refuel
+                }
+                if (blockEntity.burnTime > 0) {
+                    return true
+                }
+                context.player?.sendMessage(Text.translatable("xeno_early_start.gameplay.not_enough_fuel"), true)
+            }
+            return false
+        }
+
+        @JvmStatic
+        fun canBeLit(state: BlockState, context: ItemUsageContext): Boolean {
+            return canBeLit(state, context, refuel = null)
         }
 
         fun maybeConsumeStack(stack: ItemStack, oldFuelTime: Int, consume: Boolean): Int {

@@ -15,7 +15,7 @@
   },
   "criteria": {
     "start": {
-      "trigger": "minecraft:location"
+      "trigger": "minecraft:tick"
     }
   },
   "rewards": {

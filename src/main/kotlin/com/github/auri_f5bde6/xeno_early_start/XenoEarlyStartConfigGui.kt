@@ -46,6 +46,7 @@ object XenoEarlyStartConfigGui {
             0.4f
         )
         val primitiveFireCategory = category.newSubCategory("primitiveFire", expanded = true)
+        val inMinuteTooltip = ConfigWrapper.CustomTooltip("inMinute")
         primitiveFireCategory.addPercentageSlider(
             "percentageRequiredForMaxBrightness",
             XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::percentageRequiredForMaxBrightness,
@@ -59,7 +60,7 @@ object XenoEarlyStartConfigGui {
             60 * 60 * 20,
             { i: Int -> i / 60 / 20 },
             { i: Int -> i * 60 * 20 },
-            tooltip = ConfigWrapper.DefaultTooltip()
+            tooltip = inMinuteTooltip
         )
         primitiveFireCategory.addPercentageSlider(
             "fuelTimeMultiplier",
@@ -67,6 +68,16 @@ object XenoEarlyStartConfigGui {
             1.0f,
             1.0f,
             2.0f
+        )
+        primitiveFireCategory.addIntSlider(
+            "fuelStarterRelightFuelTime",
+            XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::fuelStarterRelightFuelTime,
+            3 * 60 * 20,
+            1 * 60 * 60,
+            60 * 60 * 20,
+            { i: Int -> i / 60 / 20 },
+            { i: Int -> i * 60 * 20 },
+            tooltip = inMinuteTooltip
         )
         category.addSubCategory(primitiveFireCategory)
     }
@@ -258,7 +269,7 @@ object XenoEarlyStartConfigGui {
 
     private fun addClientEntries(config: ConfigWrapper) {
         val category = config.newCategory("client")
-        val tooltips = category.newSubCategory("tooltips")
+        val tooltips = category.newSubCategory("tooltips", expanded = true)
         val tutorialTooltips = ConfigWrapper.CustomTooltip("tutorialTooltips")
         tooltips.addBooleanToggle(
             "disableAllTooltip",

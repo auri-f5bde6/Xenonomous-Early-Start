@@ -1,10 +1,10 @@
 {
   "display": {
     "icon": {
-      "item": "xeno_early_start:raw_copper_nugget"
+      "item": "xeno_early_start:raw_iron_nugget"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.raw_copper_nugget.title"
+      "translate": "advancements.xeno_early_start.iron_age.raw_iron_nugget.title"
     },
     "description": {
       "translate": "advancements.xeno_early_start.raw_nugget.description"
@@ -12,14 +12,14 @@
     "announce_to_chat": false,
     "frame": "task"
   },
-  "parent": "xeno_early_start:copper_ore",
+  "parent": "xeno_early_start:iron_age/iron_ore",
   "criteria": {
     "has_cobblestone": {
       "conditions": {
         "items": [
           {
             "items": [
-              "xeno_early_start:raw_copper_nugget"
+              "xeno_early_start:raw_iron_nugget"
             ]
           }
         ]
@@ -29,7 +29,7 @@
   },
   "rewards": {
     "recipes": [
-      "minecraft:raw_copper"
+      "minecraft:raw_iron"
     ]
   }
 }

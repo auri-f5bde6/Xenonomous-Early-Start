@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:raw_iron"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.iron_age.raw_iron.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.iron_age.raw_iron.description"
+    },
+    "announce_to_chat": false,
+    "frame": "task"
+  },
+  "parent": "xeno_early_start:iron_age/raw_iron_nugget",
+  "criteria": {
+    "has_cobblestone": {
+      "conditions": {
+        "recipe_id": "xeno_early_start:raw_iron_from_raw_iron_nuggets"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  }
+}

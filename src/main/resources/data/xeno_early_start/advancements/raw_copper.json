@@ -16,15 +16,9 @@
   "criteria": {
     "has_cobblestone": {
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft:raw_copper"
-            ]
-          }
-        ]
+        "recipe_id": "xeno_early_start:raw_copper_from_raw_copper_nuggets"
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:recipe_crafted"
     }
   }
 }

@@ -111,7 +111,12 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
         val world = context.world
         val blockPos = context.blockPos
         val blockState = context.world.getBlockState(context.blockPos)
-        if (PrimitiveFireBlock.canBeLit(blockState)) {
+        if (PrimitiveFireBlock.canBeLit(
+                blockState,
+                context,
+                refuel = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.fuelStarterRelightFuelTime
+            )
+        ) {
             val player = context.player
             world.playSound(
                 player,

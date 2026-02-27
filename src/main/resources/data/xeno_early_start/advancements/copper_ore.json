@@ -16,39 +16,6 @@
     "block": {
       "trigger": "xeno_early_start:break_block",
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:all_of",
-            "terms": [
-              {
-                "condition": "xeno_early_start:match_tool_tier",
-                "tier": "minecraft:diamond",
-                "cond": "<"
-              },
-              {
-                "condition": "xeno_early_start:match_tool_tier",
-                "tier": "minecraft:gold",
-                "cond": "!="
-              },
-              {
-                "condition": "minecraft:inverted",
-                "term": {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "enchantments": [
-                      {
-                        "enchantment": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            ]
-          }
-        ],
         "block": "minecraft:copper_ore"
       }
     }

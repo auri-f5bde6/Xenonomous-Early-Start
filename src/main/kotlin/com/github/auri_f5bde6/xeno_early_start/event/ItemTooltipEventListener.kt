@@ -6,23 +6,48 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.item.Items
+import net.minecraft.recipe.RecipeType
 import net.minecraft.text.MutableText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
+import net.minecraftforge.common.ForgeHooks.getBurnTime
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
+import kotlin.math.ceil
 
 @Suppress("UNUSED_PARAMETER")
 @EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
 object ItemTooltipEventListener {
+    fun calculateNumberOfStickRequired(fuelTime: Float): Int {
+        val stickBurnTime = getBurnTime(Items.STICK.defaultStack, RecipeType.SMELTING).toFloat()
+        return ceil(fuelTime / (stickBurnTime * XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.fuelTimeMultiplier)).toInt()
+    }
+
+    val AURI: Style = Style.EMPTY.withColor(0xf5bde6) // :3
+    fun auriText(string: String, style: Style = AURI): MutableText {
+        return Text.literal(string).setStyle(style)
+    }
+
     @SubscribeEvent
     fun onItemTooltipEvent(event: ItemTooltipEvent) {
         if (!XenoEarlyStartConfig.config.client.tooltips.disableAllTooltips) {
             val t = Tooltips()
+            val primitiveFire = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.FIRE_STARTER.get())) {
-                t.addItemDescriptionTooltip("fire_starter_purpose")
-                t.addTutorialTooltip("fire_starter_description")
+                //t.addItemDescriptionTooltip("fire_starter_purpose")
+                t.addItemDescriptionTooltip(
+                    t.getTranslatedText("fire_starter_purpose")
+                        .append(auriText(" ${primitiveFire.fuelStarterRelightFuelTime / 60 / 20} "))
+                        .append(t.getTranslatedText("minutes"))
+                )
+                t.addTutorialTooltip(
+                    t.getTranslatedText("fire_starter_description_requires")
+                        .append(auriText(" ${primitiveFire.maxBurnTime / 20 / 60} "))
+                        .append(t.getTranslatedText("fire_starter_description_middle"))
+                        .append(auriText(" ${calculateNumberOfStickRequired(primitiveFire.percentageRequiredForMaxBrightness * primitiveFire.maxBurnTime)} "))
+                        .append(t.getTranslatedText("fire_starter_description_end"))
+                )
                 t.addTutorialTooltip("fire_starter_chance")
 
             }
@@ -38,10 +63,24 @@ object ItemTooltipEventListener {
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.PRIMITIVE_FIRE.get())) {
                 t.addItemDescriptionTooltip("fire_starter_creation")
                 t.addTutorialTooltip("primitive_fire1")
-                t.addTutorialTooltip("primitive_fire2")
+                t.addTutorialTooltip(
+                    t.getTranslatedText("primitive_fire2")
+                        .append(auriText(" ${primitiveFire.maxBurnTime / 20 / 60} "))
+                        .append(t.getTranslatedText("primitive_fire3"))
+                        .append(auriText(" ${calculateNumberOfStickRequired(primitiveFire.maxBurnTime.toFloat())} "))
+                        .append(t.getTranslatedText("primitive_fire4"))
+                )
+                t.addTutorialTooltip("primitive_fire5")
             }
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.PLANT_FIBER.get())) {
-                t.addTutorialTooltip("plant_fiber")
+                t.addTutorialTooltip(t.getTranslatedText("plant_fiber1"))
+                t.addTutorialTooltip(
+                    Text.empty()
+                        .append(auriText("(", style = Style.EMPTY))
+                        .append(auriText("${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}% "))
+                        .append(t.getTranslatedText("plant_fiber2"))
+                        .append(auriText(")", style = Style.EMPTY))
+                )
             }
             if (event.itemStack.isIn(XenoEarlyStartTags.Items.PEBBLES)) {
                 t.addTutorialTooltip("pebble")
@@ -51,7 +90,11 @@ object ItemTooltipEventListener {
                 t.addTutorialTooltip("knapped_stone")
             }
             if (event.itemStack.isIn(XenoEarlyStartTags.Items.SHARDS)) {
-                t.addTutorialTooltip("shards")
+                t.addTutorialTooltip(
+                    t.getTranslatedText("shards1")
+                        .append(auriText(" ${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}% "))
+                        .append(t.getTranslatedText("shards2"))
+                )
             }
             if (!XenoEarlyStartConfig.config.client.tooltips.disableFoodWarningTooltips) {
                 if (event.itemStack.isIn(XenoEarlyStartTags.Items.RAW_FOOD_WARNING)) {
@@ -67,10 +110,11 @@ object ItemTooltipEventListener {
                 t.addTutorialTooltip("starting_guide")
             }
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.GUIDE.get())) {
+                t.addItemDescriptionTooltip("guide")
                 t.addItemDescriptionTooltip(
-                    t.getTranslatedText("guide").append(
+                    t.getTranslatedText("guide_more").append(
                         Text.keybind("key.advancements").setStyle(
-                            Style.EMPTY.withItalic(true).withColor(0xf5bde6)
+                            AURI.withItalic(true)
                         )
                     )
                 )
@@ -133,7 +177,7 @@ object ItemTooltipEventListener {
             if (tooltips.isEmpty()) {
                 return
             }
-            if (Screen.hasShiftDown() || tooltips.size == 1) {
+            if (Screen.hasShiftDown() || tooltips.size == 1 || true) {
                 for (text in tooltips.reversed()) {
                     event.toolTip.add(at, text)
                 }

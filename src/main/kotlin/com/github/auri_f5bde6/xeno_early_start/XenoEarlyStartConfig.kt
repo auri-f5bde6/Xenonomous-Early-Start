@@ -1,5 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start
 
+import kotlin.math.min
+
 object XenoEarlyStartConfig {
     class Config {
         @JvmField
@@ -55,6 +57,10 @@ object XenoEarlyStartConfig {
             var maxBurnTime: Int = 5 * 60 * 20
             var percentageRequiredForMaxBrightness: Float = 0.25f
             var fuelTimeMultiplier: Float = 1f
+            var fuelStarterRelightFuelTime: Int = 3 * 60 * 20
+                set(value) {
+                    field = min(value, maxBurnTime)
+                }
         }
     }
 

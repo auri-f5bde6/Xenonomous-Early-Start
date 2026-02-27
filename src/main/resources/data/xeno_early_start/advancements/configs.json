@@ -16,7 +16,7 @@
   "parent": "xeno_early_start:tips",
   "criteria": {
     "start": {
-      "trigger": "minecraft:location"
+      "trigger": "minecraft:tick"
     }
   }
 }

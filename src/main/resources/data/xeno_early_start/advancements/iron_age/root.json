@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:stone_pickaxe"
+      "item": "minecraft:iron_pickaxe"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.stone_age.title"
+      "translate": "advancements.xeno_early_start.iron_age.root.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.stone_age.description"
+      "translate": "advancements.xeno_early_start.iron_age.root.description"
     },
     "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "frame": "goal",

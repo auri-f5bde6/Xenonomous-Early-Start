@@ -42,7 +42,10 @@ class PrimitiveFireBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(
     private val itemsBeingCooked: DefaultedList<ItemStack> = DefaultedList.ofSize(2, ItemStack.EMPTY)
     private val cookingTimes = IntArray(2)
     private val cookingTotalTimes = IntArray(2)
-    var burnTime = 0
+    var burnTime: Int = 0
+        set(value) {
+            field = min(value, XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime)
+        }
     private val campfireMatchGetter: MatchGetter<Inventory, CampfireCookingRecipe> =
         RecipeManager.createCachedMatchGetter(RecipeType.CAMPFIRE_COOKING)
 
