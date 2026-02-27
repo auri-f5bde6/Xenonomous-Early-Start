@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.mixins.accessors;
+package com.github.auri_f5bde6.xeno_early_start.mixins.client.accessors;
 
 import net.minecraft.advancement.Advancement;
 import net.minecraft.client.gui.screen.advancement.AdvancementTab;
