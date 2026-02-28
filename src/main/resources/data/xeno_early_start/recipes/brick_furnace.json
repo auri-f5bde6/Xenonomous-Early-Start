@@ -4,11 +4,14 @@
   "key": {
     "#": {
       "item": "minecraft:bricks"
+    },
+    "b": {
+      "item": "minecraft:brick"
     }
   },
   "pattern": [
-    "###",
-    "# #",
+    "bbb",
+    "b b",
     "###"
   ],
   "result": {

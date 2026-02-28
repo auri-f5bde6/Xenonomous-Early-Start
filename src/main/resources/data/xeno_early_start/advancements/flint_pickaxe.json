@@ -27,5 +27,12 @@
         ]
       }
     }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:cobblestone_from_pebbles",
+      "xeno_early_start:blackstone_from_pebbles",
+      "xeno_early_start:deepslate_from_pebbles"
+    ]
   }
 }
