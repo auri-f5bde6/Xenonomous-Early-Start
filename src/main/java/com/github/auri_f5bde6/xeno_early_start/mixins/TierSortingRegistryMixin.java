@@ -27,6 +27,10 @@ public class TierSortingRegistryMixin {
     @WrapMethod(method = "isCorrectTierForDrops")
     private static boolean flintCantMineOre(ToolMaterial tier, BlockState state, Operation<Boolean> original) {
         if ((tier == XenoEarlyStartToolMaterials.FLINT || tier == XenoEarlyStartToolMaterials.BONE) && state.isIn(Tags.Blocks.ORES)) {
+            // Flint/bone pickaxe cannot mine ore
+            return false;
+        } else if (tier == XenoEarlyStartToolMaterials.COPPER && (state.isIn(Tags.Blocks.ORES) && !(state.isIn(Tags.Blocks.ORES_COPPER) || state.isIn(Tags.Blocks.ORES_IRON)))) {
+            // Copper pickaxe can only mine iron or copper (todo: and silver)
             return false;
         }
         return original.call(tier, state);
