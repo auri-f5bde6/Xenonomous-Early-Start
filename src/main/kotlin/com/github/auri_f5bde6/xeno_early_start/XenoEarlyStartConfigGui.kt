@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start
 
+import com.github.auri_f5bde6.xeno_early_start.block.RawBrickBlock
 import com.github.auri_f5bde6.xeno_early_start.config.ConfigWrapper
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter
 import me.shedaniel.clothconfig2.api.ConfigBuilder
@@ -44,6 +45,14 @@ object XenoEarlyStartConfigGui {
             "pebbleDropProbability",
             XenoEarlyStartConfig.config.earlyGameChanges::pebbleDropProbability,
             0.4f
+        )
+        category.addIntSlider(
+            "rawBrickDryingLength",
+            XenoEarlyStartConfig.config.earlyGameChanges::rawBrickDryingLength,
+            7,
+            0,
+            RawBrickBlock.MAX_DRY_LEVEL,
+            tooltip = ConfigWrapper.DefaultTooltip()
         )
         val primitiveFireCategory = category.newSubCategory("primitiveFire", expanded = true)
         val inMinuteTooltip = ConfigWrapper.CustomTooltip("inMinute")

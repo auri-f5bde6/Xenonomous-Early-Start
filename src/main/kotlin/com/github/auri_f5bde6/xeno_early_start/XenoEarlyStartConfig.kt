@@ -50,7 +50,7 @@ object XenoEarlyStartConfig {
 
         var pebbleDropProbability: Float = 0.4f
 
-        // 15/(20*60*5)=0.025
+        var rawBrickDryingLength: Int = 7
         var primitiveFire: PrimitiveFire = PrimitiveFire()
 
         class PrimitiveFire {

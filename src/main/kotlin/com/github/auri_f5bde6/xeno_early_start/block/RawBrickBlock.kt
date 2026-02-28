@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils.isCovered
 import net.minecraft.block.Block
@@ -82,8 +83,10 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
         }
         if (world.timeOfDay % 24000 < 12000 && canSeeSky) {
             return if (!raining) {
-                0.95f
+                // With no glass covering
+                1f
             } else {
+                // With glass covering
                 0.76f
             }
         }
@@ -91,10 +94,11 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     }
 
     private fun dryTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random, probability: Float) {
-        if (random.nextFloat() < probability && state[DRYING_LEVEL] < FINISH_DRYING_AT) {
+        val finishDryingAt = XenoEarlyStartConfig.config.earlyGameChanges.rawBrickDryingLength
+        if (random.nextFloat() < probability && state[DRYING_LEVEL] < finishDryingAt) {
             world.setBlockState(pos, state.with(DRYING_LEVEL, state[DRYING_LEVEL] + 1))
         }
-        if (state[DRYING_LEVEL] >= FINISH_DRYING_AT) {
+        if (state[DRYING_LEVEL] >= finishDryingAt) {
             world.playSound(
                 null,
                 pos.x + 0.5,
@@ -133,7 +137,7 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     }
 
     companion object {
-        const val FINISH_DRYING_AT = 18
-        val DRYING_LEVEL: IntProperty = IntProperty.of("drying_level", 0, FINISH_DRYING_AT)
+        const val MAX_DRY_LEVEL = 18
+        val DRYING_LEVEL: IntProperty = IntProperty.of("drying_level", 0, MAX_DRY_LEVEL)
     }
 }
