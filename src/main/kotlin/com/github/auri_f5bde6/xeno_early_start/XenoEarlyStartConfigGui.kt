@@ -28,24 +28,6 @@ object XenoEarlyStartConfigGui {
 
     private fun addEarlyGameEntries(config: ConfigWrapper) {
         val category = config.newCategory("earlyGameChanges")
-
-        category.addPercentageSlider(
-            "plantFiberDropProbability",
-            XenoEarlyStartConfig.config.earlyGameChanges::plantFiberDropProbability,
-            0.05f
-        )
-
-        category.addBooleanToggle(
-            "overridePebbleDropProbability",
-            XenoEarlyStartConfig.config.earlyGameChanges::overridePebbleDropProbability,
-            false
-        )
-
-        category.addPercentageSlider(
-            "pebbleDropProbability",
-            XenoEarlyStartConfig.config.earlyGameChanges::pebbleDropProbability,
-            0.4f
-        )
         category.addIntSlider(
             "rawBrickDryingLength",
             XenoEarlyStartConfig.config.earlyGameChanges::rawBrickDryingLength,
@@ -54,6 +36,30 @@ object XenoEarlyStartConfigGui {
             RawBrickBlock.MAX_DRY_LEVEL,
             tooltip = ConfigWrapper.DefaultTooltip()
         )
+        category.addBooleanToggle(
+            "removePickaxeFromAllLootTable",
+            XenoEarlyStartConfig.config.earlyGameChanges::removePickaxeFromAllLootTable,
+            true
+        )
+        val dropRate = category.newSubCategory("dropRate", expanded = true)
+        dropRate.addPercentageSlider(
+            "plantFiberDropProbability",
+            XenoEarlyStartConfig.config.earlyGameChanges::plantFiberDropProbability,
+            0.05f
+        )
+
+        dropRate.addBooleanToggle(
+            "overridePebbleDropProbability",
+            XenoEarlyStartConfig.config.earlyGameChanges::overridePebbleDropProbability,
+            false
+        )
+
+        dropRate.addPercentageSlider(
+            "pebbleDropProbability",
+            XenoEarlyStartConfig.config.earlyGameChanges::pebbleDropProbability,
+            0.4f
+        )
+        category.addSubCategory(dropRate)
         val primitiveFireCategory = category.newSubCategory("primitiveFire", expanded = true)
         val inMinuteTooltip = ConfigWrapper.CustomTooltip("inMinute")
         primitiveFireCategory.addPercentageSlider(
@@ -180,7 +186,7 @@ object XenoEarlyStartConfigGui {
         category.addIntSlider(
             "rawDiamondFragmentDrop",
             XenoEarlyStartConfig.config.oreChanges::diamondFragmentDrop,
-            1,
+            3,
             1,
             9
         )

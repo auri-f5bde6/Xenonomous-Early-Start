@@ -2,10 +2,7 @@ package com.github.auri_f5bde6.xeno_early_start.registries
 
 import com.github.auri_f5bde6.xeno_early_start.MultiplicativeSpawnModifier
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.loot.AddTableLootModifier
-import com.github.auri_f5bde6.xeno_early_start.loot.CapItemCountModifier
-import com.github.auri_f5bde6.xeno_early_start.loot.RemoveItemLootModifier
-import com.github.auri_f5bde6.xeno_early_start.loot.ReplaceTableLootModifier
+import com.github.auri_f5bde6.xeno_early_start.loot.*
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.registry.Registries
@@ -41,4 +38,6 @@ object XenoEarlyStartCodecRegistry {
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("cap_item_count") { CapItemCountModifier.CODEC.codec() }
     val REMOVE_ITEM_LOOT_MODIFIER_TYPE: Supplier<Codec<RemoveItemLootModifier>> =
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("remove_items") { RemoveItemLootModifier.CODEC.codec() }
+    val REMOVE_PICKAXE_LOOT_MODIFIER_TYPE: Supplier<Codec<RemovePickaxeModifier>> =
+        GLOBAL_LOOT_MODIFIER_DEF_REG.register("remove_all_pickaxe") { RemovePickaxeModifier.CODEC.codec() }
 }

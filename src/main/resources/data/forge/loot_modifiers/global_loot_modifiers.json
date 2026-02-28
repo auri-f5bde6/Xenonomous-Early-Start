@@ -21,6 +21,10 @@
     "xeno_early_start:bear_fat",
     "xeno_early_start:hoglin_fat",
     "xeno_early_start:sheep_fat",
-    "xeno_early_start:wolf_fat"
+    "xeno_early_start:wolf_fat",
+    "xeno_early_start:remove_all_pickaxe",
+    "xeno_early_start:remove_wooden_axe_from_bonus_chest",
+    "xeno_early_start:remove_wooden_pickaxe_from_bonus_chest"
+
   ]
 }
