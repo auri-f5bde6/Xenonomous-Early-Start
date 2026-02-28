@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Text.Serializer.class)
 public abstract class TextSerializerMixin {
-    @Definition(id = "jsonObject", local = @Local(type = JsonObject.class, name = "jsonObject"))
+    @Definition(id = "jsonObject", local = @Local(type = JsonObject.class, ordinal = 0))
     @Definition(id = "has", method = "Lcom/google/gson/JsonObject;has(Ljava/lang/String;)Z")
     @Expression("jsonObject.has('keybind')")
     @WrapOperation(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/text/MutableText;", at = @At("MIXINEXTRAS:EXPRESSION"))
@@ -24,7 +24,7 @@ public abstract class TextSerializerMixin {
     }
 
     @WrapOperation(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/text/MutableText;", at = @At(value = "INVOKE", target = "Lnet/minecraft/text/Text;keybind(Ljava/lang/String;)Lnet/minecraft/text/MutableText;"))
-    MutableText replaceText(String string, Operation<MutableText> original, @Local(name = "jsonObject") JsonObject jsonObject) {
+    MutableText replaceText(String string, Operation<MutableText> original, @Local(ordinal = 0) JsonObject jsonObject) {
         if (jsonObject.has("xeno_early_start")) {
             return XenoEarlyStartTextType.getText(string);
         } else {
@@ -35,7 +35,7 @@ public abstract class TextSerializerMixin {
     @Definition(id = "getString", method = "Lnet/minecraft/util/JsonHelper;getString(Lcom/google/gson/JsonObject;Ljava/lang/String;)Ljava/lang/String;")
     @Expression("getString(?,'keybind')")
     @WrapOperation(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/text/MutableText;", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
-    String maybeReturnCustomValue(JsonObject object, String element, Operation<String> original, @Local(name = "jsonObject") JsonObject jsonObject) {
+    String maybeReturnCustomValue(JsonObject object, String element, Operation<String> original, @Local(ordinal = 0) JsonObject jsonObject) {
         if (jsonObject.has("xeno_early_start")) {
             return JsonHelper.getString(object, "xeno_early_start");
         } else {
