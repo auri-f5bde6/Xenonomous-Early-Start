@@ -123,7 +123,7 @@ object ItemTooltipEventListener {
         }
         fun getTranslatedText(name: String): MutableText {
             return Text.translatable(
-                "xeno_early_start.item.tooltip"
+                "xeno_early_start.item.tooltip.$name"
             )
         }
 
