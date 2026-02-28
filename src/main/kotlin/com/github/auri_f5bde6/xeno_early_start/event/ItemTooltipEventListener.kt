@@ -96,6 +96,7 @@ object ItemTooltipEventListener {
             }
             if (event.itemStack.isOf(Items.FLINT)) {
                 t.addTutorialTooltip("flint")
+                t.addTutorialTooltip("flint_knapping")
             }
             if (event.itemStack.isOf(Items.WOODEN_PICKAXE)) {
                 t.addTutorialTooltip("starting_guide")
@@ -151,7 +152,9 @@ object ItemTooltipEventListener {
                 addToolTip(text)
             }
         }
-
+        fun addTutorialTooltip(name: String) {
+            addTutorialTooltip(getTranslatedText(name))
+        }
         fun addTutorialTooltip(name: String, vararg values: Any) {
             addTutorialTooltip(getTranslatedText(name, *values))
         }

@@ -7,7 +7,7 @@
       "translate": "advancements.xeno_early_start.fire_starter.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.fire_starter.description"
+      "xeno_early_start": "advancements.xeno_early_start.fire_starter.description"
     },
     "frame": "goal"
   },

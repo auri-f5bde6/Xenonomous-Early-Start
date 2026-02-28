@@ -14,7 +14,7 @@ object XenoEarlyStartTextType {
                     "${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}%"
                 )
 
-                "advancements.xeno_early_start.primitive_fire.description" -> arrayOf(
+                "advancements.xeno_early_start.fire_starter.description" -> arrayOf(
                     "${(XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.percentageRequiredForMaxBrightness * XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.maxBurnTime / 20 / 60).toInt()}",
                     "${
                         calculateNumberOfStickRequired(
