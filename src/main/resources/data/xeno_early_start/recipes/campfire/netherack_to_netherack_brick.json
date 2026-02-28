@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "forge:netherrack"
+  },
+  "result": "minecraft:nether_brick",
+  "experience": 0.1,
+  "cookingtime": 100
+}
