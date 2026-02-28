@@ -15,8 +15,6 @@
     "FoodComponentsMixin",
     "ProwlerMixin",
     "ShovelItemMixin",
-    "TextSerializerMixin",
-    "TextVisitFactoryMixin",
     "TierSortingRegistryMixin",
     "ToolMaterialsMixin",
     "accessors.AbstractFurnaceEntityAccessor",
