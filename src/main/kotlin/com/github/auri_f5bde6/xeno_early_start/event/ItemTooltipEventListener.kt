@@ -38,12 +38,12 @@ object ItemTooltipEventListener {
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.FIRE_STARTER.get())) {
                 t.addItemDescriptionTooltip(
                     "fire_starter_purpose",
-                    "${primitiveFire.fuelStarterRelightFuelTime / 60 / 20}%"
+                    "${primitiveFire.fuelStarterRelightFuelTime / 60 / 20}"
                 )
                 t.addTutorialTooltip(
                     "fire_starter_tutorial",
                     "${primitiveFire.maxBurnTime / 20 / 60}",
-                    "${calculateNumberOfStickRequired(primitiveFire.percentageRequiredForMaxBrightness * primitiveFire.maxBurnTime)}%"
+                    "${calculateNumberOfStickRequired(primitiveFire.percentageRequiredForMaxBrightness * primitiveFire.maxBurnTime)}"
                 )
                 t.addTutorialTooltip("fire_starter_chance")
 
@@ -63,7 +63,7 @@ object ItemTooltipEventListener {
                 t.addTutorialTooltip(
                     "primitive_fire2",
                     "${primitiveFire.maxBurnTime / 20 / 60}",
-                    "${calculateNumberOfStickRequired(primitiveFire.maxBurnTime.toFloat())}%"
+                    "${calculateNumberOfStickRequired(primitiveFire.maxBurnTime.toFloat())}"
                 )
                 t.addTutorialTooltip("primitive_fire3")
             }
@@ -170,7 +170,7 @@ object ItemTooltipEventListener {
             if (tooltips.isEmpty()) {
                 return
             }
-            if (Screen.hasShiftDown() || tooltips.size == 1 || true) {
+            if (Screen.hasShiftDown() || tooltips.size == 1) {
                 for (text in tooltips.reversed()) {
                     event.toolTip.add(at, text)
                 }
