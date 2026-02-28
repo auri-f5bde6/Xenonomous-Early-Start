@@ -38,7 +38,9 @@
       "xeno_early_start:flint_hatchet",
       "xeno_early_start:flint_pickaxe",
       "xeno_early_start:flint_dagger",
-      "xeno_early_start:primitive_arrow"
+      "xeno_early_start:primitive_arrow",
+      "xeno_early_start:fire_starter",
+      "xeno_early_start:bow"
     ]
   }
 }

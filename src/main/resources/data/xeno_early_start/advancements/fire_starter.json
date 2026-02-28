@@ -21,11 +21,17 @@
         "items": [
           {
             "items": [
-              "xeno_early_start:flint_hatchet"
+              "xeno_early_start:fire_starter"
             ]
           }
         ]
       }
     }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:raw_brick",
+      "xeno_early_start:treated_wood"
+    ]
   }
 }

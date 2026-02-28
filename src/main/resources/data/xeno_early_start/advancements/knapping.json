@@ -20,9 +20,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "xeno_early_start:flint_pickaxe"
-            ]
+            "tag": "xeno_early_start:knapped_stone"
           }
         ]
       }
