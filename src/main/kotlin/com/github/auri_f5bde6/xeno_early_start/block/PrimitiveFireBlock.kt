@@ -411,12 +411,9 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                     }
                     return ActionResult.SUCCESS
                 }
-
-                return ActionResult.CONSUME
             }
         }
-
-        return ActionResult.PASS
+        return ActionResult.FAIL
     }
 
 }

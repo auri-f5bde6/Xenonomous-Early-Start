@@ -122,7 +122,7 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
 
     override fun onSteppedOn(world: World, pos: BlockPos, state: BlockState, entity: Entity) {
         super.onSteppedOn(world, pos, state, entity)
-        if (!entity.isSneaking) {
+        if (!entity.isSneaking && entity !is ItemEntity) {
             world.breakBlock(pos, false)
             world.spawnEntity(
                 ItemEntity(
