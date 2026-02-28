@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "H": {
+      "item": "xeno_early_start:animal_fat"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "S",
+    "H"
+  ],
+  "result": {
+    "item": "xeno_early_start:animal_fat"
+  },
+  "show_notification": true
+}

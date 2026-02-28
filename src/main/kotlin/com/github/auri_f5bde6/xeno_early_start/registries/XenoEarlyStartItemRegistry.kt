@@ -155,7 +155,6 @@ object XenoEarlyStartItemRegistry {
         DEF_REG.register("plant_fiber", Supplier { BurnableItem(Item.Settings(), 100) }
         )
 
-    @Suppress("unused")
     @JvmField
     val PLANT_FIBER_BLOCK: RegistryObject<Item> = DEF_REG.register(
         "plant_fiber_block",
@@ -237,6 +236,9 @@ object XenoEarlyStartItemRegistry {
     )
 
     @JvmField
+    val ANIMAL_FAT: RegistryObject<Item> = DEF_REG.register("animal_fat") { Item(Item.Settings()) }
+
+    @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
         GUIDE,
         COPPER_SWORD,
@@ -258,6 +260,7 @@ object XenoEarlyStartItemRegistry {
         RAW_BRICK,
         FLINT_HATCHET,
         PLANT_FIBER,
+        PLANT_FIBER_BLOCK,
         PEBBLE,
         DEEPSLATE_PEBBLE,
         BLACKSTONE_PEBBLE,
@@ -274,6 +277,7 @@ object XenoEarlyStartItemRegistry {
         FLINT_SHARD,
         PRIMITIVE_ARROW,
         PROWLER_SPAWN_EGG,
+        ANIMAL_FAT
     )
 
     @Suppress("UNUSED")

@@ -1,0 +1,19 @@
+{
+  "type": "xeno_early_start:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "xeno_early_start:loot_table_id",
+          "loot_table_id": "minecraft:entities/panda"
+        },
+        {
+          "condition": "xeno_early_start:loot_table_id",
+          "loot_table_id": "minecraft:entities/polar_bear"
+        }
+      ]
+    }
+  ],
+  "table": "xeno_early_start:inject/entities/bear_fat"
+}

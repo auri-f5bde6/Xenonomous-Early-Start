@@ -1,0 +1,10 @@
+{
+  "type": "xeno_early_start:add_table",
+  "conditions": [
+    {
+      "condition": "xeno_early_start:loot_table_id",
+      "loot_table_id": "minecraft:entities/wolf"
+    }
+  ],
+  "table": "xeno_early_start:inject/entities/wolf_fat"
+}

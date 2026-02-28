@@ -15,6 +15,12 @@
     "xeno_early_start:cobblestone",
     "xeno_early_start:remove_cobblestone_block_drop",
     "xeno_early_start:iron_golem_remove_iron_ingot",
-    "xeno_early_start:iron_golem_new_lootable"
+    "xeno_early_start:iron_golem_new_lootable",
+    "xeno_early_start:cow_fat",
+    "xeno_early_start:pig_fat",
+    "xeno_early_start:bear_fat",
+    "xeno_early_start:hoglin_fat",
+    "xeno_early_start:sheep_fat",
+    "xeno_early_start:wolf_fat"
   ]
 }
