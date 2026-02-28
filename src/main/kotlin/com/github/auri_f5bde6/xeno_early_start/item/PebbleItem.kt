@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -9,7 +10,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.common.Tags
 
 class PebbleItem(private val result: Item, settings: Settings) : Item(settings) {
     companion object {
@@ -18,7 +18,7 @@ class PebbleItem(private val result: Item, settings: Settings) : Item(settings) 
             if (player != null) {
                 val mainhandStack = player.mainHandStack
                 val offhandStack = player.offHandStack
-                if (blockState.isIn(Tags.Blocks.COBBLESTONE) || blockState.isIn(Tags.Blocks.STONE)) {
+                if (blockState.isIn(XenoEarlyStartTags.Blocks.CAN_KNAP_STONE)) {
                     if (!player.isCreative) {
                         if (offhandStack.isOf(mainhandStack.item)) {
                             mainhandStack.decrement(1)

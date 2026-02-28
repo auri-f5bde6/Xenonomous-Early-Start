@@ -11,6 +11,7 @@ class XenoEarlyStartTags {
         val HAS_BLOCK_TO_BLOCK_RECIPE: TagKey<Block> = createTag("has_block_to_block_recipe")
         val ALWAYS_TRIGGER_EXPLOSION: TagKey<Block> = createTag("always_trigger_explosion")
         val TRIGGER_EXPLOSION_WHEN_LIT: TagKey<Block> = createTag("trigger_explosion_when_lit")
+        val CAN_KNAP_STONE: TagKey<Block> = createTag("can_knap_stone")
         private fun createTag(name: String): TagKey<Block> {
             return BlockTags.create(XenoEarlyStart.of(name))
         }
