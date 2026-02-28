@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "xeno_early_start:block/plant_fiber_block"
+  }
+}

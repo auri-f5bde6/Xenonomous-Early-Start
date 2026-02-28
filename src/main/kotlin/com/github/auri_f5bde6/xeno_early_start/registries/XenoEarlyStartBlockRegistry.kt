@@ -26,6 +26,7 @@ object XenoEarlyStartBlockRegistry {
     val RAW_BRICK: RegistryObject<Block> = DEF_REG.register("raw_brick", Supplier {
         RawBrickBlock(
             AbstractBlock.Settings.create()
+                .mapColor(MapColor.GRAY)
                 .strength(0.3f, 0.5f)
                 .sounds(BlockSoundGroup.SLIME)
                 .ticksRandomly()
@@ -36,6 +37,7 @@ object XenoEarlyStartBlockRegistry {
     val BRICK: RegistryObject<Block> = DEF_REG.register("brick", Supplier {
         BrickBlock(
             AbstractBlock.Settings.create()
+                .mapColor(MapColor.DARK_RED)
                 .strength(0.6f, 0.5f)
                 .sounds(BlockSoundGroup.DEEPSLATE_BRICKS)
                 .ticksRandomly()
@@ -67,6 +69,14 @@ object XenoEarlyStartBlockRegistry {
                 .luminance(PrimitiveFireBlock.createLightLevel())
                 .nonOpaque()
                 .burnable()
+        )
+    })
+
+    @JvmField
+    val PLANT_FIBER_BLOCK: RegistryObject<Block> = DEF_REG.register("plant_fiber_block", Supplier {
+        Block(
+            AbstractBlock.Settings.create().mapColor(MapColor.DARK_GREEN).instrument(Instrument.BANJO).strength(0.5f)
+                .sounds(BlockSoundGroup.GRASS)
         )
     })
 

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "xeno_early_start:plant_fiber_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "xeno_early_start:plant_fiber"
+  }
+}

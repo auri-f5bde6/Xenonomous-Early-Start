@@ -28,6 +28,8 @@
   },
   "rewards": {
     "recipes": [
+      "xeno_early_start:plant_fiber",
+      "xeno_early_start:plant_fiber_block",
       "xeno_early_start:bone_dagger",
       "xeno_early_start:bone_pickaxe",
       "xeno_early_start:bow_piece",

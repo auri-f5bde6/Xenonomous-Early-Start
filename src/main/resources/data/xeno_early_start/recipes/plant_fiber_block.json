@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    },
+    {
+      "item": "xeno_early_start:plant_fiber"
+    }
+  ],
+  "result": {
+    "item": "xeno_early_start:plant_fiber_block"
+  }
+}

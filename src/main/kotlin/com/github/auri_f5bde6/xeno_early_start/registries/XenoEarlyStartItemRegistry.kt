@@ -155,6 +155,13 @@ object XenoEarlyStartItemRegistry {
         DEF_REG.register("plant_fiber", Supplier { BurnableItem(Item.Settings(), 100) }
         )
 
+    @Suppress("unused")
+    @JvmField
+    val PLANT_FIBER_BLOCK: RegistryObject<Item> = DEF_REG.register(
+        "plant_fiber_block",
+        Supplier { BlockItem(XenoEarlyStartBlockRegistry.PLANT_FIBER_BLOCK.get(), Item.Settings()) }
+    )
+
     @JvmField
     val KNAPPED_STONE: RegistryObject<Item> =
         DEF_REG.register("knapped_stone", Supplier { Item(Item.Settings()) }
