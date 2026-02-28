@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:treated_wood"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.treated_wood.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.treated_wood.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:sugar",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:treated_wood"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "minecraft:crafting_table",
+      "minecraft:wooden_sword",
+      "minecraft:wooden_axe",
+      "minecraft:wooden_pickaxe",
+      "minecraft:wooden_shovel",
+      "minecraft:wooden_hoe"
+    ]
+  }
+}

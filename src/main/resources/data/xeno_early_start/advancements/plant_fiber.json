@@ -7,15 +7,15 @@
       "translate": "advancements.xeno_early_start.plant_fiber.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.plant_fiber.description"
+      "xeno_early_start": "advancements.xeno_early_start.plant_fiber.description"
     },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": false
   },
-  "parent": "xeno_early_start:root",
+  "parent": "xeno_early_start:flint",
   "criteria": {
-    "plant_fiber": {
+    "in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -30,16 +30,13 @@
   },
   "rewards": {
     "recipes": [
-      "xeno_early_start:plant_fiber",
-      "xeno_early_start:plant_fiber_block",
+      "xeno_early_start:fire_starter",
+      "xeno_early_start:flint_dagger",
       "xeno_early_start:bone_dagger",
-      "xeno_early_start:bone_pickaxe",
-      "xeno_early_start:bow_piece",
       "xeno_early_start:flint_hatchet",
       "xeno_early_start:flint_pickaxe",
-      "xeno_early_start:flint_dagger",
-      "xeno_early_start:primitive_arrow",
-      "xeno_early_start:fire_starter",
+      "xeno_early_start:bone_pickaxe",
+      "xeno_early_start:bow_piece",
       "xeno_early_start:bow"
     ]
   }

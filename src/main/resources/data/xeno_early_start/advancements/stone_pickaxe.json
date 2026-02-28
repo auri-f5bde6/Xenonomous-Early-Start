@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:stone_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.stone_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.stone_pickaxe.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:knapping",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:stone_pickaxe"
+      }
+    }
+  }
+}

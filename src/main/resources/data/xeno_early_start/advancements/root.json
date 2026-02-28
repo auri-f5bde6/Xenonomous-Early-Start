@@ -1,7 +1,8 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:flint"
+      "item": "minecraft:player_head",
+      "nbt": "{SkullOwner:xenonomous}"
     },
     "title": {
       "translate": "advancements.xeno_early_start.root.title"
@@ -10,12 +11,10 @@
       "translate": "advancements.xeno_early_start.root.description"
     },
     "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
-    "frame": "goal",
-    "show_toast": true,
-    "announce_to_chat": true
+    "frame": "task"
   },
   "criteria": {
-    "start": {
+    "beginning": {
       "trigger": "minecraft:tick"
     }
   },

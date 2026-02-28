@@ -9,29 +9,23 @@
     "description": {
       "translate": "advancements.xeno_early_start.raw_brick.description"
     },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "frame": "task"
   },
-  "parent": "xeno_early_start:clay_ball",
+  "parent": "xeno_early_start:clay",
   "criteria": {
-    "stone_pickaxe": {
-      "trigger": "minecraft:inventory_changed",
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "xeno_early_start:raw_brick"
-            ]
-          }
-        ]
+        "recipe_id": "xeno_early_start:raw_brick_from_clays"
       }
     }
   },
   "rewards": {
     "recipes": [
       "minecraft:bricks",
-      "xeno_early_start:brick_furnace"
+      "xeno_early_start:brick_furnace",
+      "minecraft:flower_pot",
+      "minecraft:crafting_table"
     ]
   }
 }

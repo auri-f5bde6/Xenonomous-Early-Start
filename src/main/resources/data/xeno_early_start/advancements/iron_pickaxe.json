@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.iron_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.iron_pickaxe.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:iron",
+  "criteria": {
+    "in_inventory": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:iron_pickaxe"
+      }
+    }
+  }
+}

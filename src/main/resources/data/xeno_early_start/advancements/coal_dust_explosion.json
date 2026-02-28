@@ -10,8 +10,6 @@
       "translate": "advancements.xeno_early_start.coal_dust_explosion.description"
     },
     "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
     "hidden": true
   },
   "parent": "xeno_early_start:coal_dust_infliction",

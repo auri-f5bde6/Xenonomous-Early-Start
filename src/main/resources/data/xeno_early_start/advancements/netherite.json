@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.netherite.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.netherite.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:diamond_pickaxe",
+  "criteria": {
+    "in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

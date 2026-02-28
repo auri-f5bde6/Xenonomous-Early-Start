@@ -10,12 +10,11 @@
       "translate": "advancements.xeno_early_start.copper.description"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": false
   },
-  "parent": "xeno_early_start:raw_nuggets",
+  "parent": "xeno_early_start:raw_ore_nuggets",
   "criteria": {
-    "stone_pickaxe": {
+    "in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -30,7 +29,15 @@
   },
   "rewards": {
     "recipes": [
-      "xeno_early_start:copper_pickaxe"
+      "xeno_early_start:copper_sword",
+      "xeno_early_start:copper_axe",
+      "xeno_early_start:copper_pickaxe",
+      "xeno_early_start:copper_shovel",
+      "xeno_early_start:copper_hoe",
+      "xeno_early_start:copper_helmet",
+      "xeno_early_start:copper_chestplate",
+      "xeno_early_start:copper_leggings",
+      "xeno_early_start:copper_boots"
     ]
   }
 }

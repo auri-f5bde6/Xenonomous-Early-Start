@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:copper_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.copper_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.copper_pickaxe.description"
+    },
+    "frame": "goal",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:copper",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:copper_pickaxe"
+      }
+    }
+  }
+}

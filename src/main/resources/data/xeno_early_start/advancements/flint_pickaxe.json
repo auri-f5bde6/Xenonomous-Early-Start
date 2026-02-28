@@ -9,30 +9,15 @@
     "description": {
       "translate": "advancements.xeno_early_start.flint_pickaxe.description"
     },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "frame": "goal"
   },
   "parent": "xeno_early_start:plant_fiber",
   "criteria": {
-    "stone_pickaxe": {
-      "trigger": "minecraft:inventory_changed",
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "xeno_early_start:flint_pickaxe"
-            ]
-          }
-        ]
+        "recipe_id": "xeno_early_start:flint_pickaxe"
       }
     }
-  },
-  "rewards": {
-    "recipes": [
-      "xeno_early_start:cobblestone_from_pebbles",
-      "xeno_early_start:blackstone_from_pebbles",
-      "xeno_early_start:deepslate_from_pebbles"
-    ]
   }
 }

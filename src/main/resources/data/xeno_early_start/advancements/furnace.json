@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:furnace"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.furnace.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.furnace.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:brick_furnace",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:furnace"
+      }
+    }
+  }
+}

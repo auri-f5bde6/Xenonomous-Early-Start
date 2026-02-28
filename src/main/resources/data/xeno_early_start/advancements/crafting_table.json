@@ -9,22 +9,14 @@
     "description": {
       "translate": "advancements.xeno_early_start.crafting_table.description"
     },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "frame": "goal"
   },
-  "parent": "xeno_early_start:flint_dagger",
+  "parent": "xeno_early_start:raw_brick",
   "criteria": {
-    "stone_pickaxe": {
-      "trigger": "minecraft:inventory_changed",
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft:crafting_table"
-            ]
-          }
-        ]
+        "recipe_id": "xeno_early_start:brick_furnace"
       }
     }
   }

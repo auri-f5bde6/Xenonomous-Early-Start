@@ -10,12 +10,11 @@
       "translate": "advancements.xeno_early_start.knapping.description"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": false
   },
   "parent": "xeno_early_start:flint_pickaxe",
   "criteria": {
-    "stone_pickaxe": {
+    "in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -28,10 +27,11 @@
   },
   "rewards": {
     "recipes": [
-      "minecraft:stone_pickaxe",
-      "minecraft:stone_hoe",
+      "minecraft:stone_sword",
       "minecraft:stone_axe",
-      "minecraft:stone_shovel"
+      "minecraft:stone_pickaxe",
+      "minecraft:stone_shovel",
+      "minecraft:stone_hoe"
     ]
   }
 }

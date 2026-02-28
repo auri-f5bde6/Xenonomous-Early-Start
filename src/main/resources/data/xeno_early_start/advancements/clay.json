@@ -1,21 +1,20 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:clay_ball"
+      "item": "minecraft:clay"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.clay_ball.title"
+      "translate": "advancements.xeno_early_start.clay.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.clay_ball.description"
+      "translate": "advancements.xeno_early_start.clay.description"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": false
   },
-  "parent": "xeno_early_start:flint_dagger",
+  "parent": "xeno_early_start:root",
   "criteria": {
-    "stone_pickaxe": {
+    "in_inventory": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -30,7 +29,8 @@
   },
   "rewards": {
     "recipes": [
-      "xeno_early_start:raw_brick"
+      "minecraft:clay",
+      "xeno_early_start:raw_brick_from_clays"
     ]
   }
 }

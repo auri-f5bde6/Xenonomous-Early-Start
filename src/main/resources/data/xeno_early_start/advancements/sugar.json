@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:sugar_cane"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.sugar.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.sugar.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:fire_starter",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:sugar_from_sugar_cane"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:treated_wood"
+    ]
+  }
+}

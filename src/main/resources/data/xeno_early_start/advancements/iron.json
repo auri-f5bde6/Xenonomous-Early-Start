@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_ingot"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.iron.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.iron.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:copper_pickaxe",
+  "criteria": {
+    "in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:iron_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

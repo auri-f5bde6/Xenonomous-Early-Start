@@ -9,23 +9,20 @@
     "description": {
       "translate": "advancements.xeno_early_start.flint_hatchet.description"
     },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true
+    "frame": "goal"
   },
   "parent": "xeno_early_start:plant_fiber",
   "criteria": {
-    "stone_pickaxe": {
-      "trigger": "minecraft:inventory_changed",
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "xeno_early_start:flint_hatchet"
-            ]
-          }
-        ]
+        "recipe_id": "xeno_early_start:flint_hatchet"
       }
     }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:fire_starter"
+    ]
   }
 }
