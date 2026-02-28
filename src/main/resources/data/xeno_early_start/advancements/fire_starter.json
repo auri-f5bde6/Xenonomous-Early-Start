@@ -9,21 +9,23 @@
     "description": {
       "translate": "advancements.xeno_early_start.fire_starter.description"
     },
-    "frame": "task"
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
   },
-  "parent": "xeno_early_start:log",
+  "parent": "xeno_early_start:flint_hatchet",
   "criteria": {
-    "has_plant_fiber": {
+    "stone_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "xeno_early_start:fire_starter"
+              "xeno_early_start:flint_hatchet"
             ]
           }
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
+      }
     }
   }
 }

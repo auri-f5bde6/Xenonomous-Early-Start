@@ -4,24 +4,36 @@
       "item": "xeno_early_start:knapped_stone"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.knapped_stone.title"
+      "translate": "advancements.xeno_early_start.knapping.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.knapped_stone.description"
+      "translate": "advancements.xeno_early_start.knapping.description"
     },
-    "frame": "task"
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
   },
-  "parent": "xeno_early_start:pebble",
+  "parent": "xeno_early_start:flint_pickaxe",
   "criteria": {
-    "has_cobblestone": {
+    "stone_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "xeno_early_start:knapped_stone"
+            "items": [
+              "xeno_early_start:flint_pickaxe"
+            ]
           }
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
+      }
     }
+  },
+  "rewards": {
+    "recipes": [
+      "minecraft:stone_pickaxe",
+      "minecraft:stone_hoe",
+      "minecraft:stone_axe",
+      "minecraft:stone_shovel"
+    ]
   }
 }

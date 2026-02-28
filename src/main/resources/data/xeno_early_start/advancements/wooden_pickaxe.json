@@ -9,12 +9,15 @@
     "description": {
       "translate": "advancements.xeno_early_start.wooden_pickaxe.description"
     },
-    "frame": "challenge",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
     "hidden": true
   },
-  "parent": "xeno_early_start:treated_wood",
+  "parent": "xeno_early_start:knapping",
   "criteria": {
-    "has_plant_fiber": {
+    "wooden_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -23,8 +26,7 @@
             ]
           }
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
+      }
     }
   }
 }

@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:clay_ball"
+      "item": "xeno_early_start:animal_fat"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.clay_ball.title"
+      "translate": "advancements.xeno_early_start.animal_fat.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.clay_ball.description"
+      "translate": "advancements.xeno_early_start.animal_fat.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -21,7 +21,7 @@
         "items": [
           {
             "items": [
-              "minecraft:clay_ball"
+              "xeno_early_start:animal_fat"
             ]
           }
         ]

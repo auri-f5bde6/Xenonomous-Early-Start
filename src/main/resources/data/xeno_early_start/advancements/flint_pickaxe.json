@@ -9,11 +9,14 @@
     "description": {
       "translate": "advancements.xeno_early_start.flint_pickaxe.description"
     },
-    "frame": "challenge"
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
   },
   "parent": "xeno_early_start:plant_fiber",
   "criteria": {
-    "has_plant_fiber": {
+    "stone_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -22,8 +25,7 @@
             ]
           }
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
+      }
     }
   }
 }

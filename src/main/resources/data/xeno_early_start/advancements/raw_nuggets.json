@@ -1,28 +1,27 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:clay_ball"
+      "item": "xeno_early_start:raw_copper_nugget"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.clay_ball.title"
+      "translate": "advancements.xeno_early_start.raw_nuggets.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.clay_ball.description"
+      "translate": "advancements.xeno_early_start.raw_nuggets.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "xeno_early_start:flint_dagger",
+  "parent": "xeno_early_start:knapping",
   "criteria": {
     "stone_pickaxe": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:clay_ball"
-            ]
+            "items": [],
+            "tag": "xeno_early_start:raw_nuggets"
           }
         ]
       }
