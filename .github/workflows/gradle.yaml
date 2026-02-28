@@ -29,5 +29,5 @@ jobs:
         with:
           archive: false
           path: |
-            xeno_early_start-*.*.*.jar
-            !xeno_early_start-*.*.*-sources.jar
+            build/libs/xeno_early_start-*.jar
+            !build/libs/xeno_early_start-*-sources.jar
