@@ -98,7 +98,7 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
         if (random.nextFloat() < probability && state[DRYING_LEVEL] < finishDryingAt) {
             world.setBlockState(pos, state.with(DRYING_LEVEL, state[DRYING_LEVEL] + 1))
         }
-        if (state[DRYING_LEVEL] >= finishDryingAt) {
+        if (state[DRYING_LEVEL] >= finishDryingAt && !(world.isRaining || world.isThundering)) {
             world.playSound(
                 null,
                 pos.x + 0.5,
