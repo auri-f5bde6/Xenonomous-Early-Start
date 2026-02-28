@@ -10,6 +10,7 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.text.MutableText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
+import net.minecraft.util.Language
 import net.minecraftforge.common.ForgeHooks.getBurnTime
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -35,18 +36,14 @@ object ItemTooltipEventListener {
             val t = Tooltips()
             val primitiveFire = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.FIRE_STARTER.get())) {
-                //t.addItemDescriptionTooltip("fire_starter_purpose")
                 t.addItemDescriptionTooltip(
-                    t.getTranslatedText("fire_starter_purpose")
-                        .append(auriText(" ${primitiveFire.fuelStarterRelightFuelTime / 60 / 20} "))
-                        .append(t.getTranslatedText("minutes"))
+                    "fire_starter_purpose",
+                    "${primitiveFire.fuelStarterRelightFuelTime / 60 / 20}%"
                 )
                 t.addTutorialTooltip(
-                    t.getTranslatedText("fire_starter_description_requires")
-                        .append(auriText(" ${primitiveFire.maxBurnTime / 20 / 60} "))
-                        .append(t.getTranslatedText("fire_starter_description_middle"))
-                        .append(auriText(" ${calculateNumberOfStickRequired(primitiveFire.percentageRequiredForMaxBrightness * primitiveFire.maxBurnTime)} "))
-                        .append(t.getTranslatedText("fire_starter_description_end"))
+                    "fire_starter_tutorial",
+                    "${primitiveFire.maxBurnTime / 20 / 60}",
+                    "${calculateNumberOfStickRequired(primitiveFire.percentageRequiredForMaxBrightness * primitiveFire.maxBurnTime)}%"
                 )
                 t.addTutorialTooltip("fire_starter_chance")
 
@@ -64,22 +61,17 @@ object ItemTooltipEventListener {
                 t.addItemDescriptionTooltip("fire_starter_creation")
                 t.addTutorialTooltip("primitive_fire1")
                 t.addTutorialTooltip(
-                    t.getTranslatedText("primitive_fire2")
-                        .append(auriText(" ${primitiveFire.maxBurnTime / 20 / 60} "))
-                        .append(t.getTranslatedText("primitive_fire3"))
-                        .append(auriText(" ${calculateNumberOfStickRequired(primitiveFire.maxBurnTime.toFloat())} "))
-                        .append(t.getTranslatedText("primitive_fire4"))
+                    "primitive_fire2",
+                    "${primitiveFire.maxBurnTime / 20 / 60}",
+                    "${calculateNumberOfStickRequired(primitiveFire.maxBurnTime.toFloat())}%"
                 )
-                t.addTutorialTooltip("primitive_fire5")
+                t.addTutorialTooltip("primitive_fire3")
             }
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.PLANT_FIBER.get())) {
-                t.addTutorialTooltip(t.getTranslatedText("plant_fiber1"))
+                t.addTutorialTooltip("plant_fiber1")
                 t.addTutorialTooltip(
-                    Text.empty()
-                        .append(auriText("(", style = Style.EMPTY))
-                        .append(auriText("${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}% "))
-                        .append(t.getTranslatedText("plant_fiber2"))
-                        .append(auriText(")", style = Style.EMPTY))
+                    "plant_fiber2",
+                    "${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}%"
                 )
             }
             if (event.itemStack.isIn(XenoEarlyStartTags.Items.PEBBLES)) {
@@ -91,9 +83,8 @@ object ItemTooltipEventListener {
             }
             if (event.itemStack.isIn(XenoEarlyStartTags.Items.SHARDS)) {
                 t.addTutorialTooltip(
-                    t.getTranslatedText("shards1")
-                        .append(auriText(" ${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}% "))
-                        .append(t.getTranslatedText("shards2"))
+                    "shards",
+                    "${(XenoEarlyStartConfig.config.earlyGameChanges.plantFiberDropProbability * 100).toInt()}%"
                 )
             }
             if (!XenoEarlyStartConfig.config.client.tooltips.disableFoodWarningTooltips) {
@@ -130,10 +121,16 @@ object ItemTooltipEventListener {
         private fun getTranslatedText(text: MutableText): MutableText {
             return text
         }
-
         fun getTranslatedText(name: String): MutableText {
             return Text.translatable(
-                "xeno_early_start.item.tooltip.$name"
+                "xeno_early_start.item.tooltip"
+            )
+        }
+
+        fun getTranslatedText(name: String, vararg values: Any): MutableText {
+            // For some reason you cant use %s inside § formatting code with Text.translatable, so this workaround is required
+            return Text.literal(
+                String.format(Language.getInstance().get("xeno_early_start.item.tooltip.$name"), *values)
             )
         }
 
@@ -143,9 +140,9 @@ object ItemTooltipEventListener {
             )
         }
 
-        fun addToolTip(name: String) {
-            tooltips.add(
-                getTranslatedText(name)
+        fun addToolTip(name: String, vararg values: Any) {
+            addToolTip(
+                getTranslatedText(name, *values)
             )
         }
 
@@ -155,10 +152,8 @@ object ItemTooltipEventListener {
             }
         }
 
-        fun addTutorialTooltip(name: String) {
-            if (!XenoEarlyStartConfig.config.client.tooltips.disableTutorialTooltips) {
-                addToolTip(name)
-            }
+        fun addTutorialTooltip(name: String, vararg values: Any) {
+            addTutorialTooltip(getTranslatedText(name, *values))
         }
 
         fun addItemDescriptionTooltip(text: MutableText) {
@@ -167,10 +162,8 @@ object ItemTooltipEventListener {
             }
         }
 
-        fun addItemDescriptionTooltip(name: String) {
-            if (!XenoEarlyStartConfig.config.client.tooltips.disableItemDescriptionTooltips) {
-                addToolTip(name)
-            }
+        fun addItemDescriptionTooltip(name: String, vararg values: Any) {
+            addItemDescriptionTooltip(getTranslatedText(name, *values))
         }
 
         fun insertTooltips(event: ItemTooltipEvent, at: Int) {

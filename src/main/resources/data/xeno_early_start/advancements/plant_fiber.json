@@ -7,7 +7,7 @@
       "translate": "advancements.xeno_early_start.plant_fiber.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.plant_fiber.description"
+      "xeno_early_start": "advancements.xeno_early_start.plant_fiber.description"
     },
     "frame": "task"
   },
