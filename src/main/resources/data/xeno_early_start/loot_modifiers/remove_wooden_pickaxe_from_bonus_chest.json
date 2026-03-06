@@ -1,10 +1,10 @@
 {
-  "type": "xeno_early_start:remove_items",
+  "type": "xeno_early_start:remove_tools",
   "conditions": [
     {
       "condition": "xeno_early_start:loot_table_id",
       "loot_table_id": "minecraft:chests/spawn_bonus_chest"
     }
   ],
-  "remove": "minecraft:wooden_pickaxe"
+  "tool": "pickaxe"
 }

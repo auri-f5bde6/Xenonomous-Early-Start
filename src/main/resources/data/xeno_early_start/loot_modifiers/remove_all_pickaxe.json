@@ -1,4 +1,5 @@
 {
-  "type": "xeno_early_start:remove_all_pickaxe",
-  "conditions": []
+  "type": "xeno_early_start:remove_tools",
+  "conditions": [],
+  "tool": "pickaxe"
 }

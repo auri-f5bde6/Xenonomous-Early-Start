@@ -38,6 +38,6 @@ object XenoEarlyStartCodecRegistry {
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("cap_item_count") { CapItemCountModifier.CODEC.codec() }
     val REMOVE_ITEM_LOOT_MODIFIER_TYPE: Supplier<Codec<RemoveItemLootModifier>> =
         GLOBAL_LOOT_MODIFIER_DEF_REG.register("remove_items") { RemoveItemLootModifier.CODEC.codec() }
-    val REMOVE_PICKAXE_LOOT_MODIFIER_TYPE: Supplier<Codec<RemovePickaxeModifier>> =
-        GLOBAL_LOOT_MODIFIER_DEF_REG.register("remove_all_pickaxe") { RemovePickaxeModifier.CODEC.codec() }
+    val REMOVE_TOOLS_LOOT_MODIFIER_TYPE: Supplier<Codec<RemoveToolModifier>> =
+        GLOBAL_LOOT_MODIFIER_DEF_REG.register("remove_tools") { RemoveToolModifier.CODEC.codec() }
 }
