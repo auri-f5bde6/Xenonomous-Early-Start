@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.block_changes;
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags;
 import com.github.auri_f5bde6.xeno_early_start.block.BrickFurnaceBlock;
-import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.*;
@@ -22,9 +22,9 @@ public class BlockMixin {
             entity.damage(getDamageSource(STONECUTTER, world.getRegistryManager()), XenoEarlyStartConfig.config.blockChanges.getStonecutterDamage());
         } else if (state.isOf(Blocks.SMOKER) && state.get(SmokerBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 0.5f);
-        } else if (state.isOf(XenoEarlyStartBlockRegistry.BRICK_FURNACE.get()) && state.get(BrickFurnaceBlock.LIT)) {
+        } else if (state.isIn(XenoEarlyStartTags.Blocks.BRICK_FURNACE) && state.get(BrickFurnaceBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 1f);
-        } else if (state.isOf(Blocks.FURNACE) && state.get(FurnaceBlock.LIT)) {
+        } else if (state.isIn(XenoEarlyStartTags.Blocks.FURNACE) && state.get(FurnaceBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 1.5f);
         } else if (state.isOf(Blocks.BLAST_FURNACE) && state.get(BlastFurnaceBlock.LIT)) {
             entity.damage(getDamageSource(FURNACE, world.getRegistryManager()), 2f);

@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins;
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags;
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.BrickFurnaceBlockEntity;
 import com.github.auri_f5bde6.xeno_early_start.mixins.accessors.AbstractFurnaceEntityAccessor;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -57,13 +58,14 @@ public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerB
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/recipe/RecipeManager$MatchGetter;getFirstMatch(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/world/World;)Ljava/util/Optional;"))
     private static <C extends Inventory, T extends Recipe<C>> Optional<T> dontSmeltIron(RecipeManager.MatchGetter instance, C c, World world, Operation<Optional<T>> original) {
         var result = original.call(instance, c, world);
-        if (c instanceof BrickFurnaceBlockEntity) {
-            if (result.isPresent()) {
-                var r = result.get();
-                var stack = r.getOutput(world.getRegistryManager());
-                if (stack.isOf(Items.IRON_INGOT) || stack.isOf(Items.IRON_NUGGET)) {
-                    return Optional.empty();
-                }
+        if (result.isPresent()) {
+            var r = result.get();
+            var stack = r.getOutput(world.getRegistryManager());
+            var s = ((AbstractFurnaceBlockEntity) c).getCachedState();
+            if ((s.isIn(XenoEarlyStartTags.Blocks.BRICK_FURNACE) && stack.isIn(XenoEarlyStartTags.Items.BRICK_FURNACE_OUTPUT_BLOCKLIST))
+                    || (s.isIn(XenoEarlyStartTags.Blocks.FURNACE) && stack.isIn(XenoEarlyStartTags.Items.FURNACE_OUTPUT_BLOCKLIST))
+            ) {
+                return Optional.empty();
             }
         }
         return result;

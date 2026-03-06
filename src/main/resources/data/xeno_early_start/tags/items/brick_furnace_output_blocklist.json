@@ -1,0 +1,7 @@
+{
+  "values": [
+    "#xeno_early_start:furnace_output_blocklist",
+    "#forge:ingots/iron",
+    "#forge:nuggets/iron"
+  ]
+}
