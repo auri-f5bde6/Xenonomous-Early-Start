@@ -33,4 +33,8 @@ class XenoEarlyStartTextContent(val key: String, val value: () -> Array<out Any>
     override fun toString(): String {
         return "xeno_early_start{" + this.key + "}"
     }
+
+    override fun <T> visit(visitor: StringVisitable.Visitor<T?>?): Optional<T?>? {
+        return getTranslatedText(key, *(value.invoke())).visit(visitor)
+    }
 }
