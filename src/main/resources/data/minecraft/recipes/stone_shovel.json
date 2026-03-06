@@ -3,16 +3,16 @@
   "category": "equipment",
   "key": {
     "#": {
-      "item": "minecraft:stick"
+      "item": "minecraft:wooden_shovel"
     },
     "X": {
       "tag": "xeno_early_start:knapped_stone"
     }
   },
   "pattern": [
-    "X",
-    "#",
-    "#"
+    " X ",
+    "X#X",
+    " X "
   ],
   "result": {
     "item": "minecraft:stone_shovel"

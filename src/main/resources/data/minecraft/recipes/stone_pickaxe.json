@@ -4,16 +4,16 @@
   "category": "equipment",
   "key": {
     "#": {
-      "item": "minecraft:stick"
+      "item": "minecraft:wooden_pickaxe"
     },
     "X": {
       "tag": "xeno_early_start:knapped_stone"
     }
   },
   "pattern": [
-    "XXX",
-    " # ",
-    " # "
+    " X ",
+    "X#X",
+    " X "
   ],
   "result": {
     "item": "minecraft:stone_pickaxe"
