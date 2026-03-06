@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:clay"
+      "item": "xeno_early_start:animal_fat"
     },
     "title": {
-      "translate": "advancements.xeno_early_start.clay.title"
+      "translate": "advancements.xeno_early_start.animal_fat.title"
     },
     "description": {
-      "translate": "advancements.xeno_early_start.clay.description"
+      "translate": "advancements.xeno_early_start.animal_fat.description"
     },
     "frame": "task",
     "announce_to_chat": false
@@ -20,7 +20,7 @@
         "items": [
           {
             "items": [
-              "minecraft:clay_ball"
+              "xeno_early_start:animal_fat"
             ]
           }
         ]
@@ -29,9 +29,8 @@
   },
   "rewards": {
     "recipes": [
-      "minecraft:clay",
-      "xeno_early_start:raw_brick_from_clays_and_animal_fat",
-      "xeno_early_start:raw_brick_from_clays_and_charcoal"
+      "xeno_early_start:treated_wood_from_animal_fat_and_cactus",
+      "xeno_early_start:treated_wood_from_animal_fat_and_crimson_fungus"
     ]
   }
 }

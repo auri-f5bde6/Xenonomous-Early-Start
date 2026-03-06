@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "xeno_early_start:animal_fat"
+    }
+  ],
+  "result": {
+    "item": "xeno_early_start:raw_brick"
+  },
+  "show_notification": true
+}

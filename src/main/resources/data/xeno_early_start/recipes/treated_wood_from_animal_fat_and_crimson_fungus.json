@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:cactus"
+    },
+    {
+      "item": "xeno_early_start:animal_fat"
+    }
+  ],
+  "result": {
+    "item": "xeno_early_start:treated_wood"
+  },
+  "show_notification": true
+}

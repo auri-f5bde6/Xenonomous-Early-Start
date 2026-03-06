@@ -23,7 +23,7 @@
   },
   "rewards": {
     "recipes": [
-      "xeno_early_start:treated_wood"
+      "xeno_early_start:treated_wood_from_charcoal"
     ]
   }
 }

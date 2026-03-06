@@ -16,7 +16,7 @@
     "crafted": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "xeno_early_start:brick_furnace"
+        "recipe_id": "minecraft:crafting_table"
       }
     }
   }

@@ -7,7 +7,7 @@
       "translate": "advancements.xeno_early_start.plant_fiber.title"
     },
     "description": {
-      "xeno_early_start": "advancements.xeno_early_start.plant_fiber.description"
+      "translate": "advancements.xeno_early_start.plant_fiber.description"
     },
     "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "frame": "task",

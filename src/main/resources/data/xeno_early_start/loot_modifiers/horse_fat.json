@@ -1,0 +1,23 @@
+{
+  "type": "xeno_early_start:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "xeno_early_start:loot_table_id",
+          "loot_table_id": "minecraft:entities/horse"
+        },
+        {
+          "condition": "xeno_early_start:loot_table_id",
+          "loot_table_id": "minecraft:entities/donkey"
+        },
+        {
+          "condition": "xeno_early_start:loot_table_id",
+          "loot_table_id": "minecraft:entities/mule"
+        }
+      ]
+    }
+  ],
+  "table": "xeno_early_start:inject/entities/horse_fat"
+}

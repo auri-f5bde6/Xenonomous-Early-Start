@@ -208,5 +208,7 @@
   "advancements.xeno_early_start.netherite.title": "Netherite",
   "advancements.xeno_early_start.netherite.description": "",
   "advancements.xeno_early_start.netherite_pickaxe.title": "Endgame                   ",
-  "advancements.xeno_early_start.netherite_pickaxe.description": "Craft a netherite pickaxe, which is capable of mining all vanilla ore and drop raw ore, including normal diamond gem"
+  "advancements.xeno_early_start.netherite_pickaxe.description": "Craft a netherite pickaxe, which is capable of mining all vanilla ore and drop raw ore, including normal diamond gem",
+  "advancements.xeno_early_start.primitive_fire_refuel.title": "Refueling",
+  "advancements.xeno_early_start.primitive_fire_refuel.description": "You can extend the duration of a primitive fire by throwing fuel on top of the block! (and don't worry, any excess fuel will not be lost)"
 }
