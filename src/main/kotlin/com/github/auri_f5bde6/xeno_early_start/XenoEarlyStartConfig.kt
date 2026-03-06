@@ -34,7 +34,8 @@ object XenoEarlyStartConfig {
 
         var rawGoldNuggetDrop: Int = 1
 
-        var diamondFragmentDrop: Int = 3
+        var diamondFragmentDrop: Int = 1
+        var goldenPickDiamondFragmentBuff: Int = 2
 
         var oreToStone: Boolean = false
 
@@ -50,7 +51,7 @@ object XenoEarlyStartConfig {
 
         var pebbleDropProbability: Float = 0.4f
 
-        var rawBrickDryingLength: Int = 7
+        var rawBrickDryingLength: Int = 9
 
         var removePickaxeFromAllLootTable: Boolean = true
 

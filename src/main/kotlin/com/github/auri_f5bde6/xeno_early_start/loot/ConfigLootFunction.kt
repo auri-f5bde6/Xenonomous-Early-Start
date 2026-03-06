@@ -6,7 +6,9 @@ import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootType
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.loot.context.LootContext
+import net.minecraft.loot.context.LootContextParameters
 import net.minecraft.loot.function.LootFunction
 import net.minecraft.loot.function.LootFunctionType
 import net.minecraft.util.JsonSerializer
@@ -46,7 +48,12 @@ class ConfigLootFunction private constructor(
             }
 
             DropType.Diamond -> {
-                itemStack.count = XenoEarlyStartConfig.config.oreChanges.diamondFragmentDrop
+                var bonus = 0
+                val tool = lootContext.get(LootContextParameters.TOOL)
+                if (tool != null && tool.isOf(Items.GOLDEN_PICKAXE)) {
+                    bonus += XenoEarlyStartConfig.config.oreChanges.goldenPickDiamondFragmentBuff
+                }
+                itemStack.count = XenoEarlyStartConfig.config.oreChanges.diamondFragmentDrop + bonus
             }
 
             DropType.PlantFiber -> {

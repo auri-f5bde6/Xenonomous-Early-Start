@@ -31,7 +31,7 @@ object XenoEarlyStartConfigGui {
         category.addIntSlider(
             "rawBrickDryingLength",
             XenoEarlyStartConfig.config.earlyGameChanges::rawBrickDryingLength,
-            7,
+            9,
             0,
             RawBrickBlock.MAX_DRY_LEVEL,
             tooltip = ConfigWrapper.DefaultTooltip()
@@ -186,7 +186,14 @@ object XenoEarlyStartConfigGui {
         category.addIntSlider(
             "rawDiamondFragmentDrop",
             XenoEarlyStartConfig.config.oreChanges::diamondFragmentDrop,
-            3,
+            1,
+            1,
+            9
+        )
+        category.addIntSlider(
+            "goldenPickDiamondFragmentBuff",
+            XenoEarlyStartConfig.config.oreChanges::goldenPickDiamondFragmentBuff,
+            2,
             1,
             9
         )
