@@ -5,6 +5,9 @@
     "#forge:obsidian",
     "#forge:stone",
     "#forge:sandstone",
-    "#minecraft:terracotta"
+    "#minecraft:terracotta",
+    "#minecraft:base_stone_nether",
+    "#minecraft:base_stone_overworld",
+    "minecraft:smooth_basalt"
   ]
 }
