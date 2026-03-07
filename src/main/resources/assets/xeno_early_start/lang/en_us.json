@@ -50,10 +50,11 @@
   "tag.item.xeno_early_start.knapped_stone": "Knapped Stone",
   "tag.item.xeno_early_start.shards": "Shards",
   "text.config.xeno_early_start.option.earlyGameChanges": "Early Game",
+  "text.config.xeno_early_start.option.earlyGameChanges.dropRate": "Drop Rate",
   "text.config.xeno_early_start.option.earlyGameChanges.dropRate.overridePebbleDropProbability": "Override Pebble Drop Probability",
   "text.config.xeno_early_start.option.earlyGameChanges.dropRate.pebbleDropProbability": "Pebble Drop Probability (%)",
   "text.config.xeno_early_start.option.earlyGameChanges.dropRate.plantFiberDropProbability": "Plant Fiber Drop Probability (%)",
-  "text.config.xeno_early_start.option.earlyGameChanges.rawBrickDryingLength": "Random Ticks Required for Raw Brick To Finish Drying",
+  "text.config.xeno_early_start.option.earlyGameChanges.rawBrickDryingLength": "Random Ticks Required for Raw Brick To Finish Drying With No Accelerant",
   "text.config.xeno_early_start.option.earlyGameChanges.rawBrickDryingLength.tooltip": "Each random ticks occur every ~47.3 second at default tick speed",
   "text.config.xeno_early_start.option.earlyGameChanges.removePickaxeFromAllLootTable": "Remove Pickaxe From All Loot Table",
   "text.config.xeno_early_start.option.earlyGameChanges.primitiveFire": "Primitive Fire",
@@ -85,6 +86,7 @@
   "text.config.xeno_early_start.option.oreChanges.rawCopperNuggetDropMin": "Minimum Raw Copper Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreChanges.rawCopperNuggetDropMax": "Maximum Raw Copper Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreChanges.rawDiamondFragmentDrop": "Raw Diamond Fragment Drop(s)",
+  "text.config.xeno_early_start.option.oreChanges.goldenPickDiamondFragmentBuff": "Extra Diamond Fragments Drop(s) When Using Gold Pickaxe",
   "text.config.xeno_early_start.option.oreChanges.rawGoldNuggetDrop": "Raw Gold Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreChanges.rawIronNuggetDrop": "Raw Iron Nugget Drop(s)",
   "text.config.xeno_early_start.option.oreChanges.coalDustExplosionClusterSize": "Coal Dust Explosion Cluster Size",
@@ -109,9 +111,7 @@
   "text.config.xeno_early_start.option.client.tooltips.disableTutorialTooltips": "Disable Tutorial Tooltips",
   "text.config.xeno_early_start.option.client.tooltips.disableItemDescriptionTooltips": "Disable Item Description Tooltips",
   "text.config.xeno_early_start.option.client.tooltips.tutorialTooltips.tooltip": "DO NOT ENABLE THIS unless you already know how this mod works",
-
-
-  "text.config.xeno_early_start.title": "Progression Change",
+  "text.config.xeno_early_start.title": "Xeno's Early Start",
   "text.emi.xeno_early_start.fire_starter_non_exhaustive": "Fire Starter can be used on any fuel item",
 
   "death.damage.stonecutter_0": "%s was split in half",
@@ -128,7 +128,7 @@
   "xeno_early_start.item.tooltip.raw_brick": "Dries into a brick when placed down and exposed to sun unobstructed",
   "xeno_early_start.item.tooltip.raw_brick_warning": "Drying progress reset when exposed to rain, this can be avoided by placing glass over the raw brick, at the cost of drying speed",
   "xeno_early_start.item.tooltip.raw_brick_zombie": "It is also advisable to protect the raw brick from being trample on by zombie",
-
+  "xeno_early_start.item.tooltip.raw_brick_catalyst": "Drying process can be sped up by placing lava(quickest), fire, campfire, primitive fire/torch(slowest) in a 5x2x5 (x,y,z) box around raw brick",
   "xeno_early_start.item.tooltip.brick_throwable": "Throwable (please exercise caution and restraint near glass)",
   "xeno_early_start.item.tooltip.brick_obtain": "Can also be obtained by drying raw brick",
   "xeno_early_start.item.tooltip.primitive_fire1": "Fuel will slowly deplete, throw fuels to refill",
@@ -174,7 +174,7 @@
   "advancements.xeno_early_start.clay.title": "Useful Dirt",
   "advancements.xeno_early_start.clay.description": "Find clay at the bottom of shallow body of water",
   "advancements.xeno_early_start.raw_brick.title": "This Might Take A While",
-  "advancements.xeno_early_start.raw_brick.description": "Protect your soggy brick from rain and undead while they're drying under the sun",
+  "advancements.xeno_early_start.raw_brick.description": "Protect your soggy brick from rain and undead while they're drying under the sun.\nThe process can be sped up by placing it next to lava(quickest), fire, campfire, torch/primitive fire.",
   "advancements.xeno_early_start.crafting_table.title": "A CRAFTING TABLE!",
   "advancements.xeno_early_start.crafting_table.description": "It's not shiny or anything, but you finally did it",
   "advancements.xeno_early_start.brick_furnace.title": "Low Temperature Oven",
@@ -210,5 +210,7 @@
   "advancements.xeno_early_start.netherite_pickaxe.title": "Endgame                   ",
   "advancements.xeno_early_start.netherite_pickaxe.description": "Craft a netherite pickaxe, which is capable of mining all vanilla ore and drop raw ore, including normal diamond gem",
   "advancements.xeno_early_start.primitive_fire_refuel.title": "Refueling",
-  "advancements.xeno_early_start.primitive_fire_refuel.description": "You can extend the duration of a primitive fire by throwing fuel on top of the block! (and don't worry, any excess fuel will not be lost)"
+  "advancements.xeno_early_start.primitive_fire_refuel.description": "You can extend the duration of a primitive fire by throwing fuel on top of the block! (and don't worry, any excess fuel will not be lost)",
+  "advancements.xeno_early_start.animal_fat.title": "Lipid                                      ",
+  "advancements.xeno_early_start.animal_fat.description": "Obtained by killing animal, this can be used to substituted charcoal for raw brick and treated wood"
 }

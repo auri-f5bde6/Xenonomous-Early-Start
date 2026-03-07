@@ -52,6 +52,7 @@ object ItemTooltipEventListener {
                 t.addItemDescriptionTooltip("raw_brick")
                 t.addTutorialTooltip("raw_brick_warning")
                 t.addTutorialTooltip("raw_brick_zombie")
+                t.addTutorialTooltip("raw_brick_catalyst")
             }
             if (event.itemStack.isOf(Items.BRICK)) {
                 t.addItemDescriptionTooltip("brick_throwable")

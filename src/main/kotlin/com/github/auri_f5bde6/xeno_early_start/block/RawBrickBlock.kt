@@ -5,6 +5,7 @@ import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockReg
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils.isCovered
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemStack
@@ -21,6 +22,8 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 import net.minecraftforge.registries.ForgeRegistries
+import kotlin.math.max
+import kotlin.math.min
 
 class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     init {
@@ -96,27 +99,52 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     private fun dryTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random, probability: Float) {
         val finishDryingAt = XenoEarlyStartConfig.config.earlyGameChanges.rawBrickDryingLength
         if (random.nextFloat() < probability && state[DRYING_LEVEL] < finishDryingAt) {
-            world.setBlockState(pos, state.with(DRYING_LEVEL, state[DRYING_LEVEL] + 1))
-        }
-        if (state[DRYING_LEVEL] >= finishDryingAt && !(world.isRaining || world.isThundering)) {
-            world.playSound(
-                null,
-                pos.x + 0.5,
-                pos.y + 0.5,
-                pos.z + 0.5,
-                ForgeRegistries.SOUND_EVENTS.getHolder(SoundEvents.BLOCK_DEEPSLATE_BRICKS_PLACE).get(),
-                SoundCategory.BLOCKS,
-                0.95f + random.nextFloat() * 0.05f,
-                random.nextFloat() * 0.7f + 0.6f,
-                world.random.nextLong()
-            )
-            world.removeBlock(pos, false)
-            world.setBlockState(
-                pos,
-                XenoEarlyStartBlockRegistry.BRICK.get().defaultState
-                    .with(AXIS, state[AXIS])
-            )
+            var x = 1
+            for (dx in -3..3) {
+                for (dz in -3..3) {
+                    for (dy in -2..2) {
+                        val blockState = world.getBlockState(pos.add(dx, dy, dz))
+                        x = max(
+                            if (blockState.isOf(Blocks.LAVA) || blockState.isOf(Blocks.LAVA_CAULDRON)) {
+                                14
+                            } else if (blockState.isOf(Blocks.CAMPFIRE)) {
+                                5
+                            } else if (blockState.isOf(Blocks.FIRE)) {
+                                4
+                            } else if (blockState.isOf(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get()) && blockState.get(
+                                    PrimitiveFireBlock.LIT
+                                ) || blockState.isOf(Blocks.TORCH)
+                            ) {
+                                3
+                            } else {
+                                1
+                            }, x
+                        )
+                    }
+                }
+            }
+            val newLevel = min(MAX_DRY_LEVEL, state[DRYING_LEVEL] + x)
+            world.setBlockState(pos, state.with(DRYING_LEVEL, newLevel))
+            if (newLevel >= finishDryingAt && !(world.isRaining || world.isThundering)) {
+                world.playSound(
+                    null,
+                    pos.x + 0.5,
+                    pos.y + 0.5,
+                    pos.z + 0.5,
+                    ForgeRegistries.SOUND_EVENTS.getHolder(SoundEvents.BLOCK_DEEPSLATE_BRICKS_PLACE).get(),
+                    SoundCategory.BLOCKS,
+                    0.95f + random.nextFloat() * 0.05f,
+                    random.nextFloat() * 0.7f + 0.6f,
+                    world.random.nextLong()
+                )
+                world.removeBlock(pos, false)
+                world.setBlockState(
+                    pos,
+                    XenoEarlyStartBlockRegistry.BRICK.get().defaultState
+                        .with(AXIS, state[AXIS])
+                )
 
+            }
         }
     }
 
@@ -137,7 +165,7 @@ class RawBrickBlock(arg: Settings) : BrickBlock(arg) {
     }
 
     companion object {
-        const val MAX_DRY_LEVEL = 18
+        const val MAX_DRY_LEVEL = 20
         val DRYING_LEVEL: IntProperty = IntProperty.of("drying_level", 0, MAX_DRY_LEVEL)
     }
 }
