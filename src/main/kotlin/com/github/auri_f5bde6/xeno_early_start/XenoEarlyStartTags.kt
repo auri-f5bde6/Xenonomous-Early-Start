@@ -26,6 +26,14 @@ class XenoEarlyStartTags {
         @JvmField
         val FURNACE: TagKey<Block> = createTag("furnace")
 
+        @JvmField
+        val CAN_BE_MINED_WITH_FLINT_PICKAXE: TagKey<Block> = createTag("can_be_mined_with_flint_pickaxe")
+
+        @JvmField
+        val CAN_BE_MINED_WITH_STONE_PICKAXE: TagKey<Block> = createTag("can_be_mined_with_stone_pickaxe")
+
+        @JvmField
+        val CAN_BE_MINE_WITH_COPPER_PICKAXE: TagKey<Block> = createTag("can_be_mined_with_copper_pickaxe")
         private fun createTag(name: String): TagKey<Block> {
             return BlockTags.create(XenoEarlyStart.of(name))
         }
@@ -34,26 +42,18 @@ class XenoEarlyStartTags {
     object Items {
         @JvmField
         val SHARDS: TagKey<Item> = createTag("shards")
-
         @JvmField
-
         val KNAPPED_STONE: TagKey<Item> = createTag("knapped_stone")
-
         @JvmField
         val PEBBLES: TagKey<Item> = createTag("pebbles")
-
         @JvmField
         val FOOD_WARNING: TagKey<Item> = createTag("food_warning")
-
         @JvmField
         val RAW_FOOD_WARNING: TagKey<Item> = createTag("raw_food_warning")
-
         @JvmField
         val BRICK_FURNACE_OUTPUT_BLOCKLIST: TagKey<Item> = createTag("brick_furnace_output_blocklist")
-
         @JvmField
         val FURNACE_OUTPUT_BLOCKLIST: TagKey<Item> = createTag("furnace_output_blocklist")
-
         private fun createTag(name: String): TagKey<Item> {
             return ItemTags.create(XenoEarlyStart.of(name))
         }

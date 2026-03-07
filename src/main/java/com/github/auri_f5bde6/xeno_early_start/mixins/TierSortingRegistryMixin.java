@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins;
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags;
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartToolMaterials;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -27,12 +28,12 @@ public class TierSortingRegistryMixin {
     @WrapMethod(method = "isCorrectTierForDrops")
     private static boolean flintCantMineOre(ToolMaterial tier, BlockState state, Operation<Boolean> original) {
         // todo: Don't hardcode this, use tags
-        if ((tier == XenoEarlyStartToolMaterials.FLINT || tier == XenoEarlyStartToolMaterials.BONE) && state.isIn(Tags.Blocks.ORES)) {
+        if ((tier == XenoEarlyStartToolMaterials.FLINT || tier == XenoEarlyStartToolMaterials.BONE) && (state.isIn(Tags.Blocks.ORES) && !state.isIn(XenoEarlyStartTags.Blocks.CAN_BE_MINED_WITH_FLINT_PICKAXE))) {
             // Flint/bone pickaxe cannot mine ore
             return false;
-        } else if (tier == ToolMaterials.STONE && (state.isIn(Tags.Blocks.ORES) && !(state.isIn(Tags.Blocks.ORES_COAL)))) {
+        } else if (tier == ToolMaterials.STONE && (state.isIn(Tags.Blocks.ORES) && !(state.isIn(XenoEarlyStartTags.Blocks.CAN_BE_MINED_WITH_STONE_PICKAXE)))) {
             return false;
-        } else if (tier == XenoEarlyStartToolMaterials.COPPER && (state.isIn(Tags.Blocks.ORES) && !(state.isIn(Tags.Blocks.ORES_COPPER) || state.isIn(Tags.Blocks.ORES_IRON) || state.isIn(Tags.Blocks.ORES_COAL)))) {
+        } else if (tier == XenoEarlyStartToolMaterials.COPPER && (state.isIn(Tags.Blocks.ORES) && !(state.isIn(XenoEarlyStartTags.Blocks.CAN_BE_MINE_WITH_COPPER_PICKAXE)))) {
             // Copper pickaxe can only mine iron or copper (todo: and silver)
             return false;
         }

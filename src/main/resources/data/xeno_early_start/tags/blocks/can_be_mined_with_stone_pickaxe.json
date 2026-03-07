@@ -1,0 +1,7 @@
+{
+  "values": [
+    "#xeno_early_start:can_be_mined_with_flint_pickaxe",
+    "#forge:ores/coal",
+    "#forge:ores/copper"
+  ]
+}
