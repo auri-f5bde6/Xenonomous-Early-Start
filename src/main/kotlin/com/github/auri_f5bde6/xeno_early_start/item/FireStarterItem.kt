@@ -7,6 +7,7 @@ import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.CampfireBlock
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.LivingEntity
@@ -115,7 +116,7 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
                 blockState,
                 context,
                 refuel = XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.fuelStarterRelightFuelTime
-            )
+            ) || CampfireBlock.canBeLit(blockState)
         ) {
             val player = context.player
             world.playSound(
