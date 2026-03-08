@@ -2,6 +2,7 @@ package com.github.auri_f5bde6.xeno_early_start.compat
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.recipe.UseToolRecipe
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import dev.emi.emi.api.EmiEntrypoint
@@ -17,6 +18,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
+import net.minecraft.recipe.RecipeType
 import net.minecraft.util.Identifier
 import net.minecraftforge.common.Tags
 import net.minecraftforge.registries.RegistryObject
@@ -123,6 +125,13 @@ class XenoEarlyStartEmiPlugin : EmiPlugin {
             VanillaEmiRecipeCategories.CAMPFIRE_COOKING,
             getStack(XenoEarlyStartItemRegistry.PRIMITIVE_FIRE)
         )
+
+        for (recipe in registry.recipeManager.listAllOfType(RecipeType.CRAFTING)) {
+            if (recipe is UseToolRecipe) {
+                registry.removeRecipes { r -> r.id == recipe.id && r !is EmiUseToolRecipe }
+                registry.addRecipe(EmiUseToolRecipe(recipe))
+            }
+        }
     }
 
     private fun getStack(item: Item, chance: Float = 1.0f, amount: Long = 1): EmiStack {
@@ -131,6 +140,7 @@ class XenoEarlyStartEmiPlugin : EmiPlugin {
         stack.chance = chance
         return stack
     }
+
     private fun getStack(item: RegistryObject<Item>, chance: Float = 1.0f, amount: Long = 1): EmiStack {
         return getStack(item.get(), chance, amount)
     }

@@ -22,7 +22,8 @@
   },
   "rewards": {
     "recipes": [
-      "xeno_early_start:fire_starter"
+      "xeno_early_start:fire_starter",
+      "xeno_early_start:use_tool/stick_from_sapling"
     ]
   }
 }

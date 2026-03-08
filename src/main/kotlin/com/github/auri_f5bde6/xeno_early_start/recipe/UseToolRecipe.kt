@@ -4,10 +4,7 @@ import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRe
 import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils
 import com.google.gson.JsonObject
 import net.minecraft.inventory.RecipeInputInventory
-import net.minecraft.item.AxeItem
 import net.minecraft.item.ItemStack
-import net.minecraft.item.PickaxeItem
-import net.minecraft.item.SwordItem
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.recipe.CraftingRecipe
 import net.minecraft.recipe.Ingredient
@@ -24,7 +21,7 @@ import net.minecraftforge.common.crafting.CraftingHelper
 class UseToolRecipe(
     val recipeId: Identifier,
     val craftingRecipeCategory: CraftingRecipeCategory,
-    val toolType: ToolType,
+    val tool: Ingredient,
     val input: Ingredient,
     val output: ItemStack,
     val toolDamage: Int,
@@ -34,25 +31,6 @@ class UseToolRecipe(
         private val RANDOM = Random.create()
     }
 
-    enum class ToolType(val literal: String) {
-        PICKAXE("pickaxe"),
-        AXE("axe"),
-        SWORD("sword"), ;
-
-        companion object {
-            fun fromString(type: String) = ToolType.entries.find { v -> v.literal == type }
-        }
-
-        fun match(itemStack: ItemStack): Boolean {
-            val i = itemStack.item
-            return when (this) {
-                PICKAXE -> i is PickaxeItem
-                AXE -> i is AxeItem
-                SWORD -> i is SwordItem
-            }
-        }
-    }
-
     override fun matches(
         inventory: RecipeInputInventory,
         world: World
@@ -60,7 +38,7 @@ class UseToolRecipe(
         var hasInput = false
         var hasTool = false
         for (i in inventory.inputStacks) {
-            if (toolType.match(i)) {
+            if (tool.test(i)) {
                 if (hasTool) return false
                 hasTool = true
             } else if (input.test(i)) {
@@ -82,13 +60,21 @@ class UseToolRecipe(
     override fun getRemainder(inventory: RecipeInputInventory): DefaultedList<ItemStack> {
         val l = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY)
         for ((i, v) in inventory.inputStacks.withIndex()) {
-            if (toolType.match(v)) {
+            if (tool.test(v)) {
                 val new = v.copy()
-                new.damage(toolDamage, RANDOM, null)
+                val broken = new.damage(toolDamage, RANDOM, null)
+                if (broken) {
+                    new.decrement(1)
+                    new.damage = 0
+                }
                 l[i] = new
             }
         }
         return l
+    }
+
+    override fun getIngredients(): DefaultedList<Ingredient> {
+        return DefaultedList.copyOf(Ingredient.EMPTY, input, tool)
     }
 
     override fun fits(width: Int, height: Int): Boolean {
@@ -119,12 +105,11 @@ class UseToolRecipe(
         ): UseToolRecipe {
             val input = Ingredient.fromJson(json.get("input"), false)
             val output = CraftingHelper.getItemStack(json.get("output").asJsonObject, true, true)
-            val toolType = ToolType.fromString(json.get("tool_type").asString)
-                ?: throw IllegalArgumentException("Tool type ${json.get("tool_type").asString} not found")
+            val tool = Ingredient.fromJson(json.get("tool"), false)
             val craftingBookCategory = CraftingRecipeCategory.CODEC
                 .byId(JsonHelper.getString(json, "category", null as String?), CraftingRecipeCategory.MISC)
             val toolDamage = JsonUtils.getInt(json, "tool_damage") ?: 1
-            return UseToolRecipe(id, craftingBookCategory, toolType, input, output, toolDamage)
+            return UseToolRecipe(id, craftingBookCategory, tool, input, output, toolDamage)
         }
 
         override fun read(
@@ -133,12 +118,11 @@ class UseToolRecipe(
         ): UseToolRecipe {
             val input = Ingredient.fromPacket(buf)
             val output = buf.readItemStack()
-            val toolType = ToolType.fromString(buf.readString())
-                ?: throw IllegalArgumentException("Tool type ${buf.readString()} not found")
+            val tool = Ingredient.fromPacket(buf)
             val craftingBookCategory: CraftingRecipeCategory =
                 buf.readEnumConstant(CraftingRecipeCategory::class.java)
             val toolDamage = buf.readInt()
-            return UseToolRecipe(id, craftingBookCategory, toolType, input, output, toolDamage)
+            return UseToolRecipe(id, craftingBookCategory, tool, input, output, toolDamage)
         }
 
         override fun write(
@@ -147,6 +131,7 @@ class UseToolRecipe(
         ) {
             recipe.input.write(buf)
             buf.writeItemStack(recipe.output)
+            recipe.tool.write(buf)
             buf.writeString(recipe.toolDamage.toString())
             buf.writeEnumConstant(recipe.craftingRecipeCategory)
             buf.writeInt(recipe.toolDamage)

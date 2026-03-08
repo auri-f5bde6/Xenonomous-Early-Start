@@ -3,7 +3,9 @@
   "input": {
     "tag": "minecraft:saplings"
   },
-  "tool_type": "axe",
+  "tool": {
+    "tag": "minecraft:axes"
+  },
   "output": {
     "item": "minecraft:stick"
   }
