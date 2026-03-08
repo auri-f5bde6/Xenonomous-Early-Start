@@ -22,7 +22,6 @@ open class BrickBlock(arg: Settings) : Block(arg) {
         this.defaultState = this.stateManager.getDefaultState().with(AXIS, Direction.Axis.X)
     }
 
-
     @Deprecated("Deprecated in Java, I guess")
     override fun getOutlineShape(
         state: BlockState,
@@ -47,11 +46,14 @@ open class BrickBlock(arg: Settings) : Block(arg) {
         val AXIS: EnumProperty<Direction.Axis> = Properties.HORIZONTAL_AXIS
         private val SHAPE: VoxelShape = VoxelShapes.cuboid(0.375, 0.0, 0.28125, 0.625, 0.1875, 0.71875)
         private val SHAPE_ROTATED: VoxelShape = TransUtils.rotateY(SHAPE)
+        fun canPlaceAt(world: WorldView, pos: BlockPos): Boolean {
+            return sideCoversSmallSquare(world, pos.down(), Direction.UP)
+        }
     }
 
     @Deprecated("Deprecated in Java")
     override fun canPlaceAt(state: BlockState?, world: WorldView, pos: BlockPos): Boolean {
-        return sideCoversSmallSquare(world, pos.down(), Direction.UP)
+        return canPlaceAt(world, pos)
     }
 
     @Deprecated("Deprecated in Java")

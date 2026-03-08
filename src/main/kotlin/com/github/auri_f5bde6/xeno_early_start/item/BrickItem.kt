@@ -1,13 +1,16 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
+import com.github.auri_f5bde6.xeno_early_start.block.BrickBlock
 import com.github.auri_f5bde6.xeno_early_start.entity.BrickEntity
 import net.minecraft.block.Block
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Vanishable
 import net.minecraft.stat.Stats
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.UseAction
@@ -50,6 +53,13 @@ class BrickItem(block: Block, settings: Settings) : net.minecraft.item.BlockItem
         }
     }
 
+    override fun place(context: ItemPlacementContext): ActionResult? {
+        return if (BrickBlock.canPlaceAt(context.world, context.blockPos)) {
+            super.place(context)
+        } else {
+            ActionResult.PASS
+        }
+    }
     companion object {
         fun getPullProgress(useTicks: Int): Float {
             var f = useTicks / 20.0f

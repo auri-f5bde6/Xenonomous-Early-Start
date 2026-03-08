@@ -19,7 +19,6 @@ import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import net.minecraftforge.common.Tags
 
 class BrickEntity : PersistentProjectileEntity {
     var bounced: Boolean = false
@@ -65,47 +64,39 @@ class BrickEntity : PersistentProjectileEntity {
 
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         val world = getWorld()
-        val blockState = world.getBlockState(blockHitResult.blockPos)
-        if (blockState.isIn(Tags.Blocks.GLASS) && velocity.lengthSquared() > 1.5) {
-            world.breakBlock(blockHitResult.blockPos, false, this)
-            moveEntityAwayFrom(this, blockHitResult.pos, 0.9f)
-            this.velocity = this.velocity.multiply(0.7)
-            return
+        if (blockHitResult.side != Direction.UP) {
+            val directionVector = moveEntityAwayFrom(this, blockHitResult.pos, 0.9f)
+            futureVelocity = directionVector.multiply(0.05)
+            this.setVelocity(0.0, 0.0, 0.0)
+            this.bounced = true
         } else {
-            if (blockHitResult.side != Direction.UP) {
-                val directionVector = moveEntityAwayFrom(this, blockHitResult.pos, 0.9f)
-                futureVelocity = directionVector.multiply(0.05)
-                this.setVelocity(0.0, 0.0, 0.0)
-                this.bounced = true
-            } else {
-                val above = blockHitResult.blockPos.add(0, 1, 0)
-                val block = XenoEarlyStartBlockRegistry.BRICK.get().defaultState.with(
-                    BrickBlock.AXIS, horizontalFacing.rotateClockwise(
-                        Direction.Axis.Y
-                    ).axis
+            val above = blockHitResult.blockPos.add(0, 1, 0)
+            val block = XenoEarlyStartBlockRegistry.BRICK.get().defaultState.with(
+                BrickBlock.AXIS, horizontalFacing.rotateClockwise(
+                    Direction.Axis.Y
+                ).axis
+            )
+            if (world.getBlockState(above).isAir && block.canPlaceAt(world, above)) {
+                world.setBlockState(
+                    above,
+                    block,
+                    NOTIFY_ALL
                 )
-                if (world.getBlockState(above).isAir && block.canPlaceAt(world, above)) {
-                    world.setBlockState(
-                        above,
-                        block,
-                        NOTIFY_ALL
-                    )
-                    world.playSound(
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        BlockSoundGroup.DEEPSLATE_BRICKS.hitSound,
-                        SoundCategory.BLOCKS,
-                        1.0f,
-                        1.0f,
-                        true
-                    )
-                } else {
-                    world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, brickStack))
-                }
-                kill()
-
+                world.playSound(
+                    pos.x,
+                    pos.y,
+                    pos.z,
+                    BlockSoundGroup.DEEPSLATE_BRICKS.hitSound,
+                    SoundCategory.BLOCKS,
+                    1.0f,
+                    1.0f,
+                    true
+                )
+            } else {
+                world.spawnEntity(ItemEntity(world, pos.x, pos.y, pos.z, brickStack))
             }
+            kill()
+
         }
 
 

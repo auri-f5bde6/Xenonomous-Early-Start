@@ -1,5 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.arrow_break_glass;
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags;
+import com.github.auri_f5bde6.xeno_early_start.entity.BrickEntity;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.BlockState;
@@ -36,10 +38,10 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
     public BlockHitResult fakeNoCollision(World instance, RaycastContext raycastContext, Operation<BlockHitResult> original) {
         var result = original.call(instance, raycastContext);
         var entity = (PersistentProjectileEntity) (Object) this;
-        if (entity instanceof ArrowEntity || entity instanceof TridentEntity) {
+        if (entity instanceof ArrowEntity || entity instanceof TridentEntity || entity instanceof BrickEntity) {
             var blockState = instance.getBlockState(result.getBlockPos());
             var isLeaf = blockState.isIn(BlockTags.LEAVES);
-            var isGlass = blockState.isIn(Tags.Blocks.GLASS);
+            var isGlass = blockState.isIn(XenoEarlyStartTags.Blocks.BRITTLE);
             if (isGlass || isLeaf) {
                 if (isGlass) {
                     instance.breakBlock(result.getBlockPos(), false, entity);
