@@ -1,0 +1,11 @@
+{
+  "type": "xeno_early_start:use_tool",
+  "input": {
+    "tag": "minecraft:saplings"
+  },
+  "tool_type": "sword",
+  "output": {
+    "item": "xeno_early_start:plant_fiber",
+    "count": 2
+  }
+}

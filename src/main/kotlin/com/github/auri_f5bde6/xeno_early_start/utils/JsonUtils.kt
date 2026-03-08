@@ -62,7 +62,18 @@ object JsonUtils {
                 value
             )
         )
+    }
 
+    fun getInt(obj: JsonObject, key: String): Int? {
+        val value = obj.get(key) ?: return null
+        if (value.isJsonPrimitive && value.asJsonPrimitive.isNumber) {
+            return value.asInt
+        }
+        throw JsonSyntaxException(
+            "Expected $key to be a JsonPrimitive Number, was " + JsonHelper.getType(
+                value
+            )
+        )
     }
 
     inline fun <reified T> getArray(obj: JsonObject, key: String, mapper: (JsonElement) -> T): Array<T>? {

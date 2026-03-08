@@ -1,0 +1,10 @@
+{
+  "type": "xeno_early_start:use_tool",
+  "input": {
+    "tag": "minecraft:saplings"
+  },
+  "tool_type": "axe",
+  "output": {
+    "item": "minecraft:stick"
+  }
+}
