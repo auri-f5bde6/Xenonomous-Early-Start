@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:flint_dagger"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.flint_dagger.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.flint_dagger.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:plant_fiber",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:flint_dagger"
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "xeno_early_start:use_tool/plant_fiber_from_sapling"
+    ]
+  }
+}

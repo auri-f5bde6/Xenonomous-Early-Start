@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "xeno_early_start:copper_sword"
+    "xeno_early_start:copper_sword",
+    "xeno_early_start:flint_dagger",
+    "xeno_early_start:bone_dagger"
   ]
 }

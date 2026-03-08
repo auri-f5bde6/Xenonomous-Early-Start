@@ -12,7 +12,7 @@
     "frame": "task",
     "announce_to_chat": false
   },
-  "parent": "xeno_early_start:root",
+  "parent": "xeno_early_start:flint_dagger",
   "criteria": {
     "in_inventory": {
       "trigger": "minecraft:inventory_changed",

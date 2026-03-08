@@ -13,6 +13,18 @@
           "loot_table_id": "minecraft:entities/polar_bear"
         }
       ]
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "killer",
+      "predicate": {
+        "items": [],
+        "equipment": {
+          "mainhand": {
+            "tag": "xeno_early_start:tool_for_animal_fat"
+          }
+        }
+      }
     }
   ],
   "table": "xeno_early_start:inject/entities/bear_fat"
