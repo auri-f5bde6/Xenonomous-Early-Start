@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.neutral_till_fed;
 
-import com.github.auri_f5bde6.xeno_early_start.TillFedInterface;
+import com.github.auri_f5bde6.xeno_early_start.capabilities.NeutralTilFedData;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.ai.goal.TemptGoal;
@@ -17,8 +17,8 @@ public class TempGoalMixin {
 
     @WrapMethod(method = "canStart")
     public boolean canStart(Operation<Boolean> original) {
-        var tilFedMob = (TillFedInterface) this.mob;
-        if (tilFedMob.xeno_early_start$hasFeedTrackedData() && !tilFedMob.xeno_early_start$haveBeenFed()) {
+        var cap = NeutralTilFedData.get(mob);
+        if (cap != null && !cap.getHasBeenFed()) {
             return false;
         }
         return original.call();

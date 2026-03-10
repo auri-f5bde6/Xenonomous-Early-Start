@@ -1,17 +1,17 @@
 package com.github.auri_f5bde6.xeno_early_start.entity.goal
 
 import net.minecraft.entity.ai.NoPenaltyTargeting
-import net.minecraft.entity.data.TrackedData
 import net.minecraft.entity.mob.PathAwareEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.Vec3d
+import java.util.function.Supplier
 
-class RunawayFromPlayerGoal(val mob: PathAwareEntity, val speed: Double, val beenFed: TrackedData<Boolean>) :
+class RunawayFromPlayerGoal(val mob: PathAwareEntity, val speed: Double, val beenFed: Supplier<Boolean>) :
     net.minecraft.entity.ai.goal.Goal() {
     var player: PlayerEntity? = null
     var target: Vec3d? = null
     override fun canStart(): Boolean {
-        if (this.mob.dataTracker.get(beenFed)) {
+        if (beenFed.get()) {
             return false
         }
         val currentPos = mob.blockPos
@@ -33,7 +33,7 @@ class RunawayFromPlayerGoal(val mob: PathAwareEntity, val speed: Double, val bee
     }
 
     override fun canStop(): Boolean {
-        return this.mob.dataTracker.get(beenFed) || (this.mob.squaredDistanceTo(player) >= 32.0 || player?.isAlive == false)
+        return beenFed.get() || (this.mob.squaredDistanceTo(player) >= 32.0 || player?.isAlive == false)
     }
 
     private fun findTarget(): Boolean {
@@ -56,7 +56,7 @@ class RunawayFromPlayerGoal(val mob: PathAwareEntity, val speed: Double, val bee
             findTarget()
             this.mob.getNavigation().startMovingTo(target!!.x, target!!.y, target!!.z, speed)
         }
-        if (this.mob.dataTracker.get(beenFed)) {
+        if (beenFed.get()) {
             this.mob.navigation.stop()
         }
     }
