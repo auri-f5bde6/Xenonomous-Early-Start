@@ -33,7 +33,7 @@ class RunawayFromPlayerGoal(val mob: PathAwareEntity, val speed: Double, val bee
     }
 
     override fun canStop(): Boolean {
-        return beenFed.get() || (this.mob.squaredDistanceTo(player) >= 32.0 || player?.isAlive == false)
+        return beenFed.get() || (this.mob.squaredDistanceTo(player) >= 32.0 || player?.isAlive == false) || mob.target != null
     }
 
     private fun findTarget(): Boolean {

@@ -1,7 +1,10 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.neutral_till_fed;
 
 import com.github.auri_f5bde6.xeno_early_start.capabilities.NeutralTilFedData;
-import com.github.auri_f5bde6.xeno_early_start.entity.goal.*;
+import com.github.auri_f5bde6.xeno_early_start.entity.goal.DomesticatableActiveTargetGoal;
+import com.github.auri_f5bde6.xeno_early_start.entity.goal.DomesticatableAttackGoal;
+import com.github.auri_f5bde6.xeno_early_start.entity.goal.DomesticatableRevengeGoal;
+import com.github.auri_f5bde6.xeno_early_start.entity.goal.RunawayFromPlayerGoal;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -43,11 +46,10 @@ public abstract class PigEntityMixin extends TillFedSharedMixin implements ItemS
         assert data != null;
         this.targetSelector.add(1, new DomesticatableRevengeGoal((PigEntity) (Object) this));
         this.targetSelector.add(0, new DomesticatableActiveTargetGoal<>((PigEntity) (Object) this, PlayerEntity.class, 10, true, false,
-                livingEntity -> (this.shouldAngerAt(livingEntity) && !data.getHasBeenFed()))
+                livingEntity -> (this.shouldAngerAt(livingEntity) && !data.getFed()))
         );
-        this.goalSelector.add(1, new RunawayFromPlayerGoal((PigEntity) (Object) this, 1.25, data::getHasBeenFed));
+        this.goalSelector.add(1, new RunawayFromPlayerGoal((PigEntity) (Object) this, 1.25, data::getFed));
         this.goalSelector.add(0, new DomesticatableAttackGoal((PigEntity) (Object) this));
-        this.goalSelector.add(1, new DomesticatableEscapeDangerGoal((PigEntity) (Object) this));
 
     }
 

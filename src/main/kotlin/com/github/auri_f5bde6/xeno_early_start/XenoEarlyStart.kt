@@ -3,6 +3,7 @@ package com.github.auri_f5bde6.xeno_early_start
 import com.github.auri_f5bde6.xeno_early_start.conditions.ConfigCondition
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfigGui
+import com.github.auri_f5bde6.xeno_early_start.network.NetworkHandler
 import com.github.auri_f5bde6.xeno_early_start.registries.*
 import com.mojang.logging.LogUtils
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml
@@ -31,7 +32,7 @@ import java.util.function.Supplier
 @Mod(XenoEarlyStart.MODID)
 class XenoEarlyStart {
     init {
-        LOGGER.info("Loading Progression Mod Config...")
+        LOGGER.info("Loading Xeno Early Start")
 
         XenoEarlyStartBlockRegistry.DEF_REG.register(MOD_BUS)
         XenoEarlyStartItemRegistry.VANILLA_ITEMS.register(MOD_BUS)
@@ -47,6 +48,9 @@ class XenoEarlyStart {
         XenoEarlyStartStatusEffectRegistry.DEF_REG.register(MOD_BUS)
         XenoEarlyStartCodecRegistry.BIOME_MODIFIER_DEF_REG.register(MOD_BUS)
         XenoEarlyStartCodecRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(MOD_BUS)
+
+        NetworkHandler.register()
+
         CREATIVE_TAB_REG.register(MOD_BUS)
         TierSortingRegistry.registerTier(
             XenoEarlyStartToolMaterials.COPPER,

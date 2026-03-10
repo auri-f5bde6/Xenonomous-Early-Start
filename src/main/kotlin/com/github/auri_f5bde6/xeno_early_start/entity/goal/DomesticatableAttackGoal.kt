@@ -5,10 +5,10 @@ import net.minecraft.entity.mob.MobEntity
 
 class DomesticatableAttackGoal(val mob: MobEntity) : net.minecraft.entity.ai.goal.AttackGoal(mob) {
     override fun canStart(): Boolean {
-        return !NeutralTilFedData.get(mob)!!.hasBeenFed && super.canStart()
+        return !NeutralTilFedData.get(mob)!!.fed && super.canStart()
     }
 
     override fun canStop(): Boolean {
-        return NeutralTilFedData.get(mob)!!.hasBeenFed || super.canStop()
+        return NeutralTilFedData.get(mob)!!.fed || super.canStop()
     }
 }

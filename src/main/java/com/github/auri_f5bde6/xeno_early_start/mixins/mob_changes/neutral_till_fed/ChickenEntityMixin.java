@@ -1,7 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.neutral_till_fed;
 
 import com.github.auri_f5bde6.xeno_early_start.capabilities.NeutralTilFedData;
-import com.github.auri_f5bde6.xeno_early_start.entity.goal.DomesticatableEscapeDangerGoal;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.RunawayFromPlayerGoal;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -27,8 +26,7 @@ public abstract class ChickenEntityMixin extends TillFedSharedMixin {
     protected void initGoals(Operation<Void> original) {
         var data = NeutralTilFedData.get(((AnimalEntity) (Object) this));
         assert data != null;
-        this.goalSelector.add(1, new RunawayFromPlayerGoal((ChickenEntity) (Object) this, 1.4, data::getHasBeenFed));
-        this.goalSelector.add(1, new DomesticatableEscapeDangerGoal((ChickenEntity) (Object) this));
+        this.goalSelector.add(1, new RunawayFromPlayerGoal((ChickenEntity) (Object) this, 1.4, data::getFed));
         original.call();
     }
 

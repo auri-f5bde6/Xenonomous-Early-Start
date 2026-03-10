@@ -19,13 +19,13 @@ class DomesticatableActiveTargetGoal<T : LivingEntity>(
     override fun canStart(): Boolean {
         val data = NeutralTilFedData.get(mob)!!
 
-        if (data.hasBeenFed) {
+        if (data.fed) {
             return false
         }
         return super.canStart()
     }
 
     override fun canStop(): Boolean {
-        return NeutralTilFedData.get(mob)!!.hasBeenFed || super.canStop()
+        return NeutralTilFedData.get(mob)!!.fed || super.canStop()
     }
 }

@@ -18,7 +18,7 @@ public class TempGoalMixin {
     @WrapMethod(method = "canStart")
     public boolean canStart(Operation<Boolean> original) {
         var cap = NeutralTilFedData.get(mob);
-        if (cap != null && !cap.getHasBeenFed()) {
+        if (cap != null && !cap.getFed()) {
             return false;
         }
         return original.call();

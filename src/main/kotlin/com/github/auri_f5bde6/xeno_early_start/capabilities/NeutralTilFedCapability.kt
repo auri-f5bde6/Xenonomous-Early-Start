@@ -2,6 +2,7 @@ package com.github.auri_f5bde6.xeno_early_start.capabilities
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.network.NetworkHandler
+import com.github.auri_f5bde6.xeno_early_start.network.NeutralTilFedSyncPacket
 import net.minecraft.entity.Entity
 import net.minecraft.entity.passive.ChickenEntity
 import net.minecraft.entity.passive.CowEntity
@@ -21,10 +22,11 @@ import net.minecraftforge.network.PacketDistributor
 import java.util.*
 
 @AutoRegisterCapability
-class NeutralTilFedData(var hasBeenFed: Boolean, val id: Int, val uuid: UUID?) : ICapabilitySerializable<NbtCompound> {
+class NeutralTilFedData(hasBeenFed: Boolean, val id: Int, val uuid: UUID?) : ICapabilitySerializable<NbtCompound> {
 
 
-    private var fed = hasBeenFed
+    var fed = hasBeenFed
+        private set
 
     @EventBusSubscriber(modid = XenoEarlyStart.MODID, bus = EventBusSubscriber.Bus.FORGE)
     companion object {
@@ -60,7 +62,7 @@ class NeutralTilFedData(var hasBeenFed: Boolean, val id: Int, val uuid: UUID?) :
         if (!fed) {
             fed = true
             if (world is ServerWorld) {
-                NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), this)
+                NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), NeutralTilFedSyncPacket(this))
             }
         }
     }

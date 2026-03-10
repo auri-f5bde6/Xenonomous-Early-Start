@@ -11,7 +11,7 @@ import java.util.function.Supplier
 class NeutralTilFedSyncPacket(val data: NeutralTilFedData) {
     companion object {
         fun encode(msg: NeutralTilFedSyncPacket, buf: PacketByteBuf) {
-            buf.writeBoolean(msg.data.hasBeenFed)
+            buf.writeBoolean(msg.data.fed)
             buf.writeVarInt(msg.data.id)
         }
 

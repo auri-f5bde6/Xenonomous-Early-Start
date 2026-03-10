@@ -1,7 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.neutral_till_fed;
 
 import com.github.auri_f5bde6.xeno_early_start.capabilities.NeutralTilFedData;
-import com.github.auri_f5bde6.xeno_early_start.entity.goal.DomesticatableEscapeDangerGoal;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.RunawayFromPlayerGoal;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -27,9 +26,8 @@ public abstract class SheepEntityMixin extends TillFedSharedMixin {
     protected void initGoals(Operation<Void> original) {
         var sheep = (SheepEntity) (Object) this;
         this.goalSelector.add(1, new RunawayFromPlayerGoal(sheep, 1.25,
-                () -> Objects.requireNonNull(NeutralTilFedData.get(sheep)).getHasBeenFed()
+                () -> Objects.requireNonNull(NeutralTilFedData.get(sheep)).getFed()
         ));
-        this.goalSelector.add(1, new DomesticatableEscapeDangerGoal(sheep));
         original.call();
     }
 
