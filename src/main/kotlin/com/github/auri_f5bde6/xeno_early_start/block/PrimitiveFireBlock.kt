@@ -1,9 +1,9 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.advancements.PrimitiveFireCriterion
 import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.TransUtils
@@ -399,7 +399,8 @@ class PrimitiveFireBlock : BlockWithEntity, Waterloggable {
                     && blockEntity.addItem(
                         player,
                         if (player.abilities.creativeMode) itemStack.copy() else itemStack,
-                        optional.get().getCookTime() * 2
+                        (optional.get()
+                            .getCookTime() * XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire.cookingTimeMultiplier).toInt()
                     )
                 ) {
                     player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE)

@@ -40,7 +40,7 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
         var entity = (PersistentProjectileEntity) (Object) this;
         if (entity instanceof ArrowEntity || entity instanceof TridentEntity || entity instanceof BrickEntity) {
             var blockState = instance.getBlockState(result.getBlockPos());
-            var isLeaf = blockState.isIn(BlockTags.LEAVES);
+            var isLeaf = blockState.isIn(XenoEarlyStartTags.Blocks.PROJECTILE_CAN_PASS_THROUGH);
             var isGlass = blockState.isIn(XenoEarlyStartTags.Blocks.BRITTLE);
             if (isGlass || isLeaf) {
                 if (isGlass) {

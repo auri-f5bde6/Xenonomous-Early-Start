@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber

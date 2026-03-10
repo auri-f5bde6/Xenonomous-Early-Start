@@ -61,6 +61,11 @@ class ConfigWrapper {
     fun newCategory(categoryName: String): Category.MainCategory {
         return Category.MainCategory(configBuilder, entryBuilder, categoryName, getConfigOptionTranslationKey())
     }
+    fun newCategory(categoryName: String, body: (Category.MainCategory) -> Unit): Category.MainCategory {
+        val category = newCategory(categoryName)
+        body(category)
+        return category
+    }
 
     abstract class Category {
         fun newSubCategory(subCategoryName: String, expanded: Boolean = false): SubCategory {
@@ -72,9 +77,24 @@ class ConfigWrapper {
             )
         }
 
+        fun addSubCategory(subCategoryName: String, body: (SubCategory) -> Unit, expanded: Boolean = false) {
+            val category = newSubCategory(subCategoryName, expanded)
+            body(category)
+            addSubCategory(category)
+        }
+
+        fun addSubCategory(subCategoryName: String, body: (SubCategory) -> Unit) {
+            addSubCategory(subCategoryName, body, false)
+        }
+
+        fun addSubCategory(subCategoryName: String, expanded: Boolean = false, body: (SubCategory) -> Unit) {
+            addSubCategory(subCategoryName, body, expanded)
+        }
+
         fun addSubCategory(subCategory: SubCategory) {
             addEntry(subCategory.builder.build())
         }
+
         class MainCategory(
             configBuilder: ConfigBuilder,
             override val entryBuilder: ConfigEntryBuilder,
@@ -153,7 +173,7 @@ class ConfigWrapper {
             max: Float,
             tooltip: TooltipText? = null
         ) {
-            addIntSlider(
+            addSlider(
                 name,
                 ref,
                 defaultValue,
@@ -258,7 +278,7 @@ class ConfigWrapper {
             )
         }
 
-        fun <T> addIntSlider(
+        fun <T> addSlider(
             name: String,
             ref: KMutableProperty0<T>,
             defaultValue: T,
@@ -294,7 +314,7 @@ class ConfigWrapper {
             tooltip: TooltipText? = null,
             requireRestart: Boolean = false
         ) {
-            addIntSlider(name, ref, defaultValue, from, to, { v: Int -> v }, { v: Int -> v }, tooltip, requireRestart)
+            addSlider(name, ref, defaultValue, from, to, { v: Int -> v }, { v: Int -> v }, tooltip, requireRestart)
         }
     }
 }

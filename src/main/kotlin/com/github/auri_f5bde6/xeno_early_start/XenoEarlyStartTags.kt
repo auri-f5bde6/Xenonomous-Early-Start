@@ -28,7 +28,15 @@ class XenoEarlyStartTags {
         val CAN_BE_MINE_WITH_COPPER_PICKAXE: TagKey<Block> = createTag("can_be_mined_with_copper_pickaxe")
 
         @JvmField
+        val FURNACES: TagKey<Block> = createTag("furnaces")
+
+        @JvmField
+        val CRAFTING_TABLES: TagKey<Block> = createTag("crafting_tables")
+        @JvmField
         val BRITTLE: TagKey<Block> = createTag("brittle")
+
+        @JvmField
+        val PROJECTILE_CAN_PASS_THROUGH: TagKey<Block> = createTag("projectile_can_pass_through")
 
         private fun createTag(name: String): TagKey<Block> {
             return BlockTags.create(XenoEarlyStart.of(name))

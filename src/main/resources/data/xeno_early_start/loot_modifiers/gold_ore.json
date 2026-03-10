@@ -9,6 +9,13 @@
           "tag": "forge:ores/gold"
         },
         {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "xeno_early_start:config",
+            "config": "vanilla_gold_loot_table"
+          }
+        },
+        {
           "condition": "xeno_early_start:match_tool_tier",
           "tier": "minecraft:diamond",
           "cond": "<"

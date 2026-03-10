@@ -2,6 +2,7 @@ package com.github.auri_f5bde6.xeno_early_start
 
 import com.github.auri_f5bde6.xeno_early_start.advancements.CoalDustCriterion
 import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.entity.CoalDustExplosion
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartParticleRegistry
 import net.minecraft.block.BlockState

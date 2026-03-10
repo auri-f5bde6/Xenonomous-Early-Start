@@ -1,5 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start
 
+import com.github.auri_f5bde6.xeno_early_start.conditions.ConfigCondition
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfigGui
 import com.github.auri_f5bde6.xeno_early_start.registries.*
 import com.mojang.logging.LogUtils
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml
@@ -14,6 +17,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory
 import net.minecraftforge.common.TierSortingRegistry
+import net.minecraftforge.common.crafting.CraftingHelper
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.loading.FMLPaths
 import net.minecraftforge.registries.DeferredRegister
@@ -62,6 +66,7 @@ class XenoEarlyStart {
             mutableListOf<Any?>(),
             listOf<Any?>(ofMinecraft("wood"))
         )
+        CraftingHelper.register(ConfigCondition.SERIALIZER)
         try {
             val file = FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
             XenoEarlyStartConfig.config =
@@ -75,13 +80,12 @@ class XenoEarlyStart {
             )
         }
         LOADING_CONTEXT.registerExtensionPoint(
-            ConfigScreenFactory::class.java,
-            Supplier {
-                ConfigScreenFactory { mc: MinecraftClient?, prevScreen: Screen? ->
-                    XenoEarlyStartConfigGui.configBuilder.build()
-                }
+            ConfigScreenFactory::class.java
+        ) {
+            ConfigScreenFactory { mc: MinecraftClient?, prevScreen: Screen? ->
+                XenoEarlyStartConfigGui.configBuilder.build()
             }
-        )
+        }
     }
 
 

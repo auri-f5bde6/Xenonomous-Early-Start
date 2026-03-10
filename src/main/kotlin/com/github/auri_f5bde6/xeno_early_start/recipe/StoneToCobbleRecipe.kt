@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.recipe
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getBool
 import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getFloat

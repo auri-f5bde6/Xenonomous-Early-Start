@@ -9,6 +9,13 @@
           "tag": "forge:ores/copper"
         },
         {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "xeno_early_start:config",
+            "config": "vanilla_copper_loot_table"
+          }
+        },
+        {
           "condition": "xeno_early_start:match_tool_tier",
           "tier": "minecraft:diamond",
           "cond": "<"

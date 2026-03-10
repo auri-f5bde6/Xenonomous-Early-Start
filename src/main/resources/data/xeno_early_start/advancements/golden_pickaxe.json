@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:golden_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.golden_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.golden_pickaxe.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:diamond",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:golden_pickaxe"
+      }
+    }
+  }
+}

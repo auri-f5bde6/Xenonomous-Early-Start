@@ -10,14 +10,11 @@
     },
     "W": {
       "item": "minecraft:soul_sand"
-    },
-    "#": {
-      "item": "xeno_early_start:brick_furnace"
     }
   },
   "pattern": [
     "BBB",
-    "B#B",
+    "B B",
     "SWS"
   ],
   "result": {

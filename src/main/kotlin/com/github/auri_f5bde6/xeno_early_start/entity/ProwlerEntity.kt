@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.entity
 
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartEntityRegistry
 import com.google.common.collect.HashMultimap
 import net.minecraft.entity.EntityType
@@ -28,7 +29,7 @@ class ProwlerEntity(entityType: EntityType<out ProwlerEntity>, world: World) :
             pos: BlockPos,
             random: Random
         ): Boolean {
-            return pos.y < 0
+            return pos.y < 0 && XenoEarlyStartConfig.config.mobChanges.prowlerCanSpawn
         }
 
         @JvmStatic

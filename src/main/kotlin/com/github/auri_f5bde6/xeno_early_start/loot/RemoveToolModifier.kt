@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.loot
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartCodecRegistry
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult

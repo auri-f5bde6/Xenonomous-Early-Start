@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.loot
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName

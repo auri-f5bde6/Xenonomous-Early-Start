@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.block_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags;
 import com.github.auri_f5bde6.xeno_early_start.block.BrickFurnaceBlock;
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.*;

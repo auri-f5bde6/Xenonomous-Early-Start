@@ -22,7 +22,9 @@
   },
   "rewards": {
     "recipes": [
-      "minecraft:furnace"
+      "minecraft:furnace",
+      "xeno_early_start:furnace_in_nether_soul_sand",
+      "xeno_early_start:furnace_in_nether_soul_soil"
     ]
   }
 }

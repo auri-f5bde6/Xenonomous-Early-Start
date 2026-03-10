@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes.attack_weak_player;
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;

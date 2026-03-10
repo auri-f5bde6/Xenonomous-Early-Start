@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.block
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils.isCovered
 import net.minecraft.block.Block

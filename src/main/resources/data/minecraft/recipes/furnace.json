@@ -1,27 +1,66 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "tag": "forge:cobblestone"
+  "override": true,
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "xeno_early_start:config",
+          "config": "vanilla_furnace_recipe"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "#": {
+            "tag": "minecraft:stone_crafting_materials"
+          }
+        },
+        "pattern": [
+          "###",
+          "# #",
+          "###"
+        ],
+        "result": {
+          "item": "minecraft:furnace"
+        },
+        "show_notification": true
+      }
     },
-    "B": {
-      "item": "xeno_early_start:brick_furnace"
-    },
-    "S": {
-      "item": "minecraft:smooth_stone"
-    },
-    "&": {
-      "tag": "forge:ingots/copper"
+    {
+      "conditions": [
+        {
+          "type": "forge:true"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "#": {
+            "tag": "forge:cobblestone"
+          },
+          "B": {
+            "item": "xeno_early_start:brick_furnace"
+          },
+          "S": {
+            "item": "minecraft:smooth_stone"
+          },
+          "&": {
+            "tag": "forge:ingots/copper"
+          }
+        },
+        "pattern": [
+          "###",
+          "#B#",
+          "S&S"
+        ],
+        "result": {
+          "item": "minecraft:furnace"
+        },
+        "show_notification": true
+      }
     }
-  },
-  "pattern": [
-    "###",
-    "#B#",
-    "S&S"
-  ],
-  "result": {
-    "item": "minecraft:furnace"
-  },
-  "show_notification": true
+  ]
 }

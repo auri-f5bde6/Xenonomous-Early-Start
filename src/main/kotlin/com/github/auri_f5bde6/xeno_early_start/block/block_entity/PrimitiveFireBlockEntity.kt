@@ -1,7 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.block.block_entity
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockEntityRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

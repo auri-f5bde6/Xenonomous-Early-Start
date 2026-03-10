@@ -1,14 +1,16 @@
-package com.github.auri_f5bde6.xeno_early_start
+package com.github.auri_f5bde6.xeno_early_start.config
 
 import kotlin.math.min
 
 object XenoEarlyStartConfig {
     class Config {
+        var disableNonClientConfig: Boolean = false
+
         @JvmField
         var oreChanges: OreChanges = OreChanges()
 
         @JvmField
-        var earlyGameChanges: EarlyGameChanges = EarlyGameChanges()
+        var earlyGameChanges: Gameplay = Gameplay()
 
         @JvmField
         var mobChanges: MobChanges = MobChanges()
@@ -27,12 +29,19 @@ object XenoEarlyStartConfig {
     var config: Config = Config()
 
     class OreChanges {
+        var vanillaCopperLootTable: Boolean = false
         var rawCopperNuggetDropMin: Int = 1
         var rawCopperNuggetDropMax: Int = 3
 
+        var vanillaIronLootTable: Boolean = false
+
         var rawIronNuggetDrop: Int = 1
 
+        var vanillaGoldLootTable: Boolean = false
+
         var rawGoldNuggetDrop: Int = 1
+
+        var vanillaDiamondLootTable: Boolean = false
 
         var diamondFragmentDrop: Int = 1
         var goldenPickDiamondFragmentBuff: Int = 2
@@ -44,7 +53,7 @@ object XenoEarlyStartConfig {
         var coalDustExplosionBlockLimit: Int = 256
     }
 
-    class EarlyGameChanges {
+    class Gameplay {
         var plantFiberDropProbability: Float = 0.05f
 
         var overridePebbleDropProbability: Boolean = false
@@ -54,6 +63,22 @@ object XenoEarlyStartConfig {
         var rawBrickDryingLength: Int = 9
 
         var removePickaxeFromAllLootTable: Boolean = true
+
+        var stationsUnusableUntilFirstCraft: Boolean = true
+
+        var brickFurnaceCookingTimeMultiplier: Float = 3f
+
+        var recipes = Recipes()
+
+        class Recipes {
+            var harderBrickFurnaceRecipe: Boolean = true
+
+            var vanillaFurnaceRecipe: Boolean = false
+
+            var vanillaStoneToolRecipe: Boolean = false
+
+            var vanillaCraftingTableRecipe: Boolean = false
+        }
 
         var primitiveFire: PrimitiveFire = PrimitiveFire()
 
@@ -65,6 +90,7 @@ object XenoEarlyStartConfig {
                 set(value) {
                     field = min(value, maxBurnTime)
                 }
+            var cookingTimeMultiplier: Float = 2f
         }
     }
 
@@ -86,6 +112,8 @@ object XenoEarlyStartConfig {
         var wolfAggressiveAtNight: Boolean = true
 
         var batGivesPlayerNausea: Boolean = true
+
+        var prowlerCanSpawn: Boolean = true
 
     }
 

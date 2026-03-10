@@ -1,21 +1,63 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "key": {
-    "#": {
-      "item": "minecraft:wooden_axe"
+  "override": true,
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "xeno_early_start:config",
+          "config": "vanilla_stone_tool_recipe"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "equipment",
+        "key": {
+          "#": {
+            "item": "minecraft:stick"
+          },
+          "X": {
+            "tag": "minecraft:stone_tool_materials"
+          }
+        },
+        "pattern": [
+          "XX",
+          "X#",
+          " #"
+        ],
+        "result": {
+          "item": "minecraft:stone_axe"
+        },
+        "show_notification": true
+      }
     },
-    "X": {
-      "tag": "xeno_early_start:knapped_stone"
+    {
+      "conditions": [
+        {
+          "type": "forge:true"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "equipment",
+        "key": {
+          "#": {
+            "item": "minecraft:wooden_axe"
+          },
+          "X": {
+            "tag": "xeno_early_start:knapped_stone"
+          }
+        },
+        "pattern": [
+          " X ",
+          "X#X",
+          " X "
+        ],
+        "result": {
+          "item": "minecraft:stone_axe"
+        },
+        "show_notification": true
+      }
     }
-  },
-  "pattern": [
-    " X ",
-    "X#X",
-    " X "
-  ],
-  "result": {
-    "item": "minecraft:stone_axe"
-  },
-  "show_notification": true
+  ]
 }

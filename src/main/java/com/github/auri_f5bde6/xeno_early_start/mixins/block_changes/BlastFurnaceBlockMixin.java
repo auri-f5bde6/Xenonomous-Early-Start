@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.block_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlastFurnaceBlock;

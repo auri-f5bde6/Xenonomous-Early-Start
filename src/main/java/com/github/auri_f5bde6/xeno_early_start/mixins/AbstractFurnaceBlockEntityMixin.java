@@ -2,6 +2,7 @@ package com.github.auri_f5bde6.xeno_early_start.mixins;
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags;
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.BrickFurnaceBlockEntity;
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.mixins.accessors.AbstractFurnaceEntityAccessor;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -40,7 +41,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends LockableContainerB
     @Inject(at = @At("HEAD"), method = "getCookTime(Lnet/minecraft/world/World;Lnet/minecraft/block/entity/AbstractFurnaceBlockEntity;)I", cancellable = true)
     private static void getCookTime(World world, AbstractFurnaceBlockEntity furnace, CallbackInfoReturnable<Integer> cir) {
         if (furnace instanceof BrickFurnaceBlockEntity) {
-            cir.setReturnValue((furnace.matchGetter.getFirstMatch(furnace, world).map(AbstractCookingRecipe::getCookTime).orElse(200)) * 3);
+            cir.setReturnValue((int) ((furnace.matchGetter.getFirstMatch(furnace, world).map(AbstractCookingRecipe::getCookTime).orElse(200)) * XenoEarlyStartConfig.config.earlyGameChanges.getBrickFurnaceCookingTimeMultiplier()));
         }
     }
 

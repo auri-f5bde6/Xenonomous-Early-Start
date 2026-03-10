@@ -1,10 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.loot.BlockIsInTagCondition
-import com.github.auri_f5bde6.xeno_early_start.loot.ConfigLootFunction
-import com.github.auri_f5bde6.xeno_early_start.loot.LootTableIdCondition
-import com.github.auri_f5bde6.xeno_early_start.loot.MatchToolTier
+import com.github.auri_f5bde6.xeno_early_start.loot.*
 import net.minecraft.loot.condition.LootConditionType
 import net.minecraft.loot.function.LootFunctionType
 import net.minecraft.registry.Registries
@@ -32,6 +29,11 @@ object XenoEarlyStartLootTypeRegistry {
     val blockIsInTagCondition: RegistryObject<LootConditionType> = COND_DEF_REG.register(
         "block_is_in_tag",
         Supplier { LootConditionType(BlockIsInTagCondition.Serializer()) })
+
+    @JvmField
+    val configLootCondition: RegistryObject<LootConditionType> = COND_DEF_REG.register("config") {
+        LootConditionType(ConfigLootCondition.Serializer())
+    }
 
     @JvmField
     val FUNC_DEF_REG: DeferredRegister<LootFunctionType> = DeferredRegister.create(

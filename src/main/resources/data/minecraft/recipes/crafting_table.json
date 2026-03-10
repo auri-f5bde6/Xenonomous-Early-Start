@@ -1,21 +1,58 @@
 {
   "override": true,
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "L": {
-      "item": "xeno_early_start:treated_wood"
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "xeno_early_start:config",
+          "config": "vanilla_crafting_table_recipe"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "#": {
+            "tag": "minecraft:planks"
+          }
+        },
+        "pattern": [
+          "##",
+          "##"
+        ],
+        "result": {
+          "item": "minecraft:crafting_table"
+        },
+        "show_notification": false
+      }
     },
-    "B": {
-      "item": "minecraft:brick"
+    {
+      "conditions": [
+        {
+          "type": "forge:true"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "category": "misc",
+        "key": {
+          "L": {
+            "item": "xeno_early_start:treated_wood"
+          },
+          "B": {
+            "item": "minecraft:brick"
+          }
+        },
+        "pattern": [
+          "LL",
+          "BB"
+        ],
+        "result": {
+          "item": "minecraft:crafting_table"
+        },
+        "show_notification": false
+      }
     }
-  },
-  "pattern": [
-    "LL",
-    "BB"
-  ],
-  "result": {
-    "item": "minecraft:crafting_table"
-  },
-  "show_notification": false
+  ]
 }

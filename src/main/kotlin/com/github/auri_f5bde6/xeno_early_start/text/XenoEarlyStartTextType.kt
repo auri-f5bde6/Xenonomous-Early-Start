@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.text
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.event.ItemTooltipEventListener.calculateNumberOfStickRequired
 import net.minecraft.text.MutableText
 

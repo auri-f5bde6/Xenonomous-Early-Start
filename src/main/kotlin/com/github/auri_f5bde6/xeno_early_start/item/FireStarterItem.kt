@@ -1,10 +1,10 @@
 package com.github.auri_f5bde6.xeno_early_start.item
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.advancements.PrimitiveFireCriterion
 import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
 import com.github.auri_f5bde6.xeno_early_start.block.block_entity.PrimitiveFireBlockEntity
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.CampfireBlock

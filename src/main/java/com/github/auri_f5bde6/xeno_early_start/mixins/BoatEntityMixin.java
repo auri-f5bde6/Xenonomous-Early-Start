@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins;
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

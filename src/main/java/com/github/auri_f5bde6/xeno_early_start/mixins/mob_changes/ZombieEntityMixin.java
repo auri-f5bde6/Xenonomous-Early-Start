@@ -1,6 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.mob_changes;
 
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig;
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.WalkOnRawBrickGoal;
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry;
 import net.minecraft.entity.EquipmentSlot;

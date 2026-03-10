@@ -1,8 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.event
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.item.Items
