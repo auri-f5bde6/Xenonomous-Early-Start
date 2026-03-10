@@ -54,9 +54,9 @@ class EmiUseToolRecipe(val recipe: UseToolRecipe) : EmiCraftingRecipe(
         }
         widgets.addGeneratedSlot({ random ->
             val tool = possibleTools[random.nextInt(0, possibleTools.size - 1)]
-            tool.damage = random.nextInt(0, tool.maxDamage - 2)
+            tool.damage = random.nextInt(0, tool.maxDamage - recipe.toolDamage * 2)
             val original = EmiStack.of(tool.copy())
-            tool.damage += 1
+            tool.damage += recipe.toolDamage
             val new = EmiStack.of(tool)
             original.setRemainder(new)
             original

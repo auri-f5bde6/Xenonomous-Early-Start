@@ -37,11 +37,11 @@ object XenoEarlyStartClientHandler {
             ) { handler: BrickFurnaceScreenHandler, playerInventory: PlayerInventory, title: Text ->
                 BrickFurnaceScreen(handler, playerInventory, title)
             }
+            BlockEntityRendererFactories.register(
+                XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(), ::PrimitiveFireBlockEntityRenderer
+            )
+            RenderLayers.setRenderLayer(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get(), RenderLayer.getCutout())
         })
-        BlockEntityRendererFactories.register(
-            XenoEarlyStartBlockEntityRegistry.PRIMITIVE_FIRE.get(), ::PrimitiveFireBlockEntityRenderer
-        )
-        RenderLayers.setRenderLayer(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get(), RenderLayer.getCutout())
     }
 
     @SubscribeEvent

@@ -8,6 +8,8 @@
     "#minecraft:terracotta",
     "#minecraft:base_stone_nether",
     "#minecraft:base_stone_overworld",
-    "minecraft:smooth_basalt"
+    "minecraft:smooth_basalt",
+    "minecraft:crying_obsidian",
+    "minecraft:bedrock"
   ]
 }

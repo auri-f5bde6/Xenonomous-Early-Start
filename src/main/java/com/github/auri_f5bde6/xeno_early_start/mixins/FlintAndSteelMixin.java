@@ -1,6 +1,7 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins;
 
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock;
+import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -18,7 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class FlintAndSteelMixin {
     @Inject(method = "useOnBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;", shift = At.Shift.AFTER), cancellable = true)
     void cancelIfNoFuelTime(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
-        if (!PrimitiveFireBlock.canBeLit(context.getWorld().getBlockState(context.getBlockPos()), context)) {
+        var state = context.getWorld().getBlockState(context.getBlockPos());
+        if (state.isOf(XenoEarlyStartBlockRegistry.PRIMITIVE_FIRE.get()) && !PrimitiveFireBlock.canBeLit(state, context)) {
             cir.setReturnValue(ActionResult.FAIL);
         }
     }
