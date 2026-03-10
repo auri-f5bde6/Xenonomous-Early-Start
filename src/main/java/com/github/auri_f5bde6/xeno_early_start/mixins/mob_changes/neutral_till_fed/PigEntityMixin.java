@@ -7,13 +7,13 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemSteerable;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.Angerable;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
@@ -24,7 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PigEntity.class)
 public abstract class PigEntityMixin extends TillFedSharedMixin implements ItemSteerable, Saddleable, Angerable {
-    protected PigEntityMixin(EntityType<? extends LivingEntity> arg, World arg2) {
+
+    protected PigEntityMixin(EntityType<? extends PassiveEntity> arg, World arg2) {
         super(arg, arg2);
     }
 

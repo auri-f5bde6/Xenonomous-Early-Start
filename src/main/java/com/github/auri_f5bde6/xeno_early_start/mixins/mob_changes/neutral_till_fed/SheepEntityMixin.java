@@ -7,9 +7,9 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @Mixin(SheepEntity.class)
 public abstract class SheepEntityMixin extends TillFedSharedMixin {
-    protected SheepEntityMixin(EntityType<? extends LivingEntity> arg, World arg2) {
+    protected SheepEntityMixin(EntityType<? extends PassiveEntity> arg, World arg2) {
         super(arg, arg2);
     }
 
