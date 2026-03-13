@@ -35,4 +35,10 @@ public abstract class ZombieEntityMixin extends MobEntityMixin {
     void addStepOnRawBrickGoal(CallbackInfo ci) {
         goalSelector.add(5, new WalkOnRawBrickGoal(((ZombieEntity) (Object) this), 0.8, 3));
     }
+
+    @Inject(method = "applyAttributeModifiers", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/ZombieEntity;setCanBreakDoors(Z)V"))
+    void healLeader(float chanceMultiplier, CallbackInfo ci) {
+        var zombie = ((ZombieEntity) (Object) this);
+        zombie.setHealth(zombie.getMaxHealth());
+    }
 }
