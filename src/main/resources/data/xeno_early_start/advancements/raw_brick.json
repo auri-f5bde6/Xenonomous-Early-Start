@@ -13,13 +13,25 @@
   },
   "parent": "xeno_early_start:clay",
   "criteria": {
-    "crafted": {
+    "raw_brick_from_clays_and_animal_fat": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "xeno_early_start:raw_brick_from_clays"
+        "recipe_id": "xeno_early_start:raw_brick_from_clays_and_animal_fat"
+      }
+    },
+    "raw_brick_from_clays_and_charcoal": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:raw_brick_from_clays_and_charcoal"
       }
     }
   },
+  "requirements": [
+    [
+      "raw_brick_from_clays_and_animal_fat",
+      "raw_brick_from_clays_and_charcoal"
+    ]
+  ],
   "rewards": {
     "recipes": [
       "minecraft:bricks",

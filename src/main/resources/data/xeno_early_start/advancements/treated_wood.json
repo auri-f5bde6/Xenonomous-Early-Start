@@ -14,13 +14,32 @@
   },
   "parent": "xeno_early_start:sugar",
   "criteria": {
-    "crafted": {
+    "treated_wood_from_charcoal": {
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
-        "recipe_id": "xeno_early_start:treated_wood"
+        "recipe_id": "xeno_early_start:treated_wood_from_charcoal"
+      }
+    },
+    "treated_wood_from_animal_fat_and_cactus": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:treated_wood_from_animal_fat_and_cactus"
+      },
+      "treated_wood_from_animal_fat_and_crimson_fungus": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "xeno_early_start:treated_wood_from_animal_fat_and_crimson_fungus"
+        }
       }
     }
   },
+  "requirements": [
+    [
+      "treated_wood_from_charcoal",
+      "treated_wood_from_animal_fat_and_cactus",
+      "treated_wood_from_animal_fat_and_crimson_fungus"
+    ]
+  ],
   "rewards": {
     "recipes": [
       "minecraft:crafting_table",
