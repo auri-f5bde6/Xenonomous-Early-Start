@@ -60,7 +60,7 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
                 chance = 0.5
             }
             if (chance > world.random.nextFloat()) {
-                val box = Box(aboveBlock, aboveBlock.add(1, 1, 1))
+                val box = Box(aboveBlock.add(-1, -1, -1), aboveBlock.add(1, 1, 1))
                 val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
                 var burnTime = 0
                 for (item in items) {

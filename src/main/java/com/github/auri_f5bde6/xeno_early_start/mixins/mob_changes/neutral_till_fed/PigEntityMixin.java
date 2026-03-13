@@ -35,7 +35,7 @@ public abstract class PigEntityMixin extends TillFedSharedMixin implements ItemS
     @WrapMethod(method = "createPigAttributes")
     private static DefaultAttributeContainer.Builder addSquidAttributes(Operation<DefaultAttributeContainer.Builder> original) {
         return original.call()
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 5)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.5);
     }
@@ -44,7 +44,7 @@ public abstract class PigEntityMixin extends TillFedSharedMixin implements ItemS
     private void initGoals(CallbackInfo ci) {
         var data = NeutralTilFedData.get(((PigEntity) (Object) this));
         assert data != null;
-        this.targetSelector.add(1, new DomesticatableRevengeGoal((PigEntity) (Object) this));
+        this.targetSelector.add(1, new DomesticatableRevengeGoal((PigEntity) (Object) this).setGroupRevenge());
         this.targetSelector.add(0, new DomesticatableActiveTargetGoal<>((PigEntity) (Object) this, PlayerEntity.class, 10, true, false,
                 livingEntity -> (this.shouldAngerAt(livingEntity) && !data.getFed()))
         );
