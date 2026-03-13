@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
 import net.minecraft.world.BlockView
@@ -17,6 +18,34 @@ import net.minecraft.world.RaycastContext
 import net.minecraft.world.World
 
 object OtherUtils {
+    @JvmStatic
+    fun raycast(
+        world: World,
+        start: BlockPos,
+        direction: Direction,
+        limit: Int,
+        shouldIgnore: (blockState: BlockState) -> Boolean
+    ): Pair<BlockState, BlockPos>? {
+        if (limit < 1) throw IllegalArgumentException("zero or negative limit")
+        var count = 1
+        var pos = start.offset(direction, 1)
+        var blockState = world.getBlockState(pos)
+        // don't want to call shouldIgnore more than once in case I want to do side effect with the lambda
+        var firstTest = (blockState.isAir || shouldIgnore(blockState))
+        while ((firstTest || (blockState.isAir || shouldIgnore(blockState))) && count < limit) {
+            firstTest = false
+            pos = pos.offset(direction, 1)
+            blockState = world.getBlockState(pos)
+            count++
+        }
+        return if (blockState.isAir || firstTest) {
+            null
+        } else {
+            Pair(blockState, pos)
+        }
+    }
+
+
     /**
      *Return (wasBlockHitAccordingToPredicate, wasAnyBlockHit)
      */
@@ -41,7 +70,7 @@ object OtherUtils {
                     wasAnyBlockHit = true
                 }
                 // TODO: I have 0 clues why raycasting from -60 to -58 can product a hit at -61 ...
-                if (blockState.isAir || hitPos == start || shouldIgnore(blockState)) {
+                if (blockState.isAir || hitPos.y <= start.y || hitPos == start || shouldIgnore(blockState)) {
                     null
                 } else {
                     false
@@ -125,6 +154,10 @@ object OtherUtils {
         // Move the entity away from the block by `blocks`
         entity.setPosition(blockPos.add(directionVector.multiply(blocks.toDouble())))
         return directionVector
+    }
+
+    fun toVec3d(blockPos: BlockPos): Vec3d {
+        return Vec3d(blockPos.x.toDouble(), blockPos.y.toDouble(), blockPos.z.toDouble())
     }
 }
 
