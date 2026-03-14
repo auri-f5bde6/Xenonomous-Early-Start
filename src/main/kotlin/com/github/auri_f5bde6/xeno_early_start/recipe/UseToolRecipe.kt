@@ -121,7 +121,7 @@ class UseToolRecipe(
             val tool = Ingredient.fromPacket(buf)
             val craftingBookCategory: CraftingRecipeCategory =
                 buf.readEnumConstant(CraftingRecipeCategory::class.java)
-            val toolDamage = buf.readInt()
+            val toolDamage = buf.readVarInt()
             return UseToolRecipe(id, craftingBookCategory, tool, input, output, toolDamage)
         }
 
@@ -132,9 +132,8 @@ class UseToolRecipe(
             recipe.input.write(buf)
             buf.writeItemStack(recipe.output)
             recipe.tool.write(buf)
-            buf.writeString(recipe.toolDamage.toString())
             buf.writeEnumConstant(recipe.craftingRecipeCategory)
-            buf.writeInt(recipe.toolDamage)
+            buf.writeVarInt(recipe.toolDamage)
 
         }
     }
