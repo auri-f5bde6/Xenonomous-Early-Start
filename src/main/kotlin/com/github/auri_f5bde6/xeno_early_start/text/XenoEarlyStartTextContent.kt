@@ -4,7 +4,9 @@ import net.minecraft.text.*
 import net.minecraft.util.Language
 import java.util.*
 
-class XenoEarlyStartTextContent(val key: String, val value: () -> Array<out Any>) : TextContent {
+class XenoEarlyStartTextContent(
+    key: String, val value: () -> Array<out Any>
+) : TranslatableTextContent(key, null, arrayOf()) {
     companion object {
         fun newText(id: String, value: () -> Array<out Any>): MutableText {
             return MutableText.of(XenoEarlyStartTextContent(id, value))

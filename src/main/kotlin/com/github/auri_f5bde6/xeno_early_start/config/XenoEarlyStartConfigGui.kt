@@ -2,60 +2,73 @@ package com.github.auri_f5bde6.xeno_early_start.config
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.block.RawBrickBlock
+import com.github.auri_f5bde6.xeno_early_start.config.wrapper.Category
+import com.github.auri_f5bde6.xeno_early_start.config.wrapper.ConfigWrapper
+import com.github.auri_f5bde6.xeno_early_start.config.wrapper.TooltipText
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter
 import me.shedaniel.clothconfig2.api.ConfigBuilder
+import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.screen.Screen
 import net.minecraftforge.fml.loading.FMLPaths
 
 object XenoEarlyStartConfigGui {
-    val configBuilder: ConfigBuilder
-        get() {
-            val config = ConfigWrapper(XenoEarlyStart.MODID)
-            addConfigs(config)
-            config.configBuilder.setSavingRunnable {
-                val tomlWriter = TomlWriter()
-                tomlWriter.write(
-                    XenoEarlyStartConfig.config,
-                    FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
-                )
-            }
-            return config.configBuilder
-        }
 
-    private fun addConfigs(config: ConfigWrapper) {
-        if (!XenoEarlyStartConfig.config.disableNonClientConfig) {
-            config.newCategory("general") { category ->
-                category.addSubCategory("ores", ::addOreChangesEntries)
-                category.addSubCategory("mobs", ::addMobChangesEntries)
-                category.addSubCategory("gameplay", ::addGameplayEntries)
-                category.addSubCategory("blocks", ::addBlockChangesEntries)
-                category.addBooleanToggle(
-                    "disableNonClientConfig",
-                    XenoEarlyStartConfig.config::disableNonClientConfig,
-                    false,
-                    tooltip = ConfigWrapper.DefaultTooltip()
-                )
+    fun getConfigBuilder(mc: MinecraftClient, prevScreen: Screen): ConfigBuilder {
+        val connectedToServer = prevScreen.minecraft.currentServerEntry != null
+        val config = XenoEarlyStartConfig.config
+        val configWrapper = ConfigWrapper(XenoEarlyStart.MODID)
+
+        if (!config.disableNonClientConfig) {
+            configWrapper.newCategory("general", config, ::addGeneralConfigs)
+        }
+        if (connectedToServer) {
+            // todo: receive the data from server
+            configWrapper.newCategory("general", "dedicated_server", XenoEarlyStartConfig.Config(), ::addGeneralConfigs)
+        }
+        configWrapper.newCategory("client", config, ::addClientEntries)
+        configWrapper.configBuilder.setSavingRunnable {
+            val tomlWriter = TomlWriter()
+            tomlWriter.write(
+                config,
+                FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
+            )
+            if (connectedToServer) {
+                // todo: send the config over to server
             }
         }
-        config.newCategory("client", ::addClientEntries)
+        return configWrapper.configBuilder
     }
 
-    private fun addOreChangesEntries(category: ConfigWrapper.Category) {
+    private fun addGeneralConfigs(category: Category, config: XenoEarlyStartConfig.Config) {
+        category.addSubCategory("ores", config, ::addOreChangesEntries)
+        category.addSubCategory("mobs", config, ::addMobChangesEntries)
+        category.addSubCategory("gameplay", config, ::addGameplayEntries)
+        category.addSubCategory("blocks", config, ::addBlockChangesEntries)
+        category.addBooleanToggle(
+            "disableNonClientConfig",
+            config::disableNonClientConfig,
+            false,
+            tooltip = TooltipText.DefaultTooltip()
+        )
+    }
+
+    private fun addOreChangesEntries(category: Category, config: XenoEarlyStartConfig.Config) {
         category.addSubCategory("copper") { copper ->
             copper.addBooleanToggle(
                 "vanillaCopperLootTable",
-                XenoEarlyStartConfig.config.oreChanges::vanillaCopperLootTable,
+                config.oreChanges::vanillaCopperLootTable,
                 false
             )
             copper.addIntSlider(
                 "rawCopperNuggetDropMin",
-                XenoEarlyStartConfig.config.oreChanges::rawCopperNuggetDropMin,
+                config.oreChanges::rawCopperNuggetDropMin,
                 1,
                 1,
                 9
             )
             copper.addIntSlider(
                 "rawCopperNuggetDropMax",
-                XenoEarlyStartConfig.config.oreChanges::rawCopperNuggetDropMax,
+                config.oreChanges::rawCopperNuggetDropMax,
                 3,
                 1,
                 9
@@ -65,12 +78,12 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("iron") { iron ->
             iron.addBooleanToggle(
                 "vanillaIronLootTable",
-                XenoEarlyStartConfig.config.oreChanges::vanillaIronLootTable,
+                config.oreChanges::vanillaIronLootTable,
                 false
             )
             iron.addIntSlider(
                 "rawIronNuggetDrop",
-                XenoEarlyStartConfig.config.oreChanges::rawIronNuggetDrop,
+                config.oreChanges::rawIronNuggetDrop,
                 1,
                 1,
                 9
@@ -80,12 +93,12 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("gold") { gold ->
             gold.addBooleanToggle(
                 "vanillaGoldLootTable",
-                XenoEarlyStartConfig.config.oreChanges::vanillaGoldLootTable,
+                config.oreChanges::vanillaGoldLootTable,
                 false
             )
             gold.addIntSlider(
                 "rawGoldNuggetDrop",
-                XenoEarlyStartConfig.config.oreChanges::rawGoldNuggetDrop,
+                config.oreChanges::rawGoldNuggetDrop,
                 1,
                 1,
                 9
@@ -95,19 +108,19 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("diamond") { diamond ->
             diamond.addBooleanToggle(
                 "vanillaDiamondLootTable",
-                XenoEarlyStartConfig.config.oreChanges::vanillaDiamondLootTable,
+                config.oreChanges::vanillaDiamondLootTable,
                 false
             )
             diamond.addIntSlider(
                 "rawDiamondFragmentDrop",
-                XenoEarlyStartConfig.config.oreChanges::diamondFragmentDrop,
+                config.oreChanges::diamondFragmentDrop,
                 1,
                 1,
                 9
             )
             diamond.addIntSlider(
                 "goldenPickDiamondFragmentBuff",
-                XenoEarlyStartConfig.config.oreChanges::goldenPickDiamondFragmentBuff,
+                config.oreChanges::goldenPickDiamondFragmentBuff,
                 2,
                 1,
                 9
@@ -117,14 +130,14 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("coalDust") { coalDust ->
             coalDust.addIntSlider(
                 "coalDustExplosionClusterSize",
-                XenoEarlyStartConfig.config.oreChanges::coalDustExplosionClusterSize,
+                config.oreChanges::coalDustExplosionClusterSize,
                 6,
                 5,
                 50
             )
             coalDust.addIntSlider(
                 "coalDustExplosionBlockLimit",
-                XenoEarlyStartConfig.config.oreChanges::coalDustExplosionBlockLimit,
+                config.oreChanges::coalDustExplosionBlockLimit,
                 256,
                 10,
                 1024
@@ -134,130 +147,170 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("misc") { misc ->
             misc.addBooleanToggle(
                 "oreToStone",
-                XenoEarlyStartConfig.config.oreChanges::oreToStone,
+                config.oreChanges::oreToStone,
                 false,
-                tooltip = ConfigWrapper.DefaultTooltip()
+                tooltip = TooltipText.DefaultTooltip()
             )
         }
     }
 
-    private fun addMobChangesEntries(category: ConfigWrapper.Category) {
+    private fun addMobChangesEntries(category: Category, config: XenoEarlyStartConfig.Config) {
         category.addSubCategory("vanilla") { vanilla ->
-            vanilla.addPercentageSlider(
-                "flatAdditiveMobSpawnWithEquipment",
-                XenoEarlyStartConfig.config.mobChanges::flatAdditiveMobSpawnWithEquipment,
-                0.05f
-            )
-            vanilla.addPercentageSlider(
-                "replaceEntityCopperArmourProbability",
-                XenoEarlyStartConfig.config.mobChanges::replaceEntityCopperArmourProbability,
-                0.05f,
-                tooltip = ConfigWrapper.DefaultTooltip()
-            )
-            vanilla.addPercentageSlider(
-                "entitySpawnWithCopperToolProbability",
-                XenoEarlyStartConfig.config.mobChanges::entitySpawnWithCopperToolProbability,
-                0.05f,
-            )
-            vanilla.addBooleanToggle(
-                "polarBearAlwaysAggressive",
-                XenoEarlyStartConfig.config.mobChanges::polarBearAlwaysAggressive,
-                true
-            )
-            vanilla.addFloatField(
-                "polarBearSpeed",
-                XenoEarlyStartConfig.config.mobChanges::polarBearSpeed,
-                0.35f,
-                tooltip = ConfigWrapper.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
-                requireRestart = true,
-            )
-            vanilla.addIntSlider(
-                "polarBearRange",
-                XenoEarlyStartConfig.config.mobChanges::polarBearRange,
-                40,
-                1,
-                64,
-                tooltip = ConfigWrapper.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
-                requireRestart = true,
-            )
-            vanilla.addBooleanToggle(
-                "mobAttackWeakPlayer",
-                XenoEarlyStartConfig.config.mobChanges::mobAttackWeakPlayer,
-                true
-            )
-            vanilla.addBooleanToggle(
-                "wolfAggressiveAtNight",
-                XenoEarlyStartConfig.config.mobChanges::wolfAggressiveAtNight,
-                true
-            )
-            vanilla.addBooleanToggle(
-                "batGivesPlayerNausea",
-                XenoEarlyStartConfig.config.mobChanges::batGivesPlayerNausea,
-                true
-            )
+            vanilla.addSubCategory("hostileGear") { hostileGear ->
+                hostileGear.addPercentageSlider(
+                    "flatAdditiveMobSpawnWithEquipment",
+                    config.mobChanges::flatAdditiveMobSpawnWithEquipment,
+                    0.05f
+                )
+                hostileGear.addPercentageSlider(
+                    "replaceEntityCopperArmourProbability",
+                    config.mobChanges::replaceEntityCopperArmourProbability,
+                    0.05f,
+                    tooltip = TooltipText.DefaultTooltip()
+                )
+                hostileGear.addPercentageSlider(
+                    "entitySpawnWithCopperToolProbability",
+                    config.mobChanges::entitySpawnWithCopperToolProbability,
+                    0.05f,
+                )
+            }
+            vanilla.addSubCategory("polarBear") { polarBear ->
+                polarBear.addBooleanToggle(
+                    "polarBearAlwaysAggressive",
+                    config.mobChanges::polarBearAlwaysAggressive,
+                    true
+                )
+                polarBear.addFloatField(
+                    "polarBearSpeed",
+                    config.mobChanges::polarBearSpeed,
+                    0.35f,
+                    tooltip = TooltipText.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
+                    requireRestart = true,
+                )
+                polarBear.addIntSlider(
+                    "polarBearRange",
+                    config.mobChanges::polarBearRange,
+                    40,
+                    1,
+                    64,
+                    tooltip = TooltipText.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
+                    requireRestart = true,
+                )
+            }
+            vanilla.addSubCategory("weakPlayer") { weakPlayer ->
+                weakPlayer.addBooleanToggle(
+                    "mobAttackWeakPlayer",
+                    config.mobChanges::mobAttackWeakPlayer,
+                    true
+                )
+            }
+            vanilla.addSubCategory("wolf") { wolf ->
+                wolf.addBooleanToggle(
+                    "wolfAggressiveAtNight",
+                    config.mobChanges::wolfAggressiveAtNight,
+                    true
+                )
+            }
+            vanilla.addSubCategory("bat") { bat ->
+                bat.addBooleanToggle(
+                    "batGivesPlayerNausea",
+                    config.mobChanges::batGivesPlayerNausea,
+                    true
+                )
+            }
+            vanilla.addSubCategory("pig") { pig ->
+                pig.addBooleanToggle(
+                    "pigRunAwayFromPlayerUntilFed",
+                    config.mobChanges::pigRunAwayFromPlayerUntilFed,
+                    true,
+                    requireRestart = true
+                )
+                pig.addBooleanToggle(
+                    "angerablePig",
+                    config.mobChanges::angerablePig,
+                    true,
+                    requireRestart = true
+                )
+            }
+            vanilla.addSubCategory("chicken") { chicken ->
+                chicken.addBooleanToggle(
+                    "chickenRunAwayFromPlayerUntilFed",
+                    config.mobChanges::chickenRunAwayFromPlayerUntilFed,
+                    true,
+                    requireRestart = true
+                )
+            }
+            vanilla.addSubCategory("sheep") { sheep ->
+                sheep.addBooleanToggle(
+                    "sheepRunAwayFromPlayerUntilFed",
+                    config.mobChanges::sheepRunAwayFromPlayerUntilFed,
+                    true,
+                    requireRestart = true
+                )
+            }
         }
         category.addSubCategory("xeno_early_start") { xenoEarlyStart ->
             xenoEarlyStart.addBooleanToggle(
                 "prowlerCanSpawn",
-                XenoEarlyStartConfig.config.mobChanges::prowlerCanSpawn,
+                config.mobChanges::prowlerCanSpawn,
                 true
             )
         }
     }
 
-    private fun addGameplayEntries(category: ConfigWrapper.Category) {
+    private fun addGameplayEntries(category: Category, config: XenoEarlyStartConfig.Config) {
         category.addBooleanToggle(
             "stationsUnusableUntilFirstCraft",
-            XenoEarlyStartConfig.config.earlyGameChanges::stationsUnusableUntilFirstCraft,
+            config.earlyGameChanges::stationsUnusableUntilFirstCraft,
             true
         )
 
         category.addBooleanToggle(
             "removePickaxeFromAllLootTable",
-            XenoEarlyStartConfig.config.earlyGameChanges::removePickaxeFromAllLootTable,
+            config.earlyGameChanges::removePickaxeFromAllLootTable,
             true
         )
 
         category.addSubCategory("rawBrick") { rawBrick ->
             rawBrick.addIntSlider(
                 "rawBrickDryingLength",
-                XenoEarlyStartConfig.config.earlyGameChanges::rawBrickDryingLength,
+                config.earlyGameChanges::rawBrickDryingLength,
                 9,
                 0,
                 RawBrickBlock.MAX_DRY_LEVEL,
-                tooltip = ConfigWrapper.DefaultTooltip()
+                tooltip = TooltipText.DefaultTooltip()
             )
         }
         category.addSubCategory("dropRate") { dropRate ->
             dropRate.addPercentageSlider(
                 "plantFiberDropProbability",
-                XenoEarlyStartConfig.config.earlyGameChanges::plantFiberDropProbability,
+                config.earlyGameChanges::plantFiberDropProbability,
                 0.05f
             )
 
             dropRate.addBooleanToggle(
                 "overridePebbleDropProbability",
-                XenoEarlyStartConfig.config.earlyGameChanges::overridePebbleDropProbability,
+                config.earlyGameChanges::overridePebbleDropProbability,
                 false
             )
 
             dropRate.addPercentageSlider(
                 "pebbleDropProbability",
-                XenoEarlyStartConfig.config.earlyGameChanges::pebbleDropProbability,
+                config.earlyGameChanges::pebbleDropProbability,
                 0.4f
             )
         }
 
         category.addSubCategory("primitiveFire") { primitiveFire ->
-            val inMinuteTooltip = ConfigWrapper.CustomTooltip("inMinute")
+            val inMinuteTooltip = TooltipText.CustomTooltip("inMinute")
             primitiveFire.addPercentageSlider(
                 "percentageRequiredForMaxBrightness",
-                XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::percentageRequiredForMaxBrightness,
+                config.earlyGameChanges.primitiveFire::percentageRequiredForMaxBrightness,
                 0.25f
             )
             primitiveFire.addSlider(
                 "maxBurnTime",
-                XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::maxBurnTime,
+                config.earlyGameChanges.primitiveFire::maxBurnTime,
                 5 * 60 * 20,
                 1 * 60 * 60,
                 60 * 60 * 20,
@@ -267,14 +320,14 @@ object XenoEarlyStartConfigGui {
             )
             primitiveFire.addPercentageSlider(
                 "fuelTimeMultiplier",
-                XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::fuelTimeMultiplier,
+                config.earlyGameChanges.primitiveFire::fuelTimeMultiplier,
                 1.0f,
                 1.0f,
                 2.0f
             )
             primitiveFire.addSlider(
                 "fuelStarterRelightFuelTime",
-                XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::fuelStarterRelightFuelTime,
+                config.earlyGameChanges.primitiveFire::fuelStarterRelightFuelTime,
                 3 * 60 * 20,
                 1 * 60 * 60,
                 60 * 60 * 20,
@@ -284,7 +337,7 @@ object XenoEarlyStartConfigGui {
             )
             primitiveFire.addPercentageSlider(
                 "cookingTimeMultiplier",
-                XenoEarlyStartConfig.config.earlyGameChanges.primitiveFire::cookingTimeMultiplier,
+                config.earlyGameChanges.primitiveFire::cookingTimeMultiplier,
                 2f,
                 1f,
                 4f
@@ -293,7 +346,7 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("brickFurnace") { brickFurnace ->
             brickFurnace.addPercentageSlider(
                 "cookingTimeMultiplier",
-                XenoEarlyStartConfig.config.earlyGameChanges::brickFurnaceCookingTimeMultiplier,
+                config.earlyGameChanges::brickFurnaceCookingTimeMultiplier,
                 2f,
                 3f,
                 4f
@@ -302,7 +355,7 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("hunger") { hunger ->
             hunger.addSlider(
                 "wakingUpExhaustion",
-                XenoEarlyStartConfig.config.hungerChanges::wakingUpExhaustion,
+                config.hungerChanges::wakingUpExhaustion,
                 40f,
                 0f,
                 40f,
@@ -311,7 +364,7 @@ object XenoEarlyStartConfigGui {
             )
             hunger.addFloatField(
                 "boatRowingExhaustion",
-                XenoEarlyStartConfig.config.hungerChanges::boatRowingExhaustion,
+                config.hungerChanges::boatRowingExhaustion,
                 0.05f,
                 Pair(0f, 40f)
             )
@@ -319,25 +372,25 @@ object XenoEarlyStartConfigGui {
         category.addSubCategory("recipe") { recipe ->
             recipe.addBooleanToggle(
                 "harderBrickFurnaceRecipe",
-                XenoEarlyStartConfig.config.earlyGameChanges.recipes::harderBrickFurnaceRecipe,
+                config.earlyGameChanges.recipes::harderBrickFurnaceRecipe,
                 true,
                 requireRestart = true
             )
             recipe.addBooleanToggle(
                 "vanillaFurnaceRecipe",
-                XenoEarlyStartConfig.config.earlyGameChanges.recipes::vanillaFurnaceRecipe,
+                config.earlyGameChanges.recipes::vanillaFurnaceRecipe,
                 false,
                 requireRestart = true
             )
             recipe.addBooleanToggle(
                 "vanillaCraftingTableRecipe",
-                XenoEarlyStartConfig.config.earlyGameChanges.recipes::vanillaCraftingTableRecipe,
+                config.earlyGameChanges.recipes::vanillaCraftingTableRecipe,
                 false,
                 requireRestart = true
             )
             recipe.addBooleanToggle(
                 "vanillaStoneToolRecipe",
-                XenoEarlyStartConfig.config.earlyGameChanges.recipes::vanillaStoneToolRecipe,
+                config.earlyGameChanges.recipes::vanillaStoneToolRecipe,
                 false,
                 requireRestart = true
             )
@@ -346,79 +399,79 @@ object XenoEarlyStartConfigGui {
     }
 
 
-    private fun addBlockChangesEntries(category: ConfigWrapper.Category) {
+    private fun addBlockChangesEntries(category: Category, config: XenoEarlyStartConfig.Config) {
         category.addFloatField(
             "stonecutterDamage",
-            XenoEarlyStartConfig.config.blockChanges::stonecutterDamage,
+            config.blockChanges::stonecutterDamage,
             3f,
             Pair(0f, 5f)
         )
         category.addFloatField(
             "amethystFallDamageMultiplier",
-            XenoEarlyStartConfig.config.blockChanges::amethystFallDamageMultiplier,
+            config.blockChanges::amethystFallDamageMultiplier,
             1.5f,
             Pair(0f, 5f)
         )
         category.addFloatField(
             "cookerDamage",
-            XenoEarlyStartConfig.config.blockChanges::cookerDamage,
+            config.blockChanges::cookerDamage,
             0.5f,
             Pair(0f, 5f)
         )
         category.addFloatField(
             "brickFurnaceDamage",
-            XenoEarlyStartConfig.config.blockChanges::brickFurnaceDamage,
+            config.blockChanges::brickFurnaceDamage,
             1f,
             Pair(0f, 5f)
         )
         category.addFloatField(
             "furnaceDamage",
-            XenoEarlyStartConfig.config.blockChanges::furnaceDamage,
+            config.blockChanges::furnaceDamage,
             1.5f,
             Pair(0f, 5f)
         )
         category.addFloatField(
             "blastFurnaceDamage",
-            XenoEarlyStartConfig.config.blockChanges::blastFurnaceDamage,
+            config.blockChanges::blastFurnaceDamage,
             2.5f,
             Pair(0f, 5f)
         )
         category.addBooleanToggle(
             "blastFurnaceSetNearbyBlockOnFire",
-            XenoEarlyStartConfig.config.blockChanges::blastFurnaceSetNearbyBlockOnFire,
+            config.blockChanges::blastFurnaceSetNearbyBlockOnFire,
             true
         )
         category.addEnumSelector(
             "fixThinBlockStepSound",
-            XenoEarlyStartConfig.config.blockChanges::fixThinBlockStepSound,
+            config.blockChanges::fixThinBlockStepSound,
             XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound::class.java,
             XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound.True
         )
     }
 
-    private fun addClientEntries(category: ConfigWrapper.Category) {
+    private fun addClientEntries(category: Category, config: XenoEarlyStartConfig.Config) {
         category.addSubCategory("tooltips", expanded = true) { tooltips ->
-            val tutorialTooltips = ConfigWrapper.CustomTooltip("tutorialTooltips")
+            val tutorialTooltips = TooltipText.CustomTooltip("tutorialTooltips")
             tooltips.addBooleanToggle(
                 "disableAllTooltip",
-                XenoEarlyStartConfig.config.client.tooltips::disableAllTooltips,
+                config.client.tooltips::disableAllTooltips,
                 false,
                 tooltip = tutorialTooltips
             )
             tooltips.addBooleanToggle(
                 "disableFoodWarningTooltips",
-                XenoEarlyStartConfig.config.client.tooltips::disableFoodWarningTooltips,
+                config.client.tooltips::disableFoodWarningTooltips,
                 false
             )
             tooltips.addBooleanToggle(
                 "disableTutorialTooltips",
-                XenoEarlyStartConfig.config.client.tooltips::disableTutorialTooltips,
+                config.client.tooltips::disableTutorialTooltips,
                 false,
                 tooltip = tutorialTooltips
             )
             tooltips.addBooleanToggle(
                 "disableItemDescriptionTooltips",
-                XenoEarlyStartConfig.config.client.tooltips::disableItemDescriptionTooltips,
+                config.client.tooltips::disableItemDescriptionTooltips,
                 false,
                 tooltip = tutorialTooltips
             )

@@ -1,13 +1,10 @@
 package com.github.auri_f5bde6.xeno_early_start
 
 import com.github.auri_f5bde6.xeno_early_start.conditions.ConfigCondition
-import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfigGui
 import com.github.auri_f5bde6.xeno_early_start.network.NetworkHandler
 import com.github.auri_f5bde6.xeno_early_start.registries.*
 import com.mojang.logging.LogUtils
-import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.Toml
-import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.item.ItemGroup
@@ -20,13 +17,11 @@ import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory
 import net.minecraftforge.common.TierSortingRegistry
 import net.minecraftforge.common.crafting.CraftingHelper
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.loading.FMLPaths
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.RegistryObject
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
-import java.io.FileNotFoundException
 import java.util.function.Supplier
 
 @Mod(XenoEarlyStart.MODID)
@@ -71,23 +66,11 @@ class XenoEarlyStart {
             listOf<Any?>(ofMinecraft("wood"))
         )
         CraftingHelper.register(ConfigCondition.SERIALIZER)
-        try {
-            val file = FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
-            XenoEarlyStartConfig.config =
-                Toml().read(file.reader())
-                    .to(XenoEarlyStartConfig.config.javaClass)
-        } catch (_: FileNotFoundException) {
-            val tomlWriter = TomlWriter()
-            tomlWriter.write(
-                XenoEarlyStartConfig.config,
-                FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
-            )
-        }
         LOADING_CONTEXT.registerExtensionPoint(
             ConfigScreenFactory::class.java
         ) {
-            ConfigScreenFactory { mc: MinecraftClient?, prevScreen: Screen? ->
-                XenoEarlyStartConfigGui.configBuilder.build()
+            ConfigScreenFactory { mc: MinecraftClient, prevScreen: Screen ->
+                XenoEarlyStartConfigGui.getConfigBuilder(mc, prevScreen).build()
             }
         }
     }

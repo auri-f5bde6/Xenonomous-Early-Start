@@ -115,6 +115,15 @@ object XenoEarlyStartConfig {
 
         var prowlerCanSpawn: Boolean = true
 
+        var angerableSquid: Boolean = true
+
+        var angerablePig: Boolean = false
+
+        var pigRunAwayFromPlayerUntilFed: Boolean = true
+
+        var chickenRunAwayFromPlayerUntilFed: Boolean = true
+
+        var sheepRunAwayFromPlayerUntilFed: Boolean = true
     }
 
     class BlockChanges {

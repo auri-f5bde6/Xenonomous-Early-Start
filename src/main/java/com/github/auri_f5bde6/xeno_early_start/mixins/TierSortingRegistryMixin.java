@@ -27,7 +27,6 @@ public class TierSortingRegistryMixin {
 
     @WrapMethod(method = "isCorrectTierForDrops")
     private static boolean flintCantMineOre(ToolMaterial tier, BlockState state, Operation<Boolean> original) {
-        // todo: Don't hardcode this, use tags
         if ((tier == XenoEarlyStartToolMaterials.FLINT || tier == XenoEarlyStartToolMaterials.BONE) && (state.isIn(Tags.Blocks.ORES) && !state.isIn(XenoEarlyStartTags.Blocks.CAN_BE_MINED_WITH_FLINT_PICKAXE))) {
             // Flint/bone pickaxe cannot mine ore
             return false;
