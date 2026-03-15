@@ -102,6 +102,7 @@
   "text.config.xeno_early_start.option.general.gameplay.brickFurnace": "Brick Furnace",
   "text.config.xeno_early_start.option.general.gameplay.brickFurnace.cookingTimeMultiplier": "Multiple To Time Required For Item To Finish Cooking (%)",
   "text.config.xeno_early_start.option.general.gameplay.dropRate": "Drop Rate",
+  "text.config.xeno_early_start.option.general.gameplay.dropRate.bonusStickDropProbability": "Probability Of Dropping Bonus Sticks When Leaves Is Broken With A Shard/Flint",
   "text.config.xeno_early_start.option.general.gameplay.dropRate.overridePebbleDropProbability": "Override Pebble Drop Probability",
   "text.config.xeno_early_start.option.general.gameplay.dropRate.pebbleDropProbability": "Pebble Drop Probability (%)",
   "text.config.xeno_early_start.option.general.gameplay.dropRate.plantFiberDropProbability": "Plant Fiber Drop Probability (%)",

@@ -66,6 +66,8 @@ object XenoEarlyStartConfig {
 
         var stationsUnusableUntilFirstCraft: Boolean = true
 
+        var bonusStickDropProbability: Float = 0.15f
+
         var brickFurnaceCookingTimeMultiplier: Float = 3f
 
         var recipes = Recipes()

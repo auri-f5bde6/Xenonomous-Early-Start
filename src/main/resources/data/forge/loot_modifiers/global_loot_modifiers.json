@@ -26,7 +26,7 @@
     "xeno_early_start:horse_fat",
     "xeno_early_start:remove_all_pickaxe",
     "xeno_early_start:remove_wooden_axe_from_bonus_chest",
-    "xeno_early_start:remove_wooden_pickaxe_from_bonus_chest"
-
+    "xeno_early_start:remove_wooden_pickaxe_from_bonus_chest",
+    "xeno_early_start:leave_stick_buff"
   ]
 }

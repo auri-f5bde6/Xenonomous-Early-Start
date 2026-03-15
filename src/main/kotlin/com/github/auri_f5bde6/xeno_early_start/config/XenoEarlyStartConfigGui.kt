@@ -283,17 +283,20 @@ object XenoEarlyStartConfigGui {
         }
         category.addSubCategory("dropRate") { dropRate ->
             dropRate.addPercentageSlider(
+                "bonusStickDropProbability",
+                config.earlyGameChanges::bonusStickDropProbability,
+                0.15f
+            )
+            dropRate.addPercentageSlider(
                 "plantFiberDropProbability",
                 config.earlyGameChanges::plantFiberDropProbability,
                 0.05f
             )
-
             dropRate.addBooleanToggle(
                 "overridePebbleDropProbability",
                 config.earlyGameChanges::overridePebbleDropProbability,
                 false
             )
-
             dropRate.addPercentageSlider(
                 "pebbleDropProbability",
                 config.earlyGameChanges::pebbleDropProbability,

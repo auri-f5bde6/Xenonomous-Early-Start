@@ -77,6 +77,12 @@ class ConfigLootFunction private constructor(
                     itemStack.count += 1
                 }
             }
+
+            DropType.Stick -> if (lootContext.random.nextFloat() < XenoEarlyStartConfig.config.earlyGameChanges.bonusStickDropProbability) {
+                itemStack.count = 1
+            } else {
+                itemStack.count = 0
+            }
         }
         return itemStack
     }
@@ -98,7 +104,10 @@ class ConfigLootFunction private constructor(
         PlantFiber,
 
         @SerializedName("pebble")
-        Pebble
+        Pebble,
+
+        @SerializedName("stick")
+        Stick,
     }
 
     class Serializer : JsonSerializer<ConfigLootFunction> {
