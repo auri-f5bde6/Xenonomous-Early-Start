@@ -259,28 +259,6 @@ object XenoEarlyStartConfigGui {
     }
 
     private fun addGameplayEntries(category: Category, config: XenoEarlyStartConfig.Config) {
-        category.addBooleanToggle(
-            "stationsUnusableUntilFirstCraft",
-            config.earlyGameChanges::stationsUnusableUntilFirstCraft,
-            true
-        )
-
-        category.addBooleanToggle(
-            "removePickaxeFromAllLootTable",
-            config.earlyGameChanges::removePickaxeFromAllLootTable,
-            true
-        )
-
-        category.addSubCategory("rawBrick") { rawBrick ->
-            rawBrick.addIntSlider(
-                "rawBrickDryingLength",
-                config.earlyGameChanges::rawBrickDryingLength,
-                9,
-                0,
-                RawBrickBlock.MAX_DRY_LEVEL,
-                tooltip = TooltipText.DefaultTooltip()
-            )
-        }
         category.addSubCategory("dropRate") { dropRate ->
             dropRate.addPercentageSlider(
                 "bonusStickDropProbability",
@@ -301,6 +279,62 @@ object XenoEarlyStartConfigGui {
                 "pebbleDropProbability",
                 config.earlyGameChanges::pebbleDropProbability,
                 0.4f
+            )
+        }
+
+        category.addSubCategory("recipe") { recipe ->
+            recipe.addBooleanToggle(
+                "harderBrickFurnaceRecipe",
+                config.earlyGameChanges.recipes::harderBrickFurnaceRecipe,
+                true,
+                requireRestart = true
+            )
+            recipe.addBooleanToggle(
+                "vanillaFurnaceRecipe",
+                config.earlyGameChanges.recipes::vanillaFurnaceRecipe,
+                false,
+                requireRestart = true
+            )
+            recipe.addBooleanToggle(
+                "vanillaCraftingTableRecipe",
+                config.earlyGameChanges.recipes::vanillaCraftingTableRecipe,
+                false,
+                requireRestart = true
+            )
+            recipe.addBooleanToggle(
+                "vanillaStoneToolRecipe",
+                config.earlyGameChanges.recipes::vanillaStoneToolRecipe,
+                false,
+                requireRestart = true
+            )
+        }
+
+        category.addSubCategory("hunger") { hunger ->
+            hunger.addSlider(
+                "wakingUpExhaustion",
+                config.hungerChanges::wakingUpExhaustion,
+                40f,
+                0f,
+                40f,
+                { f: Float -> f.toInt() },
+                { i: Int -> i.toFloat() }
+            )
+            hunger.addFloatField(
+                "boatRowingExhaustion",
+                config.hungerChanges::boatRowingExhaustion,
+                0.05f,
+                Pair(0f, 40f)
+            )
+        }
+
+        category.addSubCategory("rawBrick") { rawBrick ->
+            rawBrick.addIntSlider(
+                "rawBrickDryingLength",
+                config.earlyGameChanges::rawBrickDryingLength,
+                9,
+                0,
+                RawBrickBlock.MAX_DRY_LEVEL,
+                tooltip = TooltipText.DefaultTooltip()
             )
         }
 
@@ -346,6 +380,7 @@ object XenoEarlyStartConfigGui {
                 4f
             )
         }
+
         category.addSubCategory("brickFurnace") { brickFurnace ->
             brickFurnace.addPercentageSlider(
                 "cookingTimeMultiplier",
@@ -355,50 +390,18 @@ object XenoEarlyStartConfigGui {
                 4f
             )
         }
-        category.addSubCategory("hunger") { hunger ->
-            hunger.addSlider(
-                "wakingUpExhaustion",
-                config.hungerChanges::wakingUpExhaustion,
-                40f,
-                0f,
-                40f,
-                { f: Float -> f.toInt() },
-                { i: Int -> i.toFloat() }
-            )
-            hunger.addFloatField(
-                "boatRowingExhaustion",
-                config.hungerChanges::boatRowingExhaustion,
-                0.05f,
-                Pair(0f, 40f)
-            )
-        }
-        category.addSubCategory("recipe") { recipe ->
-            recipe.addBooleanToggle(
-                "harderBrickFurnaceRecipe",
-                config.earlyGameChanges.recipes::harderBrickFurnaceRecipe,
-                true,
-                requireRestart = true
-            )
-            recipe.addBooleanToggle(
-                "vanillaFurnaceRecipe",
-                config.earlyGameChanges.recipes::vanillaFurnaceRecipe,
-                false,
-                requireRestart = true
-            )
-            recipe.addBooleanToggle(
-                "vanillaCraftingTableRecipe",
-                config.earlyGameChanges.recipes::vanillaCraftingTableRecipe,
-                false,
-                requireRestart = true
-            )
-            recipe.addBooleanToggle(
-                "vanillaStoneToolRecipe",
-                config.earlyGameChanges.recipes::vanillaStoneToolRecipe,
-                false,
-                requireRestart = true
-            )
 
-        }
+        category.addBooleanToggle(
+            "stationsUnusableUntilFirstCraft",
+            config.earlyGameChanges::stationsUnusableUntilFirstCraft,
+            true
+        )
+
+        category.addBooleanToggle(
+            "removePickaxeFromAllLootTable",
+            config.earlyGameChanges::removePickaxeFromAllLootTable,
+            true
+        )
     }
 
 
