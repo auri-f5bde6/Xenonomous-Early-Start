@@ -48,37 +48,31 @@ object NetworkHandler {
     fun serverSendConfigSyncPacket(conf: XenoEarlyStartConfig.Config, player: ServerPlayerEntity) {
         CONFIG_CHANNEL.send(
             PacketDistributor.PLAYER.with { player },
-            ConfigSyncPacket(ConfigSyncPacket.Type.SERVER_SEND_CONFIG, conf)
+            ConfigSyncPacket(ConfigSyncPacket.Type.SERVER_SEND_CONFIG, conf, false)
         )
     }
 
     fun serverSendFailure(player: ServerPlayerEntity) {
         CONFIG_CHANNEL.send(
             PacketDistributor.PLAYER.with { player },
-            ConfigSyncPacket(ConfigSyncPacket.Type.SERVER_SEND_FAILURE, null)
+            ConfigSyncPacket(ConfigSyncPacket.Type.SERVER_SEND_FAILURE, null, false)
         )
     }
 
     fun clientRequestConfig() {
-        XenoEarlyStartConfig.serverConfig = XenoEarlyStartConfig.ServerConfig.PENDING()
         CONFIG_CHANNEL.send(
             PacketDistributor.SERVER.noArg(),
-            ConfigSyncPacket(ConfigSyncPacket.Type.CLIENT_REQUEST_CONFIG, null)
+            ConfigSyncPacket(ConfigSyncPacket.Type.CLIENT_REQUEST_CONFIG, null, false)
         )
     }
 
-    fun clientSendNewConfig() {
-        if (XenoEarlyStartConfig.serverConfig.config == null) {
-            XenoEarlyStart.LOGGER.error("attempting to send null as config to server, skipping")
-            return
-        }
+    fun clientSendNewConfig(config: XenoEarlyStartConfig.Config, requireRestart: Boolean) {
         CONFIG_CHANNEL.send(
             PacketDistributor.SERVER.noArg(), ConfigSyncPacket(
                 ConfigSyncPacket.Type.CLIENT_SEND_CONFIG,
-                XenoEarlyStartConfig.serverConfig.config!!
+                config,
+                requireRestart
             )
         )
-        XenoEarlyStartConfig.serverConfig = XenoEarlyStartConfig.ServerConfig.PENDING()
     }
-
 }

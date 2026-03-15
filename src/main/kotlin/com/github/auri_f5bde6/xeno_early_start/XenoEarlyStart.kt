@@ -2,7 +2,6 @@ package com.github.auri_f5bde6.xeno_early_start
 
 import com.github.auri_f5bde6.xeno_early_start.client.screen.WaitingForConfigScreen
 import com.github.auri_f5bde6.xeno_early_start.conditions.ConfigCondition
-import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.network.NetworkHandler
 import com.github.auri_f5bde6.xeno_early_start.registries.*
 import com.mojang.logging.LogUtils
@@ -71,11 +70,6 @@ class XenoEarlyStart {
             ConfigScreenFactory::class.java
         ) {
             ConfigScreenFactory { mc: MinecraftClient, prevScreen: Screen ->
-                if (mc.server != null || mc.currentServerEntry != null) {
-                    NetworkHandler.clientRequestConfig()
-                } else {
-                    XenoEarlyStartConfig.serverConfig = XenoEarlyStartConfig.ServerConfig.FAILED()
-                }
                 WaitingForConfigScreen(prevScreen)
             }
         }

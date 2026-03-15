@@ -2,10 +2,10 @@ package com.github.auri_f5bde6.xeno_early_start.config
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.block.RawBrickBlock
+import com.github.auri_f5bde6.xeno_early_start.client.screen.WaitingForConfigScreen
 import com.github.auri_f5bde6.xeno_early_start.config.wrapper.Category
 import com.github.auri_f5bde6.xeno_early_start.config.wrapper.ConfigWrapper
 import com.github.auri_f5bde6.xeno_early_start.config.wrapper.TooltipText
-import com.github.auri_f5bde6.xeno_early_start.network.NetworkHandler
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import net.minecraft.client.MinecraftClient
@@ -18,11 +18,11 @@ object XenoEarlyStartConfigGui {
 
         val config = XenoEarlyStartConfig.config
         val configWrapper = ConfigWrapper(XenoEarlyStart.MODID)
-        if (XenoEarlyStartConfig.serverConfig.config != null) {
+        if (prevScreen is WaitingForConfigScreen && prevScreen.status == WaitingForConfigScreen.Status.SEND_TO_SERVER) {
             configWrapper.newCategory(
                 "general",
                 "dedicated_server",
-                XenoEarlyStartConfig.serverConfig.config!!,
+                prevScreen.config!!,
                 ::addGeneralConfigs
             )
         }
@@ -37,9 +37,6 @@ object XenoEarlyStartConfigGui {
                 config,
                 FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
             )
-            if (XenoEarlyStartConfig.serverConfig.config != null) {
-                NetworkHandler.clientSendNewConfig()
-            }
         }
         return configWrapper.configBuilder
     }

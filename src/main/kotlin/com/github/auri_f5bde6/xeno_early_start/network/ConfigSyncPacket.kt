@@ -4,13 +4,14 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.google.gson.Gson
 import net.minecraft.network.PacketByteBuf
+import net.minecraft.text.Text
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.network.NetworkEvent
 import java.util.function.Supplier
 
 
-class ConfigSyncPacket(val type: Type, val config: XenoEarlyStartConfig.Config?) {
+class ConfigSyncPacket(val type: Type, val config: XenoEarlyStartConfig.Config?, val requireRestart: Boolean) {
     enum class Type {
         CLIENT_REQUEST_CONFIG,
         CLIENT_SEND_CONFIG,
@@ -26,19 +27,23 @@ class ConfigSyncPacket(val type: Type, val config: XenoEarlyStartConfig.Config?)
                 val json = Gson().toJson(msg.config)
                 buf.writeVarInt(json.length)
                 buf.writeString(json, json.length)
+                buf.writeBoolean(msg.requireRestart)
             } else {
                 buf.writeBoolean(false)
             }
         }
 
         fun decode(buf: PacketByteBuf): ConfigSyncPacket {
+            var requireRestart = false
             var config: XenoEarlyStartConfig.Config? = null
             val request = buf.readEnumConstant(Type::class.java)
             if (buf.readBoolean()) {
                 val length = buf.readVarInt()
                 config = Gson().fromJson(buf.readString(length), XenoEarlyStartConfig.Config::class.java)
+                requireRestart = buf.readBoolean()
             }
-            return ConfigSyncPacket(request, config)
+
+            return ConfigSyncPacket(request, config, requireRestart)
         }
 
         fun handleFromClientPacket(msg: ConfigSyncPacket, ctx: Supplier<NetworkEvent.Context>) {
@@ -58,6 +63,9 @@ class ConfigSyncPacket(val type: Type, val config: XenoEarlyStartConfig.Config?)
                     Type.CLIENT_SEND_CONFIG -> {
                         if (msg.config != null) {
                             XenoEarlyStartConfig.config = msg.config
+                            if (msg.requireRestart) {
+                                player.sendMessage(Text.translatable("text.config.xeno_early_start.syncRequireRestart"))
+                            }
                             return
                         } else {
                             XenoEarlyStart.LOGGER.error("Expecting client to have sent a config, got null")

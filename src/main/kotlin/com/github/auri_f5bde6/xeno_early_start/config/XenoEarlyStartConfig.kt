@@ -27,25 +27,6 @@ object XenoEarlyStartConfig {
 
     @JvmField
     var config: Config = Config()
-
-    sealed class ServerConfig {
-        class READY(val c: Config) : ServerConfig(c)
-        class FAILED : ServerConfig()
-        class PENDING : ServerConfig()
-
-        val config: Config?
-
-        constructor(config: Config) {
-            this.config = config
-        }
-
-        constructor() {
-            this.config = null
-        }
-    }
-
-    var serverConfig: ServerConfig = ServerConfig.PENDING()
-
     class OreChanges {
         var vanillaCopperLootTable: Boolean = false
         var rawCopperNuggetDropMin: Int = 1

@@ -53,6 +53,7 @@
   "tag.item.xeno_early_start.knapped_stone": "Knapped Stone",
   "tag.item.xeno_early_start.shards": "Shards",
   "text.config.xeno_early_start.title": "Xeno's Early Start",
+  "text.config.xeno_early_start.syncRequireRestart": "Some config that was changed may only apply after dedicated server is restarted",
   "text.config.xeno_early_start.option.general.disableNonClientConfig": "Hide Config That Isn't Client Sided",
   "text.config.xeno_early_start.option.general.disableNonClientConfig.tooltip": "§pThis can only be undone by manually editing the config file, this is only meant for modpack dev or people who want to stop themself from cheesing the game by changing config",
   "text.config.xeno_early_start.option.dedicated_server": "§pDedicated Server",
