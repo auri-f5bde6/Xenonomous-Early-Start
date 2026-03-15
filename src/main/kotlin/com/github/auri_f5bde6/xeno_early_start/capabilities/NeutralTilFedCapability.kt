@@ -62,7 +62,10 @@ class NeutralTilFedData(hasBeenFed: Boolean, val id: Int, val uuid: UUID?) : ICa
         if (!fed) {
             fed = true
             if (world is ServerWorld) {
-                NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), NeutralTilFedSyncPacket(this))
+                NetworkHandler.NEUTRAL_TIL_FED_CHANNEL.send(
+                    PacketDistributor.ALL.noArg(),
+                    NeutralTilFedSyncPacket(this)
+                )
             }
         }
     }

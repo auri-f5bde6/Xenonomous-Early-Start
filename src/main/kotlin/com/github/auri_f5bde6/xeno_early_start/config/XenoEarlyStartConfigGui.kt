@@ -5,6 +5,7 @@ import com.github.auri_f5bde6.xeno_early_start.block.RawBrickBlock
 import com.github.auri_f5bde6.xeno_early_start.config.wrapper.Category
 import com.github.auri_f5bde6.xeno_early_start.config.wrapper.ConfigWrapper
 import com.github.auri_f5bde6.xeno_early_start.config.wrapper.TooltipText
+import com.github.auri_f5bde6.xeno_early_start.network.NetworkHandler
 import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import net.minecraft.client.MinecraftClient
@@ -14,17 +15,21 @@ import net.minecraftforge.fml.loading.FMLPaths
 object XenoEarlyStartConfigGui {
 
     fun getConfigBuilder(mc: MinecraftClient, prevScreen: Screen): ConfigBuilder {
-        val connectedToServer = prevScreen.minecraft.currentServerEntry != null
+
         val config = XenoEarlyStartConfig.config
         val configWrapper = ConfigWrapper(XenoEarlyStart.MODID)
-
+        if (XenoEarlyStartConfig.serverConfig.config != null) {
+            configWrapper.newCategory(
+                "general",
+                "dedicated_server",
+                XenoEarlyStartConfig.serverConfig.config!!,
+                ::addGeneralConfigs
+            )
+        }
         if (!config.disableNonClientConfig) {
             configWrapper.newCategory("general", config, ::addGeneralConfigs)
         }
-        if (connectedToServer) {
-            // todo: receive the data from server
-            configWrapper.newCategory("general", "dedicated_server", XenoEarlyStartConfig.Config(), ::addGeneralConfigs)
-        }
+
         configWrapper.newCategory("client", config, ::addClientEntries)
         configWrapper.configBuilder.setSavingRunnable {
             val tomlWriter = TomlWriter()
@@ -32,8 +37,8 @@ object XenoEarlyStartConfigGui {
                 config,
                 FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
             )
-            if (connectedToServer) {
-                // todo: send the config over to server
+            if (XenoEarlyStartConfig.serverConfig.config != null) {
+                NetworkHandler.clientSendNewConfig()
             }
         }
         return configWrapper.configBuilder

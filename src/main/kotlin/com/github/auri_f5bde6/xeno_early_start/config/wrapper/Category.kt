@@ -49,7 +49,7 @@ abstract class Category {
 
     protected fun getCategoryTranslatedText(): Text {
         if (overrideCategoryName != null) {
-            return Text.translatable(overrideCategoryName)
+            return Text.translatable( "$translationKeyPrefix.$overrideCategoryName")
         } else {
             return Text.translatable(getCategoryTranslationKey())
         }
