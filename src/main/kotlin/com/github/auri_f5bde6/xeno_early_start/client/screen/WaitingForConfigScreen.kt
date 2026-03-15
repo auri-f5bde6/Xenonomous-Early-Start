@@ -40,6 +40,7 @@ class WaitingForConfigScreen(val prevScreen: Screen) :
         when (status) {
             Status.PENDING -> {
                 if (minecraft.currentServerEntry == null) {
+                    status = Status.FAILED
                     openConfig()
                 } else if ((minecraft.server?.getPermissionLevel(
                         minecraft.player?.gameProfile ?: return
@@ -93,7 +94,7 @@ class WaitingForConfigScreen(val prevScreen: Screen) :
     }
 
     private fun illegalStatus(where: String) {
-        XenoEarlyStart.LOGGER.error("Illegal status while $where, returning to previous screen")
+        XenoEarlyStart.LOGGER.error("Illegal status of $status while $where, returning to previous screen")
         minecraft.setScreen(prevScreen)
     }
     fun openConfig() {
