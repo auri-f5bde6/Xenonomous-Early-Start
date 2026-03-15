@@ -4,8 +4,6 @@ import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemSteerable;
-import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -21,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PigEntity.class)
-public abstract class AngerablePigEntityMixin extends TillFedSharedMixin implements ItemSteerable, Saddleable, Angerable {
+public abstract class AngerablePigEntityMixin extends TillFedSharedMixin implements Angerable {
 
     protected AngerablePigEntityMixin(EntityType<? extends PassiveEntity> arg, World arg2) {
         super(arg, arg2);

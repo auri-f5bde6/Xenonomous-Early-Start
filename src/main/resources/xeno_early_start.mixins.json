@@ -52,6 +52,7 @@
     "entity.attack_weak_player.WolfEntityMixin",
     "entity.neutral_till_fed.AngerablePigEntityMixin",
     "entity.neutral_till_fed.ChickenEntityMixin",
+    "entity.neutral_till_fed.NeutralTilFedAngerablePigEntityMixin",
     "entity.neutral_till_fed.NeutralTilFedPigEntityMixin",
     "entity.neutral_till_fed.SheepEntityMixin",
     "entity.neutral_till_fed.TempGoalMixin",

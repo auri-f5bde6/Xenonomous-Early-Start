@@ -40,6 +40,7 @@ class MixinConfig : IMixinConfigPlugin {
             "net.minecraft.entity.passive.PigEntity" to "entity.neutral_till_fed.NeutralTilFedPigEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.pigRunAwayFromPlayerUntilFed
             "net.minecraft.entity.passive.PigEntity" to "entity.neutral_till_fed.AngerablePigEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.angerablePig
             "net.minecraft.entity.passive.PigEntity" to "entity.angerable_changes.SharedMixin" -> XenoEarlyStartConfig.config.mobChanges.angerablePig
+            "net.minecraft.entity.passive.PigEntity" to "entity.neutral_till_fed.NeutralTilFedAngerablePigEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.angerablePig && XenoEarlyStartConfig.config.mobChanges.pigRunAwayFromPlayerUntilFed
             "net.minecraft.entity.passive.SheepEntity" to "entity.neutral_till_fed.SheepEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.sheepRunAwayFromPlayerUntilFed
             else -> true
         }
