@@ -1,5 +1,6 @@
-package com.github.auri_f5bde6.xeno_early_start
+package com.github.auri_f5bde6.xeno_early_start.biome
 
+import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartCodecRegistry
 import com.mojang.serialization.Codec
 import net.minecraft.entity.EntityType

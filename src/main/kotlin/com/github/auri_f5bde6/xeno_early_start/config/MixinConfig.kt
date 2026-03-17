@@ -36,12 +36,12 @@ class MixinConfig : IMixinConfigPlugin {
             "net.minecraft.entity.passive.SquidEntity" to "entity.angerable_changes.SquidEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.angerableSquid
             "net.minecraft.entity.passive.ChickenEntity" to "entity.neutral_till_fed.ChickenEntityMixin" ->
                 XenoEarlyStartConfig.config.mobChanges.chickenRunAwayFromPlayerUntilFed
-
             "net.minecraft.entity.passive.PigEntity" to "entity.neutral_till_fed.NeutralTilFedPigEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.pigRunAwayFromPlayerUntilFed
             "net.minecraft.entity.passive.PigEntity" to "entity.neutral_till_fed.AngerablePigEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.angerablePig
             "net.minecraft.entity.passive.PigEntity" to "entity.angerable_changes.SharedMixin" -> XenoEarlyStartConfig.config.mobChanges.angerablePig
             "net.minecraft.entity.passive.PigEntity" to "entity.neutral_till_fed.NeutralTilFedAngerablePigEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.angerablePig && XenoEarlyStartConfig.config.mobChanges.pigRunAwayFromPlayerUntilFed
             "net.minecraft.entity.passive.SheepEntity" to "entity.neutral_till_fed.SheepEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.sheepRunAwayFromPlayerUntilFed
+            "net.minecraft.world.spawner.PhantomSpawner" to "entity.PhantomEntityMixin" -> XenoEarlyStartConfig.config.mobChanges.customPhantomOverworldSpawn
             else -> true
         }
     }

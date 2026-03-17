@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.mixins.entity;
+package com.github.auri_f5bde6.xeno_early_start.mixins.entity.brear_or_open_door;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DoorBlock;

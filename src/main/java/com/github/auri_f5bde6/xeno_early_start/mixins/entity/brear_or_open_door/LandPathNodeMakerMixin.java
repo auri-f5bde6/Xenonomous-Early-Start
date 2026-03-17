@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.mixins.entity;
+package com.github.auri_f5bde6.xeno_early_start.mixins.entity.brear_or_open_door;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
