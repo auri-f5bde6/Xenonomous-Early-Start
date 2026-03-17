@@ -65,8 +65,10 @@ public abstract class PolarBearEntityMixin extends AnimalEntity implements Anger
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     void breakDoorGoal(CallbackInfo ci) {
-        ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
-        this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> this.angryAt != null, 20));
+        if (XenoEarlyStartConfig.config.mobChanges.getPolarBearCanDestroyDoor()) {
+            ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
+            this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> this.angryAt != null, 20));
+        }
         this.goalSelector.add(1, new BreakGlassGoal(this, this::hasAngerTime));
     }
 }

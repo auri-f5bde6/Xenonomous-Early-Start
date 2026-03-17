@@ -59,7 +59,6 @@
     "entity.brear_or_open_door.PillagerEntityMixin",
     "entity.brear_or_open_door.PolarBearEntityMixin",
     "entity.brear_or_open_door.RavagerEntityMixin",
-    "entity.brear_or_open_door.VindicatorEntityMixin",
     "entity.brear_or_open_door.WitchEntityMixin",
     "entity.brear_or_open_door.WitherSkeletonEntityMixin",
     "entity.brear_or_open_door.WolfEntityMixin",

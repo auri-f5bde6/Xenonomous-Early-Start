@@ -26,6 +26,9 @@ object XenoEarlyStartConfig {
     }
 
     @JvmField
+    val DEFAULTS = Config()
+
+    @JvmField
     var config: Config = Config()
     class OreChanges {
         var vanillaCopperLootTable: Boolean = false
@@ -126,7 +129,18 @@ object XenoEarlyStartConfig {
 
         var sheepRunAwayFromPlayerUntilFed: Boolean = true
 
-        var customPhantomSpawn: Boolean = true
+        var customPhantomOverworldSpawn: Boolean = true
+        var customPhantomNetherSpawn: Boolean = true
+        var customPhantomEndSpawn: Boolean = true
+        var blazeCanBreakDoor: Boolean = true
+        var illusionerCanOpenDoor: Boolean = true
+        var polarBearCanDestroyDoor: Boolean = true
+        var ravagerCanDestroyDoor: Boolean = true
+        var witchCanOpenDoor: Boolean = true
+        var witherSkeletonCanDestroyDoor: Boolean = true
+        var angryWolfCanDestroyDoor: Boolean = true
+
+        var pillagerCanOpenDoor: Boolean = true
 
         var phantomSpawnLevel: Int = 180
 

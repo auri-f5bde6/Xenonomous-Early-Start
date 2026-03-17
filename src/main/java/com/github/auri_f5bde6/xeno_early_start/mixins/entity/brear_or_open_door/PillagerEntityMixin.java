@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.entity.brear_or_open_door;
 
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.NonZombieBreakDoorGoal;
 import net.minecraft.entity.CrossbowUser;
 import net.minecraft.entity.EntityType;
@@ -22,7 +23,9 @@ public abstract class PillagerEntityMixin extends IllagerEntity implements Cross
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     void breakDoorGoal(CallbackInfo ci) {
-        ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
-        this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> difficulty == Difficulty.HARD, 200));
+        if (XenoEarlyStartConfig.config.mobChanges.getPillagerCanOpenDoor()) {
+            ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
+            this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> difficulty == Difficulty.HARD, 200));
+        }
     }
 }

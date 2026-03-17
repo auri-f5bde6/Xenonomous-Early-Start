@@ -1,12 +1,17 @@
 {
-  "type": "forge:add_spawns",
-  "biomes": "minecraft:soul_sand_valley",
-  "spawners": [
-    {
-      "type": "minecraft:phantom",
-      "weight": 3,
-      "minCount": 2,
-      "maxCount": 3
-    }
-  ]
+  "type": "xeno_early_start:config",
+  "config": "nether_phantom",
+  "biomeModifier": {
+    "type": "forge:add_spawns",
+    "biomes": "minecraft:soul_sand_valley",
+    "spawners": [
+      {
+        "type": "minecraft:phantom",
+        "weight": 3,
+        "minCount": 2,
+        "maxCount": 3
+      }
+    ]
+  }
 }
+

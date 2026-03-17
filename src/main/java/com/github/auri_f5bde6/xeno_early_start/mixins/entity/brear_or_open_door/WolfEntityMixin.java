@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.entity.brear_or_open_door;
 
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.NonZombieBreakDoorGoal;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -23,8 +24,10 @@ public abstract class WolfEntityMixin extends TameableEntity implements Angerabl
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     void breakDoor(CallbackInfo ci) {
-        ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
-        this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> hasAngerTime() && difficulty == Difficulty.HARD, 240));
+        if (XenoEarlyStartConfig.config.mobChanges.getAngryWolfCanDestroyDoor()) {
+            ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
+            this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> hasAngerTime() && difficulty == Difficulty.HARD, 240));
+        }
     }
 
     @WrapMethod(method = "setTamed")

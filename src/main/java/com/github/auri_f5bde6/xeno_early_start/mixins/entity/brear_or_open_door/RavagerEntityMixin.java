@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.entity.brear_or_open_door;
 
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.entity.goal.NonZombieBreakDoorGoal;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.pathing.MobNavigation;
@@ -19,7 +20,9 @@ public abstract class RavagerEntityMixin extends RaiderEntity {
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     void breakDoor(CallbackInfo ci) {
-        ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
-        this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> true, 20));
+        if (XenoEarlyStartConfig.config.mobChanges.getRavagerCanDestroyDoor()) {
+            ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
+            this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> true, 20));
+        }
     }
 }

@@ -13,12 +13,12 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraftforge.fml.loading.FMLPaths
 
 object XenoEarlyStartConfigGui {
-
+    val defaults = XenoEarlyStartConfig.DEFAULTS
     fun getConfigBuilder(mc: MinecraftClient, prevScreen: Screen): ConfigBuilder {
 
         val config = XenoEarlyStartConfig.config
         val configWrapper = ConfigWrapper(XenoEarlyStart.MODID)
-        if (prevScreen is WaitingForConfigScreen && prevScreen.status == WaitingForConfigScreen.Status.SEND_TO_SERVER) {
+        if (prevScreen is WaitingForConfigScreen && prevScreen.status == WaitingForConfigScreen.Status.SEND_TO_SERVER && !prevScreen.config!!.disableNonClientConfig) {
             configWrapper.newCategory(
                 "general",
                 "dedicated_server",
@@ -176,6 +176,126 @@ object XenoEarlyStartConfigGui {
                     0.05f,
                 )
             }
+            vanilla.addSubCategory("weakPlayer") { weakPlayer ->
+                weakPlayer.addBooleanToggle(
+                    "mobAttackWeakPlayer",
+                    config.mobChanges::mobAttackWeakPlayer,
+                    true
+                )
+            }
+            vanilla.addSubCategory("passiveMob") { passive ->
+                passive.addBooleanToggle(
+                    "pigRunAwayFromPlayerUntilFed",
+                    config.mobChanges::pigRunAwayFromPlayerUntilFed,
+                    true,
+                    requireRestart = true
+                )
+                passive.addBooleanToggle(
+                    "angerablePig",
+                    config.mobChanges::angerablePig,
+                    true,
+                    requireRestart = true
+                )
+                passive.addBooleanToggle(
+                    "chickenRunAwayFromPlayerUntilFed",
+                    config.mobChanges::chickenRunAwayFromPlayerUntilFed,
+                    true,
+                    requireRestart = true
+                )
+                passive.addBooleanToggle(
+                    "sheepRunAwayFromPlayerUntilFed",
+                    config.mobChanges::sheepRunAwayFromPlayerUntilFed,
+                    true,
+                    requireRestart = true
+                )
+            }
+            vanilla.addSubCategory("doorInteraction") { doorInteraction ->
+                doorInteraction.addBooleanToggle(
+                    "blazeCanBreakDoor",
+                    config.mobChanges::blazeCanBreakDoor,
+                    defaults.mobChanges.blazeCanBreakDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "illusionerCanOpenDoor",
+                    config.mobChanges::illusionerCanOpenDoor,
+                    defaults.mobChanges.illusionerCanOpenDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "pillagerCanOpenDoor",
+                    config.mobChanges::pillagerCanOpenDoor,
+                    defaults.mobChanges.pillagerCanOpenDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "polarBearCanDestroyDoor",
+                    config.mobChanges::polarBearCanDestroyDoor,
+                    defaults.mobChanges.polarBearCanDestroyDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "ravagerCanDestroyDoor",
+                    config.mobChanges::ravagerCanDestroyDoor,
+                    defaults.mobChanges.ravagerCanDestroyDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "witchCanOpenDoor",
+                    config.mobChanges::witchCanOpenDoor,
+                    defaults.mobChanges.witchCanOpenDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "witherSkeletonCanDestroyDoor",
+                    config.mobChanges::witherSkeletonCanDestroyDoor,
+                    defaults.mobChanges.witherSkeletonCanDestroyDoor
+                )
+                doorInteraction.addBooleanToggle(
+                    "angryWolfCanDestroyDoor",
+                    config.mobChanges::angryWolfCanDestroyDoor,
+                    defaults.mobChanges.angryWolfCanDestroyDoor
+                )
+            }
+            vanilla.addSubCategory("phantom") { phantom ->
+                phantom.addSubCategory("overworld") { overworld ->
+                    overworld.addBooleanToggle(
+                        "customPhantomOverworldSpawn",
+                        config.mobChanges::customPhantomOverworldSpawn,
+                        true,
+                        requireRestart = true
+                    )
+                    overworld.addIntSlider(
+                        "phantomSpawnLevel",
+                        config.mobChanges::phantomSpawnLevel,
+                        180,
+                        -64,
+                        320
+                    )
+                    overworld.addIntSlider(
+                        "overworldPhantomMaxGroupSize",
+                        config.mobChanges::overworldPhantomMaxGroupSize,
+                        4,
+                        1,
+                        9
+                    )
+                }
+                phantom.addSubCategory("nether") { nether ->
+                    nether.addBooleanToggle(
+                        "customPhantomNetherSpawn",
+                        config.mobChanges::customPhantomNetherSpawn,
+                        true
+                    )
+                }
+                phantom.addSubCategory("end") { end ->
+                    end.addBooleanToggle(
+                        "customPhantomEndSpawn",
+                        config.mobChanges::customPhantomEndSpawn,
+                        true
+                    )
+                }
+                phantom.addIntSlider(
+                    "maxPhantomSize",
+                    config.mobChanges::maxPhantomSize,
+                    10,
+                    0,
+                    64
+                )
+            }
             vanilla.addSubCategory("polarBear") { polarBear ->
                 polarBear.addBooleanToggle(
                     "polarBearAlwaysAggressive",
@@ -199,84 +319,16 @@ object XenoEarlyStartConfigGui {
                     requireRestart = true,
                 )
             }
-            vanilla.addSubCategory("weakPlayer") { weakPlayer ->
-                weakPlayer.addBooleanToggle(
-                    "mobAttackWeakPlayer",
-                    config.mobChanges::mobAttackWeakPlayer,
-                    true
-                )
-            }
-            vanilla.addSubCategory("wolf") { wolf ->
-                wolf.addBooleanToggle(
+            vanilla.addSubCategory("misc") { misc ->
+                misc.addBooleanToggle(
                     "wolfAggressiveAtNight",
                     config.mobChanges::wolfAggressiveAtNight,
                     true
                 )
-            }
-            vanilla.addSubCategory("bat") { bat ->
-                bat.addBooleanToggle(
+                misc.addBooleanToggle(
                     "batGivesPlayerNausea",
                     config.mobChanges::batGivesPlayerNausea,
                     true
-                )
-            }
-            vanilla.addSubCategory("pig") { pig ->
-                pig.addBooleanToggle(
-                    "pigRunAwayFromPlayerUntilFed",
-                    config.mobChanges::pigRunAwayFromPlayerUntilFed,
-                    true,
-                    requireRestart = true
-                )
-                pig.addBooleanToggle(
-                    "angerablePig",
-                    config.mobChanges::angerablePig,
-                    true,
-                    requireRestart = true
-                )
-            }
-            vanilla.addSubCategory("chicken") { chicken ->
-                chicken.addBooleanToggle(
-                    "chickenRunAwayFromPlayerUntilFed",
-                    config.mobChanges::chickenRunAwayFromPlayerUntilFed,
-                    true,
-                    requireRestart = true
-                )
-            }
-            vanilla.addSubCategory("sheep") { sheep ->
-                sheep.addBooleanToggle(
-                    "sheepRunAwayFromPlayerUntilFed",
-                    config.mobChanges::sheepRunAwayFromPlayerUntilFed,
-                    true,
-                    requireRestart = true
-                )
-            }
-            vanilla.addSubCategory("phantom") { phantom ->
-                phantom.addBooleanToggle(
-                    "customPhantomSpawn",
-                    config.mobChanges::customPhantomSpawn,
-                    true,
-                    requireRestart = true
-                )
-                phantom.addIntSlider(
-                    "phantomSpawnLevel",
-                    config.mobChanges::phantomSpawnLevel,
-                    180,
-                    -64,
-                    320
-                )
-                phantom.addIntSlider(
-                    "overworldPhantomMaxGroupSize",
-                    config.mobChanges::overworldPhantomMaxGroupSize,
-                    4,
-                    1,
-                    9
-                )
-                phantom.addIntSlider(
-                    "maxPhantomSize",
-                    config.mobChanges::maxPhantomSize,
-                    10,
-                    0,
-                    64
                 )
             }
         }

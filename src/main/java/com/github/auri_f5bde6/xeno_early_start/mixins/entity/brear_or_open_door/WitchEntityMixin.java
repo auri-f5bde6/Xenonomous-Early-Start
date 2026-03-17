@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.entity.brear_or_open_door;
 
+import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.LongDoorInteractGoal;
@@ -20,7 +21,9 @@ public abstract class WitchEntityMixin extends RaiderEntity implements RangedAtt
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     void breakDoor(CallbackInfo ci) {
-        ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
-        this.goalSelector.add(1, new LongDoorInteractGoal(this, false));
+        if (XenoEarlyStartConfig.config.mobChanges.getWitchCanOpenDoor()) {
+            ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
+            this.goalSelector.add(1, new LongDoorInteractGoal(this, false));
+        }
     }
 }

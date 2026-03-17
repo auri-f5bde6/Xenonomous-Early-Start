@@ -1,7 +1,9 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
-import com.github.auri_f5bde6.xeno_early_start.MultiplicativeSpawnModifier
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
+import com.github.auri_f5bde6.xeno_early_start.biome.ConfigBiomeModifier
+import com.github.auri_f5bde6.xeno_early_start.biome.ConfigBiomeModifier.Type
+import com.github.auri_f5bde6.xeno_early_start.biome.MultiplicativeSpawnModifier
 import com.github.auri_f5bde6.xeno_early_start.loot.*
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -28,6 +30,14 @@ object XenoEarlyStartCodecRegistry {
                 ).apply(builder, ::MultiplicativeSpawnModifier)
             }
         }
+    val CONFIG_BIOME_MODIFIER: Supplier<Codec<ConfigBiomeModifier>> = BIOME_MODIFIER_DEF_REG.register("config") {
+        RecordCodecBuilder.create { instance ->
+            instance.group(
+                Type.CODEC.fieldOf("config").forGetter(ConfigBiomeModifier::config),
+                BiomeModifier.DIRECT_CODEC.fieldOf("biomeModifier").forGetter(ConfigBiomeModifier::biomeModifier)
+            ).apply(instance, ::ConfigBiomeModifier)
+        }
+    }
     val GLOBAL_LOOT_MODIFIER_DEF_REG: DeferredRegister<Codec<out IGlobalLootModifier>> =
         DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, XenoEarlyStart.MODID)
     val ADD_TABLE_LOOT_MODIFIER_TYPE: Supplier<Codec<AddTableLootModifier>> =
