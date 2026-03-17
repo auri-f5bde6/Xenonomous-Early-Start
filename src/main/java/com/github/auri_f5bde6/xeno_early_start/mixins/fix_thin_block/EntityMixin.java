@@ -4,11 +4,13 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart;
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig;
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartBlockRegistry;
 import com.github.auri_f5bde6.xeno_early_start.utils.OtherUtils;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -50,6 +52,9 @@ public abstract class EntityMixin {
     public abstract Vec3d getPos();
 
 
+    @Shadow
+    public abstract boolean damage(DamageSource source, float amount);
+
     @WrapOperation(method = "playStepSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;getSoundType(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)Lnet/minecraft/sound/BlockSoundGroup;"))
     BlockSoundGroup fixSmallBlockStepSound(BlockState instance, WorldView worldView, BlockPos blockPos, Entity entity, Operation<BlockSoundGroup> original) {
         var conf = XenoEarlyStartConfig.config.blockChanges.getFixThinBlockStepSound();
@@ -75,5 +80,10 @@ public abstract class EntityMixin {
         } else {
             original.call(instance, world, pos, state, entity);
         }
+    }
+
+    @WrapMethod(method = "isInvulnerableTo")
+    protected boolean customInvulnerability(DamageSource damageSource, Operation<Boolean> original) {
+        return original.call(damageSource);
     }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:soul_sand_valley",
+  "spawners": [
+    {
+      "type": "minecraft:phantom",
+      "weight": 3,
+      "minCount": 2,
+      "maxCount": 3
+    }
+  ]
+}

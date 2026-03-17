@@ -250,6 +250,35 @@ object XenoEarlyStartConfigGui {
                     requireRestart = true
                 )
             }
+            vanilla.addSubCategory("phantom") { phantom ->
+                phantom.addBooleanToggle(
+                    "customPhantomSpawn",
+                    config.mobChanges::customPhantomSpawn,
+                    true,
+                    requireRestart = true
+                )
+                phantom.addIntSlider(
+                    "phantomSpawnLevel",
+                    config.mobChanges::phantomSpawnLevel,
+                    180,
+                    -64,
+                    320
+                )
+                phantom.addIntSlider(
+                    "overworldPhantomMaxGroupSize",
+                    config.mobChanges::overworldPhantomMaxGroupSize,
+                    4,
+                    1,
+                    9
+                )
+                phantom.addIntSlider(
+                    "maxPhantomSize",
+                    config.mobChanges::maxPhantomSize,
+                    10,
+                    0,
+                    64
+                )
+            }
         }
         category.addSubCategory("xeno_early_start") { xenoEarlyStart ->
             xenoEarlyStart.addBooleanToggle(

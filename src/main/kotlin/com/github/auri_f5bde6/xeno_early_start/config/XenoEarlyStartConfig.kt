@@ -125,6 +125,14 @@ object XenoEarlyStartConfig {
         var chickenRunAwayFromPlayerUntilFed: Boolean = true
 
         var sheepRunAwayFromPlayerUntilFed: Boolean = true
+
+        var customPhantomSpawn: Boolean = true
+
+        var phantomSpawnLevel: Int = 180
+
+        var overworldPhantomMaxGroupSize: Int = 4
+
+        var maxPhantomSize: Int = 10
     }
 
     class BlockChanges {

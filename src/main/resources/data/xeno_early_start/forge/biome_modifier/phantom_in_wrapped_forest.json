@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "minecraft:warped_forest",
+  "spawners": [
+    {
+      "type": "minecraft:phantom",
+      "weight": 6,
+      "minCount": 2,
+      "maxCount": 3
+    }
+  ]
+}
