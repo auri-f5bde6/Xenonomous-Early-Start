@@ -49,8 +49,8 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
                 } else {
                     var r = BlockView.raycast(raycastContext.getStart(), raycastContext.getEnd(), null, (_a, hitPos) -> {
                         var hitState = instance.getBlockState(hitPos);
-                        if (hitState.isAir() || Objects.equals(Vec3d.of(hitPos), raycastContext.getStart()) || hitState.isIn(BlockTags.LEAVES) || hitState.isIn(Tags.Blocks.GLASS)) {
-                            if (hitState.isIn(Tags.Blocks.GLASS)) {
+                        if (hitState.isAir() || Objects.equals(Vec3d.of(hitPos), raycastContext.getStart()) || hitState.isIn(XenoEarlyStartTags.Blocks.PROJECTILE_CAN_PASS_THROUGH) || hitState.isIn(XenoEarlyStartTags.Blocks.BRITTLE)) {
+                            if (hitState.isIn(XenoEarlyStartTags.Blocks.BRITTLE)) {
                                 instance.breakBlock(hitPos, false, entity);
                                 entity.setVelocity(entity.getVelocity().multiply(0.7));
                             }

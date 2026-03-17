@@ -123,6 +123,7 @@ object ItemTooltipEventListener {
         private fun getTranslatedText(text: MutableText): MutableText {
             return text
         }
+
         fun getTranslatedText(name: String): MutableText {
             return Text.translatable(
                 "xeno_early_start.item.tooltip.$name"
@@ -153,9 +154,11 @@ object ItemTooltipEventListener {
                 addToolTip(text)
             }
         }
+
         fun addTutorialTooltip(name: String) {
             addTutorialTooltip(getTranslatedText(name))
         }
+
         fun addTutorialTooltip(name: String, vararg values: Any) {
             addTutorialTooltip(getTranslatedText(name, *values))
         }
