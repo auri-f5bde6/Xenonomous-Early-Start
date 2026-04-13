@@ -50,7 +50,7 @@ class UseToolRecipe(
                     .forGetter(Incomplete::craftingRecipeCategory),
                 CodecUtils.INGREDIENT_CODEC.fieldOf("tool").forGetter(Incomplete::tool),
                 CodecUtils.INGREDIENT_CODEC.fieldOf("input").forGetter(Incomplete::input),
-                ItemStack.CODEC.fieldOf("output").forGetter(Incomplete::output),
+                CodecUtils.ITEM_STACK_CODEC.fieldOf("output").forGetter(Incomplete::output),
                 Codec.INT.optionalFieldOf("tool_damage", 1).forGetter(Incomplete::toolDamage)
             ).apply(instance, ::Incomplete)
         }

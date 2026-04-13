@@ -27,6 +27,8 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 class StoneToCobbleRecipe(
     var recipeId: Identifier,
@@ -95,16 +97,16 @@ class StoneToCobbleRecipe(
     class Incomplete(
         val minedBlock: BlockList,
         val resultingBlock: Block,
-        var toolTierCondition: MatchToolTier?,
-        var lootTable: Identifier?,
+        var toolTierCondition: Optional<MatchToolTier>,
+        var lootTable: Optional<Identifier>,
     ) : Partial<StoneToCobbleRecipe> {
         override fun withId(id: Identifier): StoneToCobbleRecipe {
             return StoneToCobbleRecipe(
                 id,
                 minedBlock,
                 resultingBlock,
-                toolTierCondition,
-                lootTable
+                toolTierCondition.getOrNull(),
+                lootTable.getOrNull()
             )
         }
     }
@@ -114,8 +116,8 @@ class StoneToCobbleRecipe(
             instance.group(
                 BlockList.CODEC.fieldOf("mined_block").forGetter(Incomplete::minedBlock),
                 Registries.BLOCK.codec.fieldOf("resulting_block").forGetter(Incomplete::resultingBlock),
-                MatchToolTier.CODEC.codec().optionalFieldOf("tool_tier", null).forGetter(Incomplete::toolTierCondition),
-                Identifier.CODEC.optionalFieldOf("loot_table", null).forGetter(Incomplete::lootTable)
+                MatchToolTier.CODEC.codec().optionalFieldOf("tool_tier").forGetter(Incomplete::toolTierCondition),
+                Identifier.CODEC.optionalFieldOf("loot_table").forGetter(Incomplete::lootTable)
             ).apply(instance, ::Incomplete)
         }
     }
