@@ -1,7 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.loot.*
+import com.github.auri_f5bde6.xeno_early_start.loot.conditions.*
+import com.github.auri_f5bde6.xeno_early_start.loot.functions.ConfigLootFunction
 import net.minecraft.loot.condition.LootConditionType
 import net.minecraft.loot.function.LootFunctionType
 import net.minecraft.registry.Registries
@@ -33,6 +34,11 @@ object XenoEarlyStartLootTypeRegistry {
     @JvmField
     val configLootCondition: RegistryObject<LootConditionType> = COND_DEF_REG.register("config") {
         LootConditionType(ConfigLootCondition.Serializer())
+    }
+
+    @JvmField
+    val modLoadedCondition: RegistryObject<LootConditionType> = COND_DEF_REG.register("mod_loaded") {
+        LootConditionType(ModLoadedCondition.Serializer())
     }
 
     @JvmField

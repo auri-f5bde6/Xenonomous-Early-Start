@@ -30,7 +30,7 @@ loom {
         }
         client {
             vmArgs "-XX:+AllowEnhancedClassRedefinition"
-            vmArg "-Dmixin.debug=true"
+            vmArg " -Dmixin.debug.export=true"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
@@ -71,18 +71,23 @@ repositories {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'thedarkcolour:kotlinforforge:4.10.0'
+
     minecraft "net.minecraft:minecraft:$project.minecraft_version"
     mappings "net.fabricmc:yarn:$project.yarn_mappings:v2"
     forge "net.minecraftforge:forge:$project.forge_version"
+
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"))
     implementation(include("io.github.llamalad7:mixinextras-forge:${project.mixin_extras_version}"))
+
     modApi "me.shedaniel.cloth:cloth-config-forge:$project.cloth_config_version"
     modCompileOnlyApi "dev.emi:emi-forge:$project.emi_version:api"
     modRuntimeOnly "dev.emi:emi-forge:$project.emi_version"
-    modImplementation("maven.modrinth:better-combat:$project.better_combat_version-forge")
-    modImplementation("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_animator_version}")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation 'thedarkcolour:kotlinforforge:4.10.0'
+    modRuntimeOnly("maven.modrinth:better-combat:$project.better_combat_version-forge")
+    modRuntimeOnly("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_animator_version}")
+    modRuntimeOnly("maven.modrinth:spelunkery:$project.spelunkery_version")
+    modRuntimeOnly("maven.modrinth:moonlight:$project.moonlight_version")
 }
 
 processResources {

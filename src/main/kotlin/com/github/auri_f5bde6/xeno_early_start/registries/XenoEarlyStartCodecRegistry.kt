@@ -4,7 +4,7 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.biome.ConfigBiomeModifier
 import com.github.auri_f5bde6.xeno_early_start.biome.ConfigBiomeModifier.Type
 import com.github.auri_f5bde6.xeno_early_start.biome.MultiplicativeSpawnModifier
-import com.github.auri_f5bde6.xeno_early_start.loot.*
+import com.github.auri_f5bde6.xeno_early_start.loot.modifiers.*
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.registry.Registries
