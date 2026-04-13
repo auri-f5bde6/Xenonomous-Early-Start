@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.loot
+package com.github.auri_f5bde6.xeno_early_start.loot.functions
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig

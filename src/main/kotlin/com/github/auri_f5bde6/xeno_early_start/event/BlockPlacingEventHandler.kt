@@ -15,7 +15,6 @@ object BlockPlacingEventHandler {
     @SubscribeEvent
     fun onBlockPlaced(event: BlockEvent.EntityPlaceEvent) {
         val placedBlock = event.placedBlock
-        event.entity
         val blockPos = event.pos
         val world = event.level
         val fluidState = event.blockSnapshot.replacedBlock.fluidState

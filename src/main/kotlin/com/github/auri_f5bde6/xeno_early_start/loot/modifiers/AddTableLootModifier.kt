@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.loot
+package com.github.auri_f5bde6.xeno_early_start.loot.modifiers
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartCodecRegistry
@@ -16,7 +16,8 @@ import net.minecraftforge.common.loot.IGlobalLootModifier
 import net.minecraftforge.common.loot.LootModifier
 import java.util.function.Function
 
-class ReplaceTableLootModifier(conditionsIn: Array<LootCondition>, private val table: Identifier) :
+// https://github.com/neoforged/NeoForge/blob/1.21.x/src/main/java/net/neoforged/neoforge/common/loot/AddTableLootModifier.java#
+class AddTableLootModifier(conditionsIn: Array<LootCondition>, private val table: Identifier) :
     LootModifier(conditionsIn) {
 
     fun table(): Identifier {
@@ -28,31 +29,30 @@ class ReplaceTableLootModifier(conditionsIn: Array<LootCondition>, private val t
         generatedLoot: ObjectArrayList<ItemStack?>,
         context: LootContext
     ): ObjectArrayList<ItemStack?> {
-        val newLoot = ObjectArrayList.of<ItemStack?>()
         val a = context.dataLookup.getElement(LootDataType.LOOT_TABLES, this.table)
         if (a != null) {
-            a.generateUnprocessedLoot(context, LootTable.processStacks(context.world, newLoot::add))
+            a.generateUnprocessedLoot(context, LootTable.processStacks(context.world, generatedLoot::add))
         } else {
-            XenoEarlyStart.LOGGER.error("No table called ${this.table} is found for ReplaceLootTableModifier")
+            XenoEarlyStart.LOGGER.error("No table called  ${this.table} is found for AddTableLootModifier")
         }
-        return newLoot
+        return generatedLoot
     }
 
     override fun codec(): Codec<out IGlobalLootModifier> {
-        return XenoEarlyStartCodecRegistry.REPLACE_TABLE_LOOT_MODIFIER_TYPE.get()
+        return XenoEarlyStartCodecRegistry.ADD_TABLE_LOOT_MODIFIER_TYPE.get()
     }
 
     companion object {
-        val CODEC: MapCodec<ReplaceTableLootModifier> =
-            RecordCodecBuilder.mapCodec(Function { instance: RecordCodecBuilder.Instance<ReplaceTableLootModifier> ->
+        val CODEC: MapCodec<AddTableLootModifier> =
+            RecordCodecBuilder.mapCodec(Function { instance: RecordCodecBuilder.Instance<AddTableLootModifier> ->
                 instance.group(
                     LOOT_CONDITIONS_CODEC.fieldOf("conditions")
-                        .forGetter { glm: ReplaceTableLootModifier -> glm.conditions },
+                        .forGetter { glm: AddTableLootModifier -> glm.conditions },
                     Identifier.CODEC.fieldOf("table")
-                        .forGetter { obj: ReplaceTableLootModifier -> obj.table() }
+                        .forGetter { obj: AddTableLootModifier -> obj.table() }
                 ).apply(
                     instance,
-                    ::ReplaceTableLootModifier
+                    ::AddTableLootModifier
                 )
             })
     }

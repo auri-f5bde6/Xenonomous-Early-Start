@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.loot
+package com.github.auri_f5bde6.xeno_early_start.loot.conditions
 
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
 import com.google.gson.JsonDeserializationContext

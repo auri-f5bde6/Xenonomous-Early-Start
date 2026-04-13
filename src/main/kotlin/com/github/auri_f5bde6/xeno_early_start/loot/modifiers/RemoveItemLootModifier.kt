@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.loot
+package com.github.auri_f5bde6.xeno_early_start.loot.modifiers
 
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartCodecRegistry
 import com.mojang.datafixers.util.Either

@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.loot
+package com.github.auri_f5bde6.xeno_early_start.loot.conditions
 
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
@@ -37,7 +37,7 @@ class ConfigLootCondition private constructor(private val config: Type) : LootCo
         }
 
         companion object {
-            fun fromString(type: String) = Type.entries.find { v -> v.literal == type }
+            fun fromString(type: String) = entries.find { v -> v.literal == type }
         }
     }
 

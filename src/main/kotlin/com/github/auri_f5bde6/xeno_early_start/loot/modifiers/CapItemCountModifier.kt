@@ -1,4 +1,4 @@
-package com.github.auri_f5bde6.xeno_early_start.loot
+package com.github.auri_f5bde6.xeno_early_start.loot.modifiers
 
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartCodecRegistry
 import com.mojang.serialization.Codec
@@ -12,12 +12,13 @@ import net.minecraft.loot.condition.LootCondition
 import net.minecraft.loot.context.LootContext
 import net.minecraft.util.Identifier
 import net.minecraftforge.common.loot.IGlobalLootModifier
+import net.minecraftforge.common.loot.LootModifier
 import net.minecraftforge.registries.ForgeRegistries
 import java.util.function.Function
 import kotlin.math.min
 
 class CapItemCountModifier(conditionsIn: Array<LootCondition>, val item: Item, val max: Int) :
-    net.minecraftforge.common.loot.LootModifier(conditionsIn) {
+    LootModifier(conditionsIn) {
 
     @Suppress("deprecation")
     override fun doApply(
