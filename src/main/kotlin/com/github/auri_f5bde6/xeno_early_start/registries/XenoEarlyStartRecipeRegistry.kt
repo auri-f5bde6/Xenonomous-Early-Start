@@ -1,7 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.registries
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.recipe.Serializer
 import com.github.auri_f5bde6.xeno_early_start.recipe.StoneToCobbleRecipe
 import com.github.auri_f5bde6.xeno_early_start.recipe.UseToolRecipe
 import net.minecraft.recipe.RecipeSerializer
@@ -28,7 +27,7 @@ object XenoEarlyStartRecipeRegistry {
     val BLOCK_TO_BLOCK: RegistryObject<RecipeSerializer<StoneToCobbleRecipe>> =
         DEF_REG.register(
             "block_to_block",
-            Supplier { Serializer() })
+            Supplier { StoneToCobbleRecipe.Serializer() })
 
     @JvmField
     val USE_TOOL: RegistryObject<RecipeSerializer<UseToolRecipe>> =

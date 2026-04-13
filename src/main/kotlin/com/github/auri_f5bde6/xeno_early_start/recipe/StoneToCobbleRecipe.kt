@@ -1,87 +1,67 @@
 package com.github.auri_f5bde6.xeno_early_start.recipe
 
-import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
+import com.github.auri_f5bde6.xeno_early_start.loot.conditions.MatchToolTier
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
-import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getBool
-import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getFloat
-import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getItem
-import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils.getString
-import com.github.auri_f5bde6.xeno_early_start.utils.MiningLevel
-import com.google.gson.JsonElement
-import com.google.gson.JsonSyntaxException
+import com.github.auri_f5bde6.xeno_early_start.utils.BlockList
+import com.github.auri_f5bde6.xeno_early_start.utils.CodecRecipeSerializer
+import com.github.auri_f5bde6.xeno_early_start.utils.PacketUtils
+import com.github.auri_f5bde6.xeno_early_start.utils.RequireId
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.inventory.SimpleInventory
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.ToolMaterial
+import net.minecraft.loot.context.LootContextParameterSet
+import net.minecraft.loot.context.LootContextParameters
+import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.DynamicRegistryManager
-import net.minecraft.registry.tag.TagKey
+import net.minecraft.registry.Registries
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import net.minecraftforge.common.TierSortingRegistry
-import net.minecraftforge.registries.ForgeRegistries
+import java.util.*
 
 class StoneToCobbleRecipe(
     var recipeId: Identifier,
-    var minedBlock: Identifier,
+    var minedBlock: BlockList,
     var resultingBlock: Block,
-    var droppedItems: Array<DroppedItem>,
-    var miningTierLowerThan: Identifier?,
-    var isDropBlockLootTable: Boolean,
-    var isOreToStone: Boolean,
-    var minedBlockIsTag: Boolean,
-    var isAnyTier: Boolean,
-    var matchHeldItems: Array<Identifier>,
-    var matchHeldItemsIsTag: Array<Boolean>
+    var toolTierCondition: MatchToolTier,
+    var lootTable: Optional<Identifier>,
 ) : Recipe<SimpleInventory> {
-    fun getMiningTierLowerThan(): ToolMaterial? {
-        return TierSortingRegistry.byName(miningTierLowerThan)
+    fun matches(
+        state: BlockState,
+        itemStack: ItemStack
+    ): Boolean {
+        return minedBlock.test(state) && toolTierCondition.test(itemStack)
     }
 
-    fun matches(state: BlockState, itemStack: ItemStack): Boolean {
-        for (i in matchHeldItems.indices) {
-            if ((!matchHeldItemsIsTag[i] && matchHeldItems[i] === (ForgeRegistries.ITEMS.getKey(itemStack.item))) || (matchHeldItemsIsTag[i] && itemStack.isIn(
-                    TagKey.of(
-                        ForgeRegistries.ITEMS.getRegistryKey(), matchHeldItems[i]
-                    )
-                ))
-            ) {
-                return true
-            }
-        }
-        if (!matchHeldItems.isEmpty()) {
-            return false
-        }
-        if ((this.isAnyTier || MiningLevel.isToolLowerThanTier(
-                itemStack, this.getMiningTierLowerThan()
-            )) && (!this.isOreToStone || (XenoEarlyStartConfig.config.oreChanges.oreToStone))
-        ) {
-            if (minedBlockIsTag) {
-                val tag = TagKey.of(ForgeRegistries.BLOCKS.getRegistryKey(), minedBlock)
-                return state.isIn(tag)
-            } else {
-                return state.isOf(ForgeRegistries.BLOCKS.getValue(minedBlock))
-            }
+    fun rollLootTable(
+        world: ServerWorld,
+        pos: BlockPos,
+        blockEntity: BlockEntity?,
+        state: BlockState,
+        itemStack: ItemStack
+    ): List<ItemStack> {
+        return if (lootTable.isPresent) {
+            val params = LootContextParameterSet.Builder(world)
+                .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
+                .add(LootContextParameters.TOOL, itemStack)
+                .addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity)
+                .add(LootContextParameters.BLOCK_STATE, state)
+                .build(LootContextTypes.BLOCK)
+            world.server.lootManager.getLootTable(lootTable.get()).generateLoot(params)
         } else {
-            return false
+            listOf()
         }
     }
-
-    fun maybeDropItemsInList(level: World, pos: BlockPos) {
-        for (i in droppedItems) {
-            val probability = i.probability
-            if (level.random.nextFloat() < probability) {
-                Block.dropStack(level, pos, i.item.defaultStack)
-            }
-        }
-    }
-
 
     override fun getOutput(registryManager: DynamicRegistryManager?): ItemStack? {
         return resultingBlock.asItem().defaultStack
@@ -113,51 +93,62 @@ class StoneToCobbleRecipe(
         return false
     }
 
-    class DroppedItem(
-        var item: Item,
-        var normalProbability: Float,
-        var isAffectedByFortune: Boolean,
-        var isPebble: Boolean,
-    ) {
-        val probability: Float
-            get() = if (XenoEarlyStartConfig.config.earlyGameChanges.overridePebbleDropProbability && isPebble) {
-                XenoEarlyStartConfig.config.earlyGameChanges.pebbleDropProbability
-            } else {
-                normalProbability
-            }
-
-        fun write(buf: PacketByteBuf) {
-            buf.writeIdentifier(ForgeRegistries.ITEMS.getKey(item))
-            buf.writeFloat(this.normalProbability)
-            buf.writeBoolean(this.isAffectedByFortune)
-            buf.writeBoolean(this.isPebble)
-        }
-
-        companion object {
-            fun read(buf: PacketByteBuf): DroppedItem {
-                val item = ForgeRegistries.ITEMS.getValue(buf.readIdentifier())!!
-                val probability = buf.readFloat()
-                val affectedByFortune = buf.readBoolean()
-                val pebble = buf.readBoolean()
-                return DroppedItem(item, probability, affectedByFortune, pebble)
-            }
-
-            fun fromJson(element: JsonElement): DroppedItem {
-                val obj = element.asJsonObject
-                val item = getItem(obj, "item") ?: throw JsonSyntaxException(
-                    "Expected item to be an valid item identifier, got ${
-                        getString(
-                            obj,
-                            "item"
-                        )
-                    }"
-                )
-                val probability = getFloat(obj, "probability") ?: 1.0f
-                val affectedByFortune = getBool(obj, "affected_by_fortune") ?: false
-                val pebble = getBool(obj, "pebble") ?: false
-                return DroppedItem(item, probability, affectedByFortune, pebble)
-            }
+    class Incomplete(
+        val minedBlock: BlockList,
+        val resultingBlock: Block,
+        var toolTierCondition: MatchToolTier,
+        var lootTable: Optional<Identifier>,
+    ) : RequireId<StoneToCobbleRecipe> {
+        override fun withId(id: Identifier): StoneToCobbleRecipe {
+            return StoneToCobbleRecipe(
+                id,
+                minedBlock,
+                resultingBlock,
+                toolTierCondition,
+                lootTable
+            )
         }
     }
 
+    companion object {
+        val CODEC: MapCodec<Incomplete> = RecordCodecBuilder.mapCodec { instance ->
+            instance.group(
+                BlockList.CODEC.fieldOf("mined_block").forGetter(Incomplete::minedBlock),
+                Registries.BLOCK.codec.fieldOf("resulting_block").forGetter(Incomplete::resultingBlock),
+                MatchToolTier.CODEC.fieldOf("tool_tier").forGetter(Incomplete::toolTierCondition),
+                Identifier.CODEC.optionalFieldOf("loot_table").forGetter(Incomplete::lootTable)
+            ).apply(instance, ::Incomplete)
+        }
+    }
+
+    class Serializer : CodecRecipeSerializer<StoneToCobbleRecipe, Incomplete>(CODEC.codec()) {
+        override fun read(
+            id: Identifier,
+            buf: PacketByteBuf
+        ): StoneToCobbleRecipe {
+            val minedBlock = BlockList.fromBuf(buf)
+            val resultingBlock = PacketUtils.readBlock(buf)
+            val toolTierCondition = MatchToolTier.fromBuf(buf)
+            val hasLootTable = buf.readBoolean()
+            var lootTable = Optional.empty<Identifier>()
+            if (hasLootTable) {
+                lootTable = Optional.of(buf.readIdentifier())
+            }
+            return StoneToCobbleRecipe(id, minedBlock, resultingBlock, toolTierCondition, lootTable)
+        }
+
+        override fun write(
+            buf: PacketByteBuf,
+            recipe: StoneToCobbleRecipe
+        ) {
+            recipe.minedBlock.toBuf(buf)
+            PacketUtils.writeBlock(buf, recipe.resultingBlock)
+            recipe.toolTierCondition.toBuf(buf)
+            buf.writeBoolean(recipe.lootTable.isPresent)
+            if (recipe.lootTable.isPresent) {
+                buf.writeIdentifier(recipe.lootTable.get())
+            }
+        }
+
+    }
 }

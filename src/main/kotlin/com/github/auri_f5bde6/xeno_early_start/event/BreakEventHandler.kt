@@ -6,6 +6,7 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStartTags
 import com.github.auri_f5bde6.xeno_early_start.advancements.CoalDustCriterion
 import com.github.auri_f5bde6.xeno_early_start.advancements.XenoEarlyStartCriteria
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -46,8 +47,18 @@ object BreakEventHandler {
                     .listAllOfType(XenoEarlyStartRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())
                 for (recipe in recipes) {
                     if (recipe.matches(state, toolStack)) {
-                        breakBlock(toolStack, level, player, state, pos, recipe.isDropBlockLootTable)
-                        recipe.maybeDropItemsInList(level, pos)
+                        breakBlock(toolStack, level, player, state, pos, false)
+                        if (!level.isClient) {
+                            for (i in recipe.rollLootTable(
+                                level as ServerWorld,
+                                pos,
+                                level.getBlockEntity(pos),
+                                state,
+                                toolStack
+                            )) {
+                                Block.dropStack(level, pos, i)
+                            }
+                        }
                         level.setBlockState(pos, recipe.resultingBlock.defaultState)
                         event.isCanceled = true
                         return

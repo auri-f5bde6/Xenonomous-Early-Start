@@ -1,10 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.compat
 
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
-import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.github.auri_f5bde6.xeno_early_start.recipe.UseToolRecipe
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartItemRegistry
-import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
@@ -70,12 +68,12 @@ class XenoEarlyStartEmiPlugin : EmiPlugin {
         registry.addWorkstation(FIRE_STARTER_CATEGORY, FIRE_STARTER)
         registry.addRecipe(FireStarterRecipe())
 
-        registry.addCategory(BLOCK_TO_BLOCK_CATEGORY)
-        for (recipe in registry.recipeManager.listAllOfType(XenoEarlyStartRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())) {
-            if (recipe.isOreToStone && XenoEarlyStartConfig.config.oreChanges.oreToStone || !recipe.isOreToStone) {
-                registry.addRecipe(EMIBlockToBlockRecipe(recipe))
-            }
-        }
+        /*        registry.addCategory(BLOCK_TO_BLOCK_CATEGORY)
+                for (recipe in registry.recipeManager.listAllOfType(XenoEarlyStartRecipeRegistry.BLOCK_TO_BLOCK_TYPE.get())) {
+                    if (recipe.isOreToStone && XenoEarlyStartConfig.config.oreChanges.oreToStone || !recipe.isOreToStone) {
+                        registry.addRecipe(EMIBlockToBlockRecipe(recipe))
+                    }
+                }*/
 
         registry.addCategory(KNAPPING_CATEGORY)
         registry.addWorkstation(KNAPPING_CATEGORY, PEBBLE)

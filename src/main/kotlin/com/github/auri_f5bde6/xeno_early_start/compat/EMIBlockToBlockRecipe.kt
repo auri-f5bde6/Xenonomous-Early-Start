@@ -1,20 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.compat
 
-import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
-import com.github.auri_f5bde6.xeno_early_start.recipe.StoneToCobbleRecipe
-import dev.emi.emi.api.recipe.EmiRecipe
-import dev.emi.emi.api.recipe.EmiRecipeCategory
-import dev.emi.emi.api.render.EmiTexture
-import dev.emi.emi.api.stack.EmiIngredient
-import dev.emi.emi.api.stack.EmiStack
-import dev.emi.emi.api.widget.WidgetHolder
-import net.minecraft.client.MinecraftClient
-import net.minecraft.recipe.Ingredient
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.text.Text
-import net.minecraft.util.Identifier
-import net.minecraftforge.registries.ForgeRegistries
-
+/*
 class EMIBlockToBlockRecipe(val recipe: StoneToCobbleRecipe) : EmiRecipe {
     val output: MutableList<EmiStack> = mutableListOf()
     val input: List<EmiIngredient>
@@ -93,4 +79,4 @@ class EMIBlockToBlockRecipe(val recipe: StoneToCobbleRecipe) : EmiRecipe {
         }
 
     }
-}
+}*/

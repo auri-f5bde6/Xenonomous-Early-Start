@@ -1,12 +1,8 @@
 package com.github.auri_f5bde6.xeno_early_start.loot.conditions
 
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartLootTypeRegistry
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonObject
-import com.google.gson.JsonSerializationContext
-import com.google.gson.JsonSyntaxException
+import com.github.auri_f5bde6.xeno_early_start.utils.CodecJsonSerializer
 import com.mojang.serialization.Codec
-import com.mojang.serialization.JsonOps
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.loot.condition.LootCondition
@@ -34,22 +30,5 @@ class ModLoadedCondition(val modid: String) : LootCondition {
         return ModList.get().isLoaded(modid)
     }
 
-    class Serializer : JsonSerializer<ModLoadedCondition> {
-        override fun toJson(
-            json: JsonObject,
-            `object`: ModLoadedCondition,
-            context: JsonSerializationContext
-        ) {
-            CODEC.codec().encode(`object`, JsonOps.INSTANCE, json)
-        }
-
-        override fun fromJson(
-            json: JsonObject,
-            context: JsonDeserializationContext
-        ): ModLoadedCondition {
-            return CODEC.codec().parse(JsonOps.INSTANCE, json)
-                .getOrThrow(false) { msg -> throw JsonSyntaxException(msg) }
-        }
-
-    }
+    class Serializer : JsonSerializer<ModLoadedCondition> by CodecJsonSerializer(CODEC.codec())
 }
