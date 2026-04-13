@@ -24,12 +24,12 @@
       "trigger": "minecraft:recipe_crafted",
       "conditions": {
         "recipe_id": "xeno_early_start:treated_wood_from_animal_fat_and_cactus"
-      },
-      "treated_wood_from_animal_fat_and_crimson_fungus": {
-        "trigger": "minecraft:recipe_crafted",
-        "conditions": {
-          "recipe_id": "xeno_early_start:treated_wood_from_animal_fat_and_crimson_fungus"
-        }
+      }
+    },
+    "treated_wood_from_animal_fat_and_crimson_fungus": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:treated_wood_from_animal_fat_and_crimson_fungus"
       }
     }
   },
