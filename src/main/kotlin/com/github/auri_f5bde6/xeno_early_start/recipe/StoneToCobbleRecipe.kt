@@ -5,7 +5,7 @@ import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRe
 import com.github.auri_f5bde6.xeno_early_start.utils.BlockList
 import com.github.auri_f5bde6.xeno_early_start.utils.CodecRecipeSerializer
 import com.github.auri_f5bde6.xeno_early_start.utils.PacketUtils
-import com.github.auri_f5bde6.xeno_early_start.utils.RequireId
+import com.github.auri_f5bde6.xeno_early_start.utils.Partial
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.block.Block
@@ -27,20 +27,19 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import java.util.*
 
 class StoneToCobbleRecipe(
     var recipeId: Identifier,
     var minedBlock: BlockList,
     var resultingBlock: Block,
-    var toolTierCondition: MatchToolTier,
-    var lootTable: Optional<Identifier>,
+    var toolTierCondition: MatchToolTier?,
+    var lootTable: Identifier?,
 ) : Recipe<SimpleInventory> {
     fun matches(
         state: BlockState,
         itemStack: ItemStack
     ): Boolean {
-        return minedBlock.test(state) && toolTierCondition.test(itemStack)
+        return minedBlock.test(state) && toolTierCondition?.test(itemStack) ?: true
     }
 
     fun rollLootTable(
@@ -50,14 +49,14 @@ class StoneToCobbleRecipe(
         state: BlockState,
         itemStack: ItemStack
     ): List<ItemStack> {
-        return if (lootTable.isPresent) {
+        return if (lootTable != null) {
             val params = LootContextParameterSet.Builder(world)
                 .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
                 .add(LootContextParameters.TOOL, itemStack)
                 .addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity)
                 .add(LootContextParameters.BLOCK_STATE, state)
                 .build(LootContextTypes.BLOCK)
-            world.server.lootManager.getLootTable(lootTable.get()).generateLoot(params)
+            world.server.lootManager.getLootTable(lootTable).generateLoot(params)
         } else {
             listOf()
         }
@@ -96,9 +95,9 @@ class StoneToCobbleRecipe(
     class Incomplete(
         val minedBlock: BlockList,
         val resultingBlock: Block,
-        var toolTierCondition: MatchToolTier,
-        var lootTable: Optional<Identifier>,
-    ) : RequireId<StoneToCobbleRecipe> {
+        var toolTierCondition: MatchToolTier?,
+        var lootTable: Identifier?,
+    ) : Partial<StoneToCobbleRecipe> {
         override fun withId(id: Identifier): StoneToCobbleRecipe {
             return StoneToCobbleRecipe(
                 id,
@@ -115,8 +114,8 @@ class StoneToCobbleRecipe(
             instance.group(
                 BlockList.CODEC.fieldOf("mined_block").forGetter(Incomplete::minedBlock),
                 Registries.BLOCK.codec.fieldOf("resulting_block").forGetter(Incomplete::resultingBlock),
-                MatchToolTier.CODEC.fieldOf("tool_tier").forGetter(Incomplete::toolTierCondition),
-                Identifier.CODEC.optionalFieldOf("loot_table").forGetter(Incomplete::lootTable)
+                MatchToolTier.CODEC.codec().optionalFieldOf("tool_tier", null).forGetter(Incomplete::toolTierCondition),
+                Identifier.CODEC.optionalFieldOf("loot_table", null).forGetter(Incomplete::lootTable)
             ).apply(instance, ::Incomplete)
         }
     }
@@ -128,11 +127,15 @@ class StoneToCobbleRecipe(
         ): StoneToCobbleRecipe {
             val minedBlock = BlockList.fromBuf(buf)
             val resultingBlock = PacketUtils.readBlock(buf)
-            val toolTierCondition = MatchToolTier.fromBuf(buf)
+            val hasToolTierCondition = buf.readBoolean()
+            var toolTierCondition: MatchToolTier? = null
+            if (hasToolTierCondition) {
+                toolTierCondition = MatchToolTier.fromBuf(buf)
+            }
             val hasLootTable = buf.readBoolean()
-            var lootTable = Optional.empty<Identifier>()
+            var lootTable: Identifier? = null
             if (hasLootTable) {
-                lootTable = Optional.of(buf.readIdentifier())
+                lootTable = buf.readIdentifier()
             }
             return StoneToCobbleRecipe(id, minedBlock, resultingBlock, toolTierCondition, lootTable)
         }
@@ -143,10 +146,13 @@ class StoneToCobbleRecipe(
         ) {
             recipe.minedBlock.toBuf(buf)
             PacketUtils.writeBlock(buf, recipe.resultingBlock)
-            recipe.toolTierCondition.toBuf(buf)
-            buf.writeBoolean(recipe.lootTable.isPresent)
-            if (recipe.lootTable.isPresent) {
-                buf.writeIdentifier(recipe.lootTable.get())
+            buf.writeBoolean(recipe.toolTierCondition != null)
+            if (recipe.toolTierCondition != null) {
+                recipe.toolTierCondition!!.toBuf(buf)
+            }
+            buf.writeBoolean(recipe.lootTable != null)
+            if (recipe.lootTable != null) {
+                buf.writeIdentifier(recipe.lootTable!!)
             }
         }
 

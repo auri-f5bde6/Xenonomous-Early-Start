@@ -1,8 +1,12 @@
 package com.github.auri_f5bde6.xeno_early_start.recipe
 
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartRecipeRegistry
-import com.github.auri_f5bde6.xeno_early_start.utils.JsonUtils
-import com.google.gson.JsonObject
+import com.github.auri_f5bde6.xeno_early_start.utils.CodecRecipeSerializer
+import com.github.auri_f5bde6.xeno_early_start.utils.CodecUtils
+import com.github.auri_f5bde6.xeno_early_start.utils.Partial
+import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.inventory.RecipeInputInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketByteBuf
@@ -12,11 +16,9 @@ import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.book.CraftingRecipeCategory
 import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.util.Identifier
-import net.minecraft.util.JsonHelper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
-import net.minecraftforge.common.crafting.CraftingHelper
 
 class UseToolRecipe(
     val recipeId: Identifier,
@@ -27,8 +29,31 @@ class UseToolRecipe(
     val toolDamage: Int,
 ) :
     CraftingRecipe {
+
+    class Incomplete(
+        val craftingRecipeCategory: CraftingRecipeCategory,
+        val tool: Ingredient,
+        val input: Ingredient,
+        val output: ItemStack,
+        val toolDamage: Int,
+    ) : Partial<UseToolRecipe> {
+        override fun withId(id: Identifier): UseToolRecipe {
+            return UseToolRecipe(id, craftingRecipeCategory, tool, input, output, toolDamage)
+        }
+    }
+
     companion object {
         private val RANDOM = Random.create()
+        val CODEC: MapCodec<Incomplete> = RecordCodecBuilder.mapCodec { instance ->
+            instance.group(
+                CraftingRecipeCategory.CODEC.optionalFieldOf("category", CraftingRecipeCategory.MISC)
+                    .forGetter(Incomplete::craftingRecipeCategory),
+                CodecUtils.INGREDIENT_CODEC.fieldOf("tool").forGetter(Incomplete::tool),
+                CodecUtils.INGREDIENT_CODEC.fieldOf("input").forGetter(Incomplete::input),
+                ItemStack.CODEC.fieldOf("output").forGetter(Incomplete::output),
+                Codec.INT.optionalFieldOf("tool_damage", 1).forGetter(Incomplete::toolDamage)
+            ).apply(instance, ::Incomplete)
+        }
     }
 
     override fun matches(
@@ -98,20 +123,7 @@ class UseToolRecipe(
         return craftingRecipeCategory
     }
 
-    class Serializer : RecipeSerializer<UseToolRecipe> {
-        override fun read(
-            id: Identifier,
-            json: JsonObject
-        ): UseToolRecipe {
-            val input = Ingredient.fromJson(json.get("input"), false)
-            val output = CraftingHelper.getItemStack(json.get("output").asJsonObject, true, true)
-            val tool = Ingredient.fromJson(json.get("tool"), false)
-            val craftingBookCategory = CraftingRecipeCategory.CODEC
-                .byId(JsonHelper.getString(json, "category", null as String?), CraftingRecipeCategory.MISC)
-            val toolDamage = JsonUtils.getInt(json, "tool_damage") ?: 1
-            return UseToolRecipe(id, craftingBookCategory, tool, input, output, toolDamage)
-        }
-
+    class Serializer : CodecRecipeSerializer<UseToolRecipe, Incomplete>(CODEC.codec()) {
         override fun read(
             id: Identifier,
             buf: PacketByteBuf

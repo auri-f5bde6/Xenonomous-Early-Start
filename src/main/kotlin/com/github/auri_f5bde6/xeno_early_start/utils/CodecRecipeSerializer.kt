@@ -8,11 +8,11 @@ import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.util.Identifier
 
-interface RequireId<T : Recipe<*>> {
+interface Partial<T : Recipe<*>> {
     fun withId(id: Identifier): T
 }
 
-abstract class CodecRecipeSerializer<T : Recipe<*>, R : RequireId<T>>(val codec: Codec<R>) : RecipeSerializer<T> {
+abstract class CodecRecipeSerializer<T : Recipe<*>, R : Partial<T>>(val codec: Codec<R>) : RecipeSerializer<T> {
     override fun read(id: Identifier, json: JsonObject): T {
         return codec.parse(JsonOps.INSTANCE, json)
             .getOrThrow(false) { msg -> throw JsonSyntaxException(msg) }.withId(id)

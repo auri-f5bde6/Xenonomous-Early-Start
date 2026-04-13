@@ -7,9 +7,10 @@ import net.minecraft.block.BlockState
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
+import java.util.function.Predicate
 
-data class BlockList(val list: Array<Either<Block, TagKey<Block>>>) {
-    fun test(blockState: BlockState): Boolean {
+data class BlockList(val list: Array<Either<Block, TagKey<Block>>>) : Predicate<BlockState> {
+    override fun test(blockState: BlockState): Boolean {
         for (blockOrTag in list) {
             if (blockOrTag.map({ block -> blockState.isOf(block) }, { tagKey -> blockState.isIn(tagKey) })) {
                 return true
