@@ -10,6 +10,7 @@
   "mixins": [
     "AdvancementManagerMixin",
     "MutableTextMixin",
+    "SpawnHelperMixin",
     "TextSerializerMixin",
     "TextVisitFactoryMixin",
     "TierSortingRegistryMixin",

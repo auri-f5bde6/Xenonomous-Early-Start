@@ -147,6 +147,8 @@ object XenoEarlyStartConfig {
         var overworldPhantomMaxGroupSize: Int = 4
 
         var maxPhantomSize: Int = 10
+
+        var replaceSpiderWithCaveSpiderY: Int = 46
     }
 
     class BlockChanges {

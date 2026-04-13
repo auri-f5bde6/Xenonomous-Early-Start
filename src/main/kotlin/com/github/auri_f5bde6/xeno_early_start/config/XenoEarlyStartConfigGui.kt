@@ -222,8 +222,8 @@ object XenoEarlyStartConfigGui {
                 )
                 doorInteraction.addBooleanToggle(
                     "pillagerCanOpenDoor",
-                    config.mobChanges::pillagerCanOpenDoor,
-                    defaults.mobChanges.pillagerCanOpenDoor
+                    config.mobChanges::pillagerCanBreakDoor,
+                    defaults.mobChanges.pillagerCanBreakDoor
                 )
                 doorInteraction.addBooleanToggle(
                     "polarBearCanDestroyDoor",
@@ -251,75 +251,83 @@ object XenoEarlyStartConfigGui {
                     defaults.mobChanges.angryWolfCanDestroyDoor
                 )
             }
-            vanilla.addSubCategory("phantom") { phantom ->
-                phantom.addSubCategory("overworld") { overworld ->
-                    overworld.addBooleanToggle(
-                        "customPhantomOverworldSpawn",
-                        config.mobChanges::customPhantomOverworldSpawn,
-                        true,
-                        requireRestart = true
-                    )
-                    overworld.addIntSlider(
-                        "phantomSpawnLevel",
-                        config.mobChanges::phantomSpawnLevel,
-                        180,
-                        -64,
-                        320
-                    )
-                    overworld.addIntSlider(
-                        "overworldPhantomMaxGroupSize",
-                        config.mobChanges::overworldPhantomMaxGroupSize,
-                        4,
-                        1,
-                        9
-                    )
-                }
-                phantom.addSubCategory("nether") { nether ->
-                    nether.addBooleanToggle(
-                        "customPhantomNetherSpawn",
-                        config.mobChanges::customPhantomNetherSpawn,
-                        true
-                    )
-                }
-                phantom.addSubCategory("end") { end ->
-                    end.addBooleanToggle(
-                        "customPhantomEndSpawn",
-                        config.mobChanges::customPhantomEndSpawn,
-                        true
-                    )
-                }
-                phantom.addIntSlider(
-                    "maxPhantomSize",
-                    config.mobChanges::maxPhantomSize,
-                    10,
-                    0,
-                    64
-                )
-            }
-            vanilla.addSubCategory("polarBear") { polarBear ->
-                polarBear.addBooleanToggle(
-                    "polarBearAlwaysAggressive",
-                    config.mobChanges::polarBearAlwaysAggressive,
-                    true
-                )
-                polarBear.addFloatField(
-                    "polarBearSpeed",
-                    config.mobChanges::polarBearSpeed,
-                    0.35f,
-                    tooltip = TooltipText.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
-                    requireRestart = true,
-                )
-                polarBear.addIntSlider(
-                    "polarBearRange",
-                    config.mobChanges::polarBearRange,
-                    40,
-                    1,
-                    64,
-                    tooltip = TooltipText.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
-                    requireRestart = true,
-                )
-            }
             vanilla.addSubCategory("misc") { misc ->
+                misc.addSubCategory("phantom") { phantom ->
+                    phantom.addSubCategory("overworld") { overworld ->
+                        overworld.addBooleanToggle(
+                            "customPhantomOverworldSpawn",
+                            config.mobChanges::customPhantomOverworldSpawn,
+                            true,
+                            requireRestart = true,
+                            tooltip = TooltipText.DefaultTooltip()
+                        )
+                        overworld.addIntSlider(
+                            "phantomSpawnLevel",
+                            config.mobChanges::phantomSpawnLevel,
+                            180,
+                            -64,
+                            320
+                        )
+                        overworld.addIntSlider(
+                            "overworldPhantomMaxGroupSize",
+                            config.mobChanges::overworldPhantomMaxGroupSize,
+                            4,
+                            1,
+                            9
+                        )
+                    }
+                    phantom.addSubCategory("nether") { nether ->
+                        nether.addBooleanToggle(
+                            "customPhantomNetherSpawn",
+                            config.mobChanges::customPhantomNetherSpawn,
+                            true
+                        )
+                    }
+                    phantom.addSubCategory("end") { end ->
+                        end.addBooleanToggle(
+                            "customPhantomEndSpawn",
+                            config.mobChanges::customPhantomEndSpawn,
+                            true
+                        )
+                    }
+                    phantom.addIntSlider(
+                        "maxPhantomSize",
+                        config.mobChanges::maxPhantomSize,
+                        10,
+                        0,
+                        64
+                    )
+                }
+                misc.addSubCategory("polarBear") { polarBear ->
+                    polarBear.addBooleanToggle(
+                        "polarBearAlwaysAggressive",
+                        config.mobChanges::polarBearAlwaysAggressive,
+                        true
+                    )
+                    polarBear.addFloatField(
+                        "polarBearSpeed",
+                        config.mobChanges::polarBearSpeed,
+                        0.35f,
+                        tooltip = TooltipText.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
+                        requireRestart = true,
+                    )
+                    polarBear.addIntSlider(
+                        "polarBearRange",
+                        config.mobChanges::polarBearRange,
+                        40,
+                        1,
+                        64,
+                        tooltip = TooltipText.CustomTooltip("onlyApplyOnNewlySpawnedMob"),
+                        requireRestart = true,
+                    )
+                }
+                misc.addIntSlider(
+                    "replaceSpiderWithCaveSpiderY",
+                    config.mobChanges::replaceSpiderWithCaveSpiderY,
+                    defaults.mobChanges.replaceSpiderWithCaveSpiderY,
+                    -64,
+                    320
+                )
                 misc.addBooleanToggle(
                     "wolfAggressiveAtNight",
                     config.mobChanges::wolfAggressiveAtNight,
