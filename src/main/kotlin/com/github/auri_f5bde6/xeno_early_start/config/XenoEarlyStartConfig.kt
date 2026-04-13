@@ -132,15 +132,15 @@ object XenoEarlyStartConfig {
         var customPhantomOverworldSpawn: Boolean = true
         var customPhantomNetherSpawn: Boolean = true
         var customPhantomEndSpawn: Boolean = true
-        var blazeCanBreakDoor: Boolean = true
+        var blazeCanBreakDoor: Boolean = false
         var illusionerCanOpenDoor: Boolean = true
-        var polarBearCanDestroyDoor: Boolean = true
-        var ravagerCanDestroyDoor: Boolean = true
+        var polarBearCanDestroyDoor: Boolean = false
+        var ravagerCanDestroyDoor: Boolean = false
         var witchCanOpenDoor: Boolean = true
-        var witherSkeletonCanDestroyDoor: Boolean = true
+        var witherSkeletonCanDestroyDoor: Boolean = false
         var angryWolfCanDestroyDoor: Boolean = true
 
-        var pillagerCanOpenDoor: Boolean = true
+        var pillagerCanBreakDoor: Boolean = true
 
         var phantomSpawnLevel: Int = 180
 

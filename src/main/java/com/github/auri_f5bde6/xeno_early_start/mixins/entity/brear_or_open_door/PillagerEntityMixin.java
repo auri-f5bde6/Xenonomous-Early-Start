@@ -23,7 +23,7 @@ public abstract class PillagerEntityMixin extends IllagerEntity implements Cross
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     void breakDoorGoal(CallbackInfo ci) {
-        if (XenoEarlyStartConfig.config.mobChanges.getPillagerCanOpenDoor()) {
+        if (XenoEarlyStartConfig.config.mobChanges.getPillagerCanBreakDoor()) {
             ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
             this.goalSelector.add(1, new NonZombieBreakDoorGoal(this, (difficulty) -> difficulty == Difficulty.HARD, 200));
         }
