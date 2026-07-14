@@ -239,6 +239,13 @@ object XenoEarlyStartItemRegistry {
     val ANIMAL_FAT: RegistryObject<Item> = DEF_REG.register("animal_fat") { Item(Item.Settings()) }
 
     @JvmField
+    val PRIMITIVE_BED: RegistryObject<Item> = DEF_REG.register("primitive_bed") {
+        BlockItem(
+            XenoEarlyStartBlockRegistry.PRIMITIVE_BED.get(), Item.Settings()
+        )
+    }
+
+    @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
         GUIDE,
         COPPER_SWORD,
@@ -277,7 +284,8 @@ object XenoEarlyStartItemRegistry {
         FLINT_SHARD,
         PRIMITIVE_ARROW,
         PROWLER_SPAWN_EGG,
-        ANIMAL_FAT
+        ANIMAL_FAT,
+        PRIMITIVE_BED
     )
 
     @Suppress("UNUSED")

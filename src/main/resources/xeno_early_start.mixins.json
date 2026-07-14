@@ -43,6 +43,7 @@
     "entity.PhantomSpawnerMixin",
     "entity.PiglinBruteEntityMixin",
     "entity.ProwlerMixin",
+    "entity.ServerPlayerEntityMixin",
     "entity.StrayEntityMixin",
     "entity.ZombieEntityMixin",
     "entity.angerable_changes.MobEntityMixin",

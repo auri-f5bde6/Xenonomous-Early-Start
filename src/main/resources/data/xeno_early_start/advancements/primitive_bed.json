@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:primitive_bed"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.primitive_bed.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.primitive_bed.description"
+    },
+    "frame": "goal"
+  },
+  "parent": "xeno_early_start:plant_fiber",
+  "criteria": {
+    "crafted": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "xeno_early_start:primitive_bed"
+      }
+    }
+  }
+}

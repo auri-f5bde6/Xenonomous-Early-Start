@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "BB"
+  ],
+  "key": {
+    "A": [
+      {"item":  "minecraft:leather"},
+      {"item":  "minecraft:rabbit_hide"},
+      {"tag":  "minecraft:wool"}
+    ],
+    "B":
+    {"item":  "xeno_early_start:plant_fiber_block"}
+  },
+  "result": {
+    "item": "xeno_early_start:primitive_bed",
+    "count": 1
+  }
+}

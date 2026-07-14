@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "xeno_early_start:primitive_bed",
+              "properties": {
+                "part": "foot"
+              }
+            }
+          ],
+          "name": "xeno_early_start:primitive_bed"
+        }
+      ]
+    }
+  ]
+}

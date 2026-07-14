@@ -112,6 +112,9 @@ object ItemTooltipEventListener {
                     )
                 )
             }
+            if (event.itemStack.isOf(XenoEarlyStartItemRegistry.PRIMITIVE_BED.get())){
+                t.addItemDescriptionTooltip("primitive_bed")
+            }
             t.insertTooltips(event, 1)
 
         }

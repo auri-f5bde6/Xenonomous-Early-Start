@@ -37,7 +37,9 @@
       "xeno_early_start:flint_pickaxe",
       "xeno_early_start:bone_pickaxe",
       "xeno_early_start:bow_piece",
-      "xeno_early_start:bow"
+      "xeno_early_start:bow",
+      "xeno_early_start:plant_fiber_block",
+      "xeno_early_start:primitive_bed"
     ]
   }
 }

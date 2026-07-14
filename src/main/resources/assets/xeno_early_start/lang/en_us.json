@@ -8,6 +8,7 @@
   "block.xeno_early_start.primitive_fire": "Primitive Fire",
   "block.xeno_early_start.raw_brick": "Raw Brick",
   "block.xeno_early_start.plant_fiber_block": "Plant Fiber Block",
+  "block.xeno_early_start.primitive_bed": "Primitive Bed",
   "container.xeno_early_start.brick_furnace": "Brick Furnace",
   "entity.xeno_early_start.brick": "Brick",
   "entity.xeno_early_start.prowler": "Prowler",
@@ -48,6 +49,7 @@
   "item.xeno_early_start.primitive_arrow": "Primitive Arrow",
   "item.xeno_early_start.prowler_spawn_egg": "Prowler Spawn Egg",
   "item.xeno_early_start.animal_fat": "Animal Fat",
+  "item.xeno_early_start.primitive_bed": "Primitive Bed",
 
   "itemGroup.xeno_early_start.creative_tab": "Xenonomous' Early Start",
   "tag.item.xeno_early_start.knapped_stone": "Knapped Stone",
@@ -204,6 +206,8 @@
   "xeno_early_start.item.tooltip.flint_knapping": "Hold at least 2 flint in hand to obtain 2-5 flint shards",
   "xeno_early_start.item.tooltip.shift_hidden": "<shift>",
   "xeno_early_start.item.tooltip.starting_guide": "To get started, find gravel and obtain flint (and check Advancement for guide!)",
+  "xeno_early_start.item.tooltip.primitive_bed": "A shabby bed that do not set your respawn point",
+
   "emi.category.xeno_early_start.drying": "Drying",
   "emi.category.xeno_early_start.world_interaction": "World Interaction",
   "emi.category.xeno_early_start.block_to_block": "World Interaction (Mine Block)",
@@ -221,6 +225,8 @@
   "advancements.xeno_early_start.stick.description": "Obtain stick by breaking leaves",
   "advancements.xeno_early_start.plant_fiber.title": "You aren't a Hylian",
   "advancements.xeno_early_start.plant_fiber.description": "Breaking grass/leaves with flint have §p%s§a chance of dropping plant fiber\nRequired for most primitive tools",
+  "advancements.xeno_early_start.primitive_bed.title": "A Good Night's Sleep",
+  "advancements.xeno_early_start.primitive_bed.description": "Craft a primitive bed using plant fiber blocks with wools or leathers",
   "advancements.xeno_early_start.flint_hatchet.title": "Deforestation",
   "advancements.xeno_early_start.flint_hatchet.description": "Craft a hatchet, which can be used to fell a tree",
   "advancements.xeno_early_start.flint_dagger.title": "Is This A Dagger I See Before Me",

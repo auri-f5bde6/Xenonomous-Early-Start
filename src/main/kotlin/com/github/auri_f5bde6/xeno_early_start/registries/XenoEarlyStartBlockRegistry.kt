@@ -3,15 +3,18 @@ package com.github.auri_f5bde6.xeno_early_start.registries
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.block.BrickBlock
 import com.github.auri_f5bde6.xeno_early_start.block.BrickFurnaceBlock
+import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveBed
 import com.github.auri_f5bde6.xeno_early_start.block.PrimitiveFireBlock
 import com.github.auri_f5bde6.xeno_early_start.block.RawBrickBlock
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.block.MapColor
 import net.minecraft.block.enums.Instrument
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.state.property.Properties
+import net.minecraft.util.DyeColor
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
@@ -77,6 +80,14 @@ object XenoEarlyStartBlockRegistry {
         Block(
             AbstractBlock.Settings.create().mapColor(MapColor.DARK_GREEN).instrument(Instrument.BANJO).strength(0.5f)
                 .sounds(BlockSoundGroup.GRASS)
+        )
+    })
+
+    @JvmField
+    val PRIMITIVE_BED: RegistryObject<Block> = DEF_REG.register("primitive_bed",Supplier {
+        PrimitiveBed(
+            DyeColor.WHITE,
+            AbstractBlock.Settings.copy(Blocks.BROWN_BED).strength(0.1f)
         )
     })
 
