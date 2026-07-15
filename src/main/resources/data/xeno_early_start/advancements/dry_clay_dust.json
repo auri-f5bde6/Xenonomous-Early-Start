@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "xeno_early_start:dry_clay_dust"
+    },
+    "title": {
+      "translate": "advancements.xeno_early_start.dry_clay_dust.title"
+    },
+    "description": {
+      "translate": "advancements.xeno_early_start.dry_clay_dust.description"
+    },
+    "frame": "task",
+    "announce_to_chat": false
+  },
+  "parent": "xeno_early_start:flint_pickaxe",
+  "criteria": {
+    "in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "xeno_early_start:dry_clay_dust"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
