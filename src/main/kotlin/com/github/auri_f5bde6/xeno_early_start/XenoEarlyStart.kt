@@ -43,6 +43,7 @@ class XenoEarlyStart {
         XenoEarlyStartStatusEffectRegistry.DEF_REG.register(MOD_BUS)
         XenoEarlyStartCodecRegistry.BIOME_MODIFIER_DEF_REG.register(MOD_BUS)
         XenoEarlyStartCodecRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(MOD_BUS)
+        XenoEarlyStartSoundEventRegistry.DEF_REG.register(MOD_BUS)
 
         NetworkHandler.register()
 

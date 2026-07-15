@@ -38,6 +38,7 @@
     "entity.EndCrystalEntityMixin",
     "entity.EntityMixin",
     "entity.FishEntityMixin",
+    "entity.ItemEntityMixin",
     "entity.MobEntityMixin",
     "entity.PhantomEntityMixin",
     "entity.PhantomSpawnerMixin",

@@ -1,0 +1,11 @@
+{
+  "dust_turns_to_clay": {
+    "subtitle": "subtitles.xeno_early_start.dust_turns_to_clay",
+    "sounds": [
+      {
+        "name": "minecraft:block.mud.break",
+        "type": "event"
+      }
+    ]
+  }
+}

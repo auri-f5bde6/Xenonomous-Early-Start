@@ -472,6 +472,16 @@ object XenoEarlyStartConfigGui {
             )
         }
 
+        category.addSubCategory("dry_clay_dust") { dryClayDust ->
+            dryClayDust.addBooleanToggle(
+                "vanillaTerracottaLootTable",
+                config.earlyGameChanges::vanillaTerracottaLootTable,
+                false,
+                tooltip = TooltipText.DefaultTooltip()
+            )
+            dryClayDust.addIntSlider("dryClayDustDrop", config.earlyGameChanges::dryClayDustDrop, 1, 1, 4)
+        }
+
         category.addSubCategory("brickFurnace") { brickFurnace ->
             brickFurnace.addPercentageSlider(
                 "cookingTimeMultiplier",

@@ -246,6 +246,9 @@ object XenoEarlyStartItemRegistry {
     }
 
     @JvmField
+    val DRY_CLAY_DUST: RegistryObject<Item> = DEF_REG.register("dry_clay_dust") { DryClayDustItem(Item.Settings()) }
+
+    @JvmField
     val CREATIVE_MOD_TAB: List<RegistryObject<Item>> = listOf(
         GUIDE,
         COPPER_SWORD,
@@ -285,7 +288,8 @@ object XenoEarlyStartItemRegistry {
         PRIMITIVE_ARROW,
         PROWLER_SPAWN_EGG,
         ANIMAL_FAT,
-        PRIMITIVE_BED
+        PRIMITIVE_BED,
+        DRY_CLAY_DUST
     )
 
     @Suppress("UNUSED")

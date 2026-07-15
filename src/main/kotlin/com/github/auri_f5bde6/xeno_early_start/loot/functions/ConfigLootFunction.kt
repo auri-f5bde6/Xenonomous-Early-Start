@@ -83,6 +83,8 @@ class ConfigLootFunction private constructor(
             } else {
                 itemStack.count = 0
             }
+
+            DropType.DryClayDust -> itemStack.count = XenoEarlyStartConfig.config.earlyGameChanges.dryClayDustDrop
         }
         return itemStack
     }
@@ -108,6 +110,9 @@ class ConfigLootFunction private constructor(
 
         @SerializedName("stick")
         Stick,
+
+        @SerializedName("dry_clay_dust")
+        DryClayDust,
     }
 
     class Serializer : JsonSerializer<ConfigLootFunction> {

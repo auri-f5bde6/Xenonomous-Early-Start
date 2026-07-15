@@ -72,6 +72,10 @@ object XenoEarlyStartConfig {
 
         var brickFurnaceCookingTimeMultiplier: Float = 3f
 
+        var vanillaTerracottaLootTable: Boolean = false
+
+        var dryClayDustDrop: Int = 1
+
         var recipes = Recipes()
 
         class Recipes {

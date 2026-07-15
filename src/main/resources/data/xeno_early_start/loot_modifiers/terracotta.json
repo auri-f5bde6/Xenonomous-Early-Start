@@ -1,0 +1,43 @@
+{
+  "type": "xeno_early_start:replace_table",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "xeno_early_start:block_is_in_tag",
+          "tag": "minecraft:terracotta"
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "xeno_early_start:config",
+            "config": "vanilla_terracotta_loot_table"
+          }
+        },
+        {
+          "condition": "xeno_early_start:match_tool_tier",
+          "tier": "minecraft:stone",
+          "cond": "<"
+        },
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "table": "xeno_early_start:inject/blocks/terracotta"
+}

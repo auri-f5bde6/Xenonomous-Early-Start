@@ -50,6 +50,8 @@
   "item.xeno_early_start.prowler_spawn_egg": "Prowler Spawn Egg",
   "item.xeno_early_start.animal_fat": "Animal Fat",
   "item.xeno_early_start.primitive_bed": "Primitive Bed",
+  "item.xeno_early_start.dry_clay_dust": "Dry Clay Dust",
+
 
   "itemGroup.xeno_early_start.creative_tab": "Xenonomous' Early Start",
   "tag.item.xeno_early_start.knapped_stone": "Knapped Stone",
@@ -147,6 +149,10 @@
   "text.config.xeno_early_start.option.general.gameplay.primitiveFire.fuelTimeMultiplier": "Multiple To Fuel Time Fuel Gives (%)",
   "text.config.xeno_early_start.option.general.gameplay.primitiveFire.fuelStarterRelightFuelTime": "Amount Of Time Primitive Fire Gain When Fire Starter Is Used To Relight",
   "text.config.xeno_early_start.option.general.gameplay.primitiveFire.cookingTimeMultiplier": "Multiple To Time Required For Item To Finish Cooking (%)",
+  "text.config.xeno_early_start.option.general.gameplay.dry_clay_dust": "Dry Clay Dust",
+  "text.config.xeno_early_start.option.general.gameplay.dry_clay_dust.vanillaTerracottaLootTable": "Vanilla Terracotta Loot Table",
+  "text.config.xeno_early_start.option.general.gameplay.dry_clay_dust.vanillaTerracottaLootTable.tooltip": "§pDry clay dust will be unobtainable after enabling, you will have to obtain clay ball by vanilla mean if enabled",
+  "text.config.xeno_early_start.option.general.gameplay.dry_clay_dust.dryClayDustDrop": "Dry Clay Dust Drop(s)",
   "text.config.xeno_early_start.option.general.gameplay.hunger": "Hunger",
   "text.config.xeno_early_start.option.general.gameplay.hunger.wakingUpExhaustion": "Exhaustion When Player Wake Up From Bed",
   "text.config.xeno_early_start.option.general.gameplay.hunger.boatRowingExhaustion": "Exhaustion When Player Row A Boat",
@@ -207,6 +213,8 @@
   "xeno_early_start.item.tooltip.shift_hidden": "<shift>",
   "xeno_early_start.item.tooltip.starting_guide": "To get started, find gravel and obtain flint (and check Advancement for guide!)",
   "xeno_early_start.item.tooltip.primitive_bed": "A shabby bed that do not set your respawn point",
+  "xeno_early_start.item.tooltip.dry_clay_dust": "Rehydrate dry clay dust on water to obtain a clay ball",
+  "xeno_early_start.item.tooltip.clay_ball": "Rehydrate dry clay dust on water to obtain a clay ball",
 
   "emi.category.xeno_early_start.drying": "Drying",
   "emi.category.xeno_early_start.world_interaction": "World Interaction",
@@ -282,5 +290,6 @@
   "advancements.xeno_early_start.primitive_fire_refuel.title": "Refueling",
   "advancements.xeno_early_start.primitive_fire_refuel.description": "You can extend the duration of a primitive fire by throwing fuel on top of the block! (and don't worry, any excess fuel will not be lost)",
   "advancements.xeno_early_start.animal_fat.title": "Lipid                                      ",
-  "advancements.xeno_early_start.animal_fat.description": "Obtained by killing animal, this can be used to substituted charcoal for raw brick and treated wood"
+  "advancements.xeno_early_start.animal_fat.description": "Obtained by killing animal, this can be used to substituted charcoal for raw brick and treated wood",
+  "subtitles.xeno_early_start.dust_turns_to_clay": "Dust Turns To Clay"
 }

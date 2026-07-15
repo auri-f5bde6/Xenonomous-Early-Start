@@ -30,6 +30,10 @@ class ConfigLootCondition private constructor(private val config: Type) : LootCo
         VANILLA_DIAMOND_LOOT_TABLE(
             "vanilla_diamond_loot_table",
             XenoEarlyStartConfig.config.oreChanges::vanillaDiamondLootTable
+        ),
+        VANILLA_TERRACOTTA(
+            "vanilla_terracotta_loot_table",
+            XenoEarlyStartConfig.config.earlyGameChanges::vanillaTerracottaLootTable
         );
 
         fun test(): Boolean {
