@@ -3,10 +3,12 @@ package com.github.auri_f5bde6.xeno_early_start.network
 import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.config.XenoEarlyStartConfig
 import com.google.gson.Gson
+import me.shedaniel.cloth.clothconfig.shadowed.com.moandjiezana.toml.TomlWriter
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.text.Text
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.fml.DistExecutor
+import net.minecraftforge.fml.loading.FMLPaths
 import net.minecraftforge.network.NetworkEvent
 import java.util.function.Supplier
 
@@ -63,6 +65,13 @@ class ConfigSyncPacket(val type: Type, val config: XenoEarlyStartConfig.Config?,
                     Type.CLIENT_SEND_CONFIG -> {
                         if (msg.config != null) {
                             XenoEarlyStartConfig.config = msg.config
+
+                            val tomlWriter = TomlWriter()
+                            tomlWriter.write(
+                                XenoEarlyStartConfig.config,
+                                FMLPaths.CONFIGDIR.get().resolve("xeno-early-start.toml").toFile()
+                            )
+
                             if (msg.requireRestart) {
                                 player.sendMessage(Text.translatable("text.config.xeno_early_start.syncRequireRestart"))
                             }
