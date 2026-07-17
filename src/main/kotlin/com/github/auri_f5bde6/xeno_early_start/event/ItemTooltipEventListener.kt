@@ -116,7 +116,8 @@ object ItemTooltipEventListener {
                 t.addItemDescriptionTooltip("primitive_bed")
             }
             if (event.itemStack.isOf(XenoEarlyStartItemRegistry.DRY_CLAY_DUST.get())) {
-                t.addTutorialTooltip("dry_clay_dust")
+                t.addTutorialTooltip("dry_clay_dust_obtain")
+                t.addTutorialTooltip("dry_clay_dust_usage")
             }
             if (event.itemStack.isOf(Items.CLAY_BALL)) {
                 t.addTutorialTooltip("clay_ball")
