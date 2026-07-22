@@ -14,7 +14,7 @@ import net.minecraft.world.spawner.PhantomSpawner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import static java.lang.Math.min;
+import static java.lang.Math.max;
 
 @Mixin(PhantomSpawner.class)
 public class PhantomSpawnerMixin {
@@ -46,7 +46,7 @@ public class PhantomSpawnerMixin {
                                 for (int i1 = 0; i1 < groupSize; i1++) {
                                     var phantom = EntityType.PHANTOM.create(world);
                                     if (phantom != null) {
-                                        var size = random.nextInt(min((int) (d * XenoEarlyStartConfig.config.mobChanges.getMaxPhantomSize()), 1));
+                                        var size = random.nextInt(max((int) (d * XenoEarlyStartConfig.config.mobChanges.getMaxPhantomSize()), 1));
                                         phantom.refreshPositionAndAngles(spawnPos, 0.0F, 0.0F);
                                         entityData = phantom.initialize(world, difficulty, SpawnReason.NATURAL, entityData, null);
                                         phantom.setPhantomSize(size);
