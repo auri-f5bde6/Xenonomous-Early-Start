@@ -7,6 +7,7 @@ import com.github.auri_f5bde6.xeno_early_start.entity.CoalDustExplosion
 import com.github.auri_f5bde6.xeno_early_start.registries.XenoEarlyStartParticleRegistry
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -59,7 +60,11 @@ object CoalDust {
                 }
             }
         }
-        return false
+        val players = world.getEntitiesByType(
+            EntityType.PLAYER,
+            Box(centerPos.add(range, range, range), centerPos.add(-range, -range, -range)),
+        ) { player -> player.handItems.any { stack -> stack.isIn(XenoEarlyStartTags.Items.ALWAYS_TRIGGER_EXPLOSION) } }
+        return players.isNotEmpty()
     }
 
     fun tryDetonate(world: ServerWorld, blockPos: BlockPos, alwaysDetonate: Boolean, owner: Entity?): Boolean {

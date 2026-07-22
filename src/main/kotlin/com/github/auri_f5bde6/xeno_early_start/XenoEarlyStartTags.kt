@@ -58,6 +58,10 @@ class XenoEarlyStartTags {
         val BRICK_FURNACE_OUTPUT_BLOCKLIST: TagKey<Item> = createTag("brick_furnace_output_blocklist")
         @JvmField
         val FURNACE_OUTPUT_BLOCKLIST: TagKey<Item> = createTag("furnace_output_blocklist")
+
+        @JvmField
+        val ALWAYS_TRIGGER_EXPLOSION: TagKey<Item> = createTag("always_trigger_explosion")
+
         private fun createTag(name: String): TagKey<Item> {
             return ItemTags.create(XenoEarlyStart.of(name))
         }
