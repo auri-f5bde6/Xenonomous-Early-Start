@@ -19,6 +19,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
+import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.UseAction
 import net.minecraft.util.math.BlockPos
@@ -60,15 +61,9 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
                 chance = 0.5
             }
             if (chance > world.random.nextFloat()) {
-                val box = Box(aboveBlock.add(-1, -1, -1), aboveBlock.add(1, 1, 1))
-                val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
-                var burnTime = 0
-                for (item in items) {
-                    burnTime = PrimitiveFireBlock.maybeConsumeStack(item.stack, 0, false)
-                }
+                val (items, burnTime) = getBurnTime(stack, world)
                 // At least 30 second worth of burn time required
                 if (burnTime >= 600) {
-
                     // I mean it works, and the alternative is O(n) still so /shrug
                     for (item in items) {
                         var x = 0
@@ -108,6 +103,16 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
         return stack
     }
 
+    fun getBurnTime(stack: ItemStack, world: World): Pair<List<ItemEntity>, Int> {
+        val aboveBlock = getBlockPos(stack)
+        val box = Box(aboveBlock.add(-1, -1, -1), aboveBlock.add(1, 1, 1))
+        val items = world.getEntitiesByClass(ItemEntity::class.java, box) { true }
+        var burnTime = 0
+        for (item in items) {
+            burnTime += PrimitiveFireBlock.maybeConsumeStack(item.stack, 0, false)
+        }
+        return items to burnTime
+    }
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
         val world = context.world
         val blockPos = context.blockPos
@@ -142,15 +147,23 @@ class FireStarterItem(settings: Settings) : net.minecraft.item.Item(settings) {
 
             return ActionResult.success(world.isClient())
         } else {
-            if (context.world.isClient) {
-                PrimitiveFireBlock.spawnSmokeParticle(context.world, context.blockPos, false)
-            }
+
             if (context.side == Direction.UP) {
                 val stack = context.stack
                 val aboveBlock = context.blockPos.add(0, 1, 0)
                 putBlockPos(stack, aboveBlock)
-                context.player?.setCurrentHand(context.hand)
-                return ActionResult.CONSUME
+                if (getBurnTime(stack, world).second >= 600) {
+                    if (context.world.isClient) {
+                        PrimitiveFireBlock.spawnSmokeParticle(context.world, context.blockPos, false)
+                    }
+                    context.player?.setCurrentHand(context.hand)
+                    return ActionResult.success(context.world.isClient)
+                } else {
+                    context.player?.sendMessage(
+                        Text.translatable("xeno_early_start.gameplay.not_enough_fuel_to_create"),
+                        true
+                    )
+                }
             }
             return ActionResult.FAIL
         }

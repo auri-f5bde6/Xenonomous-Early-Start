@@ -2,6 +2,7 @@
   "xeno_early_start.gameplay.not_enough_fuel": "This primitive fire have no fuel to burn, throw some fuel before relighting",
   "xeno_early_start.gameplay.require_crafting_table_advancement": "Learn how to craft your own crafting table and unlock the advancement first! (This can be disabled in config found in Gameplay)",
   "xeno_early_start.gameplay.require_furnace_advancement": "Learn how to craft your very first brick furnace and unlock the advancement before proceeding! (This can be disabled in config found in Gameplay)",
+  "xeno_early_start.gameplay.not_enough_fuel_to_create": "Not enough burn time to start a primitive fire, add more burnable!",
 
   "block.xeno_early_start.brick": "Brick",
   "block.xeno_early_start.brick_furnace": "Brick Furnace",
