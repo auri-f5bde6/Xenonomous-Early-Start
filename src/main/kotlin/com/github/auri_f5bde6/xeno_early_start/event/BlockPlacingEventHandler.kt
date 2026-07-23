@@ -4,6 +4,7 @@ import com.github.auri_f5bde6.xeno_early_start.XenoEarlyStart
 import com.github.auri_f5bde6.xeno_early_start.mixins.accessors.FlowableFluidAccessor
 import net.minecraft.fluid.FlowableFluid
 import net.minecraft.fluid.Fluids
+import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
 import net.minecraftforge.event.level.BlockEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -32,7 +33,10 @@ object BlockPlacingEventHandler {
                         fluid
                     )
                 ) {
-                    event.isCanceled = true
+                    val waterlogged = placedBlock.getOrEmpty(Properties.WATERLOGGED)
+                    if (!waterlogged.isPresent) {
+                        event.isCanceled = true
+                    }
                 }
             }
 

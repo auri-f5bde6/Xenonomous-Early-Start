@@ -1,5 +1,6 @@
 package com.github.auri_f5bde6.xeno_early_start.mixins.prevent_water_cheese;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.Block;
@@ -35,7 +36,7 @@ public abstract class DoorBlockMixin extends Block implements Waterloggable {
     @Final
     public static EnumProperty<DoubleBlockHalf> HALF;
     @Unique
-    private static BooleanProperty xeno_early_start$WATERLOGGED = Properties.WATERLOGGED;
+    private static final BooleanProperty xeno_early_start$WATERLOGGED = Properties.WATERLOGGED;
 
     public DoorBlockMixin(Settings arg) {
         super(arg);
@@ -69,10 +70,9 @@ public abstract class DoorBlockMixin extends Block implements Waterloggable {
         }
     }
 
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
-        var up = pos.up();
-        var fluid = world.getFluidState(up).getFluid();
-        world.setBlockState(up, state.with(xeno_early_start$WATERLOGGED, fluid == Fluids.WATER).with(HALF, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
+    @ModifyExpressionValue(method = "onPlaced", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;"))
+    public Object onPlaced(Object original, World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        var fluid = world.getFluidState(pos.up()).getFluid();
+        return ((BlockState) original).with(xeno_early_start$WATERLOGGED, fluid == Fluids.WATER);
     }
 }
