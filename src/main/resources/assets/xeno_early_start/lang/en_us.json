@@ -203,7 +203,7 @@
   "xeno_early_start.item.tooltip.plant_fiber1": "Obtained by breaking grass/leaves with shards (e.g. flint/knapped stone)",
   "xeno_early_start.item.tooltip.plant_fiber2": "(§p%s§f chance of dropping)",
   "xeno_early_start.item.tooltip.pebble": "Obtained by breaking stone/its cobbled variant with pickaxe below copper tier",
-  "xeno_early_start.item.tooltip.pebble_to_shard": "Use on a cobbled block with pebble on both hand to obtain knapped stone",
+  "xeno_early_start.item.tooltip.pebble_to_shard": "Use on a stone block with pebble on both hand to obtain knapped stone",
   "xeno_early_start.item.tooltip.shards": "Breaking grass/leaves with this has §p%s§f chance of dropping plant fiber",
   "xeno_early_start.item.tooltip.knapped_stone": "Obtained by clicking on a stone/cobbled block with at least 2 pebble",
   "xeno_early_start.item.tooltip.food_warning": "You probably don't want to eat this",
