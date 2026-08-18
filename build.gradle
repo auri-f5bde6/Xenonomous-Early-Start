@@ -30,7 +30,6 @@ loom {
         }
         client {
             vmArgs "-XX:+AllowEnhancedClassRedefinition"
-            vmArg " -Dmixin.debug.export=true"
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
