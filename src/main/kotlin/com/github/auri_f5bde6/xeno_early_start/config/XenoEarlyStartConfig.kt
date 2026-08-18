@@ -156,10 +156,6 @@ object XenoEarlyStartConfig {
     }
 
     class BlockChanges {
-        enum class FixThinBlockStepSound {
-            True, False, OnlyThisMod
-        }
-
         var stonecutterDamage: Float = 3f
         var coralDamage: Float = 1.5f
         var amethystFallDamageMultiplier: Float = 1.5f
@@ -168,7 +164,6 @@ object XenoEarlyStartConfig {
         var furnaceDamage: Float = 1.5f
         var blastFurnaceDamage: Float = 2.5f
         var blastFurnaceSetNearbyBlockOnFire: Boolean = true
-        var fixThinBlockStepSound: FixThinBlockStepSound = FixThinBlockStepSound.True
     }
 
     class HungerChanges {

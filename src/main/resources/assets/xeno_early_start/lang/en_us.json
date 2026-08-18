@@ -170,7 +170,6 @@
   "text.config.xeno_early_start.option.general.blocks.blastFurnaceDamage": "Damage Dealt When Entity Step On Blast Furnace",
   "text.config.xeno_early_start.option.general.blocks.blastFurnaceSetNearbyBlockOnFire": "Blast Furnace Set Nearby Block On Fire",
   "text.config.xeno_early_start.option.general.blocks.amethystFallDamageMultiplier": "Damage Multiplier When Player Fall On Amethyst",
-  "text.config.xeno_early_start.option.general.blocks.fixThinBlockStepSound": "Fix Vanilla Issue Where Walking On Block With Thin Hitbox Doesn't Play The Correct Sound",
 
   "text.config.xeno_early_start.option.client": "Client Configs",
   "text.config.xeno_early_start.option.client.tooltips": "Tooltips",

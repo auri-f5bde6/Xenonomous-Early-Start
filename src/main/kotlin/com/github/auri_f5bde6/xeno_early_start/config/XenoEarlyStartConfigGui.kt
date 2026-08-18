@@ -548,12 +548,6 @@ object XenoEarlyStartConfigGui {
             config.blockChanges::blastFurnaceSetNearbyBlockOnFire,
             true
         )
-        category.addEnumSelector(
-            "fixThinBlockStepSound",
-            config.blockChanges::fixThinBlockStepSound,
-            XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound::class.java,
-            XenoEarlyStartConfig.BlockChanges.FixThinBlockStepSound.True
-        )
     }
 
     private fun addClientEntries(category: Category, config: XenoEarlyStartConfig.Config) {
