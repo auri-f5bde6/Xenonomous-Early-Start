@@ -11,6 +11,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 object PlayerWakeUpEventHandler {
     @SubscribeEvent
     fun onPlayerWakeUpEvent(event: PlayerWakeUpEvent) {
-        event.entity.hungerManager.addExhaustion(XenoEarlyStartConfig.config.hungerChanges.wakingUpExhaustion)
+        if (event.entity.canResetTimeBySleeping()) { // waking up during the morning
+            if (event.entity.hungerManager.foodLevel > 8) {
+                event.entity.hungerManager.addExhaustion(XenoEarlyStartConfig.config.hungerChanges.wakingUpExhaustion)
+            }
+        }
     }
 }
