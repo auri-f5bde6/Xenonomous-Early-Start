@@ -17,23 +17,39 @@ object NetworkHandler {
         { anObject: String? -> PROTOCOL_VERSION == anObject }
     )
 
+    val HOWL_CHANNEL: SimpleChannel = NetworkRegistry.newSimpleChannel(
+        XenoEarlyStart.of("howl_sync"),
+        { PROTOCOL_VERSION },
+        { anObject: String? -> PROTOCOL_VERSION == anObject },
+        { anObject: String? -> PROTOCOL_VERSION == anObject }
+    )
+
     val CONFIG_CHANNEL: SimpleChannel = NetworkRegistry.newSimpleChannel(
         XenoEarlyStart.of("config_sync"),
         { PROTOCOL_VERSION },
         { anObject: String? -> PROTOCOL_VERSION == anObject },
         { anObject: String? -> PROTOCOL_VERSION == anObject }
     )
+    var howlPacketId: Int = 0
     var neutralTilFedPacketId: Int = 0
     var configSyncPacketId: Int = 0
 
     fun register() {
-        // This might not be necessarily, as im pretty sure the clint doesn't need to know but oh well
+        // This might not be necessarily, as im pretty sure the client doesn't need to know but oh well
         NEUTRAL_TIL_FED_CHANNEL.registerMessage(
             neutralTilFedPacketId++,
             NeutralTilFedSyncPacket::class.java,
             NeutralTilFedSyncPacket::encode,
             NeutralTilFedSyncPacket::decode,
             NeutralTilFedSyncPacket::handle
+        )
+
+        HOWL_CHANNEL.registerMessage(
+            howlPacketId++,
+            HowledSyncPacket::class.java,
+            HowledSyncPacket::encode,
+            HowledSyncPacket::decode,
+            HowledSyncPacket::handle
         )
 
         CONFIG_CHANNEL.registerMessage(
