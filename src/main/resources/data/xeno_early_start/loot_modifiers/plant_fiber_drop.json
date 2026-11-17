@@ -12,10 +12,10 @@
         },
         {
           "condition": "xeno_early_start:block_is_in_tag",
-          "tag": "minecraft:replaceable_by_trees"
+          "tag": "xeno_early_start:drop_plant_fiber"
         }
       ]
     }
   ],
-  "table": "xeno_early_start:inject/blocks/replaceable_by_trees"
+  "table": "xeno_early_start:inject/blocks/plant_fiber_drop"
 }
